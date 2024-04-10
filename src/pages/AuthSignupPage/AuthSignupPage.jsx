@@ -191,6 +191,7 @@ function AuthSignupPage() {
                 </div>
             </div>
         </div>
+        
     );
 }
 

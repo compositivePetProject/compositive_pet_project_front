@@ -6,8 +6,8 @@ import { useInput } from "../../hooks/useInput";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuid } from "uuid";
-import { CiSquarePlus } from "react-icons/ci";
 import { storage } from "../../apis/firebase/firebaseConfig";
+import { CiSquarePlus } from "react-icons/ci";
 import { useMutation } from "react-query";
 import { oAuth2SignupRequest } from "../../apis/api/authSignup";
 
@@ -146,8 +146,8 @@ function OAuthSignupPage() {
                 });
             }
         )
-
     }
+
     // css 수정 예정
     return (
         <div>

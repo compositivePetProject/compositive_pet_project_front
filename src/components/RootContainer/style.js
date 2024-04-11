@@ -8,5 +8,5 @@ export const container = css`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #fafafa;
+    background-color: white;
 `;

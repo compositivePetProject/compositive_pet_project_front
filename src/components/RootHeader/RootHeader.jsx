@@ -2,11 +2,22 @@
 import * as s from "./style";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
+import instance from "../../apis/utils/instance";
 
 function RootHeader() {
-    const navigate = useNavigate();
     const [ currentMenu, setCurrentMenu ] = useState(null);
     const [ isHovering, setIsHovering ] = useState(false);
+    const [ isLogin, setLogin ] = useState(false);
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
+
+    useEffect(() => {
+        setLogin(() => principalQueryState.status === "success");
+    }, [principalQueryState.status]);
 
     const handleHover = (menu) => {
         setIsHovering(true);
@@ -17,6 +28,14 @@ function RootHeader() {
         setIsHovering(false);
     };
     
+    const handleLogoutClick = () => {
+        localStorage.removeItem("AccessToken");
+        instance.interceptors.request.use((config) => {
+            config.headers.Authorization = null;
+            return config;
+        });
+        queryClient.refetchQueries("principalQuery");
+    }
 
     return (
         <div css={s.header}>
@@ -65,12 +84,28 @@ function RootHeader() {
                 </div>
             </div>
 
-            <div css={s.accountItems}>
+            { !isLogin ?
+             <div css={s.accountItems}>
                 <a css={s.login} href="http://localhost:3000/auth/sign-in">
                     로그인
                 </a>
             </div>
-
+            :   
+            <>
+                <div css={s.accountItems}>
+                    <a css={s.login} onClick={handleLogoutClick} href="http://localhost:3000/">
+                        로그아웃
+                    </a>
+                </div>       
+                    
+                <div css={s.imgBox}>
+                    <div css={s.profileImg} onClick={() => navigate("/account/mypage")}>
+                        <img src={principalQueryState.data?.data.profileImageUrl} alt="" />
+                    </div>
+                </div>
+            </> 
+            }   
+            
             {!!currentMenu && !!isHovering && (
                 <div css={s.sidebar} onMouseLeave={handleSidebarLeave}>
                     {currentMenu === "community" && (

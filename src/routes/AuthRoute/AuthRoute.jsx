@@ -15,8 +15,8 @@ function AuthRoute(props) {
             <PageContainer>
                 <Routes>
                     <Route path="/auth/*" element={ <AuthPage /> } />
-                    <Route path="/adoptCommunity" element={ <AdoptCommunity /> } />
-                    <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> } />
+                    <Route path="/adoptCommunity" element={ <AdoptCommunity /> } /> //임의로 붙임
+                    <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> } /> //임의로 붙임
                 </Routes>
             </PageContainer>
             <RootFooter />

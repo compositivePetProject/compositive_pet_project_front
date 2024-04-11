@@ -51,7 +51,7 @@ export const login = css`
     justify-content: center;
     align-items: center;
     padding-right: 10px;
-    width: 50px;
+    width: 60px;
     height: 30px;
     font-size: 14px;
     font-weight: 500;
@@ -65,6 +65,33 @@ export const login = css`
         color: rgb(0, 120, 255);;
     }
 `;
+
+export const imgBox = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 100%;
+    cursor: pointer;
+`;
+
+
+export const profileImg = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    width: 95%;
+    height: 95%;
+    overflow: hidden;
+    & > img {
+        height: 100%;
+    }
+`;
+
 
 export const buttons = css`
     box-sizing: border-box;

@@ -5,5 +5,4 @@ export const container = css`
     box-sizing: border-box;
     flex-grow: 1;
     width: 100%;
-    overflow-x: hidden;
 `;

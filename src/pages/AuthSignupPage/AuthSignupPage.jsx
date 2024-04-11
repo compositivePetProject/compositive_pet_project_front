@@ -37,7 +37,6 @@ function AuthSignupPage() {
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
                 const errorEntries = Object.entries(errorMap);
-                console.log(errorEntries);  
                 for(let [ k, v ] of errorEntries) {
                     if(k === "username") {
                         setUsernameMessage(() => {
@@ -97,7 +96,6 @@ function AuthSignupPage() {
         ];
 
         if(checkFlags.includes("error") || checkFlags.includes(undefined) || checkFlags.includes(null)) {
-            console.log(checkFlags);
             alert("가입 정보를 다시 확인하세요.");
             return;
         }

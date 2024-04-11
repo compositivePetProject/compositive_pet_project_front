@@ -11,7 +11,7 @@ import { storage } from "../../apis/firebase/firebaseConfig";
 import { useMutation } from "react-query";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { authNicknameCheckRequest } from "../../apis/api/authSignup";
-import { authNicknameEditRequest } from "../../apis/api/acoountPrincipal";
+import { nicknameAndProfileImageUrlEditRequest } from "../../apis/api/acoountPrincipal";
 
 function MyPage() {
     const navigate = useNavigate();
@@ -19,22 +19,32 @@ function MyPage() {
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [ isEditing, setIsEditng ] = useState(false);
     const [ newNickname, newNicknameChange, newNicknameMessage, setnewNicknameValue, setNewNicknameMessage ] = useInput("newNickname");
-    const [ profileImageUrl, profileImageUrlChange, profileImageUrlMessage, setProfileImageUrl ] = useInput("profileImageUrl");
+    const [ newProfileImageUrl, newProfileImageUrlChange, newProfileImageUrlMessage, setNewProfileImageUrl ] = useInput("newProfileImageUrl");
     const fileRef = useRef();
 
     const nicknameCheck = useMutation({
         mutationKey: "nicknameCheck",
         mutationFn: authNicknameCheckRequest,
         onSuccess: success => {
-            alert("사용 가능한 닉네임입니다.")
+            const successMap = success.data;
+            const successEntries = Object.entries(successMap);
+            for(let [ k, v ] of successEntries) {
+                if(k === "newNickname") {
+                    setNewNicknameMessage(() => {
+                        return {
+                            type: k,
+                            text: v
+                        }
+                    })
+                }
+            }
         },
         onError: error => {
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
                 const errorEntries = Object.entries(errorMap);
-                console.log(errorEntries);  
                 for(let [ k, v ] of errorEntries) {
-                    if(k === "nickname") {
+                    if(k === "newNickname") {
                         setNewNicknameMessage(() => {
                             return {
                                 type: "error",
@@ -43,35 +53,19 @@ function MyPage() {
                         })
                     }
                 }
-            } else {
-                alert("회원가입 오류");
-            }
+            } 
         }})
     
-        const nicknameEdit = useMutation({
-            mutationKey: "nicknameEdit",
-            mutationFn: authNicknameEditRequest,
+        const nicknameAndProfileImageUrlEdit = useMutation({
+            mutationKey: "nicknameAndProfileImageUrlEdit",
+            mutationFn: nicknameAndProfileImageUrlEditRequest,
             onSuccess: success => {
-                alert("닉네임 변경이 완료 되었습니다.")
+                alert("수정 완료 되었습니다.")
+                queryClient.refetchQueries("principalQuery");
+                window.location.replace("/account/mypage");
             },
             onError: error => {
-                if(error.response.status === 400) {
-                    const errorMap = error.response.data;
-                    const errorEntries = Object.entries(errorMap);
-                    console.log(errorEntries);  
-                    for(let [ k, v ] of errorEntries) {
-                        if(k === "nickname") {
-                            setNewNicknameMessage(() => {
-                                return {
-                                    type: "error",
-                                    text: v
-                                }
-                            })
-                        }
-                    }
-                } else {
-                    alert("닉네임 변경");
-                }
+                alert(error.response.data.newNickname);
         }})
 
     const handleNicknameCheck = () => {
@@ -81,11 +75,11 @@ function MyPage() {
     }
 
     const handleNicknameEdit = () => {
-        nicknameEdit.mutate({
-            newNickname
+        nicknameAndProfileImageUrlEdit.mutate({
+            newNickname,
+            newProfileImageUrl
         })
     }
-
 
 
     const handleFileChange = (e) => {
@@ -113,7 +107,7 @@ function MyPage() {
                 alert("업로드를 완료하셨습니다.");
                 getDownloadURL(storageRef)
                 .then(url => {
-                    setProfileImageUrl(() => url);
+                    setNewProfileImageUrl(() => url);
                 });
             }
         )
@@ -169,7 +163,7 @@ function MyPage() {
                     </div>
                     <div css={s.nicknameEdit}>닉네임 변경</div>
                     <div css={s.nicknameEditBox}>
-                        <AuthPageInput type="text"  name={"newNickname"} placeholder={"새로운 닉네임을 입력해주세요"} value={newNickname} onChange={newNicknameChange} message={newNicknameMessage} />
+                        <AuthPageInput type="text"  name={"newNickname"} placeholder={principalQueryState.data?.data.nickname} value={newNickname} onChange={newNicknameChange} message={newNicknameMessage} />
                         <button css={s.nickCheckButton} onClick={handleNicknameCheck}>닉네임 중복확인</button>
                     </div>
                     <div>
@@ -181,7 +175,6 @@ function MyPage() {
                     <div>
                 </div>
             </div>
-
                 <div>비밀번호 변경</div>
                 <div css={s.box}>
 

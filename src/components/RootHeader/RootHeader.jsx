@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
 

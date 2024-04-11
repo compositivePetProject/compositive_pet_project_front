@@ -7,6 +7,7 @@ export const background = css`
     z-index: -99;
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
     background-color: white;
 
 `;
@@ -16,9 +17,8 @@ export const layout = css`
     position: relative;
     margin: 0px auto;
     border: 1px solid #fafafa;
-    width: 1200px;
+    width: 80%;
     height: 100%;
-    overflow: hidden;
     background-color: #ececec;
 `;
 

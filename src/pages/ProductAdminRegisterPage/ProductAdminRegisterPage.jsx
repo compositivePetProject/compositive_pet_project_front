@@ -224,7 +224,7 @@ function ProductAdminRegisterPage(props) {
                   </>
                 :
                   <>
-                    <button onClick={() => submit}>확인</button>
+                    <button onClick={submit}>확인</button>
                     <button>취소</button>
                   </>
               }

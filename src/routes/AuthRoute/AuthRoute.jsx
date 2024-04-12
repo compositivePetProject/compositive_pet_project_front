@@ -3,7 +3,6 @@ import AuthPage from '../../pages/AuthPage/AuthPage';
 import RootHeader from '../../components/RootHeader/RootHeader';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import RootFooter from '../../components/RootFooter/RootFooter';
-
 import React from 'react';
 import AdoptCommunity from '../../pages/AdoptCommunity/AdoptCommunity';
 import AdoptCommunityDog from '../../pages/AdoptCommunityDog/AdoptCommunityDog';
@@ -13,30 +12,17 @@ import MyPage from '../../pages/MyPage/MyPage';
 import PetShopping from '../../pages/PetShopping/PetShopping';
 
 function AuthRoute(props) {
-    const principalQuery = useQuery(["principalQuery"], 
-    getPrincipalRequest, 
-    {
-        retry: 0,
-        refetchOnWindowFocus: false,
-        onSuccess: response => {
-        },
-        onError: error => {
-        }
-    });
+    
 
     return (
         <>
-            <RootHeader />
-            <PageContainer>
-                <Routes>
-                    <Route path="/auth/*" element={ <AuthPage /> } />
-                    <Route path="/account/mypage" element={ <MyPage /> } />
-                    <Route path="/adoptCommunity" element={ <AdoptCommunity /> } /> //임의로 붙임
-                    <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> } /> //임의로 붙임
-                    <Route path="/pet/shopping" element={ <PetShopping /> } />
-                </Routes>
-            </PageContainer>
-            <RootFooter />
+            <Routes>
+                <Route path="/auth/*" element={ <AuthPage /> } />
+                <Route path="/account/mypage" element={ <MyPage /> } />
+                <Route path="/adoptCommunity" element={ <AdoptCommunity /> } /> //임의로 붙임
+                <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> } /> //임의로 붙임
+                <Route path="/pet/shopping" element={ <PetShopping /> } />
+            </Routes>
         </>
     );
 }

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
 
@@ -116,9 +116,9 @@ function RootHeader() {
                     )}
                     {currentMenu === "adoptCommunity" && (
                         <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 전체 분양 게시글</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 분양 게시글</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 분양 게시글</a> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity"> 전체 분양 게시글</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog"> 강아지 분양 게시글</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat"> 고양이 분양 게시글</Link> </div>
                         </div>
                     )}
                     {currentMenu === "shop" && (

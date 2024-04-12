@@ -41,7 +41,29 @@ export const buttons = css`
         color : #0078ff;
         font-weight: 700;
     }
+`;
 
+export const buttons2 = css`
+    width: 160px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e6f2ff;
+    color: #0078ff;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+export const buttons3 = css`
+    width: 100px;
+    padding: 10px 20px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e6f2ff;
+    color: #0078ff;
+    text-decoration: none;
+    cursor: pointer;
 `;
 
 export const userDetails = css`
@@ -156,10 +178,10 @@ export const profileImg = css`
     overflow: hidden;
     & > img {
         height: 100%;   
-    }
-    
-   
+    }  
 `;
+
+
 
 
 

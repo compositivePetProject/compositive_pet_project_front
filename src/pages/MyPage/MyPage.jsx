@@ -11,15 +11,20 @@ import { storage } from "../../apis/firebase/firebaseConfig";
 import { useMutation } from "react-query";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { authNicknameCheckRequest } from "../../apis/api/authSignup";
-import { nicknameAndProfileImageUrlEditRequest } from "../../apis/api/acoountPrincipal";
+import { nicknameAndProfileImageUrlEditRequest, passwordEditRequest } from "../../apis/api/acoountPrincipal";
+import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 function MyPage() {
+    useAuthCheck();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [ isEditing, setIsEditng ] = useState(false);
     const [ newNickname, newNicknameChange, newNicknameMessage, setnewNicknameValue, setNewNicknameMessage ] = useInput("newNickname");
     const [ newProfileImageUrl, newProfileImageUrlChange, newProfileImageUrlMessage, setNewProfileImageUrl ] = useInput("newProfileImageUrl");
+    const [ oldPassword, oldPasswordChange, oldPasswordMessage, setOldPassword, setOldPasswordMessage ] = useInput("oldPassword");
+    const [ newPassword, newPasswordChange, newPasswordMessage, setNewPassword, setNewPasswordMessage ] = useInput("newPassword");
+    const [ newPasswordCheck, newPasswordCheckChange, newPasswordCheckMessage, setNewPasswordCheck, setNewPasswordCheckMessage ] = useInput("newPasswordCheck");
     const fileRef = useRef();
 
     const nicknameCheck = useMutation({
@@ -56,17 +61,52 @@ function MyPage() {
             } 
         }})
     
-        const nicknameAndProfileImageUrlEdit = useMutation({
-            mutationKey: "nicknameAndProfileImageUrlEdit",
-            mutationFn: nicknameAndProfileImageUrlEditRequest,
-            onSuccess: success => {
-                alert("수정 완료 되었습니다.")
-                queryClient.refetchQueries("principalQuery");
-                window.location.replace("/account/mypage");
-            },
-            onError: error => {
-                alert(error.response.data.newNickname);
-        }})
+    const nicknameAndProfileImageUrlEdit = useMutation({
+        mutationKey: "nicknameAndProfileImageUrlEdit",
+        mutationFn: nicknameAndProfileImageUrlEditRequest,
+        onSuccess: success => {
+            alert("수정 완료 되었습니다.")
+            queryClient.refetchQueries("principalQuery");
+            window.location.replace("/account/mypage");
+        },
+        onError: error => {
+            alert(error.response.data.newNickname);
+    }})
+
+
+    const passwordEdit = useMutation({
+        mutationKey: "passwordEdit",
+        mutationFn: passwordEditRequest,
+        onSuccess: success => {
+            alert("비밀번호 수정이 완료되었습니다.")
+            localStorage.removeItem("AccessToken")
+            window.location.replace("/auth/sign-in")
+        },
+        onError: error => {
+            if(error.response.status === 400) {
+                const errorMap = error.response.data;
+                const errorEntries = Object.entries(errorMap);
+                setOldPasswordMessage(null);
+                setNewPasswordMessage(null);
+                setNewPasswordCheckMessage(null);
+                for(let [ k, v ] of errorEntries) {
+                    const message = {
+                        type: "error",
+                        text: v
+                    }
+                    if(k === "oldPassword") {
+                        setOldPasswordMessage(() => message);
+                    }
+                    if(k === "newPassword") {
+                        setNewPasswordMessage(() => message);
+                    }
+                    if(k === "newPasswordCheck") {
+                        setNewPasswordCheckMessage(() => message);
+                    }
+                }
+            }
+        }
+    })
 
     const handleNicknameCheck = () => {
         nicknameCheck.mutate({
@@ -78,6 +118,14 @@ function MyPage() {
         nicknameAndProfileImageUrlEdit.mutate({
             newNickname,
             newProfileImageUrl
+        })
+    }
+
+    const handleEditSubmitClick = () => {
+        passwordEdit.mutate({
+            oldPassword,
+            newPassword,
+            newPasswordCheck
         })
     }
 
@@ -140,7 +188,7 @@ function MyPage() {
                         </div>
                         <div>{principalQueryState.data?.data.nickname}</div>
                         <div>{principalQueryState.data?.data.email}</div>
-                        <button onClick={() => setIsEditng(true)}>수정</button>
+                        <button css={s.buttons3} onClick={() => setIsEditng(true)}>수정</button>
                     </>
                     :
                     <>
@@ -167,8 +215,8 @@ function MyPage() {
                         <button css={s.nickCheckButton} onClick={handleNicknameCheck}>닉네임 중복확인</button>
                     </div>
                     <div>
-                        <button onClick={() => setIsEditng(false)}>취소</button>
-                        <button onClick={handleNicknameEdit}>확인</button>
+                        <button css={s.buttons3} onClick={() => setIsEditng(false)}>취소</button>
+                        <button css={s.buttons3} onClick={handleNicknameEdit}>확인</button>
                     </div>
                     </>
                     }
@@ -177,7 +225,10 @@ function MyPage() {
             </div>
                 <div>비밀번호 변경</div>
                 <div css={s.box}>
-
+                    <AuthPageInput  type="password" name={"oldPassword"} placeholder={"현재 비밀번호를 입력하세요."} value={oldPassword} onChange={oldPasswordChange} message={oldPasswordMessage}/>
+                    <AuthPageInput  type="password" name={"newPassword"} placeholder={"새로운 비밀번호를 입력하세요."} value={newPassword} onChange={newPasswordChange} message={newPasswordMessage}/>
+                    <AuthPageInput  type="password" name={"newPasswordCheck"} placeholder={"새로운 비밀번호를 확인하세요."} value={newPasswordCheck} onChange={newPasswordCheckChange} message={newPasswordCheckMessage}/>
+                    <button css={s.buttons2} onClick={handleEditSubmitClick}>비밀번호 변경하기</button>
                 </div>
             </div>  
         </div>

@@ -7,3 +7,7 @@ export const getPrincipalRequest = async () => {
 export const nicknameAndProfileImageUrlEditRequest = async (data) => {
     return await instance.put("/account/edit/nickname/profileImg", data);
 }
+
+export const passwordEditRequest = async (data) => {
+    return await instance.put("/account/edit/password", data);
+}

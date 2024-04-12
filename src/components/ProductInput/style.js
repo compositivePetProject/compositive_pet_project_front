@@ -6,7 +6,7 @@ export const inputBox = css`
     border: 1px solid #dbdbdb;
     border-radius: 5px;
     outline: none;
-    padding: 9px;
+    padding: 8px;
     width: 100%;
     height: 100%;
     &:disabled {

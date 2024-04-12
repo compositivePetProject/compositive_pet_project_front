@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getProductsAdminRequest, postProductAdminRequest } from "../../apis/api/productAdmin";
 import * as s from "./style";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -20,16 +20,21 @@ function ProductAdminRegisterPage(props) {
   const [ actionStatus, setActionStatus ] = useState(0);  // 0 = 선택, 1 = 추가, 2 = 수정, 3 = 삭제
   const fileRef = useRef();
   const queryClient = useQueryClient();
+  const [ checkAll, setCheckAll ] = useState({
+    checked : false,
+    target: 1  // 1 => 전체 선택, 2 => 부분 선택
+});
 
 
   const inputRef = [
     useRef(), // 상품ID 0
     useRef(), // 상품이름 1
-    useRef(), // 상품가격 2
-    useRef(), // 상품카테고리ID 3
-    useRef(), // 상품동물카테고리ID 4
-    useRef(), // 상품대표이미지URL 5
-    useRef()  // 상품내용 6
+    useRef(), // 상품카테고리ID 2
+    useRef(), // 상품동물카테고리ID 3
+    useRef(), // 상품대표이미지URL 4
+    useRef(), // 상품가격 5
+    useRef(),  // 상품내용 6
+    
   ];
 
   const nextInput = (ref) => {
@@ -38,10 +43,10 @@ function ProductAdminRegisterPage(props) {
 
   const productId = useProductInput(nextInput, inputRef[1])
   const productNameKor = useProductInput(nextInput, inputRef[2]);
-  const productPrice = useProductInput(nextInput, inputRef[3]);
-  const productCategoryId = useProductInput(nextInput, inputRef[4]);
-  const productAnimalCategoryId = useProductInput(nextInput, inputRef[5]);
-  const productImageUrl = useProductInput(nextInput, inputRef[6]);
+  const productCategoryId = useProductInput(nextInput, inputRef[3]);
+  const productAnimalCategoryId = useProductInput(nextInput, inputRef[4]);
+  const productImageUrl = useProductInput(nextInput, inputRef[5]);
+  const productPrice = useProductInput(nextInput, inputRef[6]);
   const [productBoardContent, setproductBoardContent] = useState("");
 
   const productCategoryOptions = [
@@ -200,6 +205,31 @@ function ProductAdminRegisterPage(props) {
   console.log("productAnimalCategoryId.value.value : " + productAnimalCategoryId.value?.value);
   console.log(productBoardContent);
 
+
+  // useEffect(() => {
+  //   if(checkAll.target === 1) {
+  //     setProductsAdmin(() => 
+  //       productsAdmin.map((product) => {
+  //         return {
+  //           ...product,
+  //           checked: checkAll.checked
+  //         }
+  //       })
+  //     )
+  //   }
+  // })
+
+
+  const handleCheckAllChange = (e) => {
+    setCheckAll(() => {
+        return {
+            checked: e.target.checked,
+            target: 1
+        }
+    });
+  }
+
+
   return (
     <div css={s.layout}>
       <div css={s.left}>
@@ -231,7 +261,7 @@ function ProductAdminRegisterPage(props) {
             </div>
           </div>
           <div style={{display: "flex"}}>
-            <table>
+            <table css={s.registerTable}>
               <tbody>
                 <tr>
                   <th css={s.registerTh}>상품ID</th>
@@ -253,15 +283,7 @@ function ProductAdminRegisterPage(props) {
                       onKeyDown={productNameKor.handleOnKeyDown}
                     />
                   </td>
-                  <th css={s.registerTh}>상품가격</th>
-                  <td>
-                    <ProductInput
-                      value={productPrice.value}
-                      productRef={inputRef[2]}
-                      onChange={productPrice.handleOnChange}
-                      onKeyDown={productPrice.handleOnKeyDown}
-                    />
-                  </td>
+                  
                 </tr>
                 <tr>
                   <th css={s.registerTh}>상품카테고리ID</th>
@@ -271,7 +293,7 @@ function ProductAdminRegisterPage(props) {
                       value={productCategoryId.value}
                       onChange={productCategoryId.handleOnChange}
                       onKeyDown={productCategoryId.handleOnKeyDown}
-                      ref={inputRef[3]}
+                      ref={inputRef[2]}
                     />
                   </td>
                   <th css={s.registerTh}>상품동물카테고리ID</th>
@@ -281,7 +303,7 @@ function ProductAdminRegisterPage(props) {
                       value={productAnimalCategoryId.value}
                       onChange={productAnimalCategoryId.handleOnChange}
                       onKeyDown={productAnimalCategoryId.handleOnKeyDown}
-                      ref={inputRef[4]}
+                      ref={inputRef[3]}
                     />
                   </td>
                 </tr>
@@ -290,7 +312,7 @@ function ProductAdminRegisterPage(props) {
                   <td>
                     <ProductInput
                       value={productImageUrl.value}
-                      productRef={inputRef[5]}
+                      productRef={inputRef[4]}
                       onChange={productImageUrl.handleOnChange}
                       onKeyDown={productImageUrl.handleOnKeyDown}
                     />
@@ -298,12 +320,20 @@ function ProductAdminRegisterPage(props) {
                       onChange={handleFileChange}
                     />
                   </td>
-                  
+                  <th css={s.registerTh}>상품가격</th>
+                  <td>
+                    <ProductInput
+                      value={productPrice.value}
+                      productRef={inputRef[5]}
+                      onChange={productPrice.handleOnChange}
+                      onKeyDown={productPrice.handleOnKeyDown}
+                    />
+                  </td>
                 </tr>
               </tbody>
             </table>
             <div css={s.preview}>
-              <img src={null} alt="" />
+              <img src={!productImageUrl.value ? null : productImageUrl.value} alt="" />
             </div>
           </div>
 
@@ -317,6 +347,7 @@ function ProductAdminRegisterPage(props) {
           <table>
             <thead>
               <tr>
+                <th><input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange} /></th>
                 <th>상품ID</th>
                 <th>상품이름</th>
                 <th>상품가격</th>
@@ -335,6 +366,7 @@ function ProductAdminRegisterPage(props) {
               {
                 productsAdmin.map((product) => 
                   <tr key={product.productId}>
+                    <td><input type="checkbox" value={product.productId} /></td>
                     <td>{product.productId}</td>
                     <td>{product.productNameKor}</td>
                     <td>{product.productPrice}</td>

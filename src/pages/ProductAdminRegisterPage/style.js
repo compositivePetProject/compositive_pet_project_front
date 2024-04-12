@@ -89,8 +89,7 @@ export const registerTh = css`
     box-sizing: border-box;
     border: 1px solid #dbdbdb;
     border-radius: 5px;
-    padding: 5px;
-    /* width: 100%; */
+    /* padding: 5px; */
     cursor: default;
     font-size: 14px;
 `;
@@ -98,5 +97,8 @@ export const registerTh = css`
 export const preview = css`
     width: 300px;
     height: 180px;
-    background-color: red;
+    & > img {
+        height: 100%;
+        width: 100%;
+    }
 `

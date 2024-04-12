@@ -53,7 +53,8 @@ export const login = css`
     padding-right: 10px;
     width: 60px;
     height: 30px;
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 500;
     overflow: hidden;
     text-decoration: none;
@@ -97,9 +98,10 @@ export const buttons = css`
     box-sizing: border-box;
     border: none;
     padding: 20px;
-    width: 150px;
+    width: 160px;
     height: 65px;
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 500;
     color: rgb(15, 19, 23);
     background-color: transparent;
@@ -107,7 +109,8 @@ export const buttons = css`
 
     &:hover {
         font-weight: 700;
-        border-bottom: 3px solid rgb(15, 19, 23);
+        transition: font-weight 0.3s, color 0.5s;
+        border-bottom: 5px solid rgb(15, 19, 23);
     }
 `;
 

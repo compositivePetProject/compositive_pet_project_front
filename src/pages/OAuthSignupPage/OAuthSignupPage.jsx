@@ -62,6 +62,7 @@ function OAuthSignupPage() {
             }
         }});
     
+        
     useEffect(() => {
         if(!checkPassword || !password) {
             setCheckPasswordMessage(() => null);

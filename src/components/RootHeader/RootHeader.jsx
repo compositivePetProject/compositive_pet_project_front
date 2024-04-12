@@ -66,7 +66,7 @@ function RootHeader() {
                     <button
                         css={s.buttons}
                         onMouseEnter={() => handleHover("shop")}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/pet/shopping")}
                     >
                         온라인 쇼핑몰
                     </button>

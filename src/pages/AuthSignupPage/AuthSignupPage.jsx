@@ -9,7 +9,7 @@ import { v4 as uuid } from "uuid";
 import { CiSquarePlus } from "react-icons/ci";
 import { storage } from "../../apis/firebase/firebaseConfig";
 import { useMutation } from "react-query";
-import { authSignupRequest } from "../../apis/api/authSignup";
+import { authSignupRequest, usernameCheckRequest } from "../../apis/api/authSignup";
 
 function AuthSignupPage() {
     const fileRef = useRef();
@@ -59,6 +59,47 @@ function AuthSignupPage() {
                 alert("회원가입 오류");
             }
         }});
+
+    const usernameCheck = useMutation({
+        mutationKey: "usernameCheck",
+        mutationFn: usernameCheckRequest,
+        onSuccess: success => {
+            const successMap = success.data;
+            const successEntries = Object.entries(successMap);
+            for(let [ k, v ] of successEntries) {
+                if(k === "username") {
+                    setUsernameMessage(() => {
+                        return {
+                            type: k,
+                            text: v
+                        }
+                    })
+                }
+            }
+        },
+        onError: error => {
+            if(error.response.status === 400) {
+                const errorMap = error.response.data;
+                const errorEntries = Object.entries(errorMap);
+                for(let [ k, v ] of errorEntries) {
+                    if(k === "username") {
+                        setUsernameMessage(() => {
+                            return {
+                                type: "error",
+                                text: v
+                            }
+                        })
+                    }
+                }
+            } 
+        }
+    })
+
+    const handleUsernameCheck = () => {
+        usernameCheck.mutate({
+            username
+        })
+    }
     
     useEffect(() => {
         if(!checkPassword || !password) {
@@ -154,6 +195,7 @@ function AuthSignupPage() {
                         </div>
                         <div css={s.header}>
                             <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={userNameChange} message={usernameMessage} />
+                            <button css={s.idCheckvbutton} onClick={handleUsernameCheck}>아이디 중복체크</button>
                             <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} message={passwordMessage} />
                             <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호 확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage} />
                             <AuthPageInput type={"text"} name={"name"} placeholder={"성명"} value={name} onChange={nameChange} message={nameMessage} />

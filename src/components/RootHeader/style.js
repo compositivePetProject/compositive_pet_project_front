@@ -51,7 +51,7 @@ export const login = css`
     justify-content: center;
     align-items: center;
     padding-right: 10px;
-    width: 60px;
+    width: 70px;
     height: 30px;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;

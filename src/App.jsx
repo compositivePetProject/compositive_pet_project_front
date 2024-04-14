@@ -5,7 +5,6 @@ import RootContainer from './components/RootContainer/RootContainer';
 import RootFooter from './components/RootFooter/RootFooter';
 import RootHeader from './components/RootHeader/RootHeader';
 import RootLayout from './components/RootLayout/RootLayout';
-import AdoptCommunity from './pages/AdoptCommunity/AdoptCommunity';
 import AuthRoute from './routes/AuthRoute/AuthRoute';
 import ProductRoute from './routes/ProductRoute/ProductRoute';
 import { useQuery } from "react-query";

@@ -7,6 +7,7 @@ export const layout = css`
     width: 100%;
     height: 100%;
     background-color: #dbdbdb;
+    overflow: hidden;
 `;
 
 export const categoryHeader = css`
@@ -51,8 +52,6 @@ export const shoppingFilter = css`
     }
 `;
 
-
-
 export const shoppingContainer = css`
     display: flex;
     flex-wrap: wrap;
@@ -67,9 +66,9 @@ export const imageBox = css`
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    margin: 10px 10px 70px 20px ;
-    width: 350px;
-    height: 380px;
+    margin: 10px 20px 70px;
+    width: 23%;
+    height: 500px;
     background-color: #dbdbdb;
     cursor: pointer;
     & > img {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 
-function ProductPage(props) {
+function ProductPage({}) {
   return (
     <div>ProductPage</div>
   )

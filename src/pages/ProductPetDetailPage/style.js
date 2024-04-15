@@ -21,10 +21,11 @@ export const sideImg = css`
 export const productImg = css`
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 500px;
     height: 700px;
     & > img {
         height: 100%;
+        width: 100%;
     }
 `;
 

@@ -55,9 +55,7 @@ function ProductPetDetailPage() {
                 <div css={s.productBody}>
                     <span>배송 방법 택배</span>
                     <span>배송비 무료 (10,000원 이상 무료배송)</span>
-                    <div>
-                        {user.productBoardContent}
-                    </div>
+                    <div dangerouslySetInnerHTML={{__html: user.productBoardContent}}></div>
                 </div>
                 <div css={s.productFooter}>
                     댓글

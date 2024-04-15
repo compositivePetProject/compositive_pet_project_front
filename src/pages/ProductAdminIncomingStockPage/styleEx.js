@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 export const layout = css`
     width: 100%;
     display: flex;
-    /* background-color: gray; */
+    background-color: gray;
 `
 
 export const left = css`
@@ -42,13 +42,7 @@ export const left = css`
 `;
 
 export const right = css`
-    width: 80%;
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-    }
-`
-
-export const managementIncomingStock = css`
     display: flex;
+    flex-direction: column;
+    width: 80%;
 `;

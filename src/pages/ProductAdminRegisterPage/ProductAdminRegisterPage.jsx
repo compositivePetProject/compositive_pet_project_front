@@ -20,10 +20,15 @@ function ProductAdminRegisterPage(props) {
   const [ actionStatus, setActionStatus ] = useState(0);  // 0 = 선택, 1 = 추가, 2 = 수정, 3 = 삭제
   const fileRef = useRef();
   const queryClient = useQueryClient();
+
+  const [ product, setProduct ] = useState();
+
   const [ checkAll, setCheckAll ] = useState({
     checked : false,
     target: 1  // 1 => 전체 선택, 2 => 부분 선택
-});
+  });
+
+  const [ lastCheckBookId, setLastCheckBookId ] = useState(0);
 
 
   const inputRef = [
@@ -159,7 +164,7 @@ function ProductAdminRegisterPage(props) {
     getProductsAdminRequest, {
         retry: 0,
         onSuccess: (response) => {
-            setProductsAdmin(response.data);
+            setProductsAdmin(response.data);  
         },
         onError: (error) => {
             console.log(error);
@@ -204,6 +209,7 @@ function ProductAdminRegisterPage(props) {
   console.log("productCategoryId.value.value : " + productCategoryId.value?.value);
   console.log("productAnimalCategoryId.value.value : " + productAnimalCategoryId.value?.value);
   console.log(productBoardContent);
+  console.log(product);
 
 
   // useEffect(() => {
@@ -227,6 +233,20 @@ function ProductAdminRegisterPage(props) {
             target: 1
         }
     });
+  }
+
+  const handleCheckOnChange = (e) => {
+    const productId = parseInt(e.target.value);
+    setProduct(() => 
+      productsAdmin.map((product) => {
+        if(product.productId == productId) {
+          return {
+            ...product,
+            chekced : e.target.value
+          }
+        }
+      })
+    );
   }
 
 
@@ -366,7 +386,7 @@ function ProductAdminRegisterPage(props) {
               {
                 productsAdmin.map((product) => 
                   <tr key={product.productId}>
-                    <td><input type="checkbox" value={product.productId} /></td>
+                    <td><input type="checkbox" value={product.productId} onChange={handleCheckOnChange} /></td>
                     <td>{product.productId}</td>
                     <td>{product.productNameKor}</td>
                     <td>{product.productPrice}</td>

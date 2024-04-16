@@ -28,3 +28,12 @@ export const getProductOutgoingStocksAdminRequest = async () => {
 export const postProductAdminRequest = async (data) => {
     return await instance.post("/product/admin/product", data);
 }
+
+export const postProductIncomingStockRequest = async (data) => {
+    return await instance.post("/product/admin/stock", data)
+}
+
+export const getProductInocmingStocksRequest = async (params) => {
+    return await instance.get("/product/admin/incoming/stocks/test", {params})
+}
+

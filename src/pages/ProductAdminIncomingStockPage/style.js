@@ -52,3 +52,7 @@ export const right = css`
 export const managementIncomingStock = css`
     display: flex;
 `;
+
+export const managementTitle = css`
+    border: 1px solid #dbdbdb;
+`;

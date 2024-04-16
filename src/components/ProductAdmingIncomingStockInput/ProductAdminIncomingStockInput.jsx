@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 
-function ProductAdminIncomingStockInput({ value, onChage, onKeyDown, productIncomingStockRef }) {
+function ProductAdminIncomingStockInput({ value, onChage, onKeyDown, productIncomingStockRef, disabled }) {
   return (
     <input
       css={s.inputBox}
@@ -10,6 +10,7 @@ function ProductAdminIncomingStockInput({ value, onChage, onKeyDown, productInco
       onChange={onChage}
       onKeyDown={onKeyDown}
       ref={productIncomingStockRef}
+      disabled={disabled}
     />
   )
 }

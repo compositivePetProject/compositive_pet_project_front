@@ -84,7 +84,7 @@ function ProductAdminPage(props) {
         <div css={s.layout}>
             <div css={s.left}>
                 <div onClick={() => navigate("/product/admin/register")}>상품등록및현황</div>
-                <div onClick={() => navigate("/product/admin/incomming/stock")}>가입고현황</div>
+                <div onClick={() => navigate("/product/admin/incoming/stock")}>가입고현황</div>
                 <div onClick={() => navigate("/product/admin/current/stock")}>재고현황</div>
                 <div onClick={() => navigate("/product/admin/order/detail")}>주문현황</div>
                 <div onClick={() => navigate("/product/admin/outgoing/stock")}>출고현황</div>

@@ -5,10 +5,22 @@ export const getProductsRequest = async () => {
 }
 
 export const getProductPageRequest = async (params) => {
-   return await instance.get("/product/page", {params});
+   return await instance.get("/product/page", { params });
 }
 
 export const getProductRequest = async (params) => {
-   return await instance.get("/product/one", {params});
+   return await instance.get("/product/one", { params });
+}
+
+export const getProductsFavoritesRequest = async (params) => {
+   return await instance.get("/product/favorites/count", { params });
+}
+
+export const postProductFavoriteRequest = async (data) => {
+   return await instance.post("/product/favorite", (data));
+}
+
+export const deleteProductFavoriteRequest = async (data) => {
+   return await instance.delete("/product/favorite/delete", { data });
 }
 

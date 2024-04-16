@@ -4,35 +4,28 @@ import { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { deleteProductFavoriteRequest, getProductRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
+import { deleteProductFavoriteRequest, getProductFavoriteStatusRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
 
 function ProductPetDetailPage() {
-    const [ isHeart, setIsHeart ] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ user, setUser ] = useState("");
     const productId = parseInt(searchParams.get("productId"));
-    const [ totalCount, setTotalCount ] = useState([]);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
-
-    // const getProductRequestQuery = useQuery(
-    //     ["getProductsRequestQuery", productId],
-    //     async () =>  await getProductRequest ({
-    //         productId: productId
-    //     }),
-    //     {
-    //         retry: 0,
-    //         refetchOnWindowFocus: false,
-    //         onSuccess: response => {
-    //             console.log(response.data)
-    //             setUser(response.data)
-    //         },
-    //         onError: (error) => {
-    //             console.log(error);
-    //         }
-    //     }
-    // );
+    
+    useEffect(() => {
+        const fetchProductFavoriteStatus = async () => {
+            const response = await getProductFavoriteStatusRequest({
+                productId: productId,
+                userId: userId
+            });
+            setIsLiked(response.data);
+            
+        };
+        fetchProductFavoriteStatus();
+    }, [productId, userId]);
 
     const getProductsFavoriteQuery = useQuery(
         ["getProductsFavoriteQuery", productId ],
@@ -43,7 +36,6 @@ function ProductPetDetailPage() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: response => {
-                setTotalCount(response.data)
                 setUser(response.data)
             },
             onError: (error) => {
@@ -51,15 +43,33 @@ function ProductPetDetailPage() {
             }
         }
     )
+
     
+    const getProductFavoriteStatusQuery = useQuery(
+        ["getProductFavoriteStatusQuery", productId, userId],
+        async () => await getProductFavoriteStatusRequest ({
+            productId: productId,
+            userId: userId
+        }),
+        {
+            retry: 0,
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response)
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+
+
     const postProductFavoriteQuery = useMutation({
         mutationKey: "postProductFavoriteQuery",
         mutationFn: postProductFavoriteRequest,
         onSuccess: response => {
-            
         },
         onError: error => {
-            
         }
     })
 
@@ -71,33 +81,24 @@ function ProductPetDetailPage() {
         onError: error => {
         }
     })
-
-    const handleFavoriteChange = async () => {
-        await postProductFavoriteQuery.mutate({
-            productId: productId,
-            userId: userId
-        })
-        setIsHeart(() => true);
-        const response = await getProductsFavoritesRequest ({
-            productId: productId
-        })
-        console.log(response.data.userId)
-         setTotalCount(() => response.data)
+ 
+    const toggleFavoriteStatus = async () => {
+            if (isLiked) {
+                await deleteProductFavoriteQuery.mutateAsync({
+                    userId: userId
+                });
+            } else {
+                await postProductFavoriteQuery.mutateAsync({
+                    productId: productId,
+                    userId: userId
+                });
+            }
+            const response = await getProductsFavoritesRequest({
+                productId: productId
+            });
+            setUser(response.data);
+            setIsLiked(Liked => !Liked);
     }
-
-    const handleFavoriteRemoveChange = async () => {
-        await deleteProductFavoriteQuery.mutate({
-            userId: userId
-        })
-        setIsHeart(() => false);
-        const response = await getProductsFavoritesRequest ({
-            productId: productId
-        })
-        console.log(response)
-        setTotalCount(() => response.data)
-        
-    }
-
 
     return (
         <div css={s.layout}>
@@ -111,25 +112,17 @@ function ProductPetDetailPage() {
                     <div>{user.productNameKor}</div>
                     <div css={s.contentBox}>
                         <div>{user.productPrice}원</div>
-                        {!isHeart
-                            ? 
-                            <button onClick={handleFavoriteChange}>
-                                <AiOutlineHeart/>
-                                <div css={s.totalCount}>{totalCount.totalUserIdCount}</div>
-                            </button>
-                            :
-                            <button onClick={handleFavoriteRemoveChange}>
-                                <AiFillHeart/>
-                                <div css={s.totalCount}>{totalCount.totalUserIdCount}</div>
-                            </button>
-                        }
+                        <button onClick={toggleFavoriteStatus}>
+                            {isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />}
+                            <div css={s.totalCount}>{user.totalUserIdCount}</div>
+                        </button>
                     </div>
                 </div>
                 <div css={s.productBody}>
                     <span>배송 방법 택배</span>
                     <span>배송비 무료 (10,000원 이상 무료배송)</span>
                     <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}>
-                       
+                    
                     </div>
                 </div>
                 <div css={s.productFooter}>

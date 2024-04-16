@@ -170,6 +170,7 @@ function MyPage() {
                     <h3>내 정보 관리</h3>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage")}>계정 관리</div>
                     <div css={s.buttons}>임시 @@@</div>
+                    <div css={s.buttons} onClick={() => navigate("/adopt/mypage")}>내가 작성한 분양 게시글</div>
                 </div>
             </div>
 

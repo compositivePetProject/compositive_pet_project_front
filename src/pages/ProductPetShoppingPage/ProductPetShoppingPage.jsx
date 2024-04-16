@@ -16,8 +16,7 @@ function ProductPetShoppingPage(props) {
     const [ categoryTypeOptions, setCategoryTypeOptions ] = useState([]);
     const [ selectedProductType, setSelectedProductType ] = useState(0);
     const [ selectedCategory, setSelectedCategory ] = useState(0);
-    // 전체 조회 카운트 추가 예정
-    const count = 16;
+    const totalCount = productList.length;
     const searchCount = 20;
     
     // const getProductsRequestQuery = useQuery(
@@ -87,7 +86,6 @@ function ProductPetShoppingPage(props) {
             }
         }
     );
-    console.log(categoryTypeOptions)
 
 
     return (
@@ -109,7 +107,7 @@ function ProductPetShoppingPage(props) {
                 )}
             </div>
             <div css={s.shoppingFilter}>
-            <div>{count}개의 상품</div>
+            <div>{totalCount}개의 상품</div>
             <div>
                 좋아요순
             </div>

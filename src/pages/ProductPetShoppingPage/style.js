@@ -67,7 +67,7 @@ export const imageBox = css`
     justify-content: center;
     box-sizing: border-box;
     margin: 10px 20px 70px;
-    width: 23%;
+    width: 22%;
     height: 500px;
     background-color: #dbdbdb;
     cursor: pointer;

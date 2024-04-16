@@ -12,8 +12,16 @@ export const getProductRequest = async (params) => {
    return await instance.get("/product/one", { params });
 }
 
+export const getProductsSearchCountRequest = async (params) => {
+   return await instance.get("/product/count", { params });
+}
+
 export const getProductsFavoritesRequest = async (params) => {
    return await instance.get("/product/favorites/count", { params });
+}
+
+export const getProductFavoriteStatusRequest = async (params) => {
+   return await instance.get("/product/like", { params });
 }
 
 export const postProductFavoriteRequest = async (data) => {

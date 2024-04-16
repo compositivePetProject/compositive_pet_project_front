@@ -84,6 +84,10 @@ export const totalCount = css`
     font-size: 12px;
 `;
 
+export const fillHeartIcon = css`
+    color: red; 
+`;
+
 export const productBody = css`
     display: flex;
     flex-direction: column;

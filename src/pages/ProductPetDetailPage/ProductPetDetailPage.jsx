@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import * as s from "./style";
+import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -55,8 +55,8 @@ function ProductPetDetailPage() {
                 <div css={s.productBody}>
                     <span>배송 방법 택배</span>
                     <span>배송비 무료 (10,000원 이상 무료배송)</span>
-                    <div>
-                        {user.productBoardContent}
+                    <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}>
+                       
                     </div>
                 </div>
                 <div css={s.productFooter}>

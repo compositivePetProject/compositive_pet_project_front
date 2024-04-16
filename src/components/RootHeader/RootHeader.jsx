@@ -75,9 +75,9 @@ function RootHeader() {
                 <div css={s.sidebar} onMouseLeave={handleSidebarLeave}>
                     {currentMenu === "community" && (
                         <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 전체 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 커뮤니티</a> </div> 
+                            <div css={s.category}><a css={s.categoryText} href= "/community"> 전체 커뮤니티</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="/community/dog"> 강아지 커뮤니티</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="/community/cat"> 고양이 커뮤니티</a> </div> 
                         </div>
                         
                     )}

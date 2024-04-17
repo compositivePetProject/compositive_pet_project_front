@@ -4,7 +4,6 @@ export const inputBox = css`
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    margin-bottom: 5px;
 `;
 
 export const input = css`

@@ -9,6 +9,7 @@ import AuthRoute from './routes/AuthRoute/AuthRoute';
 import ProductRoute from './routes/ProductRoute/ProductRoute';
 import { useQuery } from "react-query";
 function App() {
+  
   const principalQuery = useQuery(["principalQuery"], 
     getPrincipalRequest, 
     {

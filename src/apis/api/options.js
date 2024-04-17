@@ -7,3 +7,7 @@ export const getAllProductTypeRequest = async () => {
 export const getAllCategoryRequest = async () => {
     return await instance.get("/product/option/categories");
 }
+
+export const getAllSizeCategoryRequest = async () => {
+    return await instance.get("/product/option/size");
+}

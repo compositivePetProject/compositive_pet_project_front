@@ -4,10 +4,13 @@ import { BiError } from 'react-icons/bi';
 import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getAdoptAll } from '../../apis/api/Adopt';
 
 function AdoptCommunity() {
+    const [ searchParams ] = useSearchParams();
+    const page = parseInt(searchParams.get("page"))
+
     const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
     const [error, setError] = useState(null);
@@ -49,9 +52,11 @@ function AdoptCommunity() {
                         </thead>
                         <tbody css={s.boardListItem}>
                             {adoptList.map((data) => (
-                                <tr key={data.adoptationBoardId}  >
+                                <tr 
+                                key={data.adoptationBoardId} 
+                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>
                                     <div>{data.username}</div>
-                                    <div><Link to="/adoptCommunity/1">{data.adoptationBoardTitle}</Link></div>
+                                    <div>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{data.createDate}</div>
                                 </tr>

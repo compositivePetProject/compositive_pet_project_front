@@ -15,12 +15,9 @@ function AdoptRoute(props) {
         <>
             <Routes>
                 <Route path="/adoptCommunity" element={ <AdoptCommunity />} /> 
-                <Route path="/adoptCommunity/1" element={ <AdoptCommunity />} />  
                 <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> }/> 
                 <Route path="/adoptCommunity/cat" element={ <AdoptCommunityCat /> }/> 
                 <Route path="/adoptCommunity/register" element={ <AdoptCommunityRegister />} />
-
-
             </Routes>
         </>
     );

@@ -3,13 +3,15 @@ import { Navigate, useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useRef, useState } from "react";
-import { postAdopt } from "../../apis/api/Adopt";
+import { postAdopt, postAdoptRequest } from "../../apis/api/Adopt";
+import { useMutation, useQueryClient } from "react-query";
 
 function AdoptCommunityRegister(props) {
     const navigate = useNavigate();
     const [ animalCategoryId, setAnimalCategoryId ] = useState()
     const [ adopTitle , setAdopTitle ] = useState("")
     const [ adoptContent , setAdoptContent] = useState("")
+    const queryClient = useQueryClient();
 
     const modules = {
         toolbar : 
@@ -45,24 +47,28 @@ function AdoptCommunityRegister(props) {
      
     }
 
+    const postAdoptRequestMutation = useMutation({
+        mutationKey: "postAdoptRequestMutation",
+        mutationFn: postAdoptRequest,
+        onSuccess: (response) => {
+          alert("작성을 완료했습니다.");
+          window.location.replace("/adoptCommunity");
+        },
+        onError: (error) => {
+          console.log(error);
+        }
+      })
+
     const handleSubmit = () => {
-        const request = {
+        postAdoptRequestMutation.mutate({
             adoptationBoardTitle: adopTitle,
+            userId: queryClient.getQueryState("principalQuery").data?.data.userId,
             adoptationBoardContent: adoptContent,
             boardAnimalCategoryId: animalCategoryId
-        }
-        if(!request.adoptationBoardTitle || !request.adoptationBoardContent || !request.boardAnimalCategoryId) {
-            alert("다시 확인하세요")
-        } else {
-            const authToken = localStorage.getItem('AccessToken')
-            postAdopt(request, {Headers: `Bearer ${authToken}`})
-            alert("작성이 완료되었습니다.")
-            console.log(request)
-            navigate('/adoptCommunity',{replace: true})
-        }
-        
-        
+        })
     }
+
+
 
     const handleAnimalChange = (event) => {
         console.log(animalCategoryId)

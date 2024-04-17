@@ -15,6 +15,6 @@ export const getAdoptById = async (boardId) => {
     return response.data;
 }
 
-export const postAdopt = async (data) => {
-    return await instance.post("/adoptation/board", data);
+export const postAdoptRequest = async (data) => {
+    return await instance.post("/adoptation/board",data)
 }

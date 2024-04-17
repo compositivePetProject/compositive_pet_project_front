@@ -6,6 +6,8 @@ import AdoptCommunityDog from '../../pages/AdoptCommunityDog/AdoptCommunityDog';
 import MyPage from '../../pages/MyPage/MyPage';
 import ProductPetShoppingPage from '../../pages/ProductPetShoppingPage/ProductPetShoppingPage';
 import ProductPetDetailPage from '../../pages/ProductPetDetailPage/ProductPetDetailPage';
+import ProductPetOrderDetailPage from '../../pages/ProductPetOrderDetailPage/ProductPetOrderDetailPage';
+import ProductPetCartPage from '../../pages/ProductPetCartPage/ProductPetCartPage';
 
 function AuthRoute(props) {
 
@@ -18,6 +20,8 @@ function AuthRoute(props) {
                 <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> } /> //임의로 붙임
                 <Route path="/product/pet/shopping" element={ <ProductPetShoppingPage /> } />
                 <Route path="/product/pet/detail/:productId" element={<ProductPetDetailPage />} />
+                <Route path="/product/pet/order/detail" element={<ProductPetOrderDetailPage />} />
+                <Route path="/product/pet/cart" element={<ProductPetCartPage />} />
             </Routes>
         </>
     );

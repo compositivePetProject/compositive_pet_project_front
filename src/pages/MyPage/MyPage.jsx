@@ -15,7 +15,7 @@ import { nicknameAndProfileImageUrlEditRequest, passwordEditRequest } from "../.
 import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 function MyPage() {
-    useAuthCheck();
+    // useAuthCheck(); 나중에 비밀번호 수정 후 로그인 체크
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
@@ -174,7 +174,7 @@ function MyPage() {
             </div>
 
             <div css={s.userDetails}>
-                <div>계정 관리</div>
+                <div css={s.title}>계정 관리</div>
                 <div>기본 정보</div>
                 <div css={s.box}>
                     {!isEditing 
@@ -224,7 +224,7 @@ function MyPage() {
                 </div>
             </div>
                 <div>비밀번호 변경</div>
-                <div css={s.box}>
+                <div css={s.passwordBox}>
                     <AuthPageInput  type="password" name={"oldPassword"} placeholder={"현재 비밀번호를 입력하세요."} value={oldPassword} onChange={oldPasswordChange} message={oldPasswordMessage}/>
                     <AuthPageInput  type="password" name={"newPassword"} placeholder={"새로운 비밀번호를 입력하세요."} value={newPassword} onChange={newPasswordChange} message={newPasswordMessage}/>
                     <AuthPageInput  type="password" name={"newPasswordCheck"} placeholder={"새로운 비밀번호를 확인하세요."} value={newPasswordCheck} onChange={newPasswordCheckChange} message={newPasswordCheckMessage}/>

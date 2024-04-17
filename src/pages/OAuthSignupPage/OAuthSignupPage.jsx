@@ -38,7 +38,6 @@ function OAuthSignupPage() {
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
                 const errorEntries = Object.entries(errorMap);
-                console.log(errorEntries);  
                 for(let [ k, v ] of errorEntries) {
                     if(k === "username") {
                         setUsernameMessage(() => {

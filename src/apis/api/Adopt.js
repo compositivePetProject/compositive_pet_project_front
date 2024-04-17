@@ -10,6 +10,11 @@ export const getAdoptDog = async () => {
     return response.data;
 }
 
+export const getAdoptById = async (boardId) => {
+    const response = await instance.get(`/adoptation/board/${boardId}`)
+    return response.data;
+}
+
 export const postAdopt = async (data) => {
     return await instance.post("/adoptation/board", data);
 }

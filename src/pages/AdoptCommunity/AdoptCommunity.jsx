@@ -44,10 +44,10 @@ function AdoptCommunity() {
                     <table css={s.boardListLayout}>
                         <thead css={s.boardListHeader}>
                             <tr css={s.boardListHeader}>
-                                <td>닉네임</td>
-                                <td>제목</td>
-                                <td>카테고리</td>
-                                <td>등록일</td>
+                                <th>닉네임</th>
+                                <th>제목</th>
+                                <th>카테고리</th>
+                                <th>등록일</th>
                             </tr>
                         </thead>
                         <tbody css={s.boardListItem}>

@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 
-
 export const container = css`
     display: flex;
     flex-direction: column;
@@ -8,12 +7,12 @@ export const container = css`
     height: 100%;
 `;
 
-export const submitButton = css`
+export const toListButton = css`
     box-sizing: border-box;
     margin-top: 50px;
     border: 1px solid #ccc;
     padding: 10px;
-    width: 100%;
+    width: 50%;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
@@ -24,4 +23,3 @@ export const submitButton = css`
         background-color: #eee;
     }
 `;
-

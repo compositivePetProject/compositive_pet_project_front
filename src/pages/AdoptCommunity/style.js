@@ -28,17 +28,19 @@ export const boardListHeader = css`
     flex-direction: row;
     border-bottom: 2px solid #dbdbdb;
     width: 100%;
-    & > td {
+    & > th {
         box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-grow: 1;
         height: 40px;
+        width: 25%;
         font-weight: 700;
         cursor: default;
     }
-    & > td:nth-of-type(1) {
+    & > th:nth-of-type(1) {
         flex-grow: 0;
         border-right: 1px solid #dbdbdb;
         width: 80px;
@@ -49,6 +51,7 @@ export const boardListItem = css`
     color: #222;
     text-decoration: none;
     cursor: pointer;
+    overflow: hidden;
     & > tr {
         box-sizing: border-box;
         display: flex;
@@ -59,11 +62,13 @@ export const boardListItem = css`
         }
         & > div {
             box-sizing: border-box;
+            border-right: 1px solid #dbdbdb;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
             height: 40px;
+            width: 25%;
         }
         & > div:nth-of-type(1) {
             flex-grow: 0;
@@ -97,7 +102,7 @@ export const writeButton = css`
     margin-top: 50px;
     border: 1px solid #ccc;
     padding: 10px;
-    width: 90%;
+    width: 50%;
     background-color: white;
     font-weight: 600;
     cursor: pointer;

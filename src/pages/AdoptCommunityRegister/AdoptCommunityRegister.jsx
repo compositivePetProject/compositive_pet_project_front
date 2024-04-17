@@ -48,14 +48,14 @@ function AdoptCommunityRegister(props) {
     const handleSubmit = () => {
         const request = {
             adoptationBoardTitle: adopTitle,
-            userId:17, // 임의로 지정
             adoptationBoardContent: adoptContent,
             boardAnimalCategoryId: animalCategoryId
         }
         if(!request.adoptationBoardTitle || !request.adoptationBoardContent || !request.boardAnimalCategoryId) {
             alert("다시 확인하세요")
         } else {
-            postAdopt(request)
+            const authToken = localStorage.getItem('AccessToken')
+            postAdopt(request, {Headers: `Bearer ${authToken}`})
             alert("작성이 완료되었습니다.")
             console.log(request)
             navigate('/adoptCommunity',{replace: true})
@@ -71,8 +71,8 @@ function AdoptCommunityRegister(props) {
 
 
     return (
-        <div css={s.container}>\
-            <div>
+        <div>
+            <div css={s.container}>
 
                 <h2>분양 게시판 글쓰기</h2>
                 <select 
@@ -82,7 +82,7 @@ function AdoptCommunityRegister(props) {
                     <option value={1}>개</option>
                     <option value={2}>고양이</option>
                 </select>
-                <p>{animalCategoryId}</p>
+                <div>{animalCategoryId}</div>
                 <input
                 type="text"
                 value={adopTitle}
@@ -90,9 +90,9 @@ function AdoptCommunityRegister(props) {
                 placeholder="제목을 입력하세요"
                 ></input>
                 <ReactQuill modules={modules} onChange={handleQuillChange}/>
-            </div>
             <div>
                 <button css = {s.submitButton} onClick={handleSubmit}>작성</button>
+            </div>
             </div>
         </div>
     )

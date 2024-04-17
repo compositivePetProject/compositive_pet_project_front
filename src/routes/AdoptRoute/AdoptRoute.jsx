@@ -8,6 +8,7 @@ import ProductPetShoppingPage from '../../pages/ProductPetShoppingPage/ProductPe
 import ProductPetDetailPage from '../../pages/ProductPetDetailPage/ProductPetDetailPage';
 import AdoptCommunityCat from '../../pages/AdoptCommunityCat/AdoptCommunityCat';
 import AdoptCommunityRegister from '../../pages/AdoptCommunityRegister/AdoptCommunityRegister';
+import AdoptCommunityDetail from '../../pages/AdoptCommunityDetail/AdoptCommunityDetail';
 
 function AdoptRoute(props) {
 
@@ -18,6 +19,7 @@ function AdoptRoute(props) {
                 <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> }/> 
                 <Route path="/adoptCommunity/cat" element={ <AdoptCommunityCat /> }/> 
                 <Route path="/adoptCommunity/register" element={ <AdoptCommunityRegister />} />
+                <Route path="/adoptCommunity/:boardId" element={<AdoptCommunityDetail />}/>
             </Routes>
         </>
     );

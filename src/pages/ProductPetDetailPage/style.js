@@ -71,12 +71,23 @@ export const contentBox = css`
     width: 100%;
 
     & > button {
+        box-sizing: border-box;
         border: none;
         background-color: transparent;
-        font-size: 40px;
+        font-size: 35px;
         font-weight: 700;
+        
     }
 `;
+
+export const totalCount = css`
+    font-size: 12px;
+`;
+
+export const fillHeartIcon = css`
+    color: red; 
+`;
+
 export const productBody = css`
     display: flex;
     flex-direction: column;

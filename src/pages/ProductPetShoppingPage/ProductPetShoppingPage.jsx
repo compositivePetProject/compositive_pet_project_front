@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as s from "./style";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getProductPageRequest, getProductsRequest } from "../../apis/api/product";
+import { getProductPageRequest, getProductsSearchCountRequest } from "../../apis/api/product";
 import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/ProductPetPageNumbers";
 import { getAllCategoryRequest, getAllProductTypeRequest } from "../../apis/api/options";
 
@@ -16,24 +16,8 @@ function ProductPetShoppingPage(props) {
     const [ categoryTypeOptions, setCategoryTypeOptions ] = useState([]);
     const [ selectedProductType, setSelectedProductType ] = useState(0);
     const [ selectedCategory, setSelectedCategory ] = useState(0);
-    // 전체 조회 카운트 추가 예정
-    const count = 16;
-    const searchCount = 20;
-    
-    // const getProductsRequestQuery = useQuery(
-    //     ["getProductsRequestQuery"],
-    //     getProductsRequest, {
-    //         retry: 0,
-    //         refetchOnWindowFocus: false,
-    //         onSuccess: response => {
-    //             console.log(response)
-    //             setProductList(response.data)
-    //         },
-    //         onError: (error) => {
-    //             console.log(error);
-    //         }
-    //     }
-    // );
+    const [totalCount, setTotalCount ] = useState(0);
+    const searchCount = 16;
 
     const getProductsSearchRequestQuery = useQuery(
         ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType],
@@ -55,6 +39,20 @@ function ProductPetShoppingPage(props) {
         }
     );
 
+    const getProductsSearchCountRequestQuery = useQuery(
+        ["getProductsSearchCountRequestQuery", getProductsSearchRequestQuery.data],
+        async () => await getProductsSearchCountRequest({
+            count: searchCount,
+            productCategoryId: selectedProductType
+        }),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                setTotalCount(response.data.totalCount)
+            }
+        }
+    );
+
 
     const productTypeQuery = useQuery(
         ["productTypeQuery"], 
@@ -70,9 +68,9 @@ function ProductPetShoppingPage(props) {
             }
         }
     );
+    
 
-
-    // 카테고리 (개, 고양이) 검색 기능 추가
+    // 카테고리 (개, 고양이) 검색 기능 추가 예정
     const categoryTypeQuery = useQuery(
         ["categoryTypeQuery"], 
         getAllCategoryRequest,
@@ -87,7 +85,6 @@ function ProductPetShoppingPage(props) {
             }
         }
     );
-    console.log(categoryTypeOptions)
 
 
     return (
@@ -109,7 +106,7 @@ function ProductPetShoppingPage(props) {
                 )}
             </div>
             <div css={s.shoppingFilter}>
-            <div>{count}개의 상품</div>
+            <div>{totalCount}개의 상품</div>
             <div>
                 좋아요순
             </div>
@@ -124,8 +121,10 @@ function ProductPetShoppingPage(props) {
                         <div css={s.moneyBox}>{product.productPrice}원</div>
                     </div>)
                 }
-            {/* 수정 예정 => productCount*/}
-            <ProductPetPageNumbers productCount={1}/> 
+                {   
+                    !getProductsSearchCountRequestQuery.isLoading &&
+                    <ProductPetPageNumbers productCount={getProductsSearchCountRequestQuery.data?.data}/> 
+                }
             </div>
         </div>
     );

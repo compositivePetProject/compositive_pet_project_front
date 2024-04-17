@@ -7,14 +7,14 @@ import OAuthSigninPage from '../OAuthSigninPage/OAuthSigninPage';
 
 function AuthPage() {
     return (
-        <div>
+        <>
             <Routes>
                 <Route path="/sign-up" element={ <AuthSignupPage /> } />
                 <Route path="/sign-in" element={ <AuthSigninPage /> } />
                 <Route path="/oauth2/sign-up" element={ <OAuthSignupPage /> } />
                 <Route path="/oauth2/sign-in" element={ <OAuthSigninPage /> } />
             </Routes>
-        </div>
+        </>
     );
 }
 

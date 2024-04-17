@@ -11,7 +11,7 @@ function ProductRoute(props) {
   return (
     <>
       <Routes>
-        <Route path='/product' element={<ProductPage/>} />
+        <Route path='/product/*' element={<ProductPage/>} />
         <Route path='/product/admin' element={<ProductAdminPage />} />
         <Route path='/product/admin/register' element={<ProductAdminRegisterPage/>} />
         <Route path='/product/admin/incomming/stock' element={<ProductAdminIncomingStockPage/>} />

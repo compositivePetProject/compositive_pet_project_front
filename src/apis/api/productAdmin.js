@@ -30,7 +30,7 @@ export const postProductAdminRequest = async (data) => {
 }
 
 export const postProductIncomingStockRequest = async (data) => {
-    return await instance.post("/product/admin/stock", data)
+    return await instance.post("/product/admin/incoming/stock", data)
 }
 
 export const getProductInocmingStocksRequest = async (params) => {

@@ -24,10 +24,10 @@ function App() {
     <RootLayout>
       <RootContainer>
         <RootHeader />
-          <PageContainer>
-            <AuthRoute /> 
-            <ProductRoute />
-          </PageContainer>
+        <PageContainer>
+          <AuthRoute /> 
+          <ProductRoute />
+        </PageContainer>
         <RootFooter />
       </RootContainer>
     </RootLayout>

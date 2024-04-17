@@ -21,10 +21,11 @@ export const sideImg = css`
 export const productImg = css`
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 500px;
     height: 700px;
     & > img {
         height: 100%;
+        width: 100%;
     }
 `;
 
@@ -70,12 +71,19 @@ export const contentBox = css`
     width: 100%;
 
     & > button {
+        box-sizing: border-box;
         border: none;
         background-color: transparent;
-        font-size: 40px;
+        font-size: 35px;
         font-weight: 700;
+        
     }
 `;
+
+export const totalCount = css`
+    font-size: 12px;
+`;
+
 export const productBody = css`
     display: flex;
     flex-direction: column;

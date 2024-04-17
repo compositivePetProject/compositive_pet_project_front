@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 export const layout = css`
     width: 100%;
     display: flex;
-    background-color: gray;
 `
 
 export const left = css`
@@ -47,70 +46,13 @@ export const right = css`
     width: 80%;
 `;
 
-export const productRegister = css`
-    width: 100%;
-    background-color: aquamarine;
+export const table = css`
+    border: 1px solid #dbdbdb;
+    border-collapse: collapse;
 
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 10px;
+    & th, & td {
+        border: 1px solid #dbdbdb;
     }
 `;
 
-export const productRegisterTable = css`
-    box-sizing: border-box;
-    width: 100%;
-`;
-
-export const stock = css`
-    display: flex;
-`;
-
-export const incomingStock = css`
-    width: 50%;
-
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 10px;
-    }
-`;
-
-export const currentStock = css`
-    width: 50%;
-
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 10px;
-    }
-`;
-
-export const order = css`
-    display: flex;
-`;
-
-export const orderStock = css`
-    width: 50%;
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 10px;
-    }
-`;
-
-export const outgoingStock = css`
-    width: 50%;
-    & > div:nth-of-type(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 10px;
-    }
-`;
 

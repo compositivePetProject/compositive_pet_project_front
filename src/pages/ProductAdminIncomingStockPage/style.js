@@ -55,4 +55,8 @@ export const managementIncomingStock = css`
 
 export const managementTitle = css`
     border: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
 `;

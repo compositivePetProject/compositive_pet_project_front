@@ -1,13 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { getProductOutgoingStocksAdminRequest } from "../../apis/api/productAdmin";
+import Select from "react-select";
 
 function ProductAdminOutgoingStock() {
   const navigate = useNavigate();
+  const [ searchParams, setSearchParams ] = useSearchParams();
   const [ productOutgoingStocks, setProductOutgoingStocks ] = useState([]);
+  const searchCount = 0;
+
   const getProductOutgoingStocksAdminQuery = useQuery(
     ["getProductOutgoingStocksAdminQuery"],
     getProductOutgoingStocksAdminRequest, {
@@ -19,7 +23,13 @@ function ProductAdminOutgoingStock() {
             console.log(error);
         }
     }
+  );
+
+  const getProductOutgoingStocksSearchAdminQuery = useQuery(
+    ["getProductOutgoingStocksSearchAdminQuery"],
+
   )
+
   return (
     <div css={s.layout}>
       <div css={s.left}>
@@ -31,7 +41,10 @@ function ProductAdminOutgoingStock() {
         </div>
       <div css={s.right}>
         <h2>상품출고 현황</h2>
-        <table>
+        <div>
+          <div><Select/></div>
+        </div>
+        <table css={s.table}>
           <thead>
             <tr>
               <th>상품출고ID</th>
@@ -49,14 +62,14 @@ function ProductAdminOutgoingStock() {
             {
               productOutgoingStocks.map((stock) => 
                 <tr key={stock.productOutgoingStockId}>
-                  <td>{stock.productOutgoingStockId}</td>
-                  <td>{stock.productOrderId}</td>
-                  <td>{stock.productId}</td>
+                  <td style={{textAlign:"right"}}>{stock.productOutgoingStockId}</td>
+                  <td style={{textAlign:"right"}}>{stock.productOrderId}</td>
+                  <td style={{textAlign:"right"}}>{stock.productId}</td>
                   <td>{stock.productNameKor}</td>
-                  <td>{stock.productSizeCategoryId}</td>
+                  <td style={{textAlign:"right"}}>{stock.productSizeCategoryId}</td>
                   <td>{stock.productSizeCategoryName}</td>
                   <td>{stock.productSizeCategoryNameKor}</td>
-                  <td>{stock.productOutgoingStockCount}</td>
+                  <td style={{textAlign:"right"}}>{stock.productOutgoingStockCount}</td>
                   <td>{stock.createDate}</td>
                 </tr>
               )

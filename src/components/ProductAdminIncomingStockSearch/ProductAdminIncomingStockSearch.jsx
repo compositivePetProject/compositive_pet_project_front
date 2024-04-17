@@ -13,7 +13,7 @@ import { productAdminIncomingStockSelectedAtom } from "../../atoms/productAdminI
 
 function ProductAdminIncomingStockSearch() {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const searchCount = 5;
+    const searchCount = 10;
     const [ productIncomingStocks, setProductIncomingStocks ] = useState([]);
     const [ productIncomingStockList, setProductIncomingStockList ] = useState([]);
     const [ checkAll, setCheckAll ] = useState({
@@ -24,7 +24,7 @@ function ProductAdminIncomingStockSearch() {
     const [ selectedProductIncomingStocks, setSelectedProductIncomingStocks ] = useState([]);
 
     useEffect(() => {
-        // console.log(lastCheckProductIncomingStockId);
+        
         console.log(selectedProductIncomingStocks);
     }, [lastCheckProductIncomingStockId, selectedProductIncomingStocks])
 
@@ -107,7 +107,7 @@ function ProductAdminIncomingStockSearch() {
                 // 선택된 요소의 정보를 selectedProductIncomingStocks에 추가 또는 제거
                 const index = selectedProductIncomingStocks.findIndex(stock => stock.productIncomingStockId === productId);
                 if (index === -1) {
-                    // 이미 배열에 포함되어 있지 않으면 항목을 추가합니다.
+                    // 이미 배열에 포함되어 있지 않으면 항목을 추가
                     setSelectedProductIncomingStocks(prevState => [...prevState, {
                         productIncomingStockId: stock.productIncomingStockId,
                         productId: stock.productId,
@@ -118,7 +118,7 @@ function ProductAdminIncomingStockSearch() {
                         productIncomingStockCount: stock.productIncomingStockCount
                     }]);
                 } else {
-                    // 이미 배열에 포함되어 있으면 항목을 제거합니다.
+                    // 이미 배열에 포함되어 있으면 항목을 제거
                     setSelectedProductIncomingStocks(prevState => prevState.filter(item => item.productIncomingStockId !== productId));
                 }
                 setLastCheckProductIncomingStockId({
@@ -129,7 +129,7 @@ function ProductAdminIncomingStockSearch() {
                     productSizeCategoryName: stock.productSizeCategoryName,
                     productSizeCategoryNameKor: stock.productSizeCategoryNameKor,
                     productIncomingStockCount: stock.productIncomingStockCount
-                }); // 마지막으로 선택된 요소를 저장합니다.
+                }); // 마지막으로 선택된 요소를 저장
                 return {
                     ...stock,
                     checked: !stock.checked // 현재 상태의 반대로 변경
@@ -162,8 +162,8 @@ function ProductAdminIncomingStockSearch() {
 
     useEffect(() => {
         const page = parseInt(searchParams.get("page"));
-        if (isNaN(page) || page <= 0 || searchParams.get("page") === "") { // 페이지 번호가 숫자가 아니거나 0 이하거나 빈 문자열인 경우
-            setSearchParams("page", "1"); // 페이지 번호를 기본값 1로 설정
+        if (isNaN(page) || page <= 0) {
+            setSearchParams("page", "1");
         }
     }, [searchParams, setSearchParams]);
 

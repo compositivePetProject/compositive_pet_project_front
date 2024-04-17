@@ -31,7 +31,8 @@ function ProductAdminIncomingStockPage() {
         mutationKey: "registerProductIncomingStockMutation",
         mutationFn: postProductIncomingStockRequest,
         onSuccess: (response) => {
-
+            alert("가입고 상품을 등록하였습니다.");
+            window.location.replace("/product/admin/incoming/stock?page=1");
         },
         onError: (error) => {
             console.log(error)
@@ -43,22 +44,24 @@ function ProductAdminIncomingStockPage() {
     }
 
     const submit = () => {
-        console.log(productId.value);
-        console.log(productSizeCategoryId.value);
-        console.log(productIcomingStockCount.value);
+        registerProductIncomingStockMutation.mutate({
+            productId : productId.value,
+            productSizeCategoryId : productSizeCategoryId.value?.value,
+            productIncomingStockCount : parseInt(productIncomingStockCount.value)
+        })
     }
     
     const productIncomingStockId = useProductInput(nextInput, inputRefs[1]);
     const productId = useProductInput(nextInput, inputRefs[2]);
     const productSizeCategoryId = useProductInput(nextInput, inputRefs[3]);
-    const productIcomingStockCount = useProductInput(submit);
+    const productIncomingStockCount = useProductInput(submit);
     
 
     return (
         <div css={s.layout}>
             <div css={s.left}>
                 <div onClick={() => navigate("/product/admin/register")}>상품등록및현황</div>
-                <div onClick={() => navigate("/product/admin/incoming/stock")}>가입고현황</div>
+                <div onClick={() => navigate("/product/admin/incoming/stock?page=1")}>가입고현황</div>
                 <div onClick={() => navigate("/product/admin/current/stock")}>재고현황</div>
                 <div onClick={() => navigate("/product/admin/order/detail")}>주문현황</div>
                 <div onClick={() => navigate("/product/admin/outgoing/stock")}>출고현황</div>
@@ -110,10 +113,10 @@ function ProductAdminIncomingStockPage() {
                             <div css={s.managementTitle}>상품가입고갯수</div>
                             <div>
                                 <ProductAdminIncomingStockInput
-                                    value={productIcomingStockCount.value}
+                                    value={productIncomingStockCount.value}
                                     productIncomingStockRef={inputRefs[3]}
-                                    onChage={productIcomingStockCount.handleOnChange}
-                                    onKeyDown={productIcomingStockCount.handleOnKeyDown}
+                                    onChage={productIncomingStockCount.handleOnChange}
+                                    onKeyDown={productIncomingStockCount.handleOnKeyDown}
                                 />
                             </div>
                         </div>

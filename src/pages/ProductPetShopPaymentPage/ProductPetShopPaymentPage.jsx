@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ProductPetOrderDetailPage() {
+function ProductPetShopPaymentPage(props) {
     return (
         <div>
             결제페이지
@@ -8,4 +8,4 @@ function ProductPetOrderDetailPage() {
     );
 }
 
-export default ProductPetOrderDetailPage;
+export default ProductPetShopPaymentPage;

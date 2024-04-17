@@ -96,7 +96,7 @@ function ProductPetDetailPage() {
         mutationFn: postProductOrderRequest,
         onSuccess: response => {
             alert("결제페이지로 이동합니다.")
-            window.location.replace("/product/pet/order/detail")
+            window.location.replace("/product/pet/order/payment")
         },
         onError: error => {
             if(error.response.status === 400) {

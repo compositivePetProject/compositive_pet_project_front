@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
+import { FaSearch } from "react-icons/fa";
 
 function TopInput({label, disabled, inputSize, name, setState}) {
   const handleOnChange = (e) => {
@@ -30,4 +31,4 @@ TopInput.defaultProps = {
   inputSize: 20
 }
 
-export default TopInput
+export default TopInput;

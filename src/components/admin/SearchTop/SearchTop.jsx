@@ -5,12 +5,14 @@ import { FaSearch } from "react-icons/fa";
 function SearchTop({searchInputs}) {
     return (
         <div css={s.layout}>
-            <div css={s.row}>
-                {
-                    searchInputs.map((input, index) => <div key={index}>{input}</div>)
+                { searchInputs.map((row, index) => {
+                    return <div css={s.row} key={index}>
+                        {row.map((input, index) => <div key={index}>{input}</div>)}
+                    </div>
+                    })
                 }
-                <button css={s.searchButton}><FaSearch /></button>
-            </div>
+        <button css={s.searchButton}><FaSearch /></button>
+
         </div>
     );
 }

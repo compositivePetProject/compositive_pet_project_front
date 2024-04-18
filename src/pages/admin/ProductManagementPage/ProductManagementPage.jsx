@@ -8,17 +8,17 @@ import SearchTop from "../../../components/admin/SearchTop/SearchTop";
 import { productCategoryOptions } from "../../../constants/productCategoryOptions";
 import { productAnimalCategoryOptions } from "../../../constants/productAnimalCategoryOptions";
 import TopFileUpload from "../../../components/admin/TopFileUpload/TopFileUpload";
-import ReactQuill from "react-quill";
-import Quill from "../../../components/Quill/Quill";
-import ReactModal from "react-modal";
 import { useEffect, useMemo, useState } from "react";
 import ProductDetailModal from "../../../components/admin/ProductDetailModal/ProductDetailModal";
 import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
 import { useMutation } from "react-query";
 import { postProductAdminRequest } from "../../../apis/api/productAdmin";
+import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
+import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
 
 function ProductManagementPage({title}) {
+  const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const [ productData, setProductData ] = useRecoilState(productDataState);
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -43,9 +43,11 @@ function ProductManagementPage({title}) {
   }
 
   const searchInputs = useMemo(() => [
-    <TopSelect label={"상품구분"} name={"productCategoryId"} options={productCategoryOptions} />,
-    <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} options={productAnimalCategoryOptions} />,
-    <TopInput label={"상품명"} name={"productNameKor"} inputSize={20}/>
+    [
+      <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setSearchProductData} options={productCategoryOptions} />,
+      <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setSearchProductData} options={productAnimalCategoryOptions} />,
+      <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchProductData} inputSize={20}/>
+    ]
   ], []);
 
   const registerInputs = useMemo(() => [
@@ -78,6 +80,7 @@ function ProductManagementPage({title}) {
       </div>
       <SearchTop searchInputs={searchInputs}/>
       <RegisterTop registerInputs={registerInputs} submitClick={() => productRegisterMutation.mutate(productData)}/>
+      <AdminProductSearch selectedProductCategory={searchProductData.productCategoryId} selectedProductAnimalCategoryId={searchProductData.productAnimalCategoryId} searchText={searchProductData.productNameKor} />
     </AdminPageLayout>
   )
 }

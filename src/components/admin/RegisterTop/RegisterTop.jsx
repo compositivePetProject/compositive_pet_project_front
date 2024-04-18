@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import RegisterTopInput from "../TopInput/TopInput";
 import * as s from "./style";
+import RegisterTopInput from "../TopInput/TopInput";
 
 function RegisterTop({registerInputs, submitClick, cancelClick}) {
 

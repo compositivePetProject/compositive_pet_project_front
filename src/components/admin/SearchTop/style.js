@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
+    display: flex;
     box-sizing: border-box;
     margin-bottom: 15px;
     border: 1px solid #0e004a24;
@@ -44,6 +45,7 @@ export const button = css`
 export const searchButton = css`
     box-sizing: border-box;
     border: 1px solid #0e004a24;
+    margin: 5px 5px 5px 0px;
     border-radius: 5px;
     padding: 0px 15px;
     background-color: white;

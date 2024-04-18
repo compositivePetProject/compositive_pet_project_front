@@ -1,7 +1,12 @@
 import instance from "../utils/instance";
 
-export const getProductsAdminRequest = async () => {
-    const response = await instance.get("/product/admin/products");
+export const getProductsAdminRequest = async (params) => {
+    const response = await instance.get("/product/admin/products", {params});
+    return response;
+}
+
+export const getProductsAdminCountRequest = async (params) => {
+    const response = await instance.get("/product/admin/products/count", {params});
     return response;
 }
 
@@ -31,6 +36,10 @@ export const postProductAdminRequest = async (data) => {
 
 export const postProductIncomingStockRequest = async (data) => {
     return await instance.post("/product/admin/incoming/stock", data)
+}
+
+export const postProductCurrentStockRequest = async (data) => {
+    return await instance.post("/product/admin/stock", data)
 }
 
 export const getProductInocmingStocksRequest = async (params) => {

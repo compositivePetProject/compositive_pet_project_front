@@ -23,3 +23,8 @@ export const getAdoptAdmin = async () => {
     const response = await instance.get("/adoptation/admins")
     return response.data
 }
+
+export const getAdoptAdminById = async (noticeId) => {
+    const response = await instance.get(`/adoptation/admin/${noticeId}`)
+    return response.data
+}

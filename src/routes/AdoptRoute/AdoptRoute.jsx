@@ -6,6 +6,7 @@ import AdoptCommunityCat from '../../pages/AdoptCommunityCat/AdoptCommunityCat';
 import AdoptCommunityRegister from '../../pages/AdoptCommunityRegister/AdoptCommunityRegister';
 import AdoptCommunityDetail from '../../pages/AdoptCommunityDetail/AdoptCommunityDetail';
 import AdoptCommunityAdmin from '../../pages/AdoptCommunityAdmin/AdoptCommunityAdmin';
+import AdoptCommunityAdminDetail from '../../pages/AdoptCommunityAdminDetail/AdoptCommunityDetail';
 
 function AdoptRoute(props) {
 
@@ -14,6 +15,7 @@ function AdoptRoute(props) {
             <Routes>
                 <Route path="/adoptCommunity" element={ <AdoptCommunity />} /> 
                 <Route path="/adoptCommunity/admin" element={ <AdoptCommunityAdmin />} /> 
+                <Route path="/adoptCommunity/admin/:noticeId" element={ <AdoptCommunityAdminDetail />} /> 
                 <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> }/> 
                 <Route path="/adoptCommunity/cat" element={ <AdoptCommunityCat /> }/> 
                 <Route path="/adoptCommunity/register" element={ <AdoptCommunityRegister />} />

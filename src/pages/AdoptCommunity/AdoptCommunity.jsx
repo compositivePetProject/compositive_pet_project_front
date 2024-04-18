@@ -6,10 +6,15 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getAdoptAll } from '../../apis/api/Adopt';
+import Pagination from 'react-js-pagination';
 
 function AdoptCommunity() {
+    const [page, setPage] = useState(1);
+
+    const handlePageChange = (page) => {
+      setPage(page);
+    };
     const [ searchParams ] = useSearchParams();
-    const page = parseInt(searchParams.get("page"))
 
     const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
@@ -64,6 +69,7 @@ function AdoptCommunity() {
                         </div>
                     </div>
                 </div>
+                
                 <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
                 </div>
 

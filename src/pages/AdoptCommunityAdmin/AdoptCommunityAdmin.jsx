@@ -54,7 +54,7 @@ function AdoptCommunityAdmin() {
                             {adoptList.map((data) => (
                                 <div 
                                 key={data.adoptationBoardAdminId} 
-                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardAdminId}`)}>
+                                onClick={() => navigate(`/adoptCommunity/admin/${data.adoptationBoardAdminId}`)}>
                                     <div>{data.username}</div>
                                     <div>{data.adoptationBoardAdminTitle}</div>
                                     <div>{data.adoptationBoardAdminContent}</div>

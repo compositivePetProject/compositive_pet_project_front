@@ -1,8 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import MyProfilePage from '../MyProfilePage/MyProfilePage';
 import MyOrderPage from '../MyOrdersPage/MyOrdersPage'
+import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 function MyPage() {
+    // useAuthCheck();
     return (
         <>
             <Routes>

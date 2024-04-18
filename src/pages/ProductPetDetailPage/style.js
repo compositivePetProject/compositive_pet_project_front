@@ -136,6 +136,12 @@ export const productSizeBox = css`
     }
 `;
 
+export const inputBox = css`
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+`;
+
 export const productDeliveryBox = css`
     display: flex;
     position: relative;

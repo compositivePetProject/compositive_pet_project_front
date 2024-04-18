@@ -68,7 +68,7 @@ function ProductPetDetailPage() {
                 setProductSizeOptions(() => response.data.map(sizeOption => {
                    return {
                     value : sizeOption.productSizeCategoryId,
-                    label : sizeOption.productSizeCategoryName
+                    label : sizeOption.productSizeCategoryNameKor
                 }
                 }))
             }
@@ -99,6 +99,8 @@ function ProductPetDetailPage() {
             window.location.replace("/product/pet/order/payment")
         },
         onError: error => {
+            setProductOrderAdderssMessage(null);
+            setProductOrderDetailAdderssMessage(null);
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
                 const errorEntries = Object.entries(errorMap);
@@ -236,7 +238,7 @@ function ProductPetDetailPage() {
                         </div>
                         <div css={s.productDeliveryBox}>
                             <div>배송비</div>
-                            <div>3000원 (50,000원 이상 무료배송)</div>
+                            <div>무료</div>
                         </div>
                         <div css={s.productSizeBox}>
                             <div>사이즈</div>
@@ -261,14 +263,14 @@ function ProductPetDetailPage() {
                             <div>{productOrderCount}</div>
                             <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
                         </div>
-                        <div>
+                        <div css={s.inputBox}>
                             <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
                             <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
                         </div>
                         <div css={s.productOrderbox}>
                             <div css={s.productDeliveryBox}>
                                 <div>총 상품 금액</div>
-                                <div>30000원</div>
+                                <div>{user.productPrice * productOrderCount}원</div>
                             </div>
                             <button css={s.productOrderButtons} onClick={handleProductPurchase}>구매하기</button>
                             <button css={s.productOrderButtons} onClick={handleProductCartAdd}>장바구니</button>

@@ -12,10 +12,9 @@ import { useMutation } from "react-query";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { authNicknameCheckRequest } from "../../apis/api/authSignup";
 import { nicknameAndProfileImageUrlEditRequest, passwordEditRequest } from "../../apis/api/acoountPrincipal";
-import { useAuthCheck } from "../../hooks/useAuthCheck";
+
 
 function MyProfilePage() {
-    useAuthCheck();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");

@@ -43,28 +43,6 @@ export const buttons = css`
     }
 `;
 
-export const buttons2 = css`
-    width: 160px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
-    text-decoration: none;
-    cursor: pointer;
-`;
-
-export const buttons3 = css`
-    width: 100px;
-    padding: 10px 20px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
-    text-decoration: none;
-    cursor: pointer;
-`;
 
 export const userDetails = css`
     display: flex;
@@ -83,79 +61,87 @@ export const userDetails = css`
 export const title = css`
     font-size: 25px;
     margin-bottom: 24px;
-
 `;
 
-export const box = css`
+
+export const container = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid #d7e2eb;
     border-radius: 15px;
-    padding: 40px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
     row-gap: 10px;
     background-color: #ffffff;
-    
 `;
+
+export const orderHeader = css`
+    width: 100%;
+    display: flex;
+`;
+
+
+export const container2 = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #d7e2eb;
+    border-radius: 15px;
+    width: 100%;
+    padding: 5px;
+    row-gap: 10px;
+    background-color: #ffffff;
+`;
+
+export const container3 = css`
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    padding: 5px;
+    flex-grow: 1;
+    border-right: 1px solid #d7e2eb;
+    background-color: transparent;
+`;
+
 
 export const imgBox = css`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 124px;
-    height: 124px;
-    direction: none;
-    
+    width: 100px;
+    height: 120px;
+    overflow: hidden;
+    /* cursor: pointer; 해당 페이지로 가능 기능 추가 시  */
+    & > img {
+        height: 100%;   
+    }  
 `;
 
-export const editimgBox = css`
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 124px;
-    height: 124px;
-    cursor: pointer;
-    position: relative;
+export const container4 = css`
+    height: 100px;
+    padding: 10px;
+    /* cursor: pointer; */
+    flex-grow: 1;
     
-    & > div:nth-of-type(2) {
-        box-sizing: border-box;
-        position: absolute;
-        bottom: 0; 
-        right: 0; 
-        font-size: 30px; 
+    & > div {
+        margin-bottom: 5px;
     }
 `;
 
-
-
-export const nicknameEditBox = css`
-    width: 100%;
+export const container5 = css`
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: transparent;
 `;
 
-export const nicknameEdit = css`
-    width: 100%;
-    color: #424242;
-    font-size: 12px;
-`;
-
-export const nickInputEdit = css`
-    flex-grow: 1;
+export const buttons3 = css`
+    width: 100px;
     padding: 10px 20px;
-    margin-right: 15px;
-    border: 2px solid #e6eef5;
-    border-radius: 5px;
-    width: 80%;
-    color: #424242;
-    font-size: 12px;
-    background-color: #fbfbfd;
-`;
-
-export const nickCheckButton = css`
-    width: 147px;
-    padding: 10px 20px;
+    margin-right: 5px;
     border: none;
     border-radius: 5px;
     background-color: #e6f2ff;
@@ -165,33 +151,38 @@ export const nickCheckButton = css`
 `;
 
 
-export const profileImg = css`
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #dbdbdb;
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    & > img {
-        height: 100%;   
-    }  
-`;
-
-export const passwordBox = css`
+export const container6 = css`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #d7e2eb;
-    border-radius: 15px;
-    padding: 40px;
+    & > button:nth-of-type(1) {
+        margin-bottom: 10px;
+    }
+`;
+
+export const container7 = css`
+    display: flex;
+`;
+
+export const editBox = css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     row-gap: 10px;
-    background-color: #ffffff;
-    
-`
+`;
+
+
+export const productDeliveryBox = css`
+    display: flex;
+    position: relative;
+
+    & > button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0px 10px;
+    }
+`;
+
 
 
 

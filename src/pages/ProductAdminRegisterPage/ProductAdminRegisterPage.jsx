@@ -113,7 +113,7 @@ function ProductAdminRegisterPage(props) {
         [{ 'color': [] }, { 'background': [] }],          
         [{ 'font': [] }],
         [{ 'align': [] }],
-        
+
         ['clean']                                         
       ]
   }

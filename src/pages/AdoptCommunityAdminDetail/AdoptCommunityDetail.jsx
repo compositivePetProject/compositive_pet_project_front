@@ -26,7 +26,9 @@ function AdoptCommunityAdminDetail() {
     return (
         <div css={s.container}>
             {adminBoard &&
-                <div key={adminBoard.adoptationBoardAdminId}>
+                <div 
+                    key={adminBoard.adoptationBoardAdminId}
+                    css={s.boardContent}>
                     <h1>{adminBoard.adoptationBoardAdminTitle}</h1>
                     <div>
                         <div>{adminBoard.username}</div>

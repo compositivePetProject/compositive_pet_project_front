@@ -1,12 +1,12 @@
+import React, { useState } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 /** @jsxImportSource @emotion/react */
-import { useQuery, useQueryClient } from "react-query";
 import * as s from "./style";
-import { useNavigate } from "react-router-dom";
-import { useAuthCheck } from "../../hooks/useAuthCheck";
-import { useState } from "react";
-import { getProductOrdersRequest } from "../../apis/api/productOrder";
+import { getProductOrdersRequest } from '../../apis/api/productOrder';
 
-function MyOrdersPage(props) {
+
+function MyAdoptList(props) {
     // useAuthCheck(); 로그인 체크할 예정
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -43,8 +43,8 @@ function MyOrdersPage(props) {
             </div>
 
             <div css={s.userDetails}>
-                <div css={s.title}>주문 내역</div>
-                <div>결제 정보</div>
+                <div css={s.title}>분양 게시판 목록</div>
+                <div>분양 게시판 정보</div>
                     { userOrders.map(userOrder => 
                     <div key={userOrder.productOrderId}>
                         <div>{userOrder.productNameKor} </div>
@@ -58,4 +58,4 @@ function MyOrdersPage(props) {
     );
 }
 
-export default MyOrdersPage;
+export default MyAdoptList;

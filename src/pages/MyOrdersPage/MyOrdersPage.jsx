@@ -7,6 +7,7 @@ import { deleteProductOrderRequest, getProductOrdersRequest, putProductOrderRequ
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { useInput } from "../../hooks/useInput";
 import { getAllSizeCategoryRequest } from "../../apis/api/options";
+import { postProductCartAddRequest } from "../../apis/api/productCart";
 import { useSelect } from "../../hooks/useSelect";
 import Select from "react-select";
 import { FaPlus, FaMinus } from "react-icons/fa6";
@@ -26,18 +27,6 @@ function MyOrdersPage(props) {
     const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
     
-
-  
-    const handleOpenEditModal = (order) => {
-        setIsEditing(true); 
-        setEditedOrder(order); 
-    };
-
-    const handleCloseEditModal = () => {
-        setIsEditing(false); 
-        setEditedOrder(null); 
-    };
-
     const getProductOrdersQuery = useQuery(
         ["getProductOrdersQuery", principalQueryState.data],
         async () => await getProductOrdersRequest ({
@@ -63,15 +52,25 @@ function MyOrdersPage(props) {
             refetchOnWindowFocus: false,
             onSuccess: response => {
                 setProductSizeOptions(() => response.data.map(sizeOption => {
-                   return {
-                    value : sizeOption.productSizeCategoryId,
-                    label : sizeOption.productSizeCategoryNameKor
-                }
+                    return {
+                        value : sizeOption.productSizeCategoryId,
+                        label : sizeOption.productSizeCategoryNameKor
+                    }
                 }))
             }
         }
     )
 
+    const postProductCartAddQuery = useMutation ({
+        mutationKey: "postProductCartAddQuery",
+        mutationFn: postProductCartAddRequest,
+        onSuccess: response => {
+            alert("장바구니에 추가 완료 되었습니다. ")
+        },
+        onError: error => {
+        }
+    })
+    
     const deleteProductOrderQuery = useMutation({
         mutationKey: "deleteProductOrderQuery",
         mutationFn: deleteProductOrderRequest,
@@ -119,7 +118,18 @@ function MyOrdersPage(props) {
             } 
         }
     })
-
+    const handleProductCartAdd = (userId, productId, productSizeCategoryId, productCartCount) => {
+        const confirmAdd = window.confirm("장바구니에 해당 상품을 추가하겠습니까?");
+            if(confirmAdd) {
+                postProductCartAddQuery.mutate({
+                    userId: userId,
+                    productId: productId,
+                    productSizeCategoryId: productSizeCategoryId,
+                    productCartCount : productCartCount
+                })
+            }
+    }
+    
     const handleChangeOrderDelete = (productOrderId) => {
         const confirmCancel = window.confirm("주문을 취소하시겠습니까?");
         if(confirmCancel) {
@@ -128,6 +138,7 @@ function MyOrdersPage(props) {
             })
         }
     }
+
     const handleChangeOrderPut = (productOrderId) => {
         putProductOrderQuery.mutate({
             productOrderId : productOrderId,
@@ -137,7 +148,16 @@ function MyOrdersPage(props) {
             productOrderCount : productOrderCount
         })
     }
+    
+    const handleOpenEditModal = (order) => {
+        setIsEditing(true); 
+        setEditedOrder(order); 
+    };
 
+    const handleCloseEditModal = () => {
+        setIsEditing(false); 
+        setEditedOrder(null); 
+    };
     
     const selectStyle2 = {
         control: baseStyles => ({
@@ -185,54 +205,49 @@ function MyOrdersPage(props) {
                                                 <span> / {userOrder.productSizeCategoryNameKor} / </span>
                                                 <span>{userOrder.productOrderCount}개</span>
                                             </div>
-                                            <button css={s.buttons3}>장바구니</button>
+                                            <button css={s.buttons3} onClick={() => handleProductCartAdd(userOrder.userId, userOrder.productId, userOrder.productSizeCategoryId, userOrder.productOrderCount)}>장바구니</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div css={s.container6}>
-                                    {!isEditing
-                                    ?
+                                    {!isEditing &&
                                     <>
                                         <button css={s.buttons3} onClick={() => handleOpenEditModal(userOrder)}>주문수정</button>
                                         <button css={s.buttons3} onClick={() => handleChangeOrderDelete(userOrder.productOrderId)}>주문취소</button>
                                     </>
-                                    :
-                                    <>
-                                    </>
                                     }
                                 </div>
                             </div>
-                            
-                                {isEditing && editedOrder && editedOrder.productOrderId === userOrder.productOrderId &&  (
-                                    <div css={s.editBox}>
-                                        <div>주문 수정</div>
-                                        <div>
-                                            <Select
-                                                styles={selectStyle2}
-                                                options={productSizeOptions}
-                                                placeholder={"옵션을 선택해주세요"}
-                                                value={selectedSizeType.option}
-                                                onChange={selectedSizeType.handleOnChange}
-                                            />
-                                        </div>
-                                        <div css={s.productDeliveryBox}>
-                                            <button onClick={() => {
-                                                            if (productOrderCount > 1) {
-                                                                setProductOrderCount(productOrderCount - 1);
-                                                            }
-                                                        }}><FaMinus />
-                                            </button>
-                                            <div>{productOrderCount}</div>
-                                            <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
-                                        </div>
-                                        <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
-                                        <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
-                                        <div>   
-                                            <button css={s.buttons3} onClick={() => handleChangeOrderPut(userOrder.productOrderId)}>수정 확인</button>
-                                            <button css={s.buttons3} onClick={handleCloseEditModal}>수정 취소</button>
-                                        </div>
+                            {isEditing && editedOrder && editedOrder.productOrderId === userOrder.productOrderId &&  (
+                                <div css={s.editBox}>
+                                    <div>주문 수정</div>
+                                    <div>
+                                        <Select
+                                            styles={selectStyle2}
+                                            options={productSizeOptions}
+                                            placeholder={"옵션을 선택해주세요"}
+                                            value={selectedSizeType.option}
+                                            onChange={selectedSizeType.handleOnChange}
+                                        />
                                     </div>
-                                )}
+                                    <div css={s.productDeliveryBox}>
+                                        <button onClick={() => {
+                                                        if (productOrderCount > 1) {
+                                                            setProductOrderCount(productOrderCount - 1);
+                                                        }
+                                                    }}><FaMinus />
+                                        </button>
+                                        <div>{productOrderCount}</div>
+                                        <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
+                                    </div>
+                                    <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
+                                    <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
+                                    <div>   
+                                        <button css={s.buttons3} onClick={() => handleChangeOrderPut(userOrder.productOrderId)}>수정 확인</button>
+                                        <button css={s.buttons3} onClick={handleCloseEditModal}>수정 취소</button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

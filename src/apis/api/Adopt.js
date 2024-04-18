@@ -10,6 +10,11 @@ export const getAdoptDog = async () => {
     return response.data;
 }
 
+export const getAdoptCat = async () => {
+    const response = await instance.get("/adoptation/board/cat");
+    return response.data;
+}
+
 export const getAdoptById = async (boardId) => {
     const response = await instance.get(`/adoptation/board/${boardId}`)
     return response.data;
@@ -27,4 +32,9 @@ export const getAdoptAdmin = async () => {
 export const getAdoptAdminById = async (noticeId) => {
     const response = await instance.get(`/adoptation/admin/${noticeId}`)
     return response.data
+}
+
+export const getAdoptCount = async (params) => {
+    const response = await instance.get('/adoptation/board/count', {params});
+    return response;
 }

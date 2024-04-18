@@ -27,14 +27,13 @@ function AdoptCommunityAdminDetail() {
         <div css={s.container}>
             {adminBoard &&
                 <div 
-                    key={adminBoard.adoptationBoardAdminId}
-                    css={s.boardContent}>
+                    key={adminBoard.adoptationBoardAdminId}>
                     <h1>{adminBoard.adoptationBoardAdminTitle}</h1>
                     <div>
                         <div>{adminBoard.username}</div>
                     </div>
                     <div>
-                        <div>{adminBoard.adoptationBoardAdminContent}</div>
+                        <div css={s.boardContent}>{adminBoard.adoptationBoardAdminContent}</div>
                     </div>
                     <div>
                         <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity/admin")}}>목록</button>

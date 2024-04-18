@@ -1,18 +1,29 @@
 import { css } from "@emotion/react";
 
 export const container = css`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
+    width: 90%;
 `;
+
+export const boardTitle = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 20px;
+    border: 1px solid #dbdbdb;
+`
 
 export const boardContent = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
-    height: 50%;
+    width: 90%;
+    height: 100%;
     border: 1px solid #dbdbdb;
 `
 

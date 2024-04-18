@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { getAdoptAll, getAdoptDog } from '../../apis/api/Adopt';
 import { BiError } from 'react-icons/bi';
 import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
-
 import * as s from "./style";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { getAdoptAll, getAdoptDog } from '../../apis/api/Adopt';
+import Pagination from 'react-js-pagination';
 
+function AdoptCommunity() {
+    const [page, setPage] = useState(1);
 
-function AdoptCommunityDog() {
+    const handlePageChange = (page) => {
+      setPage(page);
+    };
+    const [ searchParams ] = useSearchParams();
+
+    const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
     const [error, setError] = useState(null);
 
@@ -27,45 +34,46 @@ function AdoptCommunityDog() {
         fetchData();
     }, []);
 
-    const handleSubmit = () => {
-
+    const handleWriteClick = () => {
+        navigate("/adoptCommunity/register")
     }
-   
-    
 
-    
+   
+
     return (
        
-        <div css={s.container}>
-            <div css={s.boardList}>
-                <h1>분양 게시글 목록</h1>
-                <table css={s.table}>
-                    <thead css={s.title}>
-                        <tr>
-                            <th>제목</th>
-                            <th>닉네임</th>
-                            <th>카테고리</th>
-                            <th>일자</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {adoptList.map((data) => (
-                            <tr key={data.adoptationBoardId}>
-                                <td><Link to="/adoptCommunity/1">{data.adoptationBoardTitle}</Link></td>
-                                <td>{data.username}</td>
-                                <td>{data.boardAnimalCategoryNameKor}</td>
-                                <td>{data.createDate}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div css={s.button}>
-                <Link to="/adoptCommunity/register">글쓰기</Link>
-            </div>
-        </div>
-    
-);
+            <div css={s.layout}>
+                <div>
+                    <h1 css={s.headerTitle}>강아지 분양 게시글</h1>
+                    <div css={s.boardListLayout}>
+                        <div css={s.boardListHeader}>
+                            <div css={s.boardListHeader}>
+                                <div>닉네임</div>
+                                <div>제목</div>
+                                <div>카테고리</div>
+                                <div>등록일</div>
+                            </div>
+                        </div>
+                        <div css={s.boardListItem}>
+                            {adoptList.map((data) => (
+                                <div 
+                                key={data.adoptationBoardId} 
+                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>
+                                    <div>{data.username}</div>
+                                    <div>{data.adoptationBoardTitle}</div>
+                                    <div>{data.boardAnimalCategoryNameKor}</div>
+                                    <div>{data.createDate}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                
+                <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
+                </div>
+
+        
+    );
 }
 
-export default AdoptCommunityDog;
+export default AdoptCommunity;

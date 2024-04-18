@@ -27,20 +27,22 @@ function AdoptCommunityDetail() {
     return (
         <div css={s.container}>
             {adoptationBoard &&
-                <div key={adoptationBoard.adoptationBoardId} css={s.boardContent}>
-                    <h1>{adoptationBoard.adoptationBoardTitle}</h1>
+                <div key={adoptationBoard.adoptationBoardId}>
+                    <div>
+                        <h1>{adoptationBoard.adoptationBoardTitle}</h1>
+                    </div>
                     <div>
                         <div>{adoptationBoard.username}</div>
                     </div>
                     <div>
-                        <div>{adoptationBoard.adoptationBoardContent}</div>
-                    </div>
-                    <div>
-                        <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity")}}>목록</button>
+                        <div css={s.boardContent}>{adoptationBoard.adoptationBoardContent}</div>
                     </div>
                 </div>
                
             }
+            <div>
+                <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity")}}>목록</button>
+            </div>
         </div>
     );
 }

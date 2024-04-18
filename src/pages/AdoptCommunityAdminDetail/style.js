@@ -11,8 +11,8 @@ export const boardContent = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
-    height: 50%;
+    width: 90%;
+    height: 100%;
     border: 1px solid #dbdbdb;
 `
 

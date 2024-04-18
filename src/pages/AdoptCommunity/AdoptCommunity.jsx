@@ -5,16 +5,42 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptAll } from '../../apis/api/Adopt';
+import { getAdoptAll, getAdoptCount } from '../../apis/api/Adopt';
 import Pagination from 'react-js-pagination';
+import { useQuery } from 'react-query';
+import { count } from 'firebase/firestore';
+import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
 
 function AdoptCommunity() {
+    const [ searchParams, setSearchParams ] = useSearchParams();
     const [page, setPage] = useState(1);
+    const searchCount = 10;
+    const [maxPageNumber, setMaxPageNumber] = useState(0);
+    const [totalCount, setTotalCount] = useState(0)
+
+    console.log(searchParams.get("page"))
+
+    const getAdoptCountQuery = useQuery(
+        ["getAdoptCountQuery"],
+        async () => getAdoptCount({
+            page: searchParams.get("page"),
+            count : searchCount
+        }),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                setMaxPageNumber(response.data.maxPageNumber);
+                setTotalCount(response.data.totalCount);
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
 
     const handlePageChange = (page) => {
       setPage(page);
     };
-    const [ searchParams ] = useSearchParams();
 
     const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
@@ -42,10 +68,9 @@ function AdoptCommunity() {
    
 
     return (
-       
             <div css={s.layout}>
                 <div>
-                    <h1 css={s.headerTitle}>분양 게시글 목록</h1>
+                    <h1 css={s.headerTitle}>전체 분양 게시글</h1>
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
@@ -71,9 +96,9 @@ function AdoptCommunity() {
                 </div>
                 
                 <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
+                <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} />
                 </div>
 
-        
     );
 }
 

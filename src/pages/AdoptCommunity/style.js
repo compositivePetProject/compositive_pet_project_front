@@ -19,7 +19,7 @@ export const boardListLayout = css`
     box-sizing: border-box;
     border: 1px solid #dbdbdb;
     width: 900px;
-    height: 600px;
+    height: 400px;
     overflow: scroll;
 `;
 
@@ -49,6 +49,7 @@ export const boardListItem = css`
     text-decoration: none;
     cursor: pointer;
     overflow: hidden;
+
     & > div {
         box-sizing: border-box;
         display: flex;

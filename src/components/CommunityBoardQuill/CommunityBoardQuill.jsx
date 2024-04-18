@@ -1,14 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import ReactQuill from 'react-quill'
+import { header } from '../RootHeader/style'
 
  function CommunityBoardQuill() {
 
-    const modules = {
-        toolbar: 
-        
+  const modules = {
+    toolbar : 
         [
-            ['bold', 'italic', 'underline', 'strike'],       
+            ['bold', 'italic', 'underline', 'strike'],        
             ['blockquote', 'code-block'],
             ['link', 'image', 'video', 'formula'],
         
@@ -19,14 +19,16 @@ import ReactQuill from 'react-quill'
             [{ 'direction': 'rtl' }],                         
         
             [{ 'size': ['small', false, 'large', 'huge'] }],  
-            [{ 'color': [] }, { 'background': [] }],         
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        
+            [{ 'color': [] }, { 'background': [] }],          
             [{ 'font': [] }],
             [{ 'align': [] }],
         
-            ['clean']  
-
+            ['clean']                                         
         ]
-    }
+  }
+
 
     const handleQuillChange = (value) => {
 
@@ -34,6 +36,7 @@ import ReactQuill from 'react-quill'
 
   return (
     <>
+      
       <ReactQuill modules={modules} onChange={handleQuillChange}/>
     </>
   )

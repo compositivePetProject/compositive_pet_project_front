@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { getCommunityBoardAllRequest } from "../../apis/api/getCommunityBoardAll";
+
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getCommunityBoardListRequest } from "../../apis/api/communityBoard";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
@@ -7,13 +9,14 @@ import { FaPencil } from "react-icons/fa6";
 
 
  function CommunityBoardPage() {
+    const navigate = useNavigate();
     const[communityBoardList, setCommunityBoardList] = useState([]);
     const[error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async() => { 
             try{
-                const response = await getCommunityBoardAllRequest();
+                const response = await getCommunityBoardListRequest();
                 setCommunityBoardList(response);///
                 console.log(response);
             }catch(error){
@@ -24,30 +27,40 @@ import { FaPencil } from "react-icons/fa6";
 
     fetchData();
  }, []);
-    
+
+ const handleOnClickToWritePage = () => {
+    navigate("/community/board/write")
+ }
  
   return (
-    <div>
-        <div css={s.layout} >
-            <h2>커뮤니티 갤러리 게시판</h2>
-                <div css={s.boardholder}>
-            {communityBoardList.map((data) => (
-               
-                <div key={data.communityBoardId}>
-                    <div css={s.boardholder}>                
-                        <div css={s.li}>제목: {data.communityBoardTitle}</div>
-                        <div css={s.li}>내용: {data.communityBoardContent}</div>
-                        <div css={s.li}>닉네임: {data.userName}</div>
-                        <div css={s.li}>작성일: {data.createDate}</div>
+        <div css={s.layout}>
+            <div>
+            <h1 css={s.headerTitle}>커뮤니티 갤러리 게시판</h1>
+                <div css={s.boardListLayout}>
+                    <div css={s.boardListHeader}>
+                        <div css={s.boardListHeader}>
+                            <div>제목</div>
+                            <div>내용</div>
+                            <div>닉네임</div>
+                            <div>등록일</div>
+                        </div>
                     </div>
-                    <button css={s.writeButton}><FaPencil/></button>
-                  
+                <div css={s.CommunityboardListItem}>
+                    {communityBoardList.map((data) => (
+                        <div
+                        key={data.communityBoardId}
+                        onClick={() => navigate(`/communityBoard/${data.communityBoardId}`)}>
+                        <div>{data.userName}</div>
+                        <div>{data.communityBoardTitle}</div>
+                        <div>{data.communityBoardComment}</div>
+                        <div>{data.createDate}</div>
+                       </div>
+                    ))}
+                   </div>
                 </div>
-            ))}
+            </div>
+        <button css={s.writeButton} onClick={handleOnClickToWritePage}>글 작성하기</button>
         </div>
-    </div>
-</div>
-  )
-}
-
+        ) 
+    }
 export default CommunityBoardPage;

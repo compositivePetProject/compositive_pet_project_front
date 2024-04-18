@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
+
 import { useEffect, useState } from "react";
 import * as s from "./style";
-import { getCommunityBoardDogRequest } from "../../apis/api/getCommunityBoardDog";
+import { getCommunityBoardDogRequest } from "../../apis/api/communityBoard";
 
 function CommunityBoardDogPage() {
     const [communityBoardList, setCommunityBoardList] = useState([]);

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+/*import { View, Text } from 'react-native'
 import React from 'react'
 
 function CommunityRegisterInput({value, onChange, onKeyDown, CommunityBoardRef, isDisabled}) {
@@ -15,4 +15,4 @@ function CommunityRegisterInput({value, onChange, onKeyDown, CommunityBoardRef, 
    
 }
 
-export default CommunityRegisterInput
+export default CommunityRegisterInput*/

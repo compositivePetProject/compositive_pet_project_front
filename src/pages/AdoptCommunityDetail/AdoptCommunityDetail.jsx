@@ -9,18 +9,18 @@ function AdoptCommunityDetail() {
     const { boardId } = useParams();
     const [adoptationBoard , setAdoptationBoard ] = useState(null);
     const [ boardDetail, setBoardDetail ] = useState(null);
+    
+    const fetchAdoptationBoard = async () => {
+        try {
+            const boardDetail = await getAdoptById(boardId);
+            setAdoptationBoard(boardDetail);
+            console.log(adoptationBoard);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
-        const fetchAdoptationBoard = async () => {
-            try {
-                const boardDetail = await getAdoptById(boardId);
-                setAdoptationBoard(boardDetail);
-                console.log(adoptationBoard);
-            } catch (error) {
-                console.error('Error fetching adoptation board:', error);
-            }
-        };
-
         fetchAdoptationBoard();
     }, [boardId]);
 

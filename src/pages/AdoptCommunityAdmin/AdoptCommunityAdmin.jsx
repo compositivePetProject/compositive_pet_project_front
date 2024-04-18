@@ -7,7 +7,7 @@ import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getAdoptAll } from '../../apis/api/Adopt';
 
-function AdoptCommunity() {
+function AdoptCommunityAdmin() {
     const [ searchParams ] = useSearchParams();
     const page = parseInt(searchParams.get("page"))
 
@@ -71,4 +71,4 @@ function AdoptCommunity() {
     );
 }
 
-export default AdoptCommunity;
+export default AdoptCommunityAdmin;

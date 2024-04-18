@@ -96,6 +96,109 @@ export const productBody = css`
 
 `;
 
+
+export const productOrderContainer = css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 14px;
+    color: #3d3a35;
+    font-family: 'Spoqa Han Sans Neo','Noto Sans KR',sans-serif;
+    & > div { 
+        padding: 10px 0px;
+    }
+`;
+
+export const productDetailBox = css`
+    display: flex;
+    position: relative;    
+
+    & > div:nth-of-type(1) {
+        width: 80px;
+    }
+
+    & > div:nth-of-type(2) {
+        color : #777777;
+    }
+`;
+
+export const productSizeBox = css`
+    display: flex;
+    position: relative;
+    align-items: center;
+
+    & > div:nth-of-type(1) {
+        width: 80px;
+    }
+
+    & > div:nth-of-type(2) {
+        flex-grow: 1;
+    }
+`;
+
+export const productDeliveryBox = css`
+    display: flex;
+    position: relative;
+    
+    & > div:nth-of-type(1) {
+        color : #777777;
+        width: 80px;   
+    }
+
+    & > button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0px 10px;
+    }
+`;
+
+
+export const productOrderButtons = css`
+    color: #e2e2e2;
+    font-weight: 700;
+    background-color: #444444;
+    padding: 3px;
+    border: none;
+    width: 30%;
+    height: 50px;
+    cursor: pointer;
+    
+    & > button:nth-of-type(1) {
+        margin-right: 20px;
+    }
+
+    &:hover {
+        background-color: #333333;
+    }
+`;
+
+export const productOrderbox = css`
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+        width: 30%;
+    } 
+`;
+
+export const productDetailButtons = css`
+    color: #3d3a35;
+    font-weight: 700;
+    background-color: #eeeeee;
+    padding: 3px;
+    border: none;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #dbdbdb;
+    }
+`;
+
+
+
 export const productFooter = css`
     width: 100%;
     height: 20%;

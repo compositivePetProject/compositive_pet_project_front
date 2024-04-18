@@ -97,7 +97,7 @@ function RootHeader() {
                 </div>       
                     
                 <div css={s.imgBox}>
-                    <div css={s.profileImg} onClick={() => navigate("/account/mypage")}>
+                    <div css={s.profileImg} onClick={() => navigate("/account/mypage/profile")}>
                         <img src={principalQueryState.data?.data.profileImageUrl} alt="" />
                     </div>
                 </div>

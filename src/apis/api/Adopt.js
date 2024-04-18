@@ -18,3 +18,8 @@ export const getAdoptById = async (boardId) => {
 export const postAdoptRequest = async (data) => {
     return await instance.post("/adoptation/board",data)
 }
+
+export const getAdoptAdmin = async () => {
+    const response = await instance.get("/adoptation/admins")
+    return response.data
+}

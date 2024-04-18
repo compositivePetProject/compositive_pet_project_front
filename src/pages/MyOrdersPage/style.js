@@ -76,15 +76,14 @@ export const userDetails = css`
     padding: 0px 0px 40px 60px;
     color: #263747;
     font-weight: 700;
+    font-size: 18px;
 
-    & > div:nth-of-type(1) {
-        font-size: 25px;
-        margin-bottom: 24px;
-    } 
-    
-    div:not(:first-of-type) > div {
-        font-size: 18px;
-    }
+`;
+
+export const title = css`
+    font-size: 25px;
+    margin-bottom: 24px;
+
 `;
 
 export const box = css`
@@ -181,6 +180,18 @@ export const profileImg = css`
     }  
 `;
 
+export const passwordBox = css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #d7e2eb;
+    border-radius: 15px;
+    padding: 40px;
+    row-gap: 10px;
+    background-color: #ffffff;
+    
+`
 
 
 

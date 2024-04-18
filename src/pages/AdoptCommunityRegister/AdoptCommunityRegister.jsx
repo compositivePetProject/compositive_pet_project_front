@@ -51,11 +51,11 @@ function AdoptCommunityRegister(props) {
         mutationKey: "postAdoptRequestMutation",
         mutationFn: postAdoptRequest,
         onSuccess: (response) => {
-          alert("작성을 완료했습니다.");
-          window.location.replace("/adoptCommunity");
+            alert("작성을 완료했습니다.");
+            window.location.replace("/adoptCommunity");
         },
         onError: (error) => {
-          console.log(error);
+            console.log(error);
         }
       })
 

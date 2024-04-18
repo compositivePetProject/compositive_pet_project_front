@@ -5,7 +5,7 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptAll } from '../../apis/api/Adopt';
+import { getAdoptAdmin, getAdoptAll } from '../../apis/api/Adopt';
 
 function AdoptCommunityAdmin() {
     const [ searchParams ] = useSearchParams();
@@ -18,7 +18,7 @@ function AdoptCommunityAdmin() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getAdoptAll();
+                const response = await getAdoptAdmin();
                 setAdoptList(response); 
                 console.log(response); 
             } catch (error) {
@@ -40,24 +40,24 @@ function AdoptCommunityAdmin() {
        
             <div css={s.layout}>
                 <div>
-                    <h1 css={s.headerTitle}>분양 게시글 목록</h1>
+                    <h1 css={s.headerTitle}>공지사항</h1>
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
                                 <div>닉네임</div>
                                 <div>제목</div>
-                                <div>카테고리</div>
+                                <div>내용</div>
                                 <div>등록일</div>
                             </div>
                         </div>
                         <div css={s.boardListItem}>
                             {adoptList.map((data) => (
                                 <div 
-                                key={data.adoptationBoardId} 
-                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>
+                                key={data.adoptationBoardAdminId} 
+                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardAdminId}`)}>
                                     <div>{data.username}</div>
-                                    <div>{data.adoptationBoardTitle}</div>
-                                    <div>{data.boardAnimalCategoryNameKor}</div>
+                                    <div>{data.adoptationBoardAdminTitle}</div>
+                                    <div>{data.adoptationBoardAdminContent}</div>
                                     <div>{data.createDate}</div>
                                 </div>
                             ))}

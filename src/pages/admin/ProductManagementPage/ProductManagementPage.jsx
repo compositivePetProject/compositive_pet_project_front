@@ -12,16 +12,18 @@ import { useEffect, useMemo, useState } from "react";
 import ProductDetailModal from "../../../components/admin/ProductDetailModal/ProductDetailModal";
 import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
-import { useMutation } from "react-query";
-import { postProductAdminRequest } from "../../../apis/api/productAdmin";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getProductsAdminRequest, postProductAdminRequest } from "../../../apis/api/productAdmin";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
+import { useSearchParams } from "react-router-dom";
 
 function ProductManagementPage({title}) {
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const [ productData, setProductData ] = useRecoilState(productDataState);
   const [ isOpen, setIsOpen ] = useState(false);
-
+  const queryClient = useQueryClient();
+  
   const productRegisterMutation = useMutation({
     mutationKey: "productRegisterMutation",
     mutationFn: postProductAdminRequest,
@@ -68,6 +70,12 @@ function ProductManagementPage({title}) {
   ], [isOpen, productData.productImageUrl, productData.productBoardContent]);
 
 
+  const searchSubmit = () => {
+    queryClient.refetchQueries(["searchProductsQuery"]);
+  }
+
+  
+
   return (
     <AdminPageLayout>
       <div css={s.header}>
@@ -78,7 +86,7 @@ function ProductManagementPage({title}) {
           <button css={s.button}>삭제</button>
         </div>
       </div>
-      <SearchTop searchInputs={searchInputs}/>
+      <SearchTop searchInputs={searchInputs} submit={searchSubmit}/>
       <RegisterTop registerInputs={registerInputs} submitClick={() => productRegisterMutation.mutate(productData)}/>
       <AdminProductSearch selectedProductCategory={searchProductData.productCategoryId} selectedProductAnimalCategoryId={searchProductData.productAnimalCategoryId} searchText={searchProductData.productNameKor} />
     </AdminPageLayout>

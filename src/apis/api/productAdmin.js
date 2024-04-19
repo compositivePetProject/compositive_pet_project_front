@@ -46,3 +46,7 @@ export const getProductInocmingStocksRequest = async (params) => {
     return await instance.get("/product/admin/incoming/stocks/test", {params})
 }
 
+export const getOrderProductsRequest = async (params) => {
+    return await instance.get("/product/admin/order/detail", {params});
+}
+

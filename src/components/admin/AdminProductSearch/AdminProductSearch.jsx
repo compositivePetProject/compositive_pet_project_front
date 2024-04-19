@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
+import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 
 function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText }) {
   const [ searchParams, setSearchParams ] = useSearchParams();
-  const searchCount = 5;
+  const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
+  const searchCount = 10;
   const [ productList, setProductList ] = useState([]);
   const [ checkAll, setCheckAll ] = useState({
     checked : false,
@@ -21,16 +23,20 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
   const [ maxPageNumber, setMaxPageNumber ] = useState(0);
   const [ totalCount, setTotalCount ] = useState(0);
 
+  console.log(searchProductData);
+
   const searchProductsQuery = useQuery(
     ["searchProductsQuery", searchParams.get("page")],
-    async () => await getProductsAdminRequest({
+    async () => {
+      return await getProductsAdminRequest({
       page: searchParams.get("page"),
       count: searchCount,
-      productCategoryId: selectedProductCategory,
-      productAnimalCategoryId: selectedProductAnimalCategoryId,
-      productNameKor: searchText
-    }),
+      productCategoryId: searchProductData.productCategoryId,
+      productAnimalCategoryId: searchProductData.productAnimalCategoryId,
+      productNameKor: searchProductData.productNameKor
+    })},
     {
+      retry: 0,
       refetchInterval: false,
         onSuccess: (response) => {
           setProductList(() => response.data.map((product) => {
@@ -55,6 +61,7 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       productNameKor: searchText
     }),
     {
+      retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: (response) => {
           setMaxPageNumber(response.data.maxPageNumber);
@@ -126,14 +133,29 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
   useEffect(() => {
     let lastSelectedProduct = {...selectedProduct};
     let checkStatus = false;
-    // lastSelectedProduct = productList.filter((product) =>)
-  }, []);
+    lastSelectedProduct = productList.filter((product) => product.productId === lastCheckedProductId && product.checked === true)[0];
+    if(!!lastSelectedProduct) {
+      checkStatus = true;
+    }
+    if(!checkStatus) {
+      setSelectedProduct(() => {
+        return{
+          productId: 0,
+          productCategoryId: 0,
+          productAnimalCategoryId: 0,
+          productNameKor: "",
+          productPrice: 0,
+          productImageUrl: ""
+        }
+      })
+    } else {
+      setSelectedProduct(() => lastSelectedProduct);
+    }
+  }, [productList]);
 
   useEffect(() => {
-    console.log(productList);
-    console.log(lastCheckedProductId);
-    console.log(getProductsCountQuery.data)
-  }, [productList, lastCheckedProductId])
+    searchProductsQuery.refetch();
+  }, [searchProductData]);
 
   return (
     <div css={s.layout}>

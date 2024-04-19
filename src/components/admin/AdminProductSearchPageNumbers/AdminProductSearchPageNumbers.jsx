@@ -17,8 +17,6 @@ function AdminProductSearchPageNumbers({ maxPageNumber, totalCount }) {
       pageNumbers = [...pageNumbers, i];
     }
     setNumbers(() => pageNumbers);
-    console.log(totalCount);
-    console.log(maxPageNumber);
   }, [page, maxPageNumber, totalCount])
 
   return (
@@ -41,7 +39,7 @@ function AdminProductSearchPageNumbers({ maxPageNumber, totalCount }) {
       <div css={s.pageCount}>
         <div css={s.page}>Page {page} of {maxPageNumber}</div>
         <div css={s.count}>Count: {totalCount}</div>
-      </div>
+      </div>   
     </div>
   )
 }

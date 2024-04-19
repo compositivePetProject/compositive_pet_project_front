@@ -2,7 +2,7 @@
 import * as s from "./style";
 import { FaSearch } from "react-icons/fa";
 
-function SearchTop({searchInputs}) {
+function SearchTop({searchInputs, submit}) {
     return (
         <div css={s.layout}>
                 { searchInputs.map((row, index) => {
@@ -11,7 +11,7 @@ function SearchTop({searchInputs}) {
                     </div>
                     })
                 }
-        <button css={s.searchButton}><FaSearch /></button>
+        <button css={s.searchButton} onClick={submit}><FaSearch /></button>
 
         </div>
     );

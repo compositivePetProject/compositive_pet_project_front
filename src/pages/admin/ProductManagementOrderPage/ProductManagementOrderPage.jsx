@@ -10,6 +10,7 @@ import { productAnimalCategoryOptions } from "../../../constants/productAnimalCa
 import { productSizeCategoryOptions } from "../../../constants/productSizeCategoryOptions";
 import { useRecoilState } from "recoil";
 import { searchOrderProductDataState } from "../../../atoms/admin/searchOrderProductDataAtom";
+import AdminOrderSearch from "../../../components/admin/AdminOrderSearch/AdminOrderSearch";
 
 function ProductManagementOrderPage({title}) {
     const [ searchOrderProductData, setSearchOrderProductData ] = useRecoilState(searchOrderProductDataState);
@@ -34,6 +35,7 @@ function ProductManagementOrderPage({title}) {
             </div>
         </div>
         <SearchTop searchInputs={searchInput} />
+        <AdminOrderSearch/>
         </AdminPageLayout>
     )
 }

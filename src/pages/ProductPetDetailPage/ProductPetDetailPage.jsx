@@ -13,6 +13,7 @@ import { useSelect } from "../../hooks/useSelect";
 import { postProductCartAddRequest } from "../../apis/api/productCart";
 import { useInput } from "../../hooks/useInput";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
+import { VscChevronDown, VscChevronUp  } from "react-icons/vsc";
 
 function ProductPetDetailPage() {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -27,7 +28,7 @@ function ProductPetDetailPage() {
     const selectedSizeType = useSelect();
     const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
-    
+    const [ isDetailPage, setIsDetailPage ] = useState(false);
     
     useEffect(() => {
         const fetchProductFavoriteStatus = async () => {
@@ -138,7 +139,7 @@ function ProductPetDetailPage() {
         },
         onError: error => {
             if(error.response.status === 500) {
-                alert("옵션을 선택하지 않으셨습니다. 옵션을 선택해 주세요.")
+                alert("옵션을 선택하지 않으셨습니다. 옵션을 선택해 주세요. \n 배송지 생략")
             } 
         }
     })
@@ -201,6 +202,7 @@ function ProductPetDetailPage() {
         })
     }
 
+    
 
     const selectStyle2 = {
         control: baseStyles => ({
@@ -277,8 +279,15 @@ function ProductPetDetailPage() {
                         </div>
                     </div>
                     <div>
-                        <button css={s.productDetailButtons}>상세페이지 버튼</button>
-                        <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}></div>
+                        {!isDetailPage 
+                        ?
+                        <button css={s.productDetailButtons} onClick={() => setIsDetailPage(true)}>상세페이지 <VscChevronDown /></button>
+                        : 
+                        <>
+                            <button css={s.productDetailButtons} onClick={() => setIsDetailPage(false)}>상세페이지 <VscChevronUp /></button>
+                            <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}></div>
+                        </>
+                        }
                     </div>
                 </div>
                 <div css={s.productFooter}>

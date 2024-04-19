@@ -114,7 +114,7 @@ export const imgBox = css`
     width: 100px;
     height: 120px;
     overflow: hidden;
-    /* cursor: pointer; 해당 페이지로 가능 기능 추가 시  */
+    cursor: pointer;
     & > img {
         height: 100%;   
     }  
@@ -126,6 +126,10 @@ export const container4 = css`
     /* cursor: pointer; */
     flex-grow: 1;
     
+    & > div:nth-of-type(1) {
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
     & > div {
         margin-bottom: 5px;
     }

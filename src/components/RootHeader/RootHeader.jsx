@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
 
+
 function RootHeader() {
     const [ currentMenu, setCurrentMenu ] = useState(null);
     const [ isHovering, setIsHovering ] = useState(false);
@@ -87,6 +88,9 @@ function RootHeader() {
                 <a css={s.login} href="http://localhost:3000/auth/sign-in">
                     로그인
                 </a>
+                <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                    장바구니
+                </a>
             </div>
             :   
             <>
@@ -94,8 +98,10 @@ function RootHeader() {
                     <a css={s.login} onClick={handleLogoutClick} href="http://localhost:3000/">
                         로그아웃
                     </a>
-                </div>       
-                    
+                    <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                        장바구니
+                    </a>
+                </div>                      
                 <div css={s.imgBox}>
                     <div css={s.profileImg} onClick={() => navigate("/account/mypage/profile")}>
                         <img src={principalQueryState.data?.data.profileImageUrl} alt="" />

@@ -169,6 +169,8 @@ function MyOrdersPage(props) {
         })
     }
     
+    console.log(userOrders)
+
     return (
         <div css={s.layout}>
 
@@ -190,11 +192,11 @@ function MyOrdersPage(props) {
                             </div>
                             <div css={s.container2}>
                                 <div css={s.container3}>
-                                    <div css={s.imgBox}>
+                                    <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}`)}>
                                         <img src={userOrder.productImageUrl} alt="" />
                                     </div>
                                     <div css={s.container4}>
-                                        <div>{userOrder.productNameKor}</div>
+                                        <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}`)}>{userOrder.productNameKor}</div>
                                         <div css={s.container7}>
                                             <div>{userOrder.productOrderAddress}</div>
                                             <div>{userOrder.productDetailOrderAddress}</div>

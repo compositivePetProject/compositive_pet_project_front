@@ -66,9 +66,8 @@ export const userDetails = css`
 
 export const title = css`
     font-size: 25px;
-    margin-bottom: 24px;
+    margin-bottom: 15px;
 `;
-
 
 export const container = css`
     display: flex;
@@ -86,31 +85,9 @@ export const container = css`
 export const orderHeader = css`
     width: 100%;
     display: flex;
+    padding: 18px;
+    border-bottom: 1px solid #d7e2eb;
 `;
-
-
-export const container2 = css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #d7e2eb;
-    border-radius: 15px;
-    width: 100%;
-    padding: 5px;
-    row-gap: 10px;
-    background-color: #ffffff;
-`;
-
-export const container3 = css`
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    padding: 5px;
-    flex-grow: 1;
-    border-right: 1px solid #d7e2eb;
-    background-color: transparent;
-`;
-
 
 export const imgBox = css`
     box-sizing: border-box;
@@ -126,26 +103,56 @@ export const imgBox = css`
     }  
 `;
 
-export const container4 = css`
-    height: 100px;
-    padding: 10px;
-    flex-grow: 1;
-    
+export const container2 = css`
     & > div:nth-of-type(1) {
-        margin-bottom: 5px;
-        cursor: pointer;
+        font-size: 20px;
     }
     & > div {
-        margin-bottom: 5px;
+        padding: 5px;
+    }
+`;
+export const container1 = css`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    width: 100%;
+    padding: 10px;
+`;
+
+export const starButtons = css`
+    background-color: transparent;
+    border: none;
+`;
+
+export const starButton = css`
+    background-color: transparent;
+    font-size: 30px;
+    cursor: pointer;
+`;
+
+export const activeStarButton = css`
+    color: gold;
+    font-size: 30px;
+    cursor: pointer;
+`;
+
+export const reviewBox = css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px 0px 50px;
+    & > div:nth-of-type(1) {
+        margin-bottom: 20px;
+        width: 90px;
     }
 `;
 
-export const container5 = css`
+export const box = css`
     display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    background-color: transparent;
+    position: relative;
 `;
+
 
 export const buttons3 = css`
     width: 150px;
@@ -160,42 +167,8 @@ export const buttons3 = css`
 `;
 
 
-export const container6 = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    & > button:nth-of-type(1) {
-        margin-bottom: 10px;
-    }
-    & > button:nth-of-type(2) {
-        margin-bottom: 5px;
-    }
-`;
-
-export const container7 = css`
-    display: flex;
-`;
-
-export const editBox = css`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    row-gap: 10px;
-`;
 
 
-export const productDeliveryBox = css`
-    display: flex;
-    position: relative;
-
-    & > button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0px 10px;
-    }
-`;
 
 
 

@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteProductFavoriteRequest, getProductFavoriteStatusRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
 import { postProductOrderRequest } from "../../apis/api/productOrder";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { FaPlus, FaMinus, FaStar, FaRegStar } from "react-icons/fa6";
 import Select from "react-select";
 import { getAllSizeCategoryRequest } from "../../apis/api/options";
 import { useSelect } from "../../hooks/useSelect";
@@ -14,13 +14,16 @@ import { postProductCartAddRequest } from "../../apis/api/productCart";
 import { useInput } from "../../hooks/useInput";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { VscChevronDown, VscChevronUp  } from "react-icons/vsc";
+import { getProductReviewsByProductIdRequest } from "../../apis/api/productComment";
 
 function ProductPetDetailPage() {
+
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ isLiked, setIsLiked ] = useState(false);
     const [ user, setUser ] = useState("");
     const [ productOrderCount, setProductOrderCount ] = useState(1);
     const [ productSizeOptions , setProductSizeOptions ] = useState([]);
+    const [ reviews, setReviews ] = useState([]);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const productId = parseInt(searchParams.get("productId"));
@@ -29,7 +32,10 @@ function ProductPetDetailPage() {
     const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
     const [ isDetailPage, setIsDetailPage ] = useState(false);
+    const hiddenUsername =  '****' + principalQueryState.data?.data.username.slice(-3); 
     
+  
+
     useEffect(() => {
         const fetchProductFavoriteStatus = async () => {
             const response = await getProductFavoriteStatusRequest({
@@ -91,6 +97,25 @@ function ProductPetDetailPage() {
             }
         }
     )
+
+    const getProductReviewsByProductIdQuery = useQuery(
+        ["getProductReviewsByProductIdQuery", productId],
+        async () => await getProductReviewsByProductIdRequest ({
+            productId : productId
+        }),
+        {
+            retry: 0,
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response)
+                setReviews(() => response.data)
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+
 
     const postProductOrderQuery = useMutation({
         mutationKey: "postProductOrderQuery",
@@ -202,6 +227,17 @@ function ProductPetDetailPage() {
         })
     }
 
+    const renderRatingStars = (ratingValue) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= ratingValue) {
+                stars.push(<FaStar key={i} css={s.activeStarButton} />);
+            } else {
+                stars.push(<FaRegStar key={i} css={s.starButton} />);
+            }
+        }
+        return stars;
+    }
     
 
     const selectStyle2 = {
@@ -214,6 +250,8 @@ function ProductPetDetailPage() {
         })
     }
 
+
+   
     return (
         <div css={s.layout}>
             <div css={s.sideImg}>
@@ -285,14 +323,31 @@ function ProductPetDetailPage() {
                         : 
                         <>
                             <button css={s.productDetailButtons} onClick={() => setIsDetailPage(false)}>상세페이지 <VscChevronUp /></button>
-                            <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}></div>
+                            <div css={s.productDetailBox2}>
+                                <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}></div>
+                            </div>
                         </>
                         }
                     </div>
+                    <div css={s.productFooter}>
+                        <div css={s.reviewBox}>리뷰 ({reviews.length})</div>
+                        {reviews.map(review => 
+                            <div key={review.productCommentId} css={s.reviewBox1}>
+                                <div css={s.reviewBox2}>
+                                    <div css={s.reviewBox3}>
+                                        <div>{renderRatingStars(review.productCommentRatingValue)}</div>
+                                        <div>{review.updateDate}</div>
+                                    </div>
+                                    <div css={s.reviewBox4} dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                </div>
+                                <div css={s.reviewBox5}>
+                                    {hiddenUsername}님의 리뷰입니다.
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div css={s.productFooter}>
-                    댓글
-                </div>
+                
             </div>
         </div>
     );

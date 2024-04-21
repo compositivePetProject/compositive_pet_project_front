@@ -7,3 +7,7 @@ export const postProductCartAddRequest = async (data) => {
 export const getProductCartListRequest = async (params) => {
     return await instance.get("/product/carts", { params });
 }
+
+export const deleteProductCartsRequest = async (data) => {
+    return await instance.delete("/product/delete/carts", { data });
+}

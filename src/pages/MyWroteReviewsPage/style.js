@@ -69,6 +69,33 @@ export const title = css`
     margin-bottom: 24px;
 `;
 
+export const reviews = css`
+    display: flex;
+    & > div {  
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        border-radius: 7px;
+        border: 1px solid #d7e2eb;
+        width: 150px;
+        margin-bottom: 10px;
+        margin-right: 5px;
+        background-color: transparent;
+        cursor: pointer;
+
+
+        &:hover {
+            background-color: #f9f9f9;
+        }
+        &:active {
+            background-color: #f3f3f3;
+        }
+    }
+    & > div:nth-of-type(1) {  
+        
+    }
+`;
+
 
 export const container = css`
     display: flex;
@@ -120,7 +147,6 @@ export const imgBox = css`
     width: 100px;
     height: 120px;
     overflow: hidden;
-    cursor: pointer;
     & > img {
         height: 100%;   
     }  
@@ -133,7 +159,6 @@ export const container4 = css`
     
     & > div:nth-of-type(1) {
         margin-bottom: 5px;
-        cursor: pointer;
     }
     & > div {
         margin-bottom: 5px;
@@ -195,6 +220,21 @@ export const productDeliveryBox = css`
         cursor: pointer;
         padding: 0px 10px;
     }
+`;
+
+export const starButtons = css`
+    background-color: transparent;
+    border: none;
+`;
+
+export const starButton = css`
+    background-color: transparent;
+    font-size: 30px;
+`;
+
+export const activeStarButton = css`
+    color: gold;
+    font-size: 30px;
 `;
 
 

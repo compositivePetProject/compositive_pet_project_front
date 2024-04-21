@@ -23,11 +23,16 @@ export const infoBox = css`
     padding: 0px 24px;
     border: 1px solid #d7e2eb;
 
-    & > h3 {
+    & > h3:nth-of-type(1) {
         color: #9b9b9b;
         font-size: 14px;
         font-weight: 700;
         margin: 40px 0px 15px;
+    }
+    & > h3:nth-of-type(2) {
+        color: #9b9b9b;
+        font-size: 14px;
+        font-weight: 700;
     }
 `;
 
@@ -73,7 +78,7 @@ export const userDetails = css`
     flex-grow: 1;
     height: 100%;
     margin-top: 45px;
-    padding: 0px 0px 40px 60px;
+    padding: 0px 80px 80px 40px;
     color: #263747;
     font-weight: 700;
     font-size: 18px;

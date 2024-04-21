@@ -16,7 +16,7 @@ export const userInfoBox = css`
     margin-top: 45px;
     width: 80%;
     height: 100%;
-    z-index: 999;
+    z-index: 80;
 `;
 
 

@@ -1,21 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
-import  {getProductCartListRequest } from '../../apis/api/productCart'
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import  {deleteProductCartsRequest, getProductCartListRequest } from '../../apis/api/productCart'
 import { useNavigate } from "react-router-dom";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { postProductOrderCartsRequest } from "../../apis/api/productOrder";
 
 function ProductPetCartPage(props) {
     const navigate = useNavigate();
     const [ productCartList, setProductCartList ] = useState([]);
-    const [ productOrderCount, setProductOrderCount ] = useState(1);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
-    const [ checkAll, setCheckAll ] = useState({
-        checked: false,
-        target: 1 
-    });
+    const selectProductCart = productCartList.filter(productCart => productCart.checked).length;
+    const [ checkAll, setCheckAll ] = useState({checked: false, target: 1});
+    const totalPrice = productCartList
+    .filter(productCart => productCart.checked)
+    .reduce((total, productCart) => total + productCart.productPrice * productCart.productCartCount, 0);
 
     useEffect(() => {
         if(checkAll.target === 1) {
@@ -49,6 +50,23 @@ function ProductPetCartPage(props) {
         }
     }, [productCartList]);
 
+    const deleteProductCartsQuery = useMutation({
+        mutationKey: "deleteProductCartsQuery",
+        mutationFn: deleteProductCartsRequest,
+        onSuccess: response => {
+            window.location.reload();
+        }
+    });
+
+    const postProductOrderCartsQuery = useMutation({
+        mutationKey: "postProductOrderCartsQuery",
+        mutationFn: postProductOrderCartsRequest,
+        onSuccess: response => {
+            alert("전체 주문 완료.");
+            window.location.reload();
+        }
+    });
+
     const getProductCartListQuery = useQuery(
         ["getProductCartListQuery", principalQueryState.data],
         async () => await getProductCartListRequest ({
@@ -72,6 +90,36 @@ function ProductPetCartPage(props) {
         }
     )
 
+    const handleProdudtCartsDelete =  () => {
+        const produdtCarts = productCartList.filter(productCart => productCart.checked).map(productCart => productCart.productCartId);
+        deleteProductCartsQuery.mutate(produdtCarts);
+    }
+
+    const handlePurchase = () => {
+        const selectedProductCarts = productCartList.filter(productCart => productCart.checked);
+
+        if (selectedProductCarts.length === 0) {
+            alert("구매할 상품을 선택해주세요.");
+            return;
+        }
+        
+        // 마지막 구매 주소로 요청
+        const requestData = selectedProductCarts.map(productCart => ({
+            userId: productCart.userId,
+            productId: productCart.productId,
+            productOrderAddress: productCart.productOrderAddress,
+            productOrderDetailAddress: productCart.productOrderDetailAddress,
+            productSizeCategoryId: productCart.productSizeCategoryId,
+            productOrderCount: productCart.productCartCount
+        }));
+    
+        postProductOrderCartsQuery.mutate(requestData, {
+            onSuccess: () => {
+                handleProdudtCartsDelete();
+            }
+        });
+    }
+    
     const handleCheckAllChange = (e) => {
         setCheckAll(() => {
             return {
@@ -96,14 +144,13 @@ function ProductPetCartPage(props) {
         )
     }
 
-    console.log(productOrderCount)
     return (
         <div css={s.layout}>
             <div css={s.userInfoBox}>
                 <div css={s.title}>장바구니</div>
                 <div css={s.container}>
                     <div><input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange} /></div>
-                    <div>전체 선택 (1 / 2) </div>
+                    <div>전체 선택 ({selectProductCart} / {productCartList.length}) </div>
                 </div>
                     <div css={s.userDetails}>
                         {productCartList.map(productCart => 
@@ -121,36 +168,53 @@ function ProductPetCartPage(props) {
                                 <div onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>유기농 건강식 고양이 사료</div> 
                                 <div>{parseInt(productCart.productPrice * productCart.productCartCount)}원</div>
                                 <div css={s.productDeliveryBox}>
-                                    // 수정예정
                                     <button onClick={() => {
-                                                    if (productOrderCount > 1) {
-                                                        setProductOrderCount(productOrderCount - 1);
-                                                    }
-                                                }}><FaMinus />
+                                            const updatedCount = Math.max(productCart.productCartCount - 1, 1); 
+                                            setProductCartList(productCartList => 
+                                                productCartList.map(productCartOrder => 
+                                                    productCartOrder.productCartId === productCart.productCartId 
+                                                        ? { ...productCartOrder, productCartCount: updatedCount } 
+                                                        : productCartOrder
+                                                )
+                                            );
+                                        }}>
+                                        <FaMinus />
                                     </button>
                                     <div>{productCart.productCartCount}</div>
-                                    <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
+                                    <button onClick={() => {
+                                        const updatedCount = productCart.productCartCount + 1;
+                                        setProductCartList(productCartList => 
+                                            productCartList.map(productCartOrder => 
+                                                productCartOrder.productCartId === productCart.productCartId 
+                                                    ? { ...productCartOrder, productCartCount: updatedCount } 
+                                                    : productCartOrder
+                                            )
+                                        );
+                                    }}>
+                                        <FaPlus />
+                                    </button>
                                 </div>
                             </div>
                         </div>                       
                         )}
                     </div>
-                        <button css={s.buttons3}>구매하기 (1)</button>
+                        <button css={s.buttons3} onClick={handleProdudtCartsDelete}>삭제하기 ({selectProductCart})</button>
                 </div>
             <div css={s.totalContainer}>
                 <div css={s.totalBox}>
                     <div css={s.totalBoxIn}>
                         <div css={s.totalBoxIn2}> 
                             <div>총 상품 금액</div>
-                            <div>20000원</div>
+                            <div>{totalPrice}원</div>
                         </div>
                         <div css={s.totalBoxIn2}> 
                             <div>배송비</div>
                             <div>+ 0원</div>
                         </div>
                         <div>
-                            <div css={s.totalBoxInPrice}>20000원</div>                            
-                            <button css={s.buttons4}>구매하기 (1)</button>
+                            <div css={s.totalBoxInPrice}>{totalPrice}원</div>                            
+                            <button css={s.buttons4} onClick={handlePurchase}>
+                                구매하기 ({selectProductCart})</button>
                         </div>
                     </div>
                 </div>

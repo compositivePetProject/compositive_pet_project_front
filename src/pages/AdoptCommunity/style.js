@@ -41,6 +41,10 @@ export const boardListHeader = css`
         font-weight: 700;
         cursor: default;
     }
+
+    & > div:nth-child(1) {
+        width: 50px;
+    }
    
 `;
 
@@ -69,7 +73,13 @@ export const boardListItem = css`
             width: 25%;
         }
         
+        & > div:nth-child(1) {
+            width: 50px;
+        }
+        
     }
+
+
 `;
 
 export const pageNumberLayout = (page) => css`

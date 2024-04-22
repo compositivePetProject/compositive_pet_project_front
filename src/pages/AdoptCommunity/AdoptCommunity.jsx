@@ -13,20 +13,13 @@ import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/Adopta
 
 function AdoptCommunity() {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const searchCount = 5;
+    const searchCount = 7;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const page = parseInt(searchParams.get("page")) || 1;
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
 
-
-    // const indexOfLast = currentPage * postsPerPage;
-    // const indexOfFirst = indexOfLast - postsPerPage;
-    // const currentPosts = (posts) => {
-    //   let currentPosts = 0;
-    //   currentPosts = posts.slice(indexOfFirst, indexOfLast);
-    //   return currentPosts;
 
   
 
@@ -91,6 +84,7 @@ function AdoptCommunity() {
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
+                                <div></div>
                                 <div>닉네임</div>
                                 <div>제목</div>
                                 <div>카테고리</div>
@@ -100,10 +94,10 @@ function AdoptCommunity() {
                         <div css={s.boardListItem}>
                             {adoptList.map((data) => (
                                 <div 
-                                key={data.adoptationBoardId} 
-                                onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>
+                                key={data.adoptationBoardId} >
+                                    <div><input type="checkbox" /></div>
                                     <div>{data.username}</div>
-                                    <div>{data.adoptationBoardTitle}</div>
+                                    <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{data.createDate}</div>
                                 </div>

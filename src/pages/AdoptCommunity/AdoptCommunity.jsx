@@ -10,6 +10,7 @@ import Pagination from 'react-js-pagination';
 import { useQuery } from 'react-query';
 import { count } from 'firebase/firestore';
 import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
+import { AiOutlineLike } from "react-icons/ai";
 
 function AdoptCommunity() {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -84,22 +85,22 @@ function AdoptCommunity() {
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
-                                <div></div>
                                 <div>닉네임</div>
                                 <div>제목</div>
                                 <div>카테고리</div>
                                 <div>등록일</div>
+                                <div>좋아요</div>
                             </div>
                         </div>
                         <div css={s.boardListItem}>
                             {adoptList.map((data) => (
                                 <div 
                                 key={data.adoptationBoardId} >
-                                    <div><input type="checkbox" /></div>
                                     <div>{data.username}</div>
                                     <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{data.createDate}</div>
+                                    <div><AiOutlineLike/><>좋아요 수</></div>
                                 </div>
                             ))}
                         </div>

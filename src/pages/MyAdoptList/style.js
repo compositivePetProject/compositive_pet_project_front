@@ -193,6 +193,69 @@ export const passwordBox = css`
     
 `
 
+export const boardListHeader = css`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #dbdbdb;
+    width: 100%;
+    & > div {
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
+    }
+
+    & > div:nth-of-type(1) {
+        width: 50px;
+    }
+   
+`;
+
+export const boardListItem = css`
+    color: #222;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+
+    & > div {
+        box-sizing: border-box;
+        display: flex;
+        border-bottom: 1px solid #dbdbdb;
+        width: 100%;
+        &:hover {
+            background-color: #eee;
+        }
+        & > div {
+            box-sizing: border-box;
+            border-right: 1px solid #dbdbdb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            height: 40px;
+            width: 25%;
+        }
+        
+        & > div:nth-child(1) {
+            width: 50px;
+        }
+        
+    }
+
+    
+
+
+`;
+
+
+
 
 
 

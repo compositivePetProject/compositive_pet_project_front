@@ -1,29 +1,30 @@
+/** @jsxImportSource @emotion/react */
+import * as s from "./style";
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-/** @jsxImportSource @emotion/react */
-import * as s from "./style";
-import { getProductOrdersRequest } from '../../apis/api/productOrder';
+import { getAdoptCountByUserId } from '../../apis/api/Adopt';
 
 
 function MyAdoptList(props) {
-    // useAuthCheck(); 로그인 체크할 예정
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
-    const [ userOrders, setUserOrders ] = useState([]);
+    const [ adoptList, setAdoptList] = useState([]);
     const userId = principalQueryState.data?.data.userId;
 
-    const getProductOrdersQuery = useQuery(
-        ["getProductOrdersQuery", userId],
-        async () => await getProductOrdersRequest ({
+    const getMyAdoptBoard = useQuery(
+        ["getMyAdoptBoard", userId],
+        async () => await getAdoptCountByUserId ({
             userId: userId
         }),
         {
+            enabled: !!userId,
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: response => {
-                setUserOrders(() => response.data)
+                setAdoptList(response.data)
+                console.log(response.data)
             },
             onError: (error) => {
                 console.log(error);
@@ -43,16 +44,29 @@ function MyAdoptList(props) {
             </div>
 
             <div css={s.userDetails}>
-                <div css={s.title}>분양 게시판 목록</div>
-                <div>분양 게시판 정보</div>
-                    { userOrders.map(userOrder => 
-                    <div key={userOrder.productOrderId}>
-                        <div>{userOrder.productNameKor} </div>
-                        <div>{userOrder.productOrderCount}</div>
-                        <div>{userOrder.productOrderAddress}</div>
-                    </div>)
-                    }                 
+               <h2>내가 작성한 분양 게시글 목록</h2>
+                <div css={s.boardListHeader}>
+                    <div></div>
+                    <div>제목</div>
+                    <div>카테고리</div>
+                    <div>등록일</div>
                 </div>
+                <div css={s.boardListItem}>
+                    {adoptList.map((data) => (
+                        <div 
+                        key={data.adoptationBoardId} >
+                            <div><input type="checkbox"/></div>
+                            <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
+                            <div>{data.boardAnimalCategoryNameKor}</div>
+                            <div>{data.createDate}</div>
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    <button>삭제</button>
+                    <button>수정</button>
+                </div>
+            </div>
             
         </div>
     );

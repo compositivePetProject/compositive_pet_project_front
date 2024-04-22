@@ -42,8 +42,8 @@ export const boardListHeader = css`
         cursor: default;
     }
 
-    & > div:nth-child(1) {
-        width: 50px;
+    & > div:nth-of-type(1) {
+        width: 70px;
     }
    
 `;
@@ -73,9 +73,11 @@ export const boardListItem = css`
             width: 25%;
         }
         
-        & > div:nth-child(1) {
-            width: 50px;
+        & > div:nth-of-type(1) {
+            width: 70px;
         }
+
+    
         
     }
 

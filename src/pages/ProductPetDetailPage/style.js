@@ -144,11 +144,18 @@ export const inputBox = css`
 
 export const productDeliveryBox = css`
     display: flex;
+    justify-content: space-between;
     position: relative;
+    
     
     & > div:nth-of-type(1) {
         color : #777777;
         width: 80px;   
+    }
+
+    & > div:nth-of-type(2) {
+        font-weight: 600;
+        width: 100px;   
     }
 
     & > button {
@@ -270,14 +277,7 @@ export const activeStarButton = css`
     font-size: 25px;
 `;
 
-
 export const reviewBox4 = css`
-    
-    
-
-`;
-
-export const reviewBox5 = css`
     padding-left: 20px;
 `;
 

@@ -81,6 +81,17 @@ export const shoppingFilter = css`
 
     }
 `;
+export const productLikeButtons = css`
+    color: #3d3a35;
+    font-weight: 700;
+    background-color: transparent;
+    padding: 3px;
+    border: none;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+`;
+
 
 export const shoppingContainer = css`
     display: flex;

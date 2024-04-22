@@ -3,18 +3,42 @@ import { BiError } from 'react-icons/bi';
 import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptAll, getAdoptDog } from '../../apis/api/Adopt';
-import Pagination from 'react-js-pagination';
+import {useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {getAdoptDog, getAdoptDogCount } from '../../apis/api/Adopt';
+import { useQuery } from 'react-query';
+import AdoptationPageNumbersDog from '../../components/AdoptationPageNumbersDog/AdoptationPageNumbersDog';
 
-function AdoptCommunity() {
-    const [page, setPage] = useState(1);
+function AdoptCommunityDog() {
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const searchCount = 6;
+    const [maxPageNumberDog, setMaxPageNumberDog] = useState(0);
+    const [totalCountDog, setTotalCountDog] = useState(0);
+    const page = parseInt(searchParams.get("page")) || 1;
+    const lastPage = page * searchCount;
+    const firstPage = lastPage - searchCount;
 
-    const handlePageChange = (page) => {
-      setPage(page);
-    };
-    const [ searchParams ] = useSearchParams();
-
+    
+    const getAdoptDogCountQuery = useQuery(
+        ["getAdoptDogCountQuery"],
+        async () => getAdoptDogCount({
+            page,
+            count : searchCount
+        }),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                setMaxPageNumberDog(response.data.maxPageNumberDog);
+                setTotalCountDog(response.data.totalCountDog);
+                console.log(response.data)
+              
+                
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+    
     const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
     const [error, setError] = useState(null);
@@ -23,20 +47,27 @@ function AdoptCommunity() {
         const fetchData = async () => {
             try {
                 const response = await getAdoptDog();
-                setAdoptList(response); 
+                const index = response.slice(firstPage, lastPage)
+                setAdoptList(index); 
                 console.log(response); 
             } catch (error) {
                 setError(error);
                 console.log(error);
             }
         };
-
         fetchData();
-    }, []);
+    }, [page]);
+
+
 
     const handleWriteClick = () => {
         navigate("/adoptCommunity/register")
     }
+
+
+    const handlePageChange = (pageNumber) => {
+        setSearchParams({ page: pageNumber });
+    };
 
    
 
@@ -69,11 +100,12 @@ function AdoptCommunity() {
                     </div>
                 </div>
                 
-                <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
+                <button css={s.writeButton} onClick={handleWriteClick}>글쓰기</button>
+                <AdoptationPageNumbersDog maxPageNumberDog={maxPageNumberDog} totalCountDog={totalCountDog} onChange={handlePageChange}/>
                 </div>
 
         
     );
 }
 
-export default AdoptCommunity;
+export default AdoptCommunityDog;

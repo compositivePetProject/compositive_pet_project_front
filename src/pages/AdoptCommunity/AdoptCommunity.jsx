@@ -102,7 +102,7 @@ function AdoptCommunity() {
                                 <div>닉네임</div>
                                 <div>제목</div>
                                 <div>카테고리</div>
-                                <div>등록일</div>
+                                <div>작성일</div>
                                 <div>좋아요</div>
                             </div>
                         </div>

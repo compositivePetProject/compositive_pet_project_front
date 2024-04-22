@@ -118,7 +118,7 @@ function RootHeader() {
                         <div>
                             <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
                             <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체 분양 게시글</Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog"> 강아지 분양 게시글</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지 분양 게시글</Link> </div>
                             <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat"> 고양이 분양 게시글</Link> </div>
                         </div>
                     )}

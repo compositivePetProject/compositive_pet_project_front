@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, parsePath, useSearchParams } from "react-router-dom";
 
 
-function AdminProductSearchPageNumbers({ maxPageNumber, totalCount }) {
+function AdminProductSearchPageNumbers({ maxPageNumber, totalCount, path }) {
   const [ searchParams ] = useSearchParams();
   const page = parseInt(searchParams.get("page"));
   const [ numbers , setNumbers ] = useState([]);
@@ -24,16 +24,16 @@ function AdminProductSearchPageNumbers({ maxPageNumber, totalCount }) {
       <div css={s.pageNumbers}>
         {
           page !== 1 &&
-          <Link css={s.pageButton(false)} to={`/admin/management/product?page=${page - 1}`}>&#60;</Link>
+          <Link css={s.pageButton(false)} to={`/admin/management/${parsePath}product?page=${page - 1}`}>&#60;</Link>
         }
         {
           numbers.map(number => 
-            <Link key={number} css={s.pageButton(number === page)} to={`/admin/management/product?page=${number}`}>{number}</Link>
+            <Link key={number} css={s.pageButton(number === page)} to={`/admin/management/${path}product?page=${number}`}>{number}</Link>
           )
         }
         {
           page !== maxPageNumber &&
-          <Link css={s.pageButton(false)} to={`/admin/management/product?page=${page + 1}`}>&#62;</Link>
+          <Link css={s.pageButton(false)} to={`/admin/management/${path}product?page=${page + 1}`}>&#62;</Link>
         }
       </div>
       <div css={s.pageCount}>

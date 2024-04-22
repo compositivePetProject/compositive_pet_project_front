@@ -23,8 +23,6 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
   const [ maxPageNumber, setMaxPageNumber ] = useState(0);
   const [ totalCount, setTotalCount ] = useState(0);
 
-  console.log(searchProductData);
-
   const searchProductsQuery = useQuery(
     ["searchProductsQuery", searchParams.get("page")],
     async () => {
@@ -182,7 +180,7 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
         }
       </div>
       {
-        !getProductsCountQuery.isLoading && <AdminProductSearchPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} />
+        !getProductsCountQuery.isLoading && <AdminProductSearchPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} path={""} />
       }
     </div>
   )

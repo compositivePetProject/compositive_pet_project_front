@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import RegisterTopInput from "../TopInput/TopInput";
+import { useRecoilState } from "recoil";
+import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 
-function RegisterTop({registerInputs, submitClick, cancelClick}) {
-
+function RegisterTop({registerInputs, submitClick, cancelClick, buttonState}) {
+  const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
   return (
     <div css={s.layout}>
       {

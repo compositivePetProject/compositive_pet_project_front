@@ -10,6 +10,7 @@ import { productSizeCategoryOptions } from "../../../constants/productSizeCatego
 import TopInput from "../../../components/admin/TopInput/TopInput";
 import { useRecoilState } from "recoil";
 import { searchOutgoingProductDataState } from "../../../atoms/admin/searchOutgoingProductDataAtom";
+import AdminOutgoingStockSearch from "../../../components/admin/AdminOutgoingStockSearch/AdminOutgoingStockSearch";
 
 function ProductManagementOutgoingStockPage({title}) {
     const [ searchOutgoingProductData, setSearchOutgoingProductData ] = useRecoilState(searchOutgoingProductDataState);
@@ -26,13 +27,9 @@ function ProductManagementOutgoingStockPage({title}) {
         <AdminPageLayout>
         <div css={s.header}>
             <h1 css={s.title}>{title}</h1>
-            <div>
-            <button css={s.button}>추가</button>
-            <button css={s.button}>수정</button>
-            <button css={s.button}>삭제</button>
-            </div>
         </div>
-        <SearchTop searchInputs={searchInputs}/>
+        {/* <SearchTop searchInputs={searchInputs}/> */}
+        <AdminOutgoingStockSearch/>
         </AdminPageLayout>
   )
 }

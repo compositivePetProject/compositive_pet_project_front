@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { useRecoilState } from "recoil";
+import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import * as s from "./style";
 import { FaSearch } from "react-icons/fa";
 
-function TopInput({label, disabled, inputSize, name, setState}) {
+function TopInput({label, disabled, inputSize, name, setState, buttonState, value}) {
+  const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setState(stateValue => {
@@ -19,7 +23,7 @@ function TopInput({label, disabled, inputSize, name, setState}) {
             {label}
         </div>
         <div css={s.inputBox}>
-            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled}/>
+            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled} value={buttonState == 2 ? value : ""}/>
         </div>
     </div>
   )

@@ -54,8 +54,6 @@ function AdminOrderSearch() {
                 <div css={s.label}>고객명</div>
                 <div css={s.label}>주소</div>
                 <div css={s.label}>상세주소</div>
-                <div css={s.label}>상품구분</div>
-                <div css={s.label}>동물구분</div>
             </div>
             <div css={s.productTable}>
 

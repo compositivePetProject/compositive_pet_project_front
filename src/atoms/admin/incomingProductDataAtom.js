@@ -5,7 +5,9 @@ export const incomingProductDataState = atom({
     default: {
         productIncomingStockId: 0,
         productId: 0,
+        productNameKor: "",
         productSizeCategoryId: 0,
+        productSizeCategoryName: "",
         productIncomingStockCount: 0
     }
 });

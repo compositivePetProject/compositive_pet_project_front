@@ -14,6 +14,7 @@ import { productSizeCategoryOptions } from "../../../constants/productSizeCatego
 import { useMutation } from "react-query";
 import { postProductCurrentStockRequest } from "../../../apis/api/productAdmin";
 import { searchCurrentProductDataState } from "../../../atoms/admin/searchCurrentProductDataAtom";
+import AdminCurrentStockSearch from "../../../components/admin/AdminCurrentStockSearch/AdminCurrentStockSearch";
 
 function ProductManagementCurrentStockPage({title}) {
   const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);
@@ -32,8 +33,6 @@ function ProductManagementCurrentStockPage({title}) {
 
   const searchInputs = useMemo(() => [
     [
-      <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setSearchCurrentProductData} options={productCategoryOptions} />,
-      <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setSearchCurrentProductData} options={productAnimalCategoryOptions} />,
       <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setSearchCurrentProductData} options={productSizeCategoryOptions} />,
       <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchCurrentProductData} inputSize={20}/>
     ]
@@ -62,6 +61,7 @@ function ProductManagementCurrentStockPage({title}) {
         </div>
         <SearchTop searchInputs={searchInputs} />
         <RegisterTop registerInputs={registerInputs} submitClick={() => currentProductRegisterMutation.mutate(currentProductData)}/>
+        <AdminCurrentStockSearch />
     </AdminPageLayout>
 )
 }

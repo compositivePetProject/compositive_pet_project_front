@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 
 function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
     const [ searchParams ] = useSearchParams();
+    const navigate = useNavigate();
     const page = parseInt(searchParams.get("page"));
     const [ numbers , setNumbers ] = useState([]);
+    
 
   useEffect(() => {
     const startPageNumber = page % 10 === 0 ? page - 9 : page - (page % 10) + 1;
@@ -18,6 +20,8 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
     setNumbers(() => pageNumbers);
   }, [page, maxPageNumber, totalCount])
 
+ 
+
   return (
     <div css={s.layout}>
       <div css={s.pageNumbers}>
@@ -27,7 +31,11 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
         }
         {
           numbers.map(number => 
-            <Link key={number} css={s.pageButton(number === page)} to={`/adoptCommunity?page=${number}`}>{number}</Link>
+            <Link 
+            key={number} 
+            css={s.pageButton(number === page)} 
+            to={`/adoptCommunity?page=${number}`}
+            >{number}</Link>
           )
         }
         {

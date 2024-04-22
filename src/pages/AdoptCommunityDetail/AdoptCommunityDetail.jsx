@@ -41,7 +41,7 @@ function AdoptCommunityDetail() {
                
             }
             <div>
-                <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity")}}>목록</button>
+                <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
             </div>
         </div>
     );

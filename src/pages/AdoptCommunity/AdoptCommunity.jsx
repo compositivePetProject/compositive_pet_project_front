@@ -13,17 +13,27 @@ import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/Adopta
 
 function AdoptCommunity() {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const [page, setPage] = useState(1);
-    const searchCount = 10;
+    const searchCount = 5;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
-    const [totalCount, setTotalCount] = useState(0)
+    const [totalCount, setTotalCount] = useState(0);
+    const page = parseInt(searchParams.get("page")) || 1;
+    const lastPage = page * searchCount;
+    const firstPage = lastPage - searchCount;
 
-    console.log(searchParams.get("page"))
+
+    // const indexOfLast = currentPage * postsPerPage;
+    // const indexOfFirst = indexOfLast - postsPerPage;
+    // const currentPosts = (posts) => {
+    //   let currentPosts = 0;
+    //   currentPosts = posts.slice(indexOfFirst, indexOfLast);
+    //   return currentPosts;
+
+  
 
     const getAdoptCountQuery = useQuery(
         ["getAdoptCountQuery"],
         async () => getAdoptCount({
-            page: searchParams.get("page"),
+            page,
             count : searchCount
         }),
         {
@@ -38,9 +48,9 @@ function AdoptCommunity() {
         }
     )
 
-    const handlePageChange = (page) => {
-      setPage(page);
-    };
+    
+
+   
 
     const navigate = useNavigate();
     const [adoptList, setAdoptList] = useState([]); 
@@ -50,8 +60,9 @@ function AdoptCommunity() {
         const fetchData = async () => {
             try {
                 const response = await getAdoptAll();
-                setAdoptList(response); 
-                console.log(response); 
+                const index = response.slice(firstPage, lastPage)
+                setAdoptList(index);
+            
             } catch (error) {
                 setError(error);
                 console.log(error);
@@ -59,13 +70,19 @@ function AdoptCommunity() {
         };
 
         fetchData();
-    }, []);
+    }, [page]);
 
     const handleWriteClick = () => {
         navigate("/adoptCommunity/register")
     }
 
-   
+
+    const handlePageChange = (pageNumber) => {
+        setSearchParams({ page: pageNumber });
+    };
+
+
+  
 
     return (
             <div css={s.layout}>
@@ -95,8 +112,8 @@ function AdoptCommunity() {
                     </div>
                 </div>
                 
-                <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
-                <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} />
+                <button css={s.writeButton} onClick={handleWriteClick}>글쓰기</button>
+                <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
                 </div>
 
     );

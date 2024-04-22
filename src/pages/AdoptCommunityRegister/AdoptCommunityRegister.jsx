@@ -52,7 +52,7 @@ function AdoptCommunityRegister(props) {
         mutationFn: postAdoptRequest,
         onSuccess: (response) => {
             alert("작성을 완료했습니다.");
-            window.location.replace("/adoptCommunity");
+            window.location.replace("/adoptCommunity?page=1");
         },
         onError: (error) => {
             console.log(error);

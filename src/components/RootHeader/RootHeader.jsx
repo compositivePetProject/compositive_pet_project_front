@@ -129,10 +129,9 @@ function RootHeader() {
                     )}
                     {currentMenu === "shop" && (
                         <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  온라인 쇼핑몰</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  사료 </a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  간식</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  용품</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/product/pet/shopping?page=1">  전체</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  강아지</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  고양이</a> </div>
                         </div>
                     )}
                     {currentMenu === "map" && (

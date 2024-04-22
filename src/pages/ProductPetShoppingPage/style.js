@@ -12,6 +12,7 @@ export const layout = css`
 
 export const categoryHeader = css`
     display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 85px;
     background-color: white;
@@ -32,6 +33,35 @@ export const linkButtons = css`
         border-bottom: 3px solid rgb(15, 19, 23);
     }
 `;
+
+export const searchBar = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 23%;
+    height: 50px;
+`;
+
+export const searchBarInput = css`
+    padding: 0px 45px;
+    border: none;
+    width: 100%;
+    height: 80%;
+    outline: none;
+    font-size: 15px;
+    background-color: transparent;
+`;
+
+export const searchBarButton = css`
+    font-size: 27px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+`;
+
+
 
 export const shoppingFilter = css`
     box-sizing: border-box;
@@ -67,7 +97,7 @@ export const imageBox = css`
     justify-content: center;
     box-sizing: border-box;
     margin: 10px 20px 70px;
-    width: 23%;
+    width: 22%;
     height: 500px;
     background-color: #dbdbdb;
     cursor: pointer;

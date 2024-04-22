@@ -198,6 +198,7 @@ function ProductPetDetailPage() {
     const toggleFavoriteStatus = async () => {
             if (isLiked) {
                 await deleteProductFavoriteQuery.mutateAsync({
+                    productId: productId,
                     userId: userId
                 });
             } else {
@@ -347,9 +348,9 @@ function ProductPetDetailPage() {
                                         <div>{renderRatingStars(review.productCommentRatingValue)}</div>
                                         <div>{review.updateDate}</div>
                                     </div>
-                                    <div css={s.reviewBox4} dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                    <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
                                 </div>
-                                <div css={s.reviewBox5}>
+                                <div css={s.reviewBox4}>
                                     {hiddenUsername}님의 리뷰입니다.
                                 </div>
                             </div>

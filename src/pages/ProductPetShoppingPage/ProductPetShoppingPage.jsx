@@ -8,6 +8,7 @@ import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/Produc
 import { getAllCategoryRequest, getAllProductTypeRequest } from "../../apis/api/options";
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { CiSearch } from "react-icons/ci";
+import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 
 
 function ProductPetShoppingPage(props) {
@@ -21,14 +22,16 @@ function ProductPetShoppingPage(props) {
     const [totalCount, setTotalCount ] = useState(0);
     const searchCount = 16;
     const inputRef = useRef();
+    const [orderBy, setOrderBy] = useState("desc");
     
     const getProductsSearchRequestQuery = useQuery(
-        ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType],
+        ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType, orderBy],
         async () => await getProductPageRequest({
             page: searchParams.get("page"),
             count: searchCount,
             productCategoryId: selectedProductType,
-            searchText: searchText.value    
+            searchText: searchText.value,
+            orderBy : orderBy
         }),
             {
             retry: 0,
@@ -82,6 +85,10 @@ function ProductPetShoppingPage(props) {
     }
     const searchText = useProductOnKeyUpInput(searchSubmit);
 
+    const handleOrderByChange = (value) => {
+        setOrderBy(value);
+    };
+    console.log(orderBy);
     return (
         <div css={s.layout}>
             <div css={s.categoryHeader}>
@@ -115,7 +122,12 @@ function ProductPetShoppingPage(props) {
             <div css={s.shoppingFilter}>
             <div>{totalCount}개의 상품</div>
             <div>
-                좋아요순
+                {orderBy === "desc"
+                ?
+                <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
+                :
+                <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
+                }
             </div>
 
             </div>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { getAdoptCountByUserId } from '../../apis/api/Adopt';
+import { AiOutlineLike } from "react-icons/ai";
 
 
 function MyAdoptList(props) {
@@ -50,6 +51,7 @@ function MyAdoptList(props) {
                     <div>제목</div>
                     <div>카테고리</div>
                     <div>등록일</div>
+                    <div>좋아요</div>
                 </div>
                 <div css={s.boardListItem}>
                     {adoptList.map((data) => (
@@ -59,6 +61,7 @@ function MyAdoptList(props) {
                             <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
                             <div>{data.boardAnimalCategoryNameKor}</div>
                             <div>{data.createDate}</div>
+                            <div><AiOutlineLike/><>(좋아요 수)</></div>
                         </div>
                     ))}
                 </div>

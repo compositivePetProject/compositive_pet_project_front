@@ -7,10 +7,11 @@ import {useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {getAdoptDog, getAdoptDogCount } from '../../apis/api/Adopt';
 import { useQuery } from 'react-query';
 import AdoptationPageNumbersDog from '../../components/AdoptationPageNumbersDog/AdoptationPageNumbersDog';
+import { AiOutlineLike } from 'react-icons/ai';
 
 function AdoptCommunityDog() {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const searchCount = 6;
+    const searchCount = 7;
     const [maxPageNumberDog, setMaxPageNumberDog] = useState(0);
     const [totalCountDog, setTotalCountDog] = useState(0);
     const page = parseInt(searchParams.get("page")) || 1;
@@ -83,6 +84,7 @@ function AdoptCommunityDog() {
                                 <div>제목</div>
                                 <div>카테고리</div>
                                 <div>등록일</div>
+                                <div>좋아요</div>
                             </div>
                         </div>
                         <div css={s.boardListItem}>
@@ -94,6 +96,7 @@ function AdoptCommunityDog() {
                                     <div>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{data.createDate}</div>
+                                    <div><AiOutlineLike/><>(좋아요 수)</></div>
                                 </div>
                             ))}
                         </div>

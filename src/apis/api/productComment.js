@@ -12,6 +12,14 @@ export const getProductReviewsByProductIdRequest = async (params) => {
     return await instance.get("/product/comments", { params });
 }
 
+export const getProductReviewsPageRequest = async (params) => {
+    return await instance.get("/product/comments/page", { params });
+}
+
+export const getProductReviewsCountRequest = async (params) => {
+    return await instance.get("/product/comments/count", { params });
+}
+
 export const deleteProductReviewRequest = async (data) => {
     return await instance.delete("/product/comment/delete", { data })
 }

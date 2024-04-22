@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -14,7 +14,9 @@ import { postProductCartAddRequest } from "../../apis/api/productCart";
 import { useInput } from "../../hooks/useInput";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { VscChevronDown, VscChevronUp  } from "react-icons/vsc";
-import { getProductReviewsByProductIdRequest } from "../../apis/api/productComment";
+import { getProductReviewsByProductIdRequest, getProductReviewsCountRequest, getProductReviewsPageRequest } from "../../apis/api/productComment";
+import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/ProductPetPageNumbers";
+import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDetailPageNumbers/ProductPetPageDetailPageNumbers";
 
 function ProductPetDetailPage() {
 
@@ -29,12 +31,12 @@ function ProductPetDetailPage() {
     const productId = parseInt(searchParams.get("productId"));
     const userId = principalQueryState.data?.data.userId;
     const selectedSizeType = useSelect();
-    const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
-    const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
+    const [ productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
+    const [ productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
     const [ isDetailPage, setIsDetailPage ] = useState(false);
-    const hiddenUsername =  '****' + principalQueryState.data?.data.username.slice(-3); 
-    
-  
+    const hiddenUsername =  '****' + principalQueryState.data?.data.username.slice(-3);
+    const [ totalCount, setTotalCount ] = useState(0);
+    const searchCount = 5;
 
     useEffect(() => {
         const fetchProductFavoriteStatus = async () => {
@@ -81,41 +83,45 @@ function ProductPetDetailPage() {
             }
         }
     )
-    
-    const getProductFavoriteStatusQuery = useQuery(
-        ["getProductFavoriteStatusQuery", productId, userId],
-        async () => await getProductFavoriteStatusRequest ({
-            productId: productId,
-            userId: userId
-        }),
-        {
-            retry: 0,
-            refetchOnWindowFocus: false,
-            onSuccess: response => {
-            },
-            onError: (error) => {
-            }
-        }
-    )
+   
 
-    const getProductReviewsByProductIdQuery = useQuery(
-        ["getProductReviewsByProductIdQuery", productId],
-        async () => await getProductReviewsByProductIdRequest ({
+    const getProductReviewsSearchCountQuery = useQuery(
+        ["getProductReviewsSearchCountQuery", searchParams.get("page")],
+        async () => await getProductReviewsPageRequest({
+            page: searchParams.get("page"),
+            count: searchCount,
             productId : productId
         }),
-        {
+            {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: response => {
                 console.log(response)
-                setReviews(() => response.data)
+                setReviews(response.data)
             },
             onError: (error) => {
                 console.log(error);
             }
         }
-    )
+    );
 
+    const getProductReviewsCountQuery = useQuery(
+        ["getProductReviewsCountQuery", getProductReviewsSearchCountQuery.data],
+        async () => await getProductReviewsCountRequest({
+            count: searchCount,
+            productId : productId
+        }),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response)
+                setTotalCount(response.data.totalCount)
+            },
+            onError: error => {
+                console.log(error)
+            }
+        }
+    );
 
     const postProductOrderQuery = useMutation({
         mutationKey: "postProductOrderQuery",
@@ -250,6 +256,9 @@ function ProductPetDetailPage() {
         })
     }
 
+    const reviewsCount = {
+        maxPageNumber: 10
+    }
 
    
     return (
@@ -330,7 +339,7 @@ function ProductPetDetailPage() {
                         }
                     </div>
                     <div css={s.productFooter}>
-                        <div css={s.reviewBox}>리뷰 ({reviews.length})</div>
+                        <div css={s.reviewBox}>리뷰 ({totalCount})</div>
                         {reviews.map(review => 
                             <div key={review.productCommentId} css={s.reviewBox1}>
                                 <div css={s.reviewBox2}>
@@ -345,6 +354,9 @@ function ProductPetDetailPage() {
                                 </div>
                             </div>
                         )}
+                        {   !getProductReviewsCountQuery.isLoading &&
+                            <ProductPetPageDetailPageNumbers reviewsCount={getProductReviewsCountQuery.data?.data} productId={productId}/> 
+                        }
                     </div>
                 </div>
                 

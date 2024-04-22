@@ -21,6 +21,20 @@ function AdoptCommunity() {
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
 
+    
+
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        const year = newDate.getFullYear();
+        const month = String(newDate.getMonth() + 1).padStart(2, '0');
+        const day = String(newDate.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const date = (date) => {
+        return formatDate(date);
+    }
+
 
   
 
@@ -99,8 +113,8 @@ function AdoptCommunity() {
                                     <div>{data.username}</div>
                                     <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
-                                    <div>{data.createDate}</div>
-                                    <div><AiOutlineLike/><>좋아요 수</></div>
+                                    <div>{date(data.createDate)}</div>
+                                    <div><AiOutlineLike/><>(좋아요 수)</></div>
                                 </div>
                             ))}
                         </div>

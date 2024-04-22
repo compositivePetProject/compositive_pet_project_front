@@ -34,6 +34,9 @@ function AdoptCommunityAdmin() {
         navigate("/adoptCommunity/register")
     }
 
+
+   
+
    
 
     return (
@@ -55,7 +58,7 @@ function AdoptCommunityAdmin() {
                                 <div 
                                 key={data.adoptationBoardAdminId} 
                                 onClick={() => navigate(`/adoptCommunity/admin/${data.adoptationBoardAdminId}`)}>
-                                    <div>{data.username}</div>
+                                    <div>관리자</div>
                                     <div>{data.adoptationBoardAdminTitle}</div>
                                     <div>{data.adoptationBoardAdminContent}</div>
                                     <div>{data.createDate}</div>

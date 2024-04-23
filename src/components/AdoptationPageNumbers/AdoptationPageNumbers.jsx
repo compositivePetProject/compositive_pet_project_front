@@ -44,8 +44,8 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
         }
       </div>
       <div css={s.pageCount}>
-        <div css={s.page}>Page {page} of {maxPageNumber}</div>
-        <div css={s.count}>Count: {totalCount}</div>
+        <div css={s.page}>현재 페이지: {page} of {maxPageNumber}</div>
+        <div css={s.count}>총 게시글: {totalCount}</div>
       </div>
     </div>
   )

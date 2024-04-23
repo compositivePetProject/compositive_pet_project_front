@@ -44,8 +44,8 @@ function AdoptationPageNumbersDog({ maxPageNumberDog, totalCountDog }) {
         }
       </div>
       <div css={s.pageCount}>
-        <div css={s.page}>Page {page} of {maxPageNumberDog}</div>
-        <div css={s.count}>Count: {totalCountDog}</div>
+        <div css={s.page}>현재 페이지: {page} of {maxPageNumberDog}</div>
+        <div css={s.count}>총 게시글: {totalCountDog}</div>
       </div>
     </div>
   )

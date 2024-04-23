@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getAdoptByUserId, getAdoptCountByUserId} from '../../apis/api/Adopt';
+import { DeleteAdoptBoardByID, deleteAdoptBoardByID, deleteAdoptBoardById, getAdoptByUserId, getAdoptCountByUserId} from '../../apis/api/Adopt';
 import { AiOutlineLike } from "react-icons/ai";
 import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/AdoptationPageNumbers";
 import AdoptationPageNumbersUser from "../../components/AdoptationPageNumbersUser/AdoptationPageNumbersUser";
@@ -84,9 +84,31 @@ const handleCheckboxChange = (event, adoptationBoardId) => {
 };
 
 
+const deleteAdoptRequestMutation = useMutation({
+    mutationKey: "deleteAdoptRequestMutation",
+    mutationFn: deleteAdoptBoardById,
+    onSuccess: (response) => {
+       
+    },
+    onError: (error) => {
+        console.log(error);
+    }
+})
+
+
+
+const handleDeleteBoard = () => {
+    for(let boardId of checkedBoards) {
+        deleteAdoptRequestMutation.mutate({boardIds: boardId})
+    }
+   
+    alert("해당 게시글이 삭제되었습니다.")
+    window.location.replace("/account/mypage/Adopt?page=1");
+};
+
+
 const handleDeleteSelected = () => {
     console.log("Selected items:", checkedBoards);
-    // 여기서 선택된 항목을 처리하는 로직을 구현합니다.
 };
 
 
@@ -113,7 +135,7 @@ const handleDeleteSelected = () => {
             </div>
 
             <div css={s.userDetails}>
-               <h2>내가 작성한 분양 게시글 목록</h2>
+               <h2>분양 게시글 관리</h2>
                 <div css={s.boardListHeader}>
                     <input name="check-all"type="checkbox"/>
                     <div>제목</div>
@@ -140,7 +162,7 @@ const handleDeleteSelected = () => {
                 </div>
                 <AdoptationPageNumbersUser maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
                 <div>
-                    <button onClick={() => console.log(checkedBoards)}>삭제</button>
+                    <button onClick={handleDeleteBoard}>삭제</button>
                     <button>수정</button>
                 </div>
             </div>

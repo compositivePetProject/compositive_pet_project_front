@@ -2,7 +2,7 @@
 import * as s from "./style";
 import { useEffect, useRef, useState } from "react";
 import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteProductFavoriteRequest, getProductFavoriteStatusRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
 import { postProductOrderRequest } from "../../apis/api/productOrder";
@@ -19,7 +19,7 @@ import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/Produc
 import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDetailPageNumbers/ProductPetPageDetailPageNumbers";
 
 function ProductPetDetailPage() {
-
+    const navigate = useNavigate();
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ isLiked, setIsLiked ] = useState(false);
     const [ user, setUser ] = useState("");
@@ -340,7 +340,10 @@ function ProductPetDetailPage() {
                         }
                     </div>
                     <div css={s.productFooter}>
-                        <div css={s.reviewBox}>리뷰 ({totalCount})</div>
+                        <div css={s.reviewBox}>
+                            <div> 리뷰 ({totalCount})</div>
+                            <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>리뷰 작성하기</button>
+                        </div>
                         {reviews.map(review => 
                             <div key={review.productCommentId} css={s.reviewBox1}>
                                 <div css={s.reviewBox2}>

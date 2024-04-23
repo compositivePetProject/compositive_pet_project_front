@@ -1,5 +1,13 @@
 import { css } from "@emotion/react";
 
+export const layout = css`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+`;
+
 export const container = css`
     display: flex;
     height: 20px;
@@ -17,3 +25,17 @@ export const button = css`
     height: 35px;
 `;
 
+export const listContainer = css`
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+`;
+
+export const listItem = css`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width:400px;
+`;

@@ -5,7 +5,6 @@ import * as s from "./style";
 import { FaSearch } from "react-icons/fa";
 
 function TopInput({label, disabled, inputSize, name, setState, buttonState, value}) {
-  const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +22,7 @@ function TopInput({label, disabled, inputSize, name, setState, buttonState, valu
             {label}
         </div>
         <div css={s.inputBox}>
-            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled} value={buttonState == 2 ? value : ""}/>
+            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled} value={value}/>
         </div>
     </div>
   )

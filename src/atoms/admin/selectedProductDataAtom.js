@@ -8,6 +8,7 @@ export const selectedProductData = atom({
         productAnimalCategoryId: 0,
         productNameKor: "",
         productPrice: 0,
-        productImageUrl: ""
+        productImageUrl: "",
+        productBoardContent: ""
     }
 });

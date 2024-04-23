@@ -6,7 +6,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../apis/firebase/firebaseConfig";
 import { v4 as uuid } from "uuid";
 
-function TopFileUpload({label, disabled, inputSize, fileUploadPath, name, stateValue, setState}) {
+function TopFileUpload({label, disabled, inputSize, fileUploadPath, name, stateValue, setState, buttonState, value}) {
     const fileRef = useRef();
 
     const handleOnChange = (e) => {
@@ -57,9 +57,9 @@ function TopFileUpload({label, disabled, inputSize, fileUploadPath, name, stateV
                 {label}
             </div>
             <div css={s.inputBox}>
-                <input css={s.input(inputSize)} type="text" name={name} value={stateValue} onChange={handleOnChange} disabled={disabled}/>
+                <input css={s.input(inputSize)} type="text" name={name} value={buttonState === 1 ? stateValue : value} onChange={handleOnChange} disabled={disabled}/>
                 <input css={s.file} type="file" ref={fileRef} onChange={handleFileChange}/>
-                <button css={s.button} onClick={() => {
+                <button css={s.button} disabled={buttonState === 0 ? true : false} onClick={() => {
                     fileRef.current.click();
                 }}>
                     <IoCloudUploadOutline />

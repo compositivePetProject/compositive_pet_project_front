@@ -8,8 +8,10 @@ import { count } from "firebase/firestore";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import { useRecoilState } from "recoil";
+import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
+import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
 
-function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText, buttonState }) {
+function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 10;
     const [ incomingProductList, setIncomingProductList ] = useState([]);
@@ -21,6 +23,12 @@ function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText, but
     })
     const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
     const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
+    const [ incomingProductsIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
+    const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
+    useEffect(() => {
+        console.log(searchText);
+        console.log(selectedProductSizeCategory);
+    }, [selectedProductSizeCategory, searchText])
 
     const searchIncomingProductsQuery = useQuery(
         ["searchIncomingProductsQuery", searchParams.get("page")],
@@ -81,21 +89,24 @@ function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText, but
         const productIncomingStockId = parseInt(e.target.value);
         setIncomingProductList(() => 
             incomingProductList.map((product) => {
-                console.log(product)
-            if(product.productIncomingStockId === productIncomingStockId) {
-              return {
-                ...product,
-                checked: e.target.checked
-              }
-            }
+                if(product.productIncomingStockId === productIncomingStockId) {
+                return {
+                    ...product,
+                    checked: e.target.checked
+                }
+                }
             return product;
           })
         );
         setLastCheckedProductId(() => productIncomingStockId);
-        if(buttonState == 2) {
-            setIncomingProductData(incomingProductList.filter(product => product.productIncomingStockId === productIncomingStockId)[0]);
-        }
+        setIncomingProductData(incomingProductList.filter(product => product.productIncomingStockId === productIncomingStockId)[0]);
+        setIncomingProductsIds([...incomingProductsIds, {productIncomingStockId}]);
+        console.log(productIncomingStockId);
     }
+
+    useEffect(() => {
+        console.log(incomingProductsIds)
+    }, [incomingProductsIds])
 
     useEffect(() => {
         if(checkAll.target === 1) {

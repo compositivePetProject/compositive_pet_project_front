@@ -13,13 +13,15 @@ import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
 import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import { useMutation, useQueryClient } from "react-query";
-import { postProductIncomingStockRequest, updateProductIncomingStockAdminRequest } from "../../../apis/api/productAdmin";
+import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest } from "../../../apis/api/productAdmin";
 import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
 import AdminIncomingStockSearch from "../../../components/admin/AdminIncomingStockSearch/AdminIncomingStockSearch";
+import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
 
 function ProductManagementIcomingStockPage({title}) {
     const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
     const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
+    const [ incomingProductIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
     const queryClient = useQueryClient();
     const [ buttonState, setButtonState ] = useState(0);
 
@@ -29,6 +31,14 @@ function ProductManagementIcomingStockPage({title}) {
         mutationFn: postProductIncomingStockRequest,
         onSuccess: response => {
             alert("가입고 상품 등록 완료");
+            setIncomingProductData({
+                productIncomingStockId: 0,
+                productId: 0,
+                productNameKor: "",
+                productSizeCategoryId: 0,
+                productSizeCategoryName: "",
+                productIncomingStockCount: 0
+            });
             window.location.reload();
         },
         onError: error => {
@@ -41,6 +51,14 @@ function ProductManagementIcomingStockPage({title}) {
         mutationFn: updateProductIncomingStockAdminRequest,
         onSuccess: response => {
             alert("가입고 상품 수정 완료");
+            setIncomingProductData({
+                productIncomingStockId: 0,
+                productId: 0,
+                productNameKor: "",
+                productSizeCategoryId: 0,
+                productSizeCategoryName: "",
+                productIncomingStockCount: 0
+            });
             window.location.reload();
         },
         onError: error => {
@@ -48,35 +66,45 @@ function ProductManagementIcomingStockPage({title}) {
         }
     })
 
-    const searchInputs = useMemo(() => [
+    const incomingProductDeleteMutation = useMutation({
+        mutationKey: "incomingProductDeleteMutation",
+        mutationFn: deleteProductIncomingStocksAdminRequest,
+        onSuccess: response => {
+            alert("가입고 상품 삭제 완료");
+            window.location.reload();
+        },
+        
+        onError: error => {
+            alert("실패");
+        }
+    })
+
+    const searchInputs = [
         [
             <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setSearchIncomingProductData} options={productSizeCategoryOptions} />,
             <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchIncomingProductData} inputSize={20}/>
         ]
-    ], []);
+    ];
 
     const registerInputs = [
         [
             <TopInput label={"가입고ID"} name={"productIncomingId"} setState={setIncomingProductData} disabled={true} inputSize={5} buttonState={buttonState} value={incomingProductData.productIncomingStockId}/>,
-            <TopInput label={"상품ID"} name={"productId"} setState={setIncomingProductData} inputSize={5} buttonState={buttonState} value={incomingProductData.productId}/>,
-            <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setIncomingProductData} options={productSizeCategoryOptions} buttonState={buttonState} value={incomingProductData.productSizeCategoryId}/>
+            <TopInput label={"상품ID"} name={"productId"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} inputSize={5} buttonState={buttonState} value={incomingProductData.productId}/>,
+            <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} options={productSizeCategoryOptions} buttonState={buttonState} value={incomingProductData.productSizeCategoryId}/>
         ],
         [
-            <TopInput label={"상품가입고갯수"} name={"productIncomingStockCount"} setState={setIncomingProductData} inputSize={8} buttonState={buttonState} value={incomingProductData.productIncomingStockCount}/>,
+            <TopInput label={"상품가입고갯수"} name={"productIncomingStockCount"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} inputSize={8} buttonState={buttonState} value={incomingProductData.productIncomingStockCount}/>,
         ]
     ];
 
-    // const submit = () => {
-    //     queryClient.refetchQueries(["searchIncomingProductsQuery"]);
-    //     queryClient.refetchQueries(["getIncomingStockCountQuery"]);
-    // }
-
+    
     const submit = () => {
         if(buttonState === 1) {
-            incomingProductRegisterMutation.mutate(incomingProductData)
+            incomingProductRegisterMutation.mutate(incomingProductData);
         }
-
+        
         if(buttonState === 2) {
+            setButtonState(2);
             incomingProductUpdateMutation.mutate({
                 productIncomingStockId: incomingProductData.productIncomingStockId,
                 productId: incomingProductData.productId,
@@ -84,18 +112,25 @@ function ProductManagementIcomingStockPage({title}) {
                 productIncomingStockCount: incomingProductData.productIncomingStockCount
             })
         }
-
-        if(buttonState === 3) {
-
+    }
+    
+    const deleteSubmit = () => {
+        if(window.confirm("가입고 상품을 삭제하시겠습니까?")) {
+            let ids = incomingProductIds.map(product => product.productIncomingStockId);
+            incomingProductDeleteMutation.mutate(ids);
+        } else {
+            alert("가입고 상품 삭제가 취소되었습니다.");
         }
     }
 
-    // useEffect(() => {console.log(searchIncomingProductData)}, [searchIncomingProductData])
-    // useEffect(() => {console.log(buttonState)}, [buttonState])
-    // useEffect(() => {
-    //     console.log(incomingProductData)
-    // }, [incomingProductData])
+    const searchSubmit = () => {
+        queryClient.refetchQueries(["searchIncomingProductsQuery"]);
+    }
 
+    useEffect(() => {
+        console.log(searchIncomingProductData)
+    }, [searchIncomingProductData]);
+    
     return (
         <AdminPageLayout>
             <div css={s.header}>
@@ -103,12 +138,12 @@ function ProductManagementIcomingStockPage({title}) {
                 <div>
                 <button css={s.button} onClick={() => setButtonState(1)}>추가</button>
                 <button css={s.button} onClick={() => setButtonState(2)}>수정</button>
-                <button css={s.button} onClick={() => setButtonState(3)}>삭제</button>
+                <button css={s.button} onClick={deleteSubmit}>삭제</button>
                 </div>
             </div>
-            <SearchTop searchInputs={searchInputs} submit={null} />
+            <SearchTop searchInputs={searchInputs} submit={searchSubmit} />
             <RegisterTop registerInputs={registerInputs} submitClick={submit} buttonState={buttonState}/>
-            <AdminIncomingStockSearch selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor} buttonState={buttonState} />
+            <AdminIncomingStockSearch selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor}/>
         </AdminPageLayout>
     )
 };

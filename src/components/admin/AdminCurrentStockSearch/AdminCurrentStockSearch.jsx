@@ -122,7 +122,7 @@ function AdminCurrentStockSearch() {
         <div css={s.layout}>
         <div css={s.row}>
         <div css={s.label}>
-            <input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange}/></div>
+            <input type="checkbox"checked={checkAll.checked} onChange={handleCheckAllChange}/></div>
             <div css={s.label}>ID</div>
             <div css={s.label}>상품명</div>
             <div css={s.label}>사이즈</div>

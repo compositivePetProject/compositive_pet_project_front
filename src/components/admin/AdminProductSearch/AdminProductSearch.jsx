@@ -2,14 +2,15 @@
 import * as s from "./style";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getProductsAdminCountRequest, getProductsAdminRequest } from "../../../apis/api/productAdmin";
+import { deleteProductsAdminRequest, getProductsAdminCountRequest, getProductsAdminRequest, updateProductAdminRequest } from "../../../apis/api/productAdmin";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
+import { useMutation } from "react-query";
 
-function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText }) {
+function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText, onSetDeleteProducts }) {
   const [ searchParams, setSearchParams ] = useSearchParams();
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const searchCount = 10;
@@ -22,6 +23,7 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
   const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
   const [ maxPageNumber, setMaxPageNumber ] = useState(0);
   const [ totalCount, setTotalCount ] = useState(0);
+  const [ deleteProducts, setDeleteProducts ] = useState([]);
 
   const searchProductsQuery = useQuery(
     ["searchProductsQuery", searchParams.get("page")],
@@ -71,6 +73,10 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
     }
   )
 
+  
+
+  
+
   const handleCheckAllChange = (e) => {
     setCheckAll(() => {
       return {
@@ -93,8 +99,31 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
         return product;
       })
     );
+
+    setDeleteProducts((product) => {
+      if (e.target.checked) {
+        return [...product, productId];
+      } else {
+        return product.filter((id) => id !== productId);
+      }
+    });
+  
     setLastCheckedProductId(() => productId);
   }
+
+  // useEffect(() => {
+  //   console.log(selectedProduct)
+  //   console.log(lastCheckedProductId)
+  // }, [selectedProduct])
+  useEffect(() => {
+    console.log(deleteProducts)
+    // console.log(lastCheckedProductId)
+  }, [deleteProducts])
+
+  useEffect(() => {
+    onSetDeleteProducts(deleteProducts);
+  }, [deleteProducts, onSetDeleteProducts])
+  
 
   useEffect(() => {
     if(checkAll.target === 1) {

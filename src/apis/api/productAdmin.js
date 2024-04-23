@@ -10,6 +10,14 @@ export const getProductsAdminCountRequest = async (params) => {
     return response;
 }
 
+export const updateProductAdminRequest = async (data) => {
+    return await instance.put(`/product/admin/product/${data.productId}`, data);
+}
+
+export const deleteProductsAdminRequest = async (data) => {
+    return await instance.delete("product/admin/products", {data});
+}
+
 export const getProductIncomingStocksAdminRequest = async () => {
     const response = await instance.get("/product/admin/incoming/stocks");
     return response;
@@ -57,6 +65,10 @@ export const getProductIncomingAdminCountRequest = async (params) => {
 
 export const updateProductIncomingStockAdminRequest = async (data) => {
     return await instance.put(`/product/admin/incoming/stock/${data.productIncomingStockId}`, data);
+}
+
+export const deleteProductIncomingStocksAdminRequest = async (data) => {
+    return await instance.delete("/product/admin/incoming/stocks", {data});
 }
 
 export const postProductCurrentStockRequest = async (data) => {

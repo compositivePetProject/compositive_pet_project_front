@@ -89,6 +89,10 @@ function AdoptCommunity() {
         setSearchParams({ page: pageNumber });
     };
 
+    const handleClick = () => {
+        console.log("입력이 감지되었습니다.")
+    }
+
 
   
 

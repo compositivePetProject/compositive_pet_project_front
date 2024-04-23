@@ -45,7 +45,12 @@ export const getAdoptDogCount = async (params) => {
 }
 
 
-export const getAdoptCountByUserId = async (params) => {
+export const getAdoptByUserId = async (params) => {
     const response = await instance.get('/adoptation/board/user', {params});
+    return response;
+}
+
+export const getAdoptCountByUserId = async (params) => {
+    const response = await instance.get('/adoptation/board/userCount', {params});
     return response;
 }

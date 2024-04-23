@@ -7,5 +7,5 @@ export function useQuillInput() {
     setQuillValue(() => value);
   }
 
-  return [ quillValue, onChange];
+  return [ quillValue, onChange, setQuillValue];
 }

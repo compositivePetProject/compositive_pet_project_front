@@ -12,8 +12,13 @@ import { putProductReviewRequest } from "../../apis/api/productComment";
 
 function ProductReviewModal ({ onClose, review})  {
     const [ rating, setRating] = useState(0);
-    const [ quillValue, handleQuillValueChange ] = useQuillInput();
-    const { productCommentId, productId, userId, productCommentRatingId} = review;
+    const [ quillValue, handleQuillValueChange, setQuillValue ] = useQuillInput();
+    const { productCommentId, productId, userId, productCommentRatingId, productCommentContent, productCommentRatingValue} = review;
+
+    useEffect(() => {
+        setQuillValue(() => productCommentContent)
+        setRating(() => productCommentRatingValue);
+    }, []);
 
     const updateProductCommentQuery = useMutation({
         mutationKey: "updateProductCommentQuery",
@@ -65,8 +70,9 @@ function ProductReviewModal ({ onClose, review})  {
                             <div>상세리뷰</div>
                                 <ReactQuill style={{
                                     width: "100%",
-                                    height: "800px"
+                                    height: "750px"
                                     }} 
+                                    value={quillValue}
                                     modules={QUILL_MODULES}
                                     onChange={handleQuillValueChange}
                                 />

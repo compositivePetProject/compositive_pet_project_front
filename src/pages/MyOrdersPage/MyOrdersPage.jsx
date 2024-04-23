@@ -155,6 +155,13 @@ function MyOrdersPage(props) {
     const handleOpenEditModal = (order) => {
         setIsEditing(true); 
         setEditedOrder(order); 
+        selectedSizeType.handleOnChange({
+            value: order.productSizeCategoryId,
+            label: order.productSizeCategoryNameKor
+        });
+        setProductOrderCount(() => order.productOrderCount); 
+        setProductOrderAddress(() => order.productOrderAddress); 
+        setProductOrderDetailAddress(() => order.productDetailOrderAddress); 
     };
 
     const handleCloseEditModal = () => {

@@ -179,6 +179,25 @@ export const productOrderButtons = css`
     }
 `;
 
+export const productOrderButton = css` 
+    color: #e2e2e2;
+    font-weight: 700;
+    background-color: #444444;
+    padding: 3px;
+    border: none;
+    width: 10%;
+    height: 50px;
+    cursor: pointer;
+    
+    & > button:nth-of-type(1) {
+        margin-right: 20px;
+    }
+
+    &:hover {
+        background-color: #333333;
+    }
+`;
+
 export const productOrderbox = css`
     display: flex;
     justify-content: space-between;
@@ -228,6 +247,9 @@ export const productFooter = css`
 `;
 
 export const reviewBox = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 18px;
     font-weight: 700;
     line-height: 85px;

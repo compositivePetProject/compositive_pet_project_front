@@ -1,32 +1,67 @@
-import { View, Text } from 'react-native'
+
 import * as s from "./style";
-import React, { useEffect } from 'react'
-import { getCommunityBoardAdminRequest } from '../../apis/api/getCommunityBoardAdminAll';
+import React, { useEffect, useState } from 'react'
+import { getCommunityBoardAdminListRequest } from '../../apis/api/communityBoardAdmin';
+import { useNavigate } from 'react-router-dom';
+import { FaPencil } from 'react-icons/fa6';
+import { useQueryClient } from "react-query";
 
  function CoummunityBoardAdminPage() {
+    const navigate = useNavigate();
     const[communityBoardAdminList, setCommunityBoardAdminList ] = useState([])
     const[error, setError] = useState(null);
+    
 
     useEffect(() => {
       const fetchData = async() => {
         try{
-        const response = await getCommunityBoardAdminRequest();
-        setCommunityBoardAdminList(response)
-        console.log(response)
+          const response = await getCommunityBoardAdminListRequest();
+          setCommunityBoardAdminList(response)
+          console.log(response)
         }catch(error){
-          
-        }      
-          
-      
-      }
+            setError(error);
+            console.log(error)                  
+          }            
+        };
 
-    })
+    fetchData();
+  }, []);
+
+  const handleOnClicToWritePage = () => {
+    navigate("/community/board/write")
+  }
+
   return (
-    <div>
-     
+    <div css= {s.layout}>
+      <div>
+      <h1 css={s.headerTitle}>관리자 공지사항 게시판</h1>
+        <div css ={s.boardListLayout}>
+          <div css={s.boardListHeader}>
+            <div css={s.boardListHeader}>
+                <div>관리자 아이디</div>
+                <div>공지사항 제목</div>
+                <div>공지사항 내용</div>
+                <div>작성일 </div>
+            </div>
+        </div>
+      <div css={s.CommunityboardListItem}>
+        {communityBoardAdminList.map((data) => (
+            <div
+            key={data.communityBoardAdminId}
+            onClick={() => navigate(`/community/admin/?communityNoticeId${data.communityBoardAdminId}`)}>
+            <div>관리자</div>
+            <div>{data.userId}</div>
+            <div>{data.communityBoardAdminTitle}</div>
+            <div>{data.communityBoardAdminContent}</div>
+            <div>{data.createDate}</div>
+            </div>
+          ))}
+      </div>
     </div>
+  </div>
+<FaPencil css={s.writeButton} onClick={handleOnClicToWritePage}></FaPencil>
+  
+  </div>
   )
 }
-
-
 export default CoummunityBoardAdminPage; 

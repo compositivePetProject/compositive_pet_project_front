@@ -10,6 +10,10 @@ import CommunityBoardDogPage from '../../pages/CommunityBoardDogPage/CommunityBo
 import CommunityBoardWritePage from '../../pages/CommunityBoardWritePage/CommunityBoardWritePage';
 import { useQuery } from 'react-query';
 import { getPrincipalRequest } from '../../apis/api/communityBoard';
+import CommunityBoardDetailPage from '../../pages/CommunityBoardDetailPage/CommunityBoardDetailPage';
+import CommunityBoardCatPage from '../../pages/CommunityBoardCatPage/CommunityBoardCatPage';
+import CoummunityBoardAdminPage from '../../pages/CommunityBoardAdminPage/CoummunityBoardAdminPage';
+import CommunityBoardAdminDetailPage from '../../pages/CommunityBoardAdminDetailPage/CommunityBoardAdminDetailPage';
 
 
 
@@ -34,7 +38,11 @@ function AuthRoute(props) {
                     <Route path="/auth/*" element={ <AuthPage /> } />
                     <Route path="/community/getboards" element={<CommunityBoardPage />} />
                     <Route path="/community/dog" element={<CommunityBoardDogPage />} />
+                    <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
                     <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
+                    <Route path="/community/board/:boardId" element={<CommunityBoardDetailPage />} />
+                    <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
+                    <Route path="/community/admin/" element={<CommunityBoardAdminDetailPage />} />
                 </Routes>
             </PageContainer>
             <RootFooter />

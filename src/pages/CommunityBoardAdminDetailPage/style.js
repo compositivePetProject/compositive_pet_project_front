@@ -1,6 +1,6 @@
 import { css } from "@emotion/react"
 
-export const containter = css`
+export const container = css`
  position: relative;
  display: flex;
  flex-direction: column;
@@ -29,43 +29,6 @@ export const boardContent = css`
   border: 1px solid #dbdbdb;
 
 `
-
-export const deletebutton = css`
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-padding: 5px;
-background-color: white;
-font-size: 12px;
-cursor: pointer;
-
-&:hover {
-  background-color: #dbdbdb;
-}
-& :active {
-  background-color: #eeeeee;
-}
-`
-
-
-export const updatebutton = css`
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-padding: 5px;
-background-color: white;
-font-size: 12px;
-cursor: pointer;
-
-&:hover {
-  background-color: #dbdbdb;
-}
-& :active {
-  background-color: #eeeeee;
-}
-`
-
-
 
 export const listbutton = css`
 box-sizing: border-box;

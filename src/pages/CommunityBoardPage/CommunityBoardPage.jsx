@@ -9,6 +9,7 @@ import { FaPencil } from "react-icons/fa6";
 
 
  function CommunityBoardPage() {
+    
     const navigate = useNavigate();
     const[communityBoardList, setCommunityBoardList] = useState([]);
     const[error, setError] = useState(null);
@@ -41,6 +42,7 @@ import { FaPencil } from "react-icons/fa6";
                         <div css={s.boardListHeader}>
                             <div>제목</div>
                             <div>내용</div>
+                            <div>카테고리</div>
                             <div>닉네임</div>
                             <div>등록일</div>
                         </div>
@@ -48,18 +50,21 @@ import { FaPencil } from "react-icons/fa6";
                 <div css={s.CommunityboardListItem}>
                     {communityBoardList.map((data) => (
                         <div
-                        key={data.communityBoardId}
-                        onClick={() => navigate(`/communityBoard/${data.communityBoardId}`)}>
+                        key={data.communityBoardId} >
+                        <div onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
+                        {data.communityBoardTitle}</div>
                         <div>{data.userName}</div>
-                        <div>{data.communityBoardTitle}</div>
-                        <div>{data.communityBoardComment}</div>
+                        <div>{data.communityBoardContent}</div>
+                        <div>{data.communityBoardAnimalCategoryNameKor}</div>
                         <div>{data.createDate}</div>
                        </div>
                     ))}
                    </div>
                 </div>
             </div>
-        <button css={s.writeButton} onClick={handleOnClickToWritePage}>글 작성하기</button>
+        
+        <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
+
         </div>
         ) 
     }

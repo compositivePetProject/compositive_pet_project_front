@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 
 
+
 export const layout = css`
 display: flex;
 flex-direction: column;
@@ -24,50 +25,52 @@ export const boardListLayout = css`
 `
 
 export const boardListHeader = css`
-box-sizing: border-box;
-display: flex;
-flex-direction: row;
-border-bottom: 2px solid #dbdbdb;
-width: 100%;
-& > div{
     box-sizing: border-box;
-    border-right: 1px solid #dbdbdb;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    height: 40px;
-    width: 25%;
-    font-weight: 700;
-    cursor: default;
-}
+    flex-direction: row;
+    border-bottom: 2px solid #dbdbdb;
+    width: 100%;
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
+    }
 
-`
+    `
 export const CommunityboardListItem = css`
     text-decoration: none;
     cursor: pointer;
     overflow:hidden;
-    & > div {
-        box-sizing: border-box;
-        display: flex;
-        border-bottom: 1px solid #dbdbdb;
-        width: 100%;
-        &:hover {
-            background-color: #eee;
-        }
-        & > div{
-            box-sizing: border-box;
-            border-right: 1px solid #dbdbdb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow : 1;
-            height: 40px;
-            width: 25%;
-        }
 
-        }
-        `;
+        & > div {
+            box-sizing: border-box;
+            display: flex;
+            border-bottom: 1px solid #dbdbdb;
+            width: 100%;
+            &:hover {
+                background-color: #adadad;
+            }
+            
+            & > div{
+                box-sizing: border-box;
+                border-right: 1px solid #dbdbdb;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow : 1;
+                height: 40px;
+                width: 25%;
+            }
+
+            }
+            `;
 
 export const boardListwrite = css`
     box-sizing: border-box;
@@ -79,9 +82,12 @@ export const boardListwrite = css`
 `
 
 export const writeButton = css`
+box-sizing: border-box;
+border: 2px solid #dbdbdb;
 bottom: 0%;
-width: 41px;
-height: 41px;
+width: 50px;
+height: 50px;
+
 
 `
 

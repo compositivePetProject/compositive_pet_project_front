@@ -11,8 +11,8 @@ export const getCommunityBoardListRequest = async () => {
 }
 
 
-export const getCommunityBoardRequest = async (params) => {
-    return await instance.get("/community/page/{boardId}", (params));
+export const getCommunityBoardRequestById = async (params) => {
+    return await instance.get("/community/board", {params});
 }
 
 
@@ -25,13 +25,23 @@ export const deleteCommunityBoardListRequest = async (data) => {
     return await instance.delete("/community/delete/list", (data))
 }
 
-export const deleteCommunityBoardRequest = async (params) => {
-    return await instance.delete("/community/delete")
+export const deleteCommunityBoardRequestById = async (params) => {
+    return await instance.delete(`/community/delete/board/${params}`);
 }
 
 export const getCommunityBoardDogRequest = async (data) => {
     const response = await instance.get("/community/board/dog");
     return response.data;
-
 }
 
+export const getCommunityBoardCatRequest = async (data) => {
+    const response = await instance.get("/community/board/cat");
+    return response.data;
+}
+
+
+export const putCommunityBoardRequest = async (data) => {
+    return await instance.put ("/community/update/board/{boardId}")
+    
+
+}

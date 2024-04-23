@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAdoptByUserId, getAdoptCountByUserId} from '../../apis/api/Adopt';
@@ -26,7 +26,7 @@ function MyAdoptList(props) {
 
 
     const getMyAdoptBoard = useQuery(
-        ["getMyAdoptBoard", userId],
+        ["getMyAdoptBoard", userId, page],
         async () => await getAdoptByUserId ({
             userId: userId
         }),
@@ -34,7 +34,6 @@ function MyAdoptList(props) {
             enabled: !!userId,
             refetchOnWindowFocus: false,
             onSuccess: response => {
-                setAdoptList(response.data)
                 const index = response.data.slice(firstPage,lastPage)
                 setAdoptList(index)
             },
@@ -47,7 +46,7 @@ function MyAdoptList(props) {
     
 
     const getMyBoardCount = useQuery(
-        ["getMyBoardCount", userId],
+        ["getMyBoardCount", userId, page],
         async () => await getAdoptCountByUserId({
         page:page,
         userId:userId,
@@ -71,8 +70,10 @@ function MyAdoptList(props) {
 
 )
 
+
+
     const handlePageChange = (pageNumber) => {
-        setSearchParams({ page: pageNumber });
+        setSearchParams({ page: pageNumber.toString() });
     };
 
     const handleClick = () => {
@@ -83,10 +84,12 @@ function MyAdoptList(props) {
         <div css={s.layout}>
             <div css={s.userInfoBox}>
                 <div css={s.infoBox}>
-                    <h3>내 정보 관리</h3>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>내가 작성한 분양 게시글</div>
+                <h3>내 정보 관리</h3>
+                <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
+                <h3>내 쇼핑 관리</h3>
+                <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
+                <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>내가 작성한 분양 게시글</div>
+                <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
                 </div>
             </div>
 

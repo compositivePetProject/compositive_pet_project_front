@@ -172,7 +172,6 @@ function MyProfilePage() {
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>내가 작성한 분양 게시글</div>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
-
                 </div>
             </div>
 

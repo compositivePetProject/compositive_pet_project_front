@@ -54,3 +54,7 @@ export const getAdoptCountByUserId = async (params) => {
     const response = await instance.get('/adoptation/board/userCount', {params});
     return response;
 }
+
+export const DeleteAdoptBoardByID = async (params) => {
+    return await instance.delete('/adoptation/board')
+}

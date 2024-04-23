@@ -79,6 +79,7 @@ const handleCheckboxChange = (event, adoptationBoardId) => {
         console.log(isChecked, adoptationBoardId)
     } else {
         setCheckedBoards(prevState => prevState.filter(id => id !== adoptationBoardId));
+        console.log(isChecked, adoptationBoardId)
     }
 };
 
@@ -106,7 +107,7 @@ const handleDeleteSelected = () => {
                 <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
                 <h3>내 쇼핑 관리</h3>
                 <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
-                <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>내가 작성한 분양 게시글</div>
+                <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>분양 게시글 관리</div>
                 <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
                 </div>
             </div>

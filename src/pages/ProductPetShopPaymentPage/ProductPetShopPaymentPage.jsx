@@ -3,7 +3,9 @@ import React from 'react';
 function ProductPetShopPaymentPage(props) {
     return (
         <div>
-            결제페이지
+
+             <a href="http://localhost:8080/oauth2/authorization/google"></a>
+        
         </div>
     );
 }

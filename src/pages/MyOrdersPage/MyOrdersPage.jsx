@@ -18,7 +18,6 @@ function MyOrdersPage(props) {
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [ userOrders, setUserOrders ] = useState([]);
-    const userId = principalQueryState.data?.data.userId;
     const [ isEditing, setIsEditing ] = useState(false);
     const [editedOrder, setEditedOrder] = useState(null); 
     const selectedSizeType = useSelect();
@@ -26,6 +25,8 @@ function MyOrdersPage(props) {
     const [ productSizeOptions , setProductSizeOptions ] = useState([]);
     const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
+    const userId = principalQueryState.data?.data.userId;
+
     
     const getProductOrdersQuery = useQuery(
         ["getProductOrdersQuery", principalQueryState.data],
@@ -175,7 +176,6 @@ function MyOrdersPage(props) {
 
     return (
         <div css={s.layout}>
-
             <div css={s.userInfoBox}>
             <div css={s.infoBox}>
                     <h3>내 정보 관리</h3>

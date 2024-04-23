@@ -175,7 +175,6 @@ function MyOrdersPage(props) {
 
     return (
         <div css={s.layout}>
-
             <div css={s.userInfoBox}>
             <div css={s.infoBox}>
                 <h3>내 정보 관리</h3>

@@ -22,6 +22,7 @@ function MyAdoptList(props) {
     const firstPage = lastPage - searchCount;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
+    const [checkedBoards, setCheckedBoards] = useState([]);
 
 
 
@@ -70,6 +71,23 @@ function MyAdoptList(props) {
 
 )
 
+const handleCheckboxChange = (event, adoptationBoardId) => {
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+        setCheckedBoards(prevState => [...prevState, adoptationBoardId]);
+        console.log(isChecked, adoptationBoardId)
+    } else {
+        setCheckedBoards(prevState => prevState.filter(id => id !== adoptationBoardId));
+    }
+};
+
+
+const handleDeleteSelected = () => {
+    console.log("Selected items:", checkedBoards);
+    // 여기서 선택된 항목을 처리하는 로직을 구현합니다.
+};
+
 
 
     const handlePageChange = (pageNumber) => {
@@ -96,7 +114,7 @@ function MyAdoptList(props) {
             <div css={s.userDetails}>
                <h2>내가 작성한 분양 게시글 목록</h2>
                 <div css={s.boardListHeader}>
-                    <div></div>
+                    <input name="check-all"type="checkbox"/>
                     <div>제목</div>
                     <div>카테고리</div>
                     <div>등록일</div>
@@ -106,7 +124,12 @@ function MyAdoptList(props) {
                     {adoptList.map((data) => (
                         <div 
                         key={data.adoptationBoardId} >
-                            <div><input type="checkbox"/></div>
+                           <input
+                                type="checkbox"
+                                name="boardCheck"
+                                checked={checkedBoards.includes(data.adoptationBoardId)}
+                                onChange={(event) => handleCheckboxChange(event, data.adoptationBoardId)}
+                            />
                             <div onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
                             <div>{data.boardAnimalCategoryNameKor}</div>
                             <div>{data.createDate}</div>
@@ -116,7 +139,7 @@ function MyAdoptList(props) {
                 </div>
                 <AdoptationPageNumbersUser maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
                 <div>
-                    <button>삭제</button>
+                    <button onClick={() => console.log(checkedBoards)}>삭제</button>
                     <button>수정</button>
                 </div>
             </div>

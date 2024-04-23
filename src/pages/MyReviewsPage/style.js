@@ -69,6 +69,33 @@ export const title = css`
     margin-bottom: 24px;
 `;
 
+export const reviews = css`
+    display: flex;
+    & > div {  
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        border-radius: 7px;
+        border: 1px solid #d7e2eb;
+        width: 150px;
+        margin-bottom: 10px;
+        margin-right: 5px;
+        background-color: transparent;
+        cursor: pointer;
+
+
+        &:hover {
+            background-color: #f9f9f9;
+        }
+        &:active {
+            background-color: #f3f3f3;
+        }
+    }
+    & > div:nth-of-type(1) {  
+        
+    }
+`;
+
 
 export const container = css`
     display: flex;

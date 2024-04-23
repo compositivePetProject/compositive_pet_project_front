@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as s from "./style";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getProductPageRequest, getProductsSearchCountRequest } from "../../apis/api/product";
 import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/ProductPetPageNumbers";
 import { getAllCategoryRequest, getAllProductTypeRequest } from "../../apis/api/options";
+import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
+import { CiSearch } from "react-icons/ci";
+import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 
 
 function ProductPetShoppingPage(props) {
@@ -18,13 +21,17 @@ function ProductPetShoppingPage(props) {
     const [ selectedCategory, setSelectedCategory ] = useState(0);
     const [totalCount, setTotalCount ] = useState(0);
     const searchCount = 16;
-
+    const inputRef = useRef();
+    const [orderBy, setOrderBy] = useState("desc");
+    
     const getProductsSearchRequestQuery = useQuery(
-        ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType],
+        ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType, orderBy],
         async () => await getProductPageRequest({
             page: searchParams.get("page"),
             count: searchCount,
-            productCategoryId: selectedProductType
+            productCategoryId: selectedProductType,
+            searchText: searchText.value,
+            orderBy : orderBy
         }),
             {
             retry: 0,
@@ -43,7 +50,8 @@ function ProductPetShoppingPage(props) {
         ["getProductsSearchCountRequestQuery", getProductsSearchRequestQuery.data],
         async () => await getProductsSearchCountRequest({
             count: searchCount,
-            productCategoryId: selectedProductType
+            productCategoryId: selectedProductType,
+            searchText: searchText.value
         }),
         {
             refetchOnWindowFocus: false,
@@ -69,24 +77,18 @@ function ProductPetShoppingPage(props) {
         }
     );
     
+    const searchSubmit = () => {
+        setSearchParams({
+            page: 1
+        })
+        getProductsSearchRequestQuery.refetch();
+    }
+    const searchText = useProductOnKeyUpInput(searchSubmit);
 
-    // 카테고리 (개, 고양이) 검색 기능 추가 예정
-    const categoryTypeQuery = useQuery(
-        ["categoryTypeQuery"], 
-        getAllCategoryRequest,
-        {   retry: 0,
-            refetchOnWindowFocus: false,
-            onSuccess: response => {
-                setCategoryTypeOptions(() => response.data.map(categoryType => {
-                    return {
-                        categoryType
-                    }
-                }));
-            }
-        }
-    );
-
-
+    const handleOrderByChange = (value) => {
+        setOrderBy(value);
+    };
+    console.log(orderBy);
     return (
         <div css={s.layout}>
             <div css={s.categoryHeader}>
@@ -104,18 +106,35 @@ function ProductPetShoppingPage(props) {
                         {option.productType.productCategoryNameKor}
                     </Link>
                 )}
+                <div css={s.searchBar}>   
+                    <input css={s.searchBarInput} type="text" 
+                        ref={inputRef} 
+                        value={searchText.value} 
+                        onChange={searchText.handleOnChange} 
+                        onKeyUp={searchText.handleOnKeyUp}
+                        placeholder="검색"
+                    />
+                    <button css={s.searchBarButton} >
+                        <CiSearch onClick={() => searchSubmit()}/>
+                    </button>
+                </div>
             </div>
             <div css={s.shoppingFilter}>
             <div>{totalCount}개의 상품</div>
             <div>
-                좋아요순
+                {orderBy === "desc"
+                ?
+                <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
+                :
+                <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
+                }
             </div>
 
             </div>
             <div css={s.shoppingContainer}>
                 {
                     productList.map(product => 
-                    <div key={product.productId} css={s.imageBox} onClick={() => navigate(`/product/pet/detail/${product.productId}/?productId=${product.productId}`)}>
+                    <div key={product.productId} css={s.imageBox} onClick={() => navigate(`/product/pet/detail/${product.productId}/?productId=${product.productId}&page=1`)}>
                         <img src={product.productImageUrl} alt="" />
                         <div css={s.nameBox}>{product.productNameKor}</div>
                         <div css={s.moneyBox}>{product.productPrice}원</div>

@@ -1,9 +1,224 @@
-import React from 'react';
+/** @jsxImportSource @emotion/react */
+import * as s from "./style";
+import React, { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import  {deleteProductCartsRequest, getProductCartListRequest } from '../../apis/api/productCart'
+import { useNavigate } from "react-router-dom";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { postProductOrderCartsRequest } from "../../apis/api/productOrder";
 
 function ProductPetCartPage(props) {
+    const navigate = useNavigate();
+    const [ productCartList, setProductCartList ] = useState([]);
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
+    const selectProductCart = productCartList.filter(productCart => productCart.checked).length;
+    const [ checkAll, setCheckAll ] = useState({checked: false, target: 1});
+    const totalPrice = productCartList
+    .filter(productCart => productCart.checked)
+    .reduce((total, productCart) => total + productCart.productPrice * productCart.productCartCount, 0);
+
+    useEffect(() => {
+        if(checkAll.target === 1) {
+            setProductCartList(() =>
+            productCartList.map(productCart => {
+                return {
+                        ...productCart,
+                        checked: checkAll.checked
+                    }
+                })
+            );
+        }
+    }, [checkAll.checked])
+
+    useEffect(() => {
+        const findCount = productCartList.filter(productCart => productCart.checked === false).length;
+        if(findCount === 0) {
+            setCheckAll(() => {
+                return {
+                    checked: true,
+                    target: 2
+                }
+            });
+        } else {
+            setCheckAll(() => {
+                return {
+                    checked: false,
+                    target: 2
+                }
+            });
+        }
+    }, [productCartList]);
+
+    const deleteProductCartsQuery = useMutation({
+        mutationKey: "deleteProductCartsQuery",
+        mutationFn: deleteProductCartsRequest,
+        onSuccess: response => {
+            window.location.reload();
+        }
+    });
+
+    const postProductOrderCartsQuery = useMutation({
+        mutationKey: "postProductOrderCartsQuery",
+        mutationFn: postProductOrderCartsRequest,
+        onSuccess: response => {
+            alert("전체 주문 완료.");
+            window.location.reload();
+        }
+    });
+
+    const getProductCartListQuery = useQuery(
+        ["getProductCartListQuery", principalQueryState.data],
+        async () => await getProductCartListRequest ({
+            userId : principalQueryState.data?.data.userId
+        }),
+        {
+            retry: 0,
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response)
+                setProductCartList(() => response.data.map(productCart => {
+                    return  {
+                        ...productCart,
+                        checked: false
+                    }
+                }))
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+
+    const handleProdudtCartsDelete =  () => {
+        const produdtCarts = productCartList.filter(productCart => productCart.checked).map(productCart => productCart.productCartId);
+        deleteProductCartsQuery.mutate(produdtCarts);
+    }
+
+    const handlePurchase = () => {
+        const selectedProductCarts = productCartList.filter(productCart => productCart.checked);
+
+        if (selectedProductCarts.length === 0) {
+            alert("구매할 상품을 선택해주세요.");
+            return;
+        }
+        
+        // 마지막 구매 주소로 요청
+        const requestData = selectedProductCarts.map(productCart => ({
+            userId: productCart.userId,
+            productId: productCart.productId,
+            productOrderAddress: productCart.productOrderAddress,
+            productOrderDetailAddress: productCart.productOrderDetailAddress,
+            productSizeCategoryId: productCart.productSizeCategoryId,
+            productOrderCount: productCart.productCartCount
+        }));
+    
+        postProductOrderCartsQuery.mutate(requestData, {
+            onSuccess: () => {
+                handleProdudtCartsDelete();
+            }
+        });
+    }
+    
+    const handleCheckAllChange = (e) => {
+        setCheckAll(() => {
+            return {
+                checked: e.target.checked,
+                target: 1
+            }
+        });
+    }
+
+    const handleCheckOnChange = (e) => {
+        const productCartId = parseInt(e.target.value);
+        setProductCartList(() => 
+            productCartList.map(productCart => {
+                if(productCart.productCartId === productCartId) {
+                    return {
+                        ...productCart,
+                        checked: e.target.checked
+                    }
+                }
+                return productCart;
+            })
+        )
+    }
+
     return (
-        <div>
-            장바구니리스트
+        <div css={s.layout}>
+            <div css={s.userInfoBox}>
+                <div css={s.title}>장바구니</div>
+                <div css={s.container}>
+                    <div><input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange} /></div>
+                    <div>전체 선택 ({selectProductCart} / {productCartList.length}) </div>
+                </div>
+                    <div css={s.userDetails}>
+                        {productCartList.map(productCart => 
+                        <div key={productCart.productCartId} css={s.container1}>
+                            <input 
+                                type="checkbox" 
+                                value={productCart.productCartId} 
+                                checked={productCart.checked} 
+                                onChange={handleCheckOnChange}
+                            />
+                            <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>
+                                <img src={productCart.productImageUrl} alt="" />
+                            </div>
+                            <div css={s.container4}>
+                                <div onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>유기농 건강식 고양이 사료</div> 
+                                <div>{parseInt(productCart.productPrice * productCart.productCartCount)}원</div>
+                                <div css={s.productDeliveryBox}>
+                                    <button onClick={() => {
+                                            const updatedCount = Math.max(productCart.productCartCount - 1, 1); 
+                                            setProductCartList(productCartList => 
+                                                productCartList.map(productCartOrder => 
+                                                    productCartOrder.productCartId === productCart.productCartId 
+                                                        ? { ...productCartOrder, productCartCount: updatedCount } 
+                                                        : productCartOrder
+                                                )
+                                            );
+                                        }}>
+                                        <FaMinus />
+                                    </button>
+                                    <div>{productCart.productCartCount}</div>
+                                    <button onClick={() => {
+                                        const updatedCount = productCart.productCartCount + 1;
+                                        setProductCartList(productCartList => 
+                                            productCartList.map(productCartOrder => 
+                                                productCartOrder.productCartId === productCart.productCartId 
+                                                    ? { ...productCartOrder, productCartCount: updatedCount } 
+                                                    : productCartOrder
+                                            )
+                                        );
+                                    }}>
+                                        <FaPlus />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>                       
+                        )}
+                    </div>
+                        <button css={s.buttons3} onClick={handleProdudtCartsDelete}>삭제하기 ({selectProductCart})</button>
+                </div>
+            <div css={s.totalContainer}>
+                <div css={s.totalBox}>
+                    <div css={s.totalBoxIn}>
+                        <div css={s.totalBoxIn2}> 
+                            <div>총 상품 금액</div>
+                            <div>{totalPrice}원</div>
+                        </div>
+                        <div css={s.totalBoxIn2}> 
+                            <div>배송비</div>
+                            <div>+ 0원</div>
+                        </div>
+                        <div>
+                            <div css={s.totalBoxInPrice}>{totalPrice}원</div>                            
+                            <button css={s.buttons4} onClick={handlePurchase}>
+                                구매하기 ({selectProductCart})</button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
         </div>
     );
 }

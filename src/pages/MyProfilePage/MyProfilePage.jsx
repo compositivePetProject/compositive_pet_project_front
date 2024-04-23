@@ -12,10 +12,9 @@ import { useMutation } from "react-query";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { authNicknameCheckRequest } from "../../apis/api/authSignup";
 import { nicknameAndProfileImageUrlEditRequest, passwordEditRequest } from "../../apis/api/acoountPrincipal";
-import { useAuthCheck } from "../../hooks/useAuthCheck";
+
 
 function MyProfilePage() {
-    useAuthCheck();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
@@ -169,8 +168,11 @@ function MyProfilePage() {
                 <div css={s.infoBox}>
                     <h3>내 정보 관리</h3>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
+                    <h3>내 쇼핑 관리</h3>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
                     <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>내가 작성한 분양 게시글</div>
+                    <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
+
                 </div>
             </div>
 

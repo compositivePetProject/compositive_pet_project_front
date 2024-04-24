@@ -10,7 +10,7 @@ import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/Admi
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import { useMutation } from "react-query";
 
-function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText, onSetDeleteProducts }) {
+function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText, onSetDeleteProducts, refetch, setRefetch }) {
   const [ searchParams, setSearchParams ] = useSearchParams();
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const searchCount = 10;
@@ -25,18 +25,24 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
   const [ totalCount, setTotalCount ] = useState(0);
   const [ deleteProducts, setDeleteProducts ] = useState([]);
 
+  useEffect(() => {
+    searchProductsQuery.refetch();
+    setRefetch(() => false);
+  }, [refetch])
+
   const searchProductsQuery = useQuery(
     ["searchProductsQuery", searchParams.get("page")],
-    async () => {
-      return await getProductsAdminRequest({
-      page: searchParams.get("page"),
-      count: searchCount,
-      productCategoryId: searchProductData.productCategoryId,
-      productAnimalCategoryId: searchProductData.productAnimalCategoryId,
-      productNameKor: searchProductData.productNameKor
-    })},
+    async () => await getProductsAdminRequest({
+        page: searchParams.get("page"),
+        count: searchCount,
+        productCategoryId: searchProductData.productCategoryId,
+        productAnimalCategoryId: searchProductData.productAnimalCategoryId,
+        productNameKor: searchProductData.productNameKor
+      }
+    ),
     {
       retry: 0,
+      refetchOnWindowFocus: false,
       refetchInterval: false,
         onSuccess: (response) => {
           setProductList(() => response.data.map((product) => {
@@ -56,9 +62,9 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
     ["getProductsCountQuery", searchProductsQuery.data],
     async () => await getProductsAdminCountRequest({
       count: searchCount,
-      productCategoryId: selectedProductCategory,
-      productAnimalCategoryId: selectedProductAnimalCategoryId,
-      productNameKor: searchText
+      productCategoryId: searchProductData.productCategoryId,
+      productAnimalCategoryId: searchProductData.productAnimalCategoryId,
+      productNameKor: searchProductData.productNameKor
     }),
     {
       retry: 0,
@@ -72,11 +78,7 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       }
     }
   )
-
   
-
-  
-
   const handleCheckAllChange = (e) => {
     setCheckAll(() => {
       return {
@@ -179,10 +181,6 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       setSelectedProduct(() => lastSelectedProduct);
     }
   }, [productList]);
-
-  useEffect(() => {
-    searchProductsQuery.refetch();
-  }, [searchProductData]);
 
   return (
     <div css={s.layout}>

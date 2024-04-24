@@ -4,7 +4,7 @@ import { incomingProductDataState } from "../../../atoms/admin/incomingProductDa
 import * as s from "./style";
 import { FaSearch } from "react-icons/fa";
 
-function TopInput({label, disabled, inputSize, name, setState, buttonState, value}) {
+function TopInput({label, disabled, inputSize, name, setState, buttonState, value, onKeyDown}) {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -16,13 +16,15 @@ function TopInput({label, disabled, inputSize, name, setState, buttonState, valu
     })
   }
 
+  
+
   return (
     <div css={s.item}>
         <div css={s.label}>
             {label}
         </div>
         <div css={s.inputBox}>
-            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled} value={value}/>
+            <input css={s.input(inputSize)} type="text" name={name} onChange={handleOnChange} disabled={disabled} value={value} onKeyDown={onKeyDown}/>
         </div>
     </div>
   )

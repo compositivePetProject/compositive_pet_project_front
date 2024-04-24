@@ -5,41 +5,47 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getProductStocksAdminRequest, getProductStocksCountAdminRequest } from "../../../apis/api/productAdmin";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
+import { searchCurrentProductDataState } from "../../../atoms/admin/searchCurrentProductDataAtom";
+import { useRecoilState } from "recoil";
+import { currentProductDataState } from "../../../atoms/admin/currentProductDataAtom";
 
-function AdminCurrentStockSearch() {
+function AdminCurrentStockSearch({refetch, setRefetch}) {
+    const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 10;
-    const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
     const [ currentProductList, setCurrentProductList ] = useState([]);
     const [ maxPageNumber, setMaxPageNumber ] = useState(0);
     const [ totalCount, setTotalCount ] = useState(0);
-    const [ checkAll, setCheckAll ] = useState({
-        checked : false,
-        target: 1
-    })
+    const [ currentProductData, setCurrentProductData ] = useRecoilState(currentProductDataState);
 
-    const searchCurrentStocksQuery = useQuery(
-        ["searchCurrentStocksQuery", searchParams.get("page")],
-        async () => {
-            return await getProductStocksAdminRequest({
+    useEffect(() => {
+        getCurrentProductsQuery.refetch();
+        setRefetch(() => false);
+    }, [refetch])
+
+    const getCurrentProductsQuery = useQuery(
+        ["getCurrentProductsQuery", searchParams.get("page")],
+        async () => 
+            await getProductStocksAdminRequest({
                 page: searchParams.get("page"),
-                count: searchCount
-            })
-        },
+                count: searchCount,
+                productSizeCategoryId: searchCurrentProductData.productSizeCategoryId,
+                productNameKor: searchCurrentProductData.productNameKor
+        }),
         {
             retry: 0,
-            refetchInterval: false,
-              onSuccess: (response) => {
-                setCurrentProductList(() => response.data.map((product) => {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                setCurrentProductList(response.data.map((product) => {
                     return {
                         ...product
                     }
                 }))
-              },
-              onError: (error) => {
+            },
+            onError: (error) => {
                 console.log(error);
-              }
-          }
+            }
+        }
     )
 
     const getCurrentStockCountQuery = useQuery(
@@ -51,7 +57,6 @@ function AdminCurrentStockSearch() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response);
                 setMaxPageNumber(response.data.maxPageNumber)
                 setTotalCount(response.data.totalCount)
             },
@@ -61,68 +66,36 @@ function AdminCurrentStockSearch() {
         }
     )
 
-    const handleCheckAllChange = (e) => {
-        setCheckAll(() => {
-            return {
-                checked: e.target.checked,
-                target: 1
-            }
-        })
-    }
-
     const handleCheckOnChange = (e) => {
         const productStockId = parseInt(e.target.value);
-        setCurrentProductList(() => 
-            currentProductList.map((product) => {
+        setCurrentProductList(currentProductList.map((product) => {
             if(product.productStockId === productStockId) {
-              return {
-                ...product,
-                checked: e.target.checked
-              }
+                return {
+                    ...product,
+                    checked: e.target.checked
+                }
+            } else {
+                return {
+                    ...product,
+                    checked: false
+                }
             }
-            return product;
-          })
-        );
-        setLastCheckedProductId(() => productStockId);
+        }))
     }
 
     useEffect(() => {
-        if(checkAll.target === 1) {
-            setCurrentProductList(() => 
-                currentProductList.map((product) => {
-                    return {
-                        ...product,
-                        checked: checkAll.checked
-                    }
-                })
-            );
-        }
-    }, [checkAll.checked]);
-    
-    useEffect(() => {
-        const findCount = currentProductList.filter((product) => product.checked === false).length;
-        if(findCount === 0) {
-            setCheckAll(() => {
-                return {
-                checked: true,
-                target: 2
-                }
-            });
-        } else {
-            setCheckAll(() => {
-                return {
-                checked: false,
-                target: 2
-                }
-            })
-        }
-    }, [currentProductList]);
+       console.log(currentProductData)
+    }, [currentProductData])
 
+    useEffect(() => {
+        if(currentProductList.filter((product) => product.checked === true).length !== 0) {
+            setCurrentProductData(currentProductList.filter((product) => product.checked === true)[0]);
+        }
+    }, [currentProductList])
     return (
         <div css={s.layout}>
         <div css={s.row}>
-        <div css={s.label}>
-            <input type="checkbox"checked={checkAll.checked} onChange={handleCheckAllChange}/></div>
+            <div css={s.label}></div>
             <div css={s.label}>ID</div>
             <div css={s.label}>상품명</div>
             <div css={s.label}>사이즈</div>

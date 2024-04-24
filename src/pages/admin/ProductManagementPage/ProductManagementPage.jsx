@@ -16,7 +16,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteProductsAdminRequest, getProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/productAdmin";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
-import { useSearchParams } from "react-router-dom";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 
 function ProductManagementPage({title}) {
@@ -26,6 +25,7 @@ function ProductManagementPage({title}) {
   const queryClient = useQueryClient();
   const [ buttonState, setButtonState ] = useState(0);
   const [ selectedProduct, setSelectedProduct ] = useRecoilState(selectedProductData);
+  const [ refetch, setRefetch ] = useState(false);
 
   const [deleteProducts, setDeleteProducts] = useState([]);
   const handleSetDeleteProducts = (products) => {
@@ -36,12 +36,15 @@ function ProductManagementPage({title}) {
       setProductData(selectedProduct);
   }, [selectedProduct]);
 
-  useEffect(() => {
-    console.log(deleteProducts);
-  }, [deleteProducts])
-  useEffect(() => {
-    console.log(productData);
-  }, [productData])
+  // useEffect(() => {
+  //   console.log(deleteProducts);
+  // }, [deleteProducts])
+  // useEffect(() => {
+  //   console.log(productData);
+  // }, [productData])
+  // useEffect(() => {
+  //   console.log(searchProductData);
+  // }, [searchProductData])
   
   const productRegisterMutation = useMutation({
     mutationKey: "productRegisterMutation",
@@ -114,7 +117,7 @@ function ProductManagementPage({title}) {
   ];
 
   const searchSubmit = () => {
-    queryClient.refetchQueries(["searchProductsQuery"]);
+    setRefetch(() => true);
   }
 
   const registerSubmit = () => {
@@ -137,7 +140,7 @@ function ProductManagementPage({title}) {
       </div>
       <SearchTop searchInputs={searchInputs} submit={searchSubmit}/>
       <RegisterTop registerInputs={registerInputs} submitClick={buttonState === 1 ? registerSubmit : buttonState === 2 ? updateSubmit : null}/>
-      <AdminProductSearch selectedProductCategory={searchProductData.productCategoryId} selectedProductAnimalCategoryId={searchProductData.productAnimalCategoryId} searchText={searchProductData.productNameKor} buttonState={buttonState} onSetDeleteProducts={handleSetDeleteProducts} />
+      <AdminProductSearch refetch={refetch} setRefetch={setRefetch} selectedProductCategory={searchProductData.productCategoryId} selectedProductAnimalCategoryId={searchProductData.productAnimalCategoryId} searchText={searchProductData.productNameKor} buttonState={buttonState} onSetDeleteProducts={handleSetDeleteProducts} />
     </AdminPageLayout>
   )
 }

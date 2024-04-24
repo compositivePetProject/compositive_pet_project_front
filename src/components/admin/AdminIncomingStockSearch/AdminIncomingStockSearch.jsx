@@ -11,24 +11,41 @@ import { useRecoilState } from "recoil";
 import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
 import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
 
-function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText}) {
+function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText, refetch, setRefetch}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 10;
     const [ incomingProductList, setIncomingProductList ] = useState([]);
+    const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
+    const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
+
     const [ maxPageNumber, setMaxPageNumber ] = useState(0);
     const [ totalCount, setTotalCount ] = useState(0);
-    const [ checkAll, setCheckAll ] = useState({
-        checked : false,
-        target: 1
-    })
-    const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
-    const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
-    const [ incomingProductsIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
-    const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
-    useEffect(() => {
-        console.log(searchText);
-        console.log(selectedProductSizeCategory);
-    }, [selectedProductSizeCategory, searchText])
+
+    const [ checkAll, setCheckAll ] = useState(
+        {
+            checked: false,
+            target: 0 // 1 : 전체 선택 , 2 : 부분 선택
+        }
+    )
+
+
+    // const [ checkAll, setCheckAll ] = useState({
+    //     checked : false,
+    //     target: 1
+    // })
+    // const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
+    // const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
+    // const [ incomingProductsIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
+    // const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
+    // useEffect(() => {
+    //     console.log(searchText);
+    //     console.log(selectedProductSizeCategory);
+    // }, [selectedProductSizeCategory, searchText])
+
+    // useEffect(() => {
+    //     searchIncomingProductsQuery.refetch();
+    //     setRefetch(() => false);
+    //   }, [refetch])
 
     const searchIncomingProductsQuery = useQuery(
         ["searchIncomingProductsQuery", searchParams.get("page")],
@@ -36,8 +53,8 @@ function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText}) {
             return await getProductInocmingStocksRequest({
                 page: searchParams.get("page"),
                 count: searchCount,
-                productSizeCategoryId : selectedProductSizeCategory,
-                productNameKor : searchText
+                productSizeCategoryId : searchIncomingProductData.productSizeCategoryId,
+                productNameKor : searchIncomingProductData.productNameKor
             })
         },
         {
@@ -75,7 +92,7 @@ function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText}) {
             }
         }
     )
-    
+
     const handleCheckAllChange = (e) => {
         setCheckAll(() => {
             return {
@@ -85,60 +102,106 @@ function AdminIncomingStockSearch({ selectedProductSizeCategory, searchText}) {
         })
     }
 
+    useEffect(() => {
+        if(checkAll.checked === true && checkAll.target === 1) {
+            setIncomingProductList(incomingProductList.map((product) => {
+                return {
+                    ...product,
+                    checked: true
+                }
+            }))
+        } else if(checkAll.checked === false && checkAll.target === 1) {
+            setIncomingProductList(incomingProductList.map((product) => {
+                return {
+                    ...product,
+                    checked: false
+                }
+            }))
+        }
+    }, [checkAll]);
+
     const handleCheckOnChange = (e) => {
         const productIncomingStockId = parseInt(e.target.value);
-        setIncomingProductList(() => 
-            incomingProductList.map((product) => {
-                if(product.productIncomingStockId === productIncomingStockId) {
+        setIncomingProductList(incomingProductList.map((product) => {
+            if(product.productIncomingStockId === productIncomingStockId) {
                 return {
                     ...product,
                     checked: e.target.checked
                 }
-                }
+            }
             return product;
-          })
-        );
-        setLastCheckedProductId(() => productIncomingStockId);
-        setIncomingProductData(incomingProductList.filter(product => product.productIncomingStockId === productIncomingStockId)[0]);
-        setIncomingProductsIds([...incomingProductsIds, {productIncomingStockId}]);
-        console.log(productIncomingStockId);
+        }));
+        if(incomingProductList.filter((product) => product.checked === true).length !== 0) {
+            setCheckAll({
+                target: 2,
+                checked: false
+            })
+        } 
     }
-
-    useEffect(() => {
-        console.log(incomingProductsIds)
-    }, [incomingProductsIds])
-
-    useEffect(() => {
-        if(checkAll.target === 1) {
-            setIncomingProductList(() => 
-                incomingProductList.map((product) => {
-                    return {
-                        ...product,
-                        checked: checkAll.checked
-                    }
-                })
-            );
-        }
-    }, [checkAll.checked]);
     
-    useEffect(() => {
-        const findCount = incomingProductList.filter((product) => product.checked === false).length;
-        if(findCount === 0) {
-          setCheckAll(() => {
-            return {
-              checked: true,
-              target: 2
-            }
-          });
-        } else {
-          setCheckAll(() => {
-            return {
-              checked: false,
-              target: 2
-            }
-          })
-        }
-    }, [incomingProductList]);
+    // const handleCheckAllChange = (e) => {
+    //     setCheckAll(() => {
+    //         return {
+    //             checked: e.target.checked,
+    //             target: 1
+    //         }
+    //     })
+    // }
+
+    // const handleCheckOnChange = (e) => {
+    //     const productIncomingStockId = parseInt(e.target.value);
+    //     setIncomingProductList(() => 
+    //         incomingProductList.map((product) => {
+    //             if(product.productIncomingStockId === productIncomingStockId) {
+    //             return {
+    //                 ...product,
+    //                 checked: e.target.checked
+    //             }
+    //             }
+    //         return product;
+    //       })
+    //     );
+    //     setLastCheckedProductId(() => productIncomingStockId);
+    //     setIncomingProductData(incomingProductList.filter(product => product.productIncomingStockId === productIncomingStockId)[0]);
+    //     setIncomingProductsIds([...incomingProductsIds, {productIncomingStockId}]);
+    //     console.log(productIncomingStockId);
+    // }
+
+    // useEffect(() => {
+    //     console.log(incomingProductsIds)
+    // }, [incomingProductsIds])
+
+    // useEffect(() => {
+    //     if(checkAll.target === 1) {
+    //         setIncomingProductList(() => 
+    //             incomingProductList.map((product) => {
+    //                 return {
+    //                     ...product,
+    //                     checked: checkAll.checked
+    //                 }
+    //             })
+    //         );
+    //     }
+    // }, [checkAll.checked]);
+    
+    // useEffect(() => {
+    //     const findCount = incomingProductList.filter((product) => product.checked === false).length;
+    //     if(findCount === 0) {
+    //       setCheckAll(() => {
+    //         return {
+    //           checked: false,
+    //           target: 2
+    //         }
+    //       });
+    //     } else {
+    //       setCheckAll(() => {
+    //         return {
+    //           checked: false,
+    //           target: 2
+    //         }
+    //       })
+    //     }
+    // }, [incomingProductList]);
     
     return (
         <div css={s.layout}>

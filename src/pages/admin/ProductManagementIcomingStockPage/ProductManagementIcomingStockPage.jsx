@@ -21,10 +21,10 @@ import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingSt
 function ProductManagementIcomingStockPage({title}) {
     const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
     const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
-    const [ incomingProductIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
     const queryClient = useQueryClient();
     const [ buttonState, setButtonState ] = useState(0);
-
+    const [ incomingProductIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
+    const [ refetch, setRefetch ] = useState(false);
 
     const incomingProductRegisterMutation = useMutation({
         mutationKey: "incomingProductRegisterMutation",
@@ -124,7 +124,7 @@ function ProductManagementIcomingStockPage({title}) {
     }
 
     const searchSubmit = () => {
-        queryClient.refetchQueries(["searchIncomingProductsQuery"]);
+        setRefetch(() => true);
     }
 
     useEffect(() => {
@@ -143,7 +143,7 @@ function ProductManagementIcomingStockPage({title}) {
             </div>
             <SearchTop searchInputs={searchInputs} submit={searchSubmit} />
             <RegisterTop registerInputs={registerInputs} submitClick={submit} buttonState={buttonState}/>
-            <AdminIncomingStockSearch selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor}/>
+            <AdminIncomingStockSearch refetch={refetch} setRefetch={setRefetch} selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor}/>
         </AdminPageLayout>
     )
 };

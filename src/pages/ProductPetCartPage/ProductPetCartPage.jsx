@@ -9,14 +9,22 @@ import { postProductOrderCartsRequest } from "../../apis/api/productOrder";
 
 function ProductPetCartPage(props) {
     const navigate = useNavigate();
-    const [ productCartList, setProductCartList ] = useState([]);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
+    const [ productCartList, setProductCartList ] = useState([]);
     const selectProductCart = productCartList.filter(productCart => productCart.checked).length;
     const [ checkAll, setCheckAll ] = useState({checked: false, target: 1});
-    const totalPrice = productCartList
-    .filter(productCart => productCart.checked)
-    .reduce((total, productCart) => total + productCart.productPrice * productCart.productCartCount, 0);
+    const totalPrice = productCartList.filter(productCart => productCart.checked)
+                        .reduce((total, productCart) => total + productCart.productPrice * productCart.productCartCount, 0);
+                        
+    useEffect(() => {
+        const iamport = document.createElement("script");
+        iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
+        document.head.appendChild(iamport);
+        return () => {
+            document.head.removeChild(iamport);
+        }
+    }, [])
 
     useEffect(() => {
         if(checkAll.target === 1) {
@@ -76,7 +84,7 @@ function ProductPetCartPage(props) {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: response => {
-                console.log(response)
+                console.log(response.data)
                 setProductCartList(() => response.data.map(productCart => {
                     return  {
                         ...productCart,
@@ -102,8 +110,7 @@ function ProductPetCartPage(props) {
             alert("구매할 상품을 선택해주세요.");
             return;
         }
-        
-        // 마지막 구매 주소로 요청
+
         const requestData = selectedProductCarts.map(productCart => ({
             userId: productCart.userId,
             productId: productCart.productId,
@@ -112,10 +119,37 @@ function ProductPetCartPage(props) {
             productSizeCategoryId: productCart.productSizeCategoryId,
             productOrderCount: productCart.productCartCount
         }));
-    
-        postProductOrderCartsQuery.mutate(requestData, {
-            onSuccess: () => {
-                handleProdudtCartsDelete();
+        
+        const productName = selectedProductCarts.length > 1 
+        ? `${selectedProductCarts[0].productNameKor} 외 ${selectedProductCarts.length - 1}건` 
+        : selectedProductCarts[0].productNameKor;
+
+        if(!window.IMP) {return;}
+        const { IMP } = window;
+        IMP.init("imp65452786");
+
+        const paymentData = {
+            pg: "kakaopay",
+            pay_method: "kakaopay",
+            merchant_uid: `mid_${new Date().getTime()}`,
+            amount: totalPrice,
+            name: productName,
+            buyer_name: principalQueryState?.data?.data?.name,
+            buyer_email: principalQueryState?.data?.data?.email
+        }
+
+        IMP.request_pay(paymentData, (response) => {
+            const { success, error_msg } = response;
+            console.log(success)
+
+            if(success) {
+                postProductOrderCartsQuery.mutate(requestData, {
+                    onSuccess: () => {
+                        handleProdudtCartsDelete();
+                    }
+                });
+            } else {
+                alert(error_msg);
             }
         });
     }
@@ -165,7 +199,7 @@ function ProductPetCartPage(props) {
                                 <img src={productCart.productImageUrl} alt="" />
                             </div>
                             <div css={s.container4}>
-                                <div onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>유기농 건강식 고양이 사료</div> 
+                                <div onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>{productCart.productNameKor}</div> 
                                 <div>{parseInt(productCart.productPrice * productCart.productCartCount)}원</div>
                                 <div css={s.productDeliveryBox}>
                                     <button onClick={() => {

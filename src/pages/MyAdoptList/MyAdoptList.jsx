@@ -14,8 +14,8 @@ function MyAdoptList(props) {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
-    const [ adoptList, setAdoptList] = useState([]);
     const userId = principalQueryState.data?.data.userId;
+    const [ adoptList, setAdoptList] = useState([]);
     const searchCount = 6;
     const page = searchParams.get("page") || 1;
     const lastPage = page * searchCount;

@@ -59,3 +59,8 @@ export const deleteAdoptBoardById = async (params) => {
    
     return await instance.delete('/adoptation/board', {params})
 }
+
+
+export const postAdoptLike = async (data) => {
+    const response = await instance.post('/adoptation/favorite',data);
+}

@@ -5,18 +5,22 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptAll, getAdoptCount } from '../../apis/api/Adopt';
-import Pagination from 'react-js-pagination';
-import { useQuery } from 'react-query';
+import { getAdoptAll, getAdoptCount, postAdoptLike } from '../../apis/api/Adopt';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { count } from 'firebase/firestore';
 import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
 import { AiOutlineLike } from "react-icons/ai";
 
 function AdoptCommunity() {
+    const [likeBoards, setLikeBoards] = useState([])
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
+    const userId = principalQueryState.data?.data.userId;
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 7;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
+    const boardId = parseInt(searchParams.get("boardId"))
     const page = parseInt(searchParams.get("page")) || 1;
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
@@ -35,6 +39,20 @@ function AdoptCommunity() {
         return formatDate(date);
     }
 
+
+
+    const postAdoptLikeMutation = useMutation({
+        mutationKey: "postAdoptLikeMutation",
+        mutationFn: postAdoptLike,
+        onSuccess: (response) => {
+            console.log("좋아요 성공")
+            console.log(response)
+        },
+        onError: (error) => {
+            console.log("좋아요 실패")
+            console.log(error)
+        }
+    })
 
   
 
@@ -89,8 +107,13 @@ function AdoptCommunity() {
         setSearchParams({ page: pageNumber });
     };
 
-    const handleClick = () => {
-        console.log("입력이 감지되었습니다.")
+    const handleLikeSubmit = (boardId) => {
+        postAdoptLikeMutation.mutate(
+            {
+                adoptationBoardId: boardId,
+                userId: userId
+            }
+        )
     }
 
 
@@ -115,10 +138,12 @@ function AdoptCommunity() {
                                 <div 
                                 key={data.adoptationBoardId} >
                                     <div>{data.username}</div>
-                                    <div  onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
+                                    <div  onClick={(event) => {
+                                        navigate(`/adoptCommunity/${data.adoptationBoardId}`)
+                                        console.log(event.target)}}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{date(data.createDate)}</div>
-                                    <div><AiOutlineLike/><>(좋아요 수)</></div>
+                                    <div><AiOutlineLike onClick={() => handleLikeSubmit(data.adoptationBoardId)}/></div>
                                 </div>
                             ))}
                         </div>

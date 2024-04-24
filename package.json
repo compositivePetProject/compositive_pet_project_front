@@ -12,11 +12,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-<<<<<<< HEAD
     "react-js-pagination": "^3.0.3",
-=======
     "react-kakao-maps-sdk": "^1.1.26",
->>>>>>> 6d87a0a202962080046c44ecb7d2a705766fa4d6
     "react-query": "^3.39.3",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.3",

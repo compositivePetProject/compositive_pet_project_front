@@ -7,6 +7,7 @@ import RootHeader from './components/RootHeader/RootHeader';
 import RootLayout from './components/RootLayout/RootLayout';
 import AdoptRoute from './routes/AdoptRoute/AdoptRoute';
 import AuthRoute from './routes/AuthRoute/AuthRoute';
+import MapRoute from './routes/MapRoute/MapRoute';
 import MyPageRoute from './routes/MyPageRoute/MyPageRoute';
 import ProductRoute from './routes/ProductRoute/ProductRoute';
 import { useQuery } from "react-query";
@@ -32,6 +33,7 @@ function App() {
             <ProductRoute />
             <AdoptRoute/>
             <MyPageRoute />
+            <MapRoute />
           </PageContainer>
         <RootFooter />
       </RootContainer>

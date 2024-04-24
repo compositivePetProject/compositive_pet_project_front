@@ -107,6 +107,11 @@ function MyProfilePage() {
         }
     })
 
+    const handleEditButton = () => {
+        setIsEditng(() => true)
+        setnewNicknameValue(() => principalQueryState.data?.data.nickname)
+    }
+
     const handleNicknameCheck = () => {
         nicknameCheck.mutate({
             newNickname
@@ -190,7 +195,7 @@ function MyProfilePage() {
                         </div>
                         <div>{principalQueryState.data?.data.nickname}</div>
                         <div>{principalQueryState.data?.data.email}</div>
-                        <button css={s.buttons3} onClick={() => setIsEditng(true)}>수정</button>
+                        <button css={s.buttons3} onClick={handleEditButton}>수정</button>
                     </>
                     :
                     <>
@@ -213,7 +218,7 @@ function MyProfilePage() {
                     </div>
                     <div css={s.nicknameEdit}>닉네임 변경</div>
                     <div css={s.nicknameEditBox}>
-                        <AuthPageInput type="text"  name={"newNickname"} placeholder={principalQueryState.data?.data.nickname} value={newNickname} onChange={newNicknameChange} message={newNicknameMessage} />
+                        <AuthPageInput type="text"  name={"newNickname"} value={newNickname} onChange={newNicknameChange} message={newNicknameMessage} />
                         <button css={s.nickCheckButton} onClick={handleNicknameCheck}>닉네임 중복확인</button>
                     </div>
                     <div>

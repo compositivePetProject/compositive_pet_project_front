@@ -18,7 +18,6 @@ function MyOrdersPage(props) {
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [ userOrders, setUserOrders ] = useState([]);
-    const userId = principalQueryState.data?.data.userId;
     const [ isEditing, setIsEditing ] = useState(false);
     const [editedOrder, setEditedOrder] = useState(null); 
     const selectedSizeType = useSelect();
@@ -26,6 +25,8 @@ function MyOrdersPage(props) {
     const [ productSizeOptions , setProductSizeOptions ] = useState([]);
     const [productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
+    const userId = principalQueryState.data?.data.userId;
+
     
     const getProductOrdersQuery = useQuery(
         ["getProductOrdersQuery", principalQueryState.data],
@@ -154,6 +155,13 @@ function MyOrdersPage(props) {
     const handleOpenEditModal = (order) => {
         setIsEditing(true); 
         setEditedOrder(order); 
+        selectedSizeType.handleOnChange({
+            value: order.productSizeCategoryId,
+            label: order.productSizeCategoryNameKor
+        });
+        setProductOrderCount(() => order.productOrderCount); 
+        setProductOrderAddress(() => order.productOrderAddress); 
+        setProductOrderDetailAddress(() => order.productDetailOrderAddress); 
     };
 
     const handleCloseEditModal = () => {

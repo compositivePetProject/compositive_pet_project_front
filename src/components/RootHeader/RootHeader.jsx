@@ -76,7 +76,7 @@ function RootHeader() {
                     <button
                         css={s.buttons}
                         onMouseEnter={() => handleHover("map")}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/kakao/map")}
                     >
                         지도
                     </button>
@@ -137,7 +137,7 @@ function RootHeader() {
                     )}
                     {currentMenu === "map" && (
                         <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  내 주변 동물병원</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/kakao/map">  카카오 맵</a> </div>
                             <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  내 주변 동물약국</a> </div>
                         </div>
                     )}

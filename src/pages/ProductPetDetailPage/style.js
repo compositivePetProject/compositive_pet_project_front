@@ -144,18 +144,11 @@ export const inputBox = css`
 
 export const productDeliveryBox = css`
     display: flex;
-    justify-content: space-between;
     position: relative;
-    
     
     & > div:nth-of-type(1) {
         color : #777777;
         width: 80px;   
-    }
-
-    & > div:nth-of-type(2) {
-        font-weight: 600;
-        width: 100px;   
     }
 
     & > button {
@@ -174,6 +167,25 @@ export const productOrderButtons = css`
     padding: 3px;
     border: none;
     width: 30%;
+    height: 50px;
+    cursor: pointer;
+    
+    & > button:nth-of-type(1) {
+        margin-right: 20px;
+    }
+
+    &:hover {
+        background-color: #333333;
+    }
+`;
+
+export const productOrderButton = css` 
+    color: #e2e2e2;
+    font-weight: 700;
+    background-color: #444444;
+    padding: 3px;
+    border: none;
+    width: 10%;
     height: 50px;
     cursor: pointer;
     
@@ -235,6 +247,9 @@ export const productFooter = css`
 `;
 
 export const reviewBox = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 18px;
     font-weight: 700;
     line-height: 85px;

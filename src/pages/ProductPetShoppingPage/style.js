@@ -40,7 +40,7 @@ export const searchBar = css`
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    width: 23%;
+    width: 18%;
     height: 50px;
 `;
 

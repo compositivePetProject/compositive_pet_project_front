@@ -183,9 +183,8 @@ export const productOrderButton = css`
     color: #e2e2e2;
     font-weight: 700;
     background-color: #444444;
-    padding: 3px;
     border: none;
-    width: 10%;
+    width: 15%;
     height: 50px;
     cursor: pointer;
     
@@ -225,12 +224,24 @@ export const productDetailButtons = css`
 
 export const productDetailBox2 = css`
     display: flex;
-    justify-content: center;
     width: 100%;
     height: 100%;
     overflow: hidden;
     // css 안 먹음 quill
     & > img {
+        height: 100%;
+        width: 100%;
+    }
+`;
+
+export const contentBox2 = css`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    // css 안 먹음 quill
+    & > img {
+        
         height: 100%;
         width: 100%;
     }

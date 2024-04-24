@@ -4,7 +4,7 @@ import * as s from "./style";
 
 import React, { useEffect, useState } from 'react';
 
-function    ProductPetPageNumbers({productCount}) {
+function ProductPetPageNumbers({productCount}) {
     const [ searchParams ] = useSearchParams();
     const page = parseInt(searchParams.get("page"));
     const [ numbers, setNumbers ] = useState([]);

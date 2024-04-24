@@ -257,10 +257,6 @@ function ProductPetDetailPage() {
         })
     }
 
-    const reviewsCount = {
-        maxPageNumber: 10
-    }
-
    
     return (
         <div css={s.layout}>
@@ -351,7 +347,9 @@ function ProductPetDetailPage() {
                                         <div>{renderRatingStars(review.productCommentRatingValue)}</div>
                                         <div>{review.updateDate}</div>
                                     </div>
-                                    <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                    <div css={s.contentBox2}>
+                                        <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                    </div>
                                 </div>
                                 <div css={s.reviewBox4}>
                                     {hiddenUsername}님의 리뷰입니다.
@@ -363,7 +361,6 @@ function ProductPetDetailPage() {
                         }
                     </div>
                 </div>
-                
             </div>
         </div>
     );

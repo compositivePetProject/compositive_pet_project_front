@@ -1,11 +1,11 @@
 import { useState } from "react"
 
-export const useSelect = () => {
-    const [option, setOption] = useState();
+export const useSelect = (defaultValue) => {
+    const [option, setOption] = useState(defaultValue);
 
     const handleOnChange = (option) => {
         setOption(() => option);
     }
 
-    return { option, setOption, handleOnChange };
+    return { option, setOption, handleOnChange, defaultValue };
 }   

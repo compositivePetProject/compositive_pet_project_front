@@ -88,7 +88,8 @@ function ProductPetShoppingPage(props) {
     const handleOrderByChange = (value) => {
         setOrderBy(value);
     };
-    console.log(orderBy);
+
+    
     return (
         <div css={s.layout}>
             <div css={s.categoryHeader}>

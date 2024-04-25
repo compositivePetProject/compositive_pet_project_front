@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import AdminPageLayout from "../../../components/admin/AdminPageLayout/AdminPageLayout";
 import SearchTop from "../../../components/admin/SearchTop/SearchTop";
 import TopSelect from "../../../components/admin/TopSelect/TopSelect";
@@ -14,22 +14,33 @@ import AdminOutgoingStockSearch from "../../../components/admin/AdminOutgoingSto
 
 function ProductManagementOutgoingStockPage({title}) {
     const [ searchOutgoingProductData, setSearchOutgoingProductData ] = useRecoilState(searchOutgoingProductDataState);
+    const [ refetch, setRefetch ] = useState(false);
 
-    const searchInputs = useMemo(() => [
+    const searchSubmit = () => {
+        setRefetch(() => true);
+    }
+
+    const searchHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+          searchSubmit();
+        }
+    }
+
+    const searchInputs = [
         [
-            <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setSearchOutgoingProductData} options={productCategoryOptions} />,
-            <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setSearchOutgoingProductData} options={productAnimalCategoryOptions} />,
             <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setSearchOutgoingProductData} options={productSizeCategoryOptions} />,
-            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchOutgoingProductData} inputSize={20}/>
+            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchOutgoingProductData} inputSize={20} onKeyDown={searchHandleKeyDown}/>
         ],
-    ], []);
+    ];
+
+
     return (
         <AdminPageLayout>
         <div css={s.header}>
             <h1 css={s.title}>{title}</h1>
         </div>
-        {/* <SearchTop searchInputs={searchInputs}/> */}
-        <AdminOutgoingStockSearch/>
+        <SearchTop searchInputs={searchInputs} submit={searchSubmit}/>
+        <AdminOutgoingStockSearch refetch={refetch} setRefetch={setRefetch}/>
         </AdminPageLayout>
   )
 }

@@ -5,7 +5,7 @@ export const layout = css`
     box-sizing: border-box;
     border: 1px solid #0e004a24;
     border-radius: 10px;
-    padding: 0px 10px;
+    padding: 10px 10px;
     overflow: hidden;
 `
 
@@ -14,6 +14,36 @@ export const row = css`
     display: flex;
     margin: 5px 0px 0px 0px;
     box-sizing: border-box;
+
+    & > div:nth-of-type(1) {
+        border-top-left-radius: 5px;
+        width: 5%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(2) {
+        width: 15%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(3) {
+        width: 10%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(4) {
+        width: 10%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(5) {
+        width: 15%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(6) {
+        width: 20%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(7) {
+        width: 25%;
+        border-top-right-radius: 5px;
+    }
 `;
 
 export const label = css`
@@ -33,4 +63,46 @@ export const label = css`
 
 export const productTable = css`
     margin-bottom: 10px;
+`;
+
+export const rowData = css`
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+
+    & > div:nth-of-type(1) {
+        width: 5%;
+    }
+    & > div:nth-of-type(2) {
+        width: 15%;
+    }
+    & > div:nth-of-type(3) {
+        width: 10%;
+    }
+    & > div:nth-of-type(4) {
+        width: 10%;
+    }
+    & > div:nth-of-type(5) {
+        width: 15%;
+    }
+    & > div:nth-of-type(6) {
+        width: 20%;
+    }
+    & > div:nth-of-type(7) {
+        width: 25%;
+    }
+`;
+
+export const labelData = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border: 1px solid #dbdbdb;
+    
+    padding: 0px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: default;
 `;

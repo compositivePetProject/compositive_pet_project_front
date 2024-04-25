@@ -1,26 +1,34 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as s from "./style";
 import { useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import { getProductOutgoingAdminCountRequest, getProductOutgoingStocksAdminRequest } from "../../../apis/api/productAdmin";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
+import { searchOutgoingProductDataState } from "../../../atoms/admin/searchOutgoingProductDataAtom";
 
-function AdminOutgoingStockSearch() {
+function AdminOutgoingStockSearch({refetch, setRefetch}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    // const [ searchOrderProductData, setSearchOrderProductData ] = useRecoilState(null);
+    const [ searchOutgoingProductData, setSearchOutgoingProductData ] = useRecoilState(searchOutgoingProductDataState);
     const searchCount = 10;
     const [ outgoingList, setOutgoingList ] = useState([]);
     const [ maxPageNumber, setMaxPageNumber ] = useState(0);
     const [ totalCount, setTotalCount ] = useState(0);
+
+    useEffect(() => {
+        searchOutgoingStockQuery.refetch();
+        setRefetch(() => false);
+    }, [refetch])
 
     const searchOutgoingStockQuery = useQuery(
         ["searchOutgoingStockQuery", searchParams.get("page")],
         async () => {
             return await getProductOutgoingStocksAdminRequest({
                 page: searchParams.get("page"),
-                count: searchCount
+                count: searchCount,
+                productSizeCategoryId: searchOutgoingProductData.productSizeCategoryId,
+                productNameKor: searchOutgoingProductData.productNameKor,
             })
         },
         {
@@ -41,9 +49,11 @@ function AdminOutgoingStockSearch() {
     )
 
     const getOutgoingStockCountQuery = useQuery(
-        ["getOutgoingStockCountQuery"],
+        ["getOutgoingStockCountQuery", searchOutgoingStockQuery.data],
         async () => await getProductOutgoingAdminCountRequest({
-            count: searchCount
+            count: searchCount,
+            productSizeCategoryId: searchOutgoingProductData.productSizeCategoryId,
+            productNameKor: searchOutgoingProductData.productNameKor,
         }),
         {
             retry: 0,

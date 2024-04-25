@@ -5,7 +5,7 @@ export const layout = css`
     box-sizing: border-box;
     border: 1px solid #0e004a24;
     border-radius: 10px;
-    padding: 0px 10px;
+    padding: 10px 10px;
     overflow: hidden;
 `
 
@@ -33,6 +33,7 @@ export const label = css`
 
     &:nth-of-type(1) {
         width: 10%;
+        border-top-left-radius: 5px;
     }
     &:nth-of-type(2) {
         width: 50%;
@@ -45,6 +46,7 @@ export const label = css`
     }
     &:nth-of-type(5) {
         width: 30%;
+        border-top-right-radius: 5px;
     }
 `;
 

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import AdminPageLayout from "../../../components/admin/AdminPageLayout/AdminPageLayout";
 import SearchTop from "../../../components/admin/SearchTop/SearchTop";
 import TopInput from "../../../components/admin/TopInput/TopInput";
@@ -15,12 +15,22 @@ import AdminOrderSearch from "../../../components/admin/AdminOrderSearch/AdminOr
 function ProductManagementOrderPage({title}) {
     const [ searchOrderProductData, setSearchOrderProductData ] = useRecoilState(searchOrderProductDataState);
 
+    const [ refetch, setRefetch ] = useState(false);
+
+    const searchSubmit = () => {
+        setRefetch(() => true);
+    }
+
+    const searchHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+          searchSubmit();
+        }
+    }
+
     const searchInput = useMemo(() => [
         [
-            <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setSearchOrderProductData} options={productCategoryOptions} />,
-            <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setSearchOrderProductData} options={productAnimalCategoryOptions} />,
             <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setSearchOrderProductData} options={productSizeCategoryOptions} />,
-            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchOrderProductData} inputSize={20}/>
+            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchOrderProductData} inputSize={20} onKeyDown={searchHandleKeyDown}/>
         ]
     ], []);
 
@@ -30,7 +40,7 @@ function ProductManagementOrderPage({title}) {
             <h1 css={s.title}>{title}</h1>
         </div>
         <SearchTop searchInputs={searchInput} />
-        <AdminOrderSearch/>
+        <AdminOrderSearch refetch={refetch} setRefetch={setRefetch}/>
         </AdminPageLayout>
     )
 }

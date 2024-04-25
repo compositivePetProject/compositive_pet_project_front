@@ -49,9 +49,11 @@ function AdminCurrentStockSearch({refetch, setRefetch}) {
     )
 
     const getCurrentStockCountQuery = useQuery(
-        ["getCurrentStockCountQuery"],
+        ["getCurrentStockCountQuery", getCurrentProductsQuery.data],
         async () => await getProductStocksCountAdminRequest({
-            count: searchCount
+            count: searchCount,
+            productSizeCategoryId: searchCurrentProductData.productSizeCategoryId,
+            productNameKor: searchCurrentProductData.productNameKor
         }),
         {
             retry: 0,

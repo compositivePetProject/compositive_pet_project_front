@@ -82,3 +82,7 @@ export const getOrderProductsRequest = async (params) => {
     return await instance.get("/product/admin/order/detail", {params});
 }
 
+export const getOrderProductsCountRequest = async (params) => {
+    return await instance.get("/product/admin/order/count", {params});
+}
+

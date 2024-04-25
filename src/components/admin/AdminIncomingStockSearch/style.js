@@ -5,7 +5,7 @@ export const layout = css`
     box-sizing: border-box;
     border: 1px solid #0e004a24;
     border-radius: 10px;
-    padding: 0px 10px;
+    padding: 10px 10px;
     overflow: hidden;
 `
 
@@ -35,6 +35,7 @@ export const row = css`
     & > div:nth-of-type(5) {
         width: 30%;
         border-right: 1px solid #eee;
+        border-top-right-radius: 5px;
     }
 `;
 

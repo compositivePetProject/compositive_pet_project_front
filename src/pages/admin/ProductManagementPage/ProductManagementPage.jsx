@@ -91,14 +91,32 @@ function ProductManagementPage({title}) {
     })
   }
 
+  const searchHandleKeyDown = (e) => {
+    if(e.key === "Enter") {
+        searchSubmit();
+    }
+  }
+  
+  const searchSubmit = () => {
+    setRefetch(() => true);
+  }
+  
+  const registerSubmit = () => {
+    productRegisterMutation.mutate(productData);
+  }
+  
+  const updateSubmit = () => {
+    updateProductQuery.mutate(productData);
+  }
+
   const searchInputs = [
     [
       <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setSearchProductData} options={productCategoryOptions} />,
       <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setSearchProductData} options={productAnimalCategoryOptions} />,
-      <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchProductData} inputSize={20}/>
+      <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchProductData} inputSize={20} onKeyDown={searchHandleKeyDown}/>
     ]
   ];
-
+  
   const registerInputs =  [
     [
       <TopInput label={"ID"} name={"productId"} setState={setProductData} disabled={true} inputSize={5} value={productData.productCategoryId}/>,
@@ -116,17 +134,6 @@ function ProductManagementPage({title}) {
     ]
   ];
 
-  const searchSubmit = () => {
-    setRefetch(() => true);
-  }
-
-  const registerSubmit = () => {
-    productRegisterMutation.mutate(productData);
-  }
-
-  const updateSubmit = () => {
-    updateProductQuery.mutate(productData);
-  }
 
   return (
     <AdminPageLayout>

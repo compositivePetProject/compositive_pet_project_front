@@ -24,7 +24,7 @@ function AdminProductSearchPageNumbers({ maxPageNumber, totalCount, path }) {
       <div css={s.pageNumbers}>
         {
           page !== 1 &&
-          <Link css={s.pageButton(false)} to={`/admin/management/${parsePath}product?page=${page - 1}`}>&#60;</Link>
+          <Link css={s.pageButton(false)} to={`/admin/management/${path}product?page=${page - 1}`}>&#60;</Link>
         }
         {
           numbers.map(number => 

@@ -23,7 +23,7 @@ function ProductManagementIcomingStockPage({title}) {
     const [ incomingProductData, setIncomingProductData ] = useRecoilState(incomingProductDataState);
     const queryClient = useQueryClient();
     const [ buttonState, setButtonState ] = useState(0);
-    const [ incomingProductIds, setIncomingProductsIds ] = useRecoilState(deleteIncomingStocksState);
+    const [ incomingProductIds, setIncomingProductsIds ] = useState([]);
     const [ refetch, setRefetch ] = useState(false);
 
     const incomingProductRegisterMutation = useMutation({
@@ -79,10 +79,33 @@ function ProductManagementIcomingStockPage({title}) {
         }
     })
 
+    
+
+    const searchHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+            searchSubmit();
+        }
+    }
+
+    const registerHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+            incomingProductRegisterMutation.mutate(incomingProductData);
+        }
+    }
+    
+    const updateHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+            incomingProductUpdateMutation.mutate(incomingProductData);
+        }
+    }
+    const searchSubmit = () => {
+        setRefetch(() => true);
+    }
+
     const searchInputs = [
         [
             <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setSearchIncomingProductData} options={productSizeCategoryOptions} />,
-            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchIncomingProductData} inputSize={20}/>
+            <TopInput label={"상품명"} name={"productNameKor"} setState={setSearchIncomingProductData} inputSize={20} onKeyDown={searchHandleKeyDown}/>
         ]
     ];
 
@@ -93,38 +116,16 @@ function ProductManagementIcomingStockPage({title}) {
             <TopSelect label={"상품사이즈"} name={"productSizeCategoryId"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} options={productSizeCategoryOptions} buttonState={buttonState} value={incomingProductData.productSizeCategoryId}/>
         ],
         [
-            <TopInput label={"상품가입고갯수"} name={"productIncomingStockCount"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} inputSize={8} buttonState={buttonState} value={incomingProductData.productIncomingStockCount}/>,
+            <TopInput label={"상품가입고갯수"} name={"productIncomingStockCount"} setState={setIncomingProductData} disabled={buttonState === 0 ? true : false} inputSize={8} buttonState={buttonState} value={incomingProductData.productIncomingStockCount} onKeyDown={buttonState === 1 ? registerHandleKeyDown : updateHandleKeyDown}/>,
         ]
     ];
-
-    
-    const submit = () => {
-        if(buttonState === 1) {
-            incomingProductRegisterMutation.mutate(incomingProductData);
-        }
-        
-        if(buttonState === 2) {
-            setButtonState(2);
-            incomingProductUpdateMutation.mutate({
-                productIncomingStockId: incomingProductData.productIncomingStockId,
-                productId: incomingProductData.productId,
-                productSizeCategoryId: incomingProductData.productSizeCategoryId,
-                productIncomingStockCount: incomingProductData.productIncomingStockCount
-            })
-        }
-    }
     
     const deleteSubmit = () => {
         if(window.confirm("가입고 상품을 삭제하시겠습니까?")) {
-            let ids = incomingProductIds.map(product => product.productIncomingStockId);
-            incomingProductDeleteMutation.mutate(ids);
+            incomingProductDeleteMutation.mutate(incomingProductIds);
         } else {
             alert("가입고 상품 삭제가 취소되었습니다.");
         }
-    }
-
-    const searchSubmit = () => {
-        setRefetch(() => true);
     }
 
     useEffect(() => {
@@ -142,8 +143,8 @@ function ProductManagementIcomingStockPage({title}) {
                 </div>
             </div>
             <SearchTop searchInputs={searchInputs} submit={searchSubmit} />
-            <RegisterTop registerInputs={registerInputs} submitClick={submit} buttonState={buttonState}/>
-            <AdminIncomingStockSearch refetch={refetch} setRefetch={setRefetch} selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor}/>
+            <RegisterTop registerInputs={registerInputs} submitClick={() => buttonState === 1 ? incomingProductRegisterMutation.mutate(incomingProductData) : incomingProductUpdateMutation.mutate(incomingProductData)} buttonState={buttonState}/>
+            <AdminIncomingStockSearch setIncomingProductsIds={setIncomingProductsIds} refetch={refetch} setRefetch={setRefetch} selectedProductSizeCategory={searchIncomingProductData.productSizeCategoryId} searchText={searchIncomingProductData.productNameKor}/>
         </AdminPageLayout>
     )
 };

@@ -1,18 +1,37 @@
 import ReactQuill from "react-quill";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useRef, useState } from "react";
-import { postAdopt, postAdoptRequest } from "../../apis/api/Adopt";
+import { useEffect, useRef, useState } from "react";
+import { getAdoptById, postAdopt, postAdoptRequest, putAdoptRequest, putUpdateAdoptRequest } from "../../apis/api/Adopt";
 import { useMutation, useQueryClient } from "react-query";
 
-function AdoptCommunityUpdate(data) {
+function AdoptCommunityEdit() {
     const navigate = useNavigate();
-    const [ animalCategoryId, setAnimalCategoryId ] = useState()
-    const [ adopTitle , setAdopTitle ] = useState("")
-    const [ adoptContent , setAdoptContent] = useState("")
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const adoptationBoardId = searchParams.get("adoptBoardId")
     const queryClient = useQueryClient();
+    const [animalCategoryId, setAnimalCategoryId] = useState(0);
+    const [adopTitle, setAdopTitle] = useState("");
+    const [adoptContent, setAdoptContent] = useState("");
 
+      
+  useEffect(() => {
+    const fetchAdoptationBoard = async () => {
+      try {
+        const boardDetail = await getAdoptById(adoptationBoardId);
+        setAnimalCategoryId(boardDetail.boardAnimalCategoryId);
+        setAdopTitle(boardDetail.adoptationBoardTitle);
+        setAdoptContent(boardDetail.adoptationBoardContent);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchAdoptationBoard();
+  }, [adoptationBoardId]);
+
+    
     const modules = {
         toolbar : 
             [
@@ -47,23 +66,24 @@ function AdoptCommunityUpdate(data) {
      
     }
 
-    const postAdoptRequestMutation = useMutation({
-        mutationKey: "postAdoptRequestMutation",
-        mutationFn: postAdoptRequest,
+    const putAdoptRequestMutation = useMutation({
+        mutationKey:"putAdoptRequestMutation",
+        mutationFn: putAdoptRequest,
         onSuccess: (response) => {
-            alert("작성을 완료했습니다.");
+            alert("수정을 완료했습니다.")
             window.location.replace("/adoptCommunity?page=1");
         },
         onError: (error) => {
-            console.log(error);
+            console.log(error)
         }
-      })
+    })
+    
 
 
     const handleSubmit = () => {
-        postAdoptRequestMutation.mutate({
+        putAdoptRequestMutation.mutate({
+            adoptationBoardId:adoptationBoardId,
             adoptationBoardTitle: adopTitle,
-            userId: queryClient.getQueryState("principalQuery").data?.data.userId,
             adoptationBoardContent: adoptContent,
             boardAnimalCategoryId: animalCategoryId
         })
@@ -81,7 +101,7 @@ function AdoptCommunityUpdate(data) {
         <div>
             <div css={s.container}>
 
-                <h2>분양 게시판 글쓰기</h2>
+                <h2>수정</h2>
                 <select 
                 value={animalCategoryId}
                 onChange={handleAnimalChange}>
@@ -96,7 +116,7 @@ function AdoptCommunityUpdate(data) {
                 onChange={handleTitleChange}
                 placeholder="제목을 입력하세요"
                 ></input>
-                <ReactQuill modules={modules} onChange={handleQuillChange}/>
+                <ReactQuill value={adoptContent} modules={modules} onChange={handleQuillChange}/>
             <div>
                 <button css = {s.submitButton} onClick={handleSubmit}>작성</button>
             </div>
@@ -105,4 +125,4 @@ function AdoptCommunityUpdate(data) {
     )
 }
 
-export default AdoptCommunityUpdate;
+export default AdoptCommunityEdit;

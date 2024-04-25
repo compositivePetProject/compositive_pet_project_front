@@ -1,16 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getAdoptById} from '../../apis/api/Adopt';
 import { useQueryClient } from "react-query";
 
 function AdoptCommunityDetail() {
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const adoptationBoardId = searchParams.get("adoptBoardId")
+    const { boardId } =useParams();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
     const navigate = useNavigate();
-    const { boardId } = useParams();
     const [adoptationBoard , setAdoptationBoard ] = useState(null);
     const [ boardDetail, setBoardDetail ] = useState(null);
     
@@ -50,7 +52,9 @@ function AdoptCommunityDetail() {
             {adoptationBoard && adoptationBoard.userId === userId &&
             (
                 <div>
-                    <button css={s.toUpdateButton} onClick={() => {navigate("/adoptCommunity/update")}}>수정</button>
+                    <button css={s.toUpdateButton} onClick={
+                        () => {navigate
+                        (`/adoptCommunity/edit?adoptBoardId=${adoptationBoard.adoptationBoardId}`)}}>수정</button>
                 </div>
             )
             }

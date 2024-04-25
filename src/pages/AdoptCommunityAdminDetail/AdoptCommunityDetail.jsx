@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getAdoptAdminById, getAdoptById} from '../../apis/api/Adopt';
 
 function AdoptCommunityAdminDetail() {
+    const searchParams = useSearchParams();
     const navigate = useNavigate();
     const { noticeId } = useParams();
     const [adminBoard , setAdminBoard ] = useState(null);

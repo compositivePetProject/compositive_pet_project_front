@@ -10,7 +10,7 @@ import { useMutation } from "react-query";
 import { putProductReviewRequest } from "../../apis/api/productComment";
 
 
-function ProductReviewModal ({ onClose, review})  {
+function ProductReviewModal ({ onClose, review })  {
     const [ rating, setRating] = useState(0);
     const [ quillValue, handleQuillValueChange, setQuillValue ] = useQuillInput();
     const { productCommentId, productId, userId, productCommentRatingId, productCommentContent, productCommentRatingValue} = review;

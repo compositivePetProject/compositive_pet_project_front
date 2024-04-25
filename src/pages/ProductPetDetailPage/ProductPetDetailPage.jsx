@@ -5,18 +5,15 @@ import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteProductFavoriteRequest, getProductFavoriteStatusRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
-import { postProductOrderRequest } from "../../apis/api/productOrder";
 import { FaPlus, FaMinus, FaStar, FaRegStar } from "react-icons/fa6";
 import Select from "react-select";
 import { getAllSizeCategoryRequest } from "../../apis/api/options";
 import { useSelect } from "../../hooks/useSelect";
 import { postProductCartAddRequest } from "../../apis/api/productCart";
-import { useInput } from "../../hooks/useInput";
-import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { VscChevronDown, VscChevronUp  } from "react-icons/vsc";
-import { getProductReviewsByProductIdRequest, getProductReviewsCountRequest, getProductReviewsPageRequest } from "../../apis/api/productComment";
-import ProductPetPageNumbers from "../../components/ProductPetPageNumbers/ProductPetPageNumbers";
+import {getProductReviewsCountRequest, getProductReviewsPageRequest } from "../../apis/api/productComment";
 import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDetailPageNumbers/ProductPetPageDetailPageNumbers";
+import ProductPayment from "../../components/ProductPayment/ProductPayment"
 
 function ProductPetDetailPage() {
     const navigate = useNavigate();
@@ -31,12 +28,14 @@ function ProductPetDetailPage() {
     const productId = parseInt(searchParams.get("productId"));
     const userId = principalQueryState.data?.data.userId;
     const selectedSizeType = useSelect();
-    const [ productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
-    const [ productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
     const [ isDetailPage, setIsDetailPage ] = useState(false);
     const hiddenUsername =  '****' + principalQueryState.data?.data.username.slice(-3);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [ totalCount, setTotalCount ] = useState(0);
     const searchCount = 5;
+    const totalRating  = reviews.reduce((sum, review) => sum + review.productCommentRatingValue, 0);
+    const averageRating = totalRating / reviews.length;
+
 
     useEffect(() => {
         const fetchProductFavoriteStatus = async () => {
@@ -123,44 +122,7 @@ function ProductPetDetailPage() {
         }
     );
 
-    const postProductOrderQuery = useMutation({
-        mutationKey: "postProductOrderQuery",
-        mutationFn: postProductOrderRequest,
-        onSuccess: response => {
-            alert("결제페이지로 이동합니다.")
-            window.location.replace("/product/pet/order/payment")
-        },
-        onError: error => {
-            setProductOrderAdderssMessage(null);
-            setProductOrderDetailAdderssMessage(null);
-            if(error.response.status === 400) {
-                const errorMap = error.response.data;
-                const errorEntries = Object.entries(errorMap);
-                for(let [ k, v ] of errorEntries) {
-                    if(k === "productOrderAddress") {
-                        setProductOrderAdderssMessage(() => {
-                            return {
-                                type: "error",
-                                text: v
-                            }
-                        })
-                    }
-                    if(k === "productOrderDetailAddress") {
-                        setProductOrderDetailAdderssMessage(() => {
-                            return {
-                                type: "error",
-                                text: v
-                            }
-                        })
-                    } 
-                }
-            }
-            if(error.response.status === 500) {
-                alert("옵션을 선택하지 않으셨습니다. 옵션을 선택해 주세요.")
-            } 
-        }
-    })
-
+   
     const postProductCartAddQuery = useMutation ({
         mutationKey: "postProductCartAddQuery",
         mutationFn: postProductCartAddRequest,
@@ -215,14 +177,11 @@ function ProductPetDetailPage() {
     }
 
     const handleProductPurchase = () => {
-        postProductOrderQuery.mutate({
-            userId : userId,
-            productId : productId,
-            productOrderAddress: productOrderAddress, 
-            productOrderDetailAddress: productOrderDetailAddress,
-            productSizeCategoryId: selectedSizeType.option?.value,
-            productOrderCount : productOrderCount
-        })
+        if (!selectedSizeType.option) {
+            alert("옵션을 선택해주세요.");
+            return;
+        }
+        setIsModalOpen(() => true)
     }
 
     const handleProductCartAdd = () => {
@@ -255,10 +214,6 @@ function ProductPetDetailPage() {
             outline: "none",
             boxShadow: "none"
         })
-    }
-
-    const reviewsCount = {
-        maxPageNumber: 10
     }
 
    
@@ -313,10 +268,6 @@ function ProductPetDetailPage() {
                             <div>{productOrderCount}</div>
                             <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
                         </div>
-                        <div css={s.inputBox}>
-                            <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
-                            <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
-                        </div>
                         <div css={s.productOrderbox}>
                             <div css={s.productDeliveryBox}>
                                 <div>총 상품 금액</div>
@@ -344,6 +295,9 @@ function ProductPetDetailPage() {
                             <div> 리뷰 ({totalCount})</div>
                             <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>리뷰 작성하기</button>
                         </div>
+                        <div>
+                        <FaStar css={s.activeStarButton} /> { isNaN(averageRating) ? 0 : averageRating }
+                        </div>
                         {reviews.map(review => 
                             <div key={review.productCommentId} css={s.reviewBox1}>
                                 <div css={s.reviewBox2}>
@@ -351,7 +305,9 @@ function ProductPetDetailPage() {
                                         <div>{renderRatingStars(review.productCommentRatingValue)}</div>
                                         <div>{review.updateDate}</div>
                                     </div>
-                                    <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                    <div css={s.contentBox2}>
+                                        <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                    </div>
                                 </div>
                                 <div css={s.reviewBox4}>
                                     {hiddenUsername}님의 리뷰입니다.
@@ -362,8 +318,10 @@ function ProductPetDetailPage() {
                             <ProductPetPageDetailPageNumbers reviewsCount={getProductReviewsCountQuery.data?.data} productId={productId}/> 
                         }
                     </div>
+                    {isModalOpen && (
+                        <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount}/>
+                    )}
                 </div>
-                
             </div>
         </div>
     );

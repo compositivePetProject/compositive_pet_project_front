@@ -66,8 +66,9 @@ export const postAdoptLike = async (data) => {
 }
 
 
-export const getAdoptLikeCount = async (params) => {
-    const response = await instance.get("adoptation/favorite/board", {params})
+export const getAdoptLike = async (params) => {
+    const response = await instance.get("adoptation/favorite/board", {params});
+    return response.data;
 }
 
 export const deleteAdoptLike = async (params) => {

@@ -127,6 +127,12 @@ export const likeCount = css`
     margin-right: 10px;
 `
 
+export const viewCount = css`
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+`
+
 export const likeHeart = css`
     width: 25px;
     height: 25px;

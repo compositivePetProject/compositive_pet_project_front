@@ -5,7 +5,7 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { deleteAdoptLike, getAdoptAll, getAdoptCount, getAdoptLikeCount, postAdoptLike } from '../../apis/api/Adopt';
+import { deleteAdoptLike, getAdoptAll, getAdoptCount, getAdoptLike, getAdoptLikeCount, postAdoptLike } from '../../apis/api/Adopt';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { count } from 'firebase/firestore';
 import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
@@ -15,7 +15,7 @@ import { FaHeart } from "react-icons/fa";
 
 function AdoptCommunity() {
     const [likeStatus, setLikeStatus] = useState({});
-    const [likeCounts, setLikeCounts] = useState([]);
+    const [likeCounts, setLikeCounts] = useState({});
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
@@ -23,7 +23,8 @@ function AdoptCommunity() {
     const searchCount = 7;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
-    const boardId = parseInt(searchParams.get("boardId"))
+    const boardId = searchParams.get("boardId")
+    const {adoptationBoardId} = useParams();
     const page = parseInt(searchParams.get("page")) || 1;
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
@@ -93,22 +94,9 @@ function AdoptCommunity() {
     )
 
 
-    const getAdoptLikeCountQuery = useQuery(
-        ["getAdoptLikeCountQuery", boardId],
-        async () => {
-            const response = await getAdoptLikeCount(boardId);
-            return response.data;  
-        },
-        {
-            refetchOnWindowFocus: false,
-            enabled: !!boardId 
-            
-        });
-
-     
+  
 
 
-    
 
    
 
@@ -130,7 +118,7 @@ function AdoptCommunity() {
         };
 
         fetchData();
-    }, [page]);
+    }, [page,likeStatus]);
 
 
  
@@ -147,19 +135,23 @@ function AdoptCommunity() {
         setSearchParams({ page: pageNumber });
     };
 
-    const handleLikeSubmit = (boardId) => {
-        if(!likeStatus[boardId]) {
-            postAdoptLikeMutation.mutate({
-                adoptationBoardId: boardId,
-                userId: userId
-            });
-            setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
-        } else {
-            DeleteAdoptLikeMutation.mutate({
-                adoptationBoardId: boardId,
-                userId: userId
-            });     
-            setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
+    const handleLikeSubmit = async (boardId) => {
+        try {
+            if (!likeStatus[boardId]) {
+                await postAdoptLikeMutation.mutate({
+                    adoptationBoardId: boardId,
+                    userId: userId
+                });
+                setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
+            } else {
+                await DeleteAdoptLikeMutation.mutate({
+                    adoptationBoardId: boardId,
+                    userId: userId
+                });
+                setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
+            }
+        } catch (error) {
+            console.error("좋아요 처리 중 오류 발생:", error);
         }
     };
 
@@ -198,10 +190,11 @@ function AdoptCommunity() {
                                             <FaHeart css={s.likeHeart} />
                                         )}
                                          </div>
-                                        <div css={s.likeCount}>0</div>
+                                         <div css={s.likeCount}>
+                                           0
+                                        </div>
                                         <MdOutlineRemoveRedEye css={s.likeHeart} />
-                                        
-                                        <div css={s.likeCount}>0</div>
+                                        <div css={s.viewCount}>0</div>
                                     </div>
                                 </div>
                             ))}

@@ -55,6 +55,18 @@ export const header = css`
     color: #0068ff;
 `
 
+export const idCheckvbutton = css`
+    width: 180px;
+    height: 38px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e6f2ff;
+    color: #0078ff;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
 export const imgUrlBox = css`
     display: inline-block;
     width: 95%;

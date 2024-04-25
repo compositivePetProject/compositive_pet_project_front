@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { postAdopt, postAdoptRequest } from "../../apis/api/Adopt";
 import { useMutation, useQueryClient } from "react-query";
 
-function AdoptCommunityRegister(props) {
+function AdoptCommunityRegister() {
     const navigate = useNavigate();
     const [ animalCategoryId, setAnimalCategoryId ] = useState()
     const [ adopTitle , setAdopTitle ] = useState("")
@@ -58,6 +58,7 @@ function AdoptCommunityRegister(props) {
             console.log(error);
         }
       })
+
 
     const handleSubmit = () => {
         postAdoptRequestMutation.mutate({

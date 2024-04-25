@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-
+import { FaRegHeart } from "react-icons/fa6";
 import { BiError } from 'react-icons/bi';
 import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptAll, getAdoptCount, postAdoptLike } from '../../apis/api/Adopt';
+import { deleteAdoptLike, getAdoptAll, getAdoptCount, getAdoptLikeCount, postAdoptLike } from '../../apis/api/Adopt';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { count } from 'firebase/firestore';
 import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
 import { AiOutlineLike } from "react-icons/ai";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 function AdoptCommunity() {
-    const [likeBoards, setLikeBoards] = useState([])
+    const [islike, setIslike ] = useState(false);
+    const [likeCounts, setLikeCounts] = useState([]);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
@@ -38,21 +40,36 @@ function AdoptCommunity() {
     const date = (date) => {
         return formatDate(date);
     }
+    
 
+    
 
 
     const postAdoptLikeMutation = useMutation({
         mutationKey: "postAdoptLikeMutation",
         mutationFn: postAdoptLike,
         onSuccess: (response) => {
-            console.log("좋아요 성공")
-            console.log(response)
+          
         },
         onError: (error) => {
-            console.log("좋아요 실패")
-            console.log(error)
+            
         }
     })
+
+
+    const DeleteAdoptLikeMutation = useMutation({
+        mutationKey: "DeleteAdoptLikeMutation",
+        mutationFn: deleteAdoptLike,
+        onSuccess: (response) => {
+            console.log("좋아요 성공")
+            
+        },
+        onError: (error) => {
+            
+        }
+    })
+
+    
 
   
 
@@ -73,6 +90,22 @@ function AdoptCommunity() {
             }
         }
     )
+
+
+    const getAdoptLikeCountQuery = useQuery(
+        ["getAdoptLikeCountQuery", boardId],
+        async () => {
+            const response = await getAdoptLikeCount(boardId);
+            return response.data;  
+        },
+        {
+            refetchOnWindowFocus: false,
+            enabled: !!boardId 
+            
+        });
+
+     
+
 
     
 
@@ -98,6 +131,12 @@ function AdoptCommunity() {
         fetchData();
     }, [page]);
 
+
+ 
+
+
+  
+
     const handleWriteClick = () => {
         navigate("/adoptCommunity/register")
     }
@@ -108,12 +147,26 @@ function AdoptCommunity() {
     };
 
     const handleLikeSubmit = (boardId) => {
-        postAdoptLikeMutation.mutate(
-            {
+        if(islike===false){
+            postAdoptLikeMutation.mutate(
+                {
+                    adoptationBoardId: boardId,
+                    userId: userId
+                });
+                setIslike(true);
+            
+        } else {
+            console.log(userId)
+            DeleteAdoptLikeMutation.mutate({
                 adoptationBoardId: boardId,
                 userId: userId
-            }
-        )
+            });     
+           
+
+            setIslike(false);
+        }
+       
+        
     }
 
 
@@ -130,7 +183,7 @@ function AdoptCommunity() {
                                 <div>제목</div>
                                 <div>카테고리</div>
                                 <div>작성일</div>
-                                <div>좋아요</div>
+                                <div></div>
                             </div>
                         </div>
                         <div css={s.boardListItem}>
@@ -143,7 +196,14 @@ function AdoptCommunity() {
                                         console.log(event.target)}}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{date(data.createDate)}</div>
-                                    <div><AiOutlineLike onClick={() => handleLikeSubmit(data.adoptationBoardId)}/></div>
+                                    <div css={s.status}>
+                                        <div onClick={()=>{handleLikeSubmit(data.adoptationBoardId)}}>
+                                            <FaRegHeart css={s.likeHeart}/>
+                                        </div>
+                                        <div css={s.likeCount}>0</div>
+                                        <MdOutlineRemoveRedEye css={s.likeHeart} />
+                                        <div css={s.likeCount}>0</div>
+                                    </div>
                                 </div>
                             ))}
                         </div>

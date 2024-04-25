@@ -64,3 +64,12 @@ export const deleteAdoptBoardById = async (params) => {
 export const postAdoptLike = async (data) => {
     const response = await instance.post('/adoptation/favorite',data);
 }
+
+
+export const getAdoptLikeCount = async (params) => {
+    const response = await instance.get("adoptation/favorite/board", {params})
+}
+
+export const deleteAdoptLike = async (params) => {
+    const response = await instance.delete("/adoptation/favorite",{params});
+}

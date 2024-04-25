@@ -121,6 +121,33 @@ export const writeButton = css`
 `;
 
 
+export const likeCount = css`
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+`
+
+export const likeHeart = css`
+    width: 25px;
+    height: 25px;
+    &:hover {
+        background-color: #fafafa;
+    }
+    &:active {
+        background-color: #eee;
+    }
+`
+
+export const status = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+`
+
+
+
 
 
 

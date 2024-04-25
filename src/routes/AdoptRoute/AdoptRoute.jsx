@@ -21,7 +21,7 @@ function AdoptRoute(props) {
                 <Route path="/adoptCommunity/cat" element={ <AdoptCommunityCat /> }/> 
                 <Route path="/adoptCommunity/register" element={ <AdoptCommunityRegister />} />
                 <Route path="/adoptCommunity/edit" element={ <AdoptCommunityEdit />} />
-                <Route path="/adoptCommunity/:boardId" element={<AdoptCommunityDetail />}/>
+                <Route path="/adoptCommunityDetail" element={<AdoptCommunityDetail />}/>
                 <Route path="/adoptCommunity/admin/:noticeId" element={ <AdoptCommunityAdminDetail />} /> 
             </Routes>
         </>

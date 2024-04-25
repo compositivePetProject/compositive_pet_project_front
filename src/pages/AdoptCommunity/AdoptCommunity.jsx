@@ -186,7 +186,7 @@ function AdoptCommunity() {
                                 key={data.adoptationBoardId} >
                                     <div>{data.username}</div>
                                     <div  onClick={(event) => {
-                                        navigate(`/adoptCommunity/${data.adoptationBoardId}`)
+                                        navigate(`/adoptCommunityDetail?boardId=${data.adoptationBoardId}`)
                                         console.log(event.target)}}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{date(data.createDate)}</div>

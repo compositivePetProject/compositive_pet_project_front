@@ -7,8 +7,7 @@ import { useQueryClient } from "react-query";
 
 function AdoptCommunityDetail() {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const adoptationBoardId = searchParams.get("adoptBoardId")
-    const { boardId } =useParams();
+    const adoptationBoardId = searchParams.get("boardId")
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
@@ -18,7 +17,7 @@ function AdoptCommunityDetail() {
     
     const fetchAdoptationBoard = async () => {
         try {
-            const boardDetail = await getAdoptById(boardId);
+            const boardDetail = await getAdoptById(adoptationBoardId);
             setAdoptationBoard(boardDetail);
             console.log(adoptationBoard);
         } catch (error) {
@@ -28,7 +27,7 @@ function AdoptCommunityDetail() {
 
     useEffect(() => {
         fetchAdoptationBoard();
-    }, [boardId]);
+    }, [adoptationBoardId]);
 
     return (
         <div css={s.container}>

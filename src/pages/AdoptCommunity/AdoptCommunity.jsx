@@ -11,9 +11,10 @@ import { count } from 'firebase/firestore';
 import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
 import { AiOutlineLike } from "react-icons/ai";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FaHeart } from "react-icons/fa";
 
 function AdoptCommunity() {
-    const [islike, setIslike ] = useState(false);
+    const [likeStatus, setLikeStatus] = useState({});
     const [likeCounts, setLikeCounts] = useState([]);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
@@ -147,27 +148,20 @@ function AdoptCommunity() {
     };
 
     const handleLikeSubmit = (boardId) => {
-        if(islike===false){
-            postAdoptLikeMutation.mutate(
-                {
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                setIslike(true);
-            
+        if(!likeStatus[boardId]) {
+            postAdoptLikeMutation.mutate({
+                adoptationBoardId: boardId,
+                userId: userId
+            });
+            setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
         } else {
-            console.log(userId)
             DeleteAdoptLikeMutation.mutate({
                 adoptationBoardId: boardId,
                 userId: userId
             });     
-           
-
-            setIslike(false);
+            setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
         }
-       
-        
-    }
+    };
 
 
   
@@ -198,10 +192,15 @@ function AdoptCommunity() {
                                     <div>{date(data.createDate)}</div>
                                     <div css={s.status}>
                                         <div onClick={()=>{handleLikeSubmit(data.adoptationBoardId)}}>
-                                            <FaRegHeart css={s.likeHeart}/>
-                                        </div>
+                                        {!likeStatus[data.adoptationBoardId] ? (
+                                            <FaRegHeart css={s.likeHeart} />
+                                        ) : (
+                                            <FaHeart css={s.likeHeart} />
+                                        )}
+                                         </div>
                                         <div css={s.likeCount}>0</div>
                                         <MdOutlineRemoveRedEye css={s.likeHeart} />
+                                        
                                         <div css={s.likeCount}>0</div>
                                     </div>
                                 </div>

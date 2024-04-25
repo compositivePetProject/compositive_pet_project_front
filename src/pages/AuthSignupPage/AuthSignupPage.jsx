@@ -20,6 +20,7 @@ function AuthSignupPage() {
     const [ checkPassword, checkPasswordChange ] = useInput("checkPassword");
     const [ name, nameChange, nameMessage ] = useInput("name");
     const [ address, addressChange, addressMessage ] = useInput("address");
+    const [ detailAddress, detailAddressChange, detailAddressMessage ] = useInput("detailAddress");
     const [ telNumber, telNumberChange, telNumberMessage ] = useInput("telNumber");
     const [ nickname, nicknameChange, nicknameMessage, setNicknameValue, setNicknameMessage ] = useInput("nickname");
     const [ email, emailChange, emailMessage ] = useInput("email");
@@ -131,6 +132,7 @@ function AuthSignupPage() {
             checkPasswordMessage?.type,
             nameMessage?.type,
             addressMessage?.type,
+            detailAddressMessage?.type,
             telNumberMessage?.type,
             nicknameMessage?.type,
             emailMessage?.type
@@ -141,14 +143,15 @@ function AuthSignupPage() {
             return;
         }
         authSignupMutation.mutate({
-            username,
-            password,
-            name,
-            address,
-            telNumber,
-            nickname,
-            email,
-            profileImageUrl
+            username: username,
+            password: password,
+            name: name,
+            address: address,
+            detailAddress: detailAddress,
+            telNumber: telNumber,
+            nickname: nickname,
+            email: email,
+            profileImageUrl: profileImageUrl
         })
     }
     
@@ -200,6 +203,7 @@ function AuthSignupPage() {
                             <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호 확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage} />
                             <AuthPageInput type={"text"} name={"name"} placeholder={"성명"} value={name} onChange={nameChange} message={nameMessage} />
                             <AuthPageInput type={"text"} name={"address"} placeholder={"주소"} value={address} onChange={addressChange} message={addressMessage} />
+                            <AuthPageInput type={"text"} name={"detailAddress"} placeholder={"상세주소"} value={detailAddress} onChange={detailAddressChange} message={detailAddressMessage} />
                             <AuthPageInput type={"text"} name={"telNumber"} placeholder={"전화번호"} value={telNumber} onChange={telNumberChange} message={telNumberMessage} />
                             <AuthPageInput type={"text"} name={"nickname"} placeholder={"닉네임"} value={nickname} onChange={nicknameChange} message={nicknameMessage} />
                             <AuthPageInput type={"text"} name={"email"} placeholder={"이메일"} value={email} onChange={emailChange} message={emailMessage} />

@@ -30,7 +30,7 @@ function ProductPetDetailPage() {
     const selectedSizeType = useSelect();
     const [ isDetailPage, setIsDetailPage ] = useState(false);
     const hiddenUsername =  '****' + principalQueryState.data?.data.username.slice(-3);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
     const [ totalCount, setTotalCount ] = useState(0);
     const searchCount = 5;
     const totalRating  = reviews.reduce((sum, review) => sum + review.productCommentRatingValue, 0);
@@ -218,7 +218,7 @@ function ProductPetDetailPage() {
 
    
     return (
-        <div css={s.layout}>
+        <div css={s.layout} >
             <div css={s.sideImg}>
                 <div css={s.productImg}>
                     <img src={user.productImageUrl} alt="" />
@@ -319,7 +319,7 @@ function ProductPetDetailPage() {
                         }
                     </div>
                     {isModalOpen && (
-                        <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount}/>
+                        <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount} />
                     )}
                 </div>
             </div>

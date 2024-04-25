@@ -38,6 +38,9 @@ function AdoptCommunityAdminDetail() {
                     <div>
                         <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity/admin")}}>목록</button>
                     </div>
+                    <div>
+                       
+                    </div>
                 </div>
                
             }

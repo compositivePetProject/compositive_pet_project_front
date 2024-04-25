@@ -3,8 +3,12 @@ import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAdoptById} from '../../apis/api/Adopt';
+import { useQueryClient } from "react-query";
 
 function AdoptCommunityDetail() {
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
+    const userId = principalQueryState.data?.data.userId;
     const navigate = useNavigate();
     const { boardId } = useParams();
     const [adoptationBoard , setAdoptationBoard ] = useState(null);
@@ -43,6 +47,13 @@ function AdoptCommunityDetail() {
             <div>
                 <button css={s.toListButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
             </div>
+            {adoptationBoard && adoptationBoard.userId === userId &&
+            (
+                <div>
+                    <button css={s.toUpdateButton} onClick={() => {navigate("/adoptCommunity/update")}}>수정</button>
+                </div>
+            )
+            }
         </div>
     );
 }

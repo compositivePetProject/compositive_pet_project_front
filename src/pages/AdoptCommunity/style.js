@@ -130,12 +130,6 @@ export const likeCount = css`
 export const likeHeart = css`
     width: 25px;
     height: 25px;
-    &:hover {
-        background-color: #fafafa;
-    }
-    &:active {
-        background-color: #eee;
-    }
 `
 
 export const status = css`

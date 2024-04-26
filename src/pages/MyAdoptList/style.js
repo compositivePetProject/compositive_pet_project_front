@@ -66,6 +66,24 @@ export const buttons3 = css`
     cursor: pointer;
 `;
 
+export const writeButton = css`
+    box-sizing: border-box;
+    margin-top: 50px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-right: 10px;
+    width: 25%;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        background-color: #fafafa;
+    }
+    &:active {
+        background-color: #eee;
+    }
+`;
+
 export const userDetails = css`
     display: flex;
     flex-direction: column;

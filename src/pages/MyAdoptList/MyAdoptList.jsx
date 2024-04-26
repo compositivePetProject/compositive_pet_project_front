@@ -147,6 +147,7 @@ const handleDeleteSelected = () => {
                     {adoptList.map((data) => (
                         <div 
                         key={data.adoptationBoardId} >
+                
                            <input
                                 type="checkbox"
                                 name="boardCheck"
@@ -162,8 +163,8 @@ const handleDeleteSelected = () => {
                 </div>
                 <AdoptationPageNumbersUser maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
                 <div>
-                    <button onClick={handleDeleteBoard}>삭제</button>
-                    <button>수정</button>
+                    <button css={s.writeButton} onClick={handleDeleteBoard}>삭제</button>
+                    <button css={s.writeButton} >수정</button>
                 </div>
             </div>
             

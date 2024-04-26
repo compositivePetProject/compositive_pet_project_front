@@ -47,11 +47,11 @@ function AdoptCommunityDetail() {
         <div css={s.box}>
             {adoptationBoard &&
                 <div css={s.boardListItem} key={adoptationBoard.adoptationBoardId}>
-                    <h1 css={s.title}>{adoptationBoard.adoptationBoardTitle}</h1>
+                    <h2>{adoptationBoard.adoptationBoardTitle}</h2>
                     <div>
                         <div>{adoptationBoard.username}</div>
                     </div>
-                    <div>
+                    <div css= {s.content}>
                         <div>{adoptationBoard.adoptationBoardContent}</div>
                     </div>
                 </div>
@@ -65,7 +65,6 @@ function AdoptCommunityDetail() {
                         (`/adoptCommunity/edit?adoptBoardId=${adoptationBoard.adoptationBoardId}`)}}>수정</button>
                         
                 }
-                <button css={s.writeButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
             </div>      
 
             {adoptationBoard &&   
@@ -74,8 +73,15 @@ function AdoptCommunityDetail() {
                 <div>{likeCount}</div>
             </div>
             }
+            <div css={s.commentBox}>
+                <div>
+                    <div>댓글 1</div>
+                    <div>댓글 2</div>
+                </div>
+            </div>
+            <button css={s.writeButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
         </div>
-        </div>
+    </div>
           
     );
 }

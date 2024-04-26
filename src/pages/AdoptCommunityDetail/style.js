@@ -99,14 +99,14 @@ export const userDetails = css`
 
 `;
 
-export const title = css`
-    position: absolute;
-    top: 10%;
-    
-    font-size: 25px;
-    margin-bottom: 24px;
 
-`;
+
+export const content = css`
+    
+    height: 800px;
+    box-sizing: border-box;
+    width: 80%;
+`
 
 export const box = css`
     position: relative;
@@ -114,14 +114,17 @@ export const box = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
     width: 80%;
-    height: 80%;
+    height: 600px;
     border: 1px solid #d7e2eb;
     border-radius: 15px;
     padding: 10px;
     row-gap: 10px;
     background-color: #ffffff;
+
+    & > h1 {
+        margin-top: 0;
+    }
     
 `;
 
@@ -161,8 +164,8 @@ export const buttonList = css`
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    height: 25%;
+    width: 400px;
+    height: 10%;
  
     
 `
@@ -233,8 +236,8 @@ export const boardListHeader = css`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    border-bottom: 2px solid #dbdbdb;
-    width: 100%;
+    border-bottom: 1px solid #dbdbdb;
+    width: 80%;
     & > div {
         box-sizing: border-box;
         border-right: 1px solid #dbdbdb;
@@ -264,7 +267,7 @@ export const boardListItem = css`
     cursor: pointer;
     overflow: hidden;
     height: 50%;
-    width: 70%;
+    width: 100%;
 
     & > div {
         box-sizing: border-box;
@@ -302,12 +305,28 @@ export const likeHeart = css`
     height: 25px;
 `
 export const status = css`
+    position: absolute;
+    top: 40px;
+    right: 40px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
    
 `
+
+export const commentBox = css`
+    box-sizing: border-box;
+    width: 30%;
+    height: 30%;
+    text-align: center;
+    border: 1px solid #dbdbdb;
+    & > div {
+
+    }
+`
+
+
 
 
 

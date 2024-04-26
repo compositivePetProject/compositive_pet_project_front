@@ -13,52 +13,109 @@ export const layout = css`
 export const categoryHeader = css`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     height: 85px;
     background-color: white;
-    border-bottom: 1px solid rgba(60, 57, 52, 0.2);
+    border-bottom: 1px solid #00005cff;;
+`;
+
+export const menuList = css`
+    height: 100%;
+    display: flex;
+    align-items: center;
 `;
 
 export const linkButtons = css`
     box-sizing: border-box;
     text-decoration: none;
-    color: rgb(15, 19, 23);
+    color: rgb(32, 40, 49);
     padding: 30px;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
+    /* transition: all 0.3s; */
     &:hover {
         font-weight: 700;
-        transition: font-weight 0.3s, color 0.5s;
-        border-bottom: 3px solid rgb(15, 19, 23);
+        border-bottom: 3px solid #00005cff;
+        color: #00005cff;
     }
 `;
 
 export const searchBar = css`
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
-    margin-top: 20px;
-    width: 18%;
+    width: 600px;
     height: 50px;
 `;
 
+export const searchLabel = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #0e004a24;
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #00005cff;
+    color: #eee;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    cursor: default;
+`;
+
 export const searchBarInput = css`
-    padding: 0px 45px;
+    /* padding: 0px 45px;
     border: none;
     width: 100%;
     height: 80%;
     outline: none;
     font-size: 15px;
-    background-color: transparent;
+    background-color: transparent; */
+    width: 300px;
+    padding: 0px 45px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    height: 40px;
+    font-size: 16px;
+    border-top: 1px solid #0e004a24;
+    border-right: 1px solid #0e004a24;
+    border-bottom: 1px solid #0e004a24;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    &:disabled {
+        cursor: not-allowed;
+    }
 `;
 
 export const searchBarButton = css`
-    font-size: 27px;
+    /* font-size: 27px;
     border: none;
     background-color: transparent;
+    cursor: pointer; */
+    margin-left: 5px;
+    width: 50px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #0e004a24;
+    font-weight: 600;
     cursor: pointer;
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
 `;
 
 export const shoppingFilter = css`
@@ -81,7 +138,7 @@ export const shoppingFilter = css`
 
 export const span = css`
     font-weight: 800;
-    color: black;
+    color:#00005cff;;
     font-size: 18px;
 `;
 
@@ -98,6 +155,10 @@ export const productLikeButtons = css`
     width: 100%;
     height: 50px;
     cursor: pointer;
+
+    &:hover{
+        color: #00005cff;
+    }
     
     & * {
         color: #00005cff;

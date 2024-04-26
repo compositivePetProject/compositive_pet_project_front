@@ -121,16 +121,15 @@ function ProductPetShoppingPage(props) {
                 </div>
             </div>
             <div css={s.shoppingFilter}>
-            <div>{totalCount}개의 상품</div>
-            <div>
-                {orderBy === "desc"
-                ?
-                <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
-                :
-                <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
-                }
-            </div>
-
+                <div><span css={s.span}>{totalCount}</span>개의 상품</div>
+                <div>
+                    {orderBy === "desc"
+                    ?
+                    <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
+                    :
+                    <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
+                    }
+                </div>
             </div>
             <div css={s.shoppingContainer}>
                 {

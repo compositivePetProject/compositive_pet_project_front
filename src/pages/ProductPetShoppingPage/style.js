@@ -61,15 +61,13 @@ export const searchBarButton = css`
     cursor: pointer;
 `;
 
-
-
 export const shoppingFilter = css`
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0px auto;
-    padding: 25px 40px 0px;
+    padding: 0px 0px 0px 10px;
     width: 100%;
     height: 70px;
     background-color: white;
@@ -78,24 +76,40 @@ export const shoppingFilter = css`
         font-size: 15px;
         font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
         color: #777777;
-
     }
 `;
+
+export const span = css`
+    font-weight: 800;
+    color: black;
+    font-size: 18px;
+`;
+
 export const productLikeButtons = css`
-    color: #3d3a35;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+
+    color: black;
+    font-weight: 800;
+    font-size: 15px;
     background-color: transparent;
     padding: 3px;
     border: none;
     width: 100%;
     height: 50px;
     cursor: pointer;
+    
+    & * {
+        color: #00005cff;
+        font-weight: 700;
+    }
 `;
 
 
 export const shoppingContainer = css`
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
     background-color: white;
@@ -104,34 +118,35 @@ export const shoppingContainer = css`
 export const imageBox = css`
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     box-sizing: border-box;
-    margin: 10px 20px 70px;
-    width: 22%;
-    height: 500px;
-    background-color: #dbdbdb;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 450px;
+    
+    /* background-color: #dbdbdb; */
     cursor: pointer;
     & > img {
-        height: 100%;
+        /* height: 100%; */
         width: 100%;
     }
 `;
 
 export const nameBox = css`
-    position: absolute;
-    bottom: -60px;
-    margin-bottom: 20px;
+    /* position: absolute;
+    bottom: -60px; */
+    margin: 10px 0 20px 0;
     font-size: 22px;
     font-weight: 700;
     color: #3d3a35;
 `;
 
 export const moneyBox = css`
-    position: absolute;
+    /* position: absolute;
     bottom: -85px;
     margin-bottom: 20px;
-    right: 0;
+    right: 0; */
+    text-align: right;
     font-size: 18px;
     font-weight: 500;
     color: #3d3a35;

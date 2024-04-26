@@ -165,6 +165,10 @@ const handleDeleteSelected = () => {
                 <div>
                     <button css={s.writeButton} onClick={handleDeleteBoard}>삭제</button>
                     <button css={s.writeButton} >수정</button>
+                    <button css={s.writeButton} 
+                        onClick={()=> navigate("/adoptCommunity/register")} 
+                    >글쓰기</button>
+
                 </div>
             </div>
             

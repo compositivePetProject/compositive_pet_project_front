@@ -13,6 +13,7 @@ function ProductPetShopPaymentPage({ onClose, order, option, productOrderCount }
     const principal = queryClient.getQueryState("principalQuery");
     const [ productOrderAddress, productOrderAddressOnChege, productOrderAdderssMessage, setProductOrderAddress, setProductOrderAdderssMessage] = useInput();
     const [ productOrderDetailAddress, productOrderDetailAddressOnChege, productOrderDetailAdderssMessage, setProductOrderDetailAddress, setProductOrderDetailAdderssMessage] = useInput();
+    const orderProductPrice = order.productPrice * productOrderCount;
 
     const getProductsQuery = useQuery(
         ["getProductsQuery"],
@@ -96,7 +97,7 @@ function ProductPetShopPaymentPage({ onClose, order, option, productOrderCount }
             pg: "kakaopay",
             pay_method: "kakaopay",
             merchant_uid: `mid_${new Date().getTime()}`,
-            amount: order.productPrice,
+            amount: orderProductPrice,
             name: order.productNameKor,
             buyer_name: principal?.data?.data?.name,
             buyer_email: principal?.data?.data?.email
@@ -125,18 +126,51 @@ function ProductPetShopPaymentPage({ onClose, order, option, productOrderCount }
     return (
         <div css={s.background}>
             <div css={s.layout}>
-                <h1>결제하기</h1>
+                <h3>배송지</h3>
                 <div css={s.storeContainer}>
                     <div css={s.inputBox}>
+                        <div>{principal.data?.data.name}({principal.data?.data.nickname})</div>
+                        <div>{principal.data?.data.telNumber}</div>
                         <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
                         <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
                     </div>
-                    { <button css={s.productContainer} 
+                </div>
+                <h3>주문 상품</h3>
+                <div css={s.storeContainer}>
+                    <div css={s.orderBox}>
+                        <div>(주)도대표회사</div>
+                        <div>무료배송</div>
+                    </div>
+                    <div css={s.productContainer}>
+                        <div css={s.productImg}>
+                            <img src={order.productImageUrl} alt="" />
+                        </div>
+                        <div css={s.productContainer2}>
+                            <div>{order.productNameKor}</div>
+                            <div css={s.productContainer3}> 
+                                <div>수량</div>
+                                <div>{productOrderCount}개</div>
+                            </div>
+                            <div>{orderProductPrice}원</div>
+                        </div>
+                    </div>
+                </div>
+                <div css={s.storeContainer2}>
+                    <div>총 주문 금액</div>
+                    <div>{orderProductPrice}원</div>
+                </div>
+                <h3>결제 수단</h3>
+                <div css={s.storeContainer3}>
+                    <input type="radio" checked={true} disabled={true}/>
+                    <div>카카오 페이 결제</div>
+                </div>
+                <div>
+                    <button css={s.productDetailButtons}  onClick={onClose}>취소</button>
+                    { <button css={s.productDetailButtons} 
                             onClick={() => {handlePaymentSubmit(order);}}>
-                            {order.productNameKor} Point
+                            결제하기
                         </button>
                     }
-                    <button onClick={onClose}>취소</button>
                 </div>
             </div>
         </div>

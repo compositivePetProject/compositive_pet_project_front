@@ -114,11 +114,13 @@ function ProductPetCartPage(props) {
         const requestData = selectedProductCarts.map(productCart => ({
             userId: productCart.userId,
             productId: productCart.productId,
-            productOrderAddress: productCart.productOrderAddress,
-            productOrderDetailAddress: productCart.productOrderDetailAddress,
+            productOrderAddress: principalQueryState?.data?.data?.address,
+            productOrderDetailAddress: principalQueryState?.data?.data?.detailAddress,
             productSizeCategoryId: productCart.productSizeCategoryId,
             productOrderCount: productCart.productCartCount
         }));
+
+        console.log(requestData)
         
         const productName = selectedProductCarts.length > 1 
         ? `${selectedProductCarts[0].productNameKor} 외 ${selectedProductCarts.length - 1}건` 

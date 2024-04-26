@@ -1,4 +1,4 @@
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import { Navigate, useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";

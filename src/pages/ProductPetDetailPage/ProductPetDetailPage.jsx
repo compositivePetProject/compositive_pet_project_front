@@ -36,18 +36,24 @@ function ProductPetDetailPage() {
     const totalRating  = reviews.reduce((sum, review) => sum + review.productCommentRatingValue, 0);
     const averageRating = totalRating / reviews.length;
 
-
-    useEffect(() => {
-        const fetchProductFavoriteStatus = async () => {
-            const response = await getProductFavoriteStatusRequest({
-                productId: productId,
-                userId: userId
-            });
-            setIsLiked(response.data);
-            
-        };
-        fetchProductFavoriteStatus();
-    }, [productId, userId]);
+    const getProductFavoriteStatusQuery = useQuery(
+        ["getProductFavoriteStatusQuery", userId, productId],
+        async () => await getProductFavoriteStatusRequest({
+            productId: productId,
+            userId: userId
+        }),
+        {
+            retry: 0,
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response.data)
+                setIsLiked(response.data)
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
 
     const getProductsFavoriteQuery = useQuery(
         ["getProductsFavoriteQuery", productId ],
@@ -82,7 +88,6 @@ function ProductPetDetailPage() {
             }
         }
     )
-   
 
     const getProductReviewsSearchCountQuery = useQuery(
         ["getProductReviewsSearchCountQuery", searchParams.get("page")],
@@ -156,8 +161,8 @@ function ProductPetDetailPage() {
             
         }
     })
- 
-    const toggleFavoriteStatus = async () => {
+    
+    const toggleFavoriteStatusButton = async () => {
             if (isLiked) {
                 await deleteProductFavoriteQuery.mutateAsync({
                     productId: productId,
@@ -175,6 +180,8 @@ function ProductPetDetailPage() {
             setUser(response.data);
             setIsLiked(Liked => !Liked);
     }
+
+
 
     const handleProductPurchase = () => {
         if (!selectedSizeType.option) {
@@ -204,7 +211,6 @@ function ProductPetDetailPage() {
         }
         return stars;
     }
-    
 
     const selectStyle2 = {
         control: baseStyles => ({
@@ -216,7 +222,7 @@ function ProductPetDetailPage() {
         })
     }
 
-   
+    console.log(user)
     return (
         <div css={s.layout} >
             <div css={s.sideImg}>
@@ -229,7 +235,7 @@ function ProductPetDetailPage() {
                     <div>{user.productNameKor}</div>
                     <div css={s.contentBox}>
                         <div>{user.productPrice}원</div>
-                        <button onClick={toggleFavoriteStatus}>
+                        <button onClick={toggleFavoriteStatusButton}>
                             {isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />}
                             <div css={s.totalCount}>{user.totalUserIdCount}</div>
                         </button>
@@ -285,7 +291,7 @@ function ProductPetDetailPage() {
                         <>
                             <button css={s.productDetailButtons} onClick={() => setIsDetailPage(false)}>상세페이지 <VscChevronUp /></button>
                             <div css={s.productDetailBox2}>
-                                <div dangerouslySetInnerHTML={{__html:user.productBoardContent}}></div>
+                                <img src={user.productBoardContent} alt="" />   
                             </div>
                         </>
                         }

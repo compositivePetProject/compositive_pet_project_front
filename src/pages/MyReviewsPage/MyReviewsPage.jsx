@@ -22,7 +22,6 @@ function MyReviewsPage() {
         }
     })
 
-
     const handlehideProduct = (productOrderId) => {
         const confirmHide = window.confirm("숨기기한 구매후기는 복구할 수 없으며 추후 작성이 불가능합니다. \n 이 상품을 숨기시겠습니까?");
         if (confirmHide) {
@@ -75,11 +74,11 @@ function MyReviewsPage() {
                         </div>
                         <div css={s.container2}>
                             <div css={s.container3}>
-                                <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}`)}>
+                                <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>
                                     <img src={userOrder.productImageUrl} alt="" />
                                 </div>
                                 <div css={s.container4}>
-                                    <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}`)}>{userOrder.productNameKor}</div>
+                                    <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
                                     <div css={s.container5}>
                                         <div>
                                             <span>{parseInt(userOrder.productPrice * userOrder.productOrderCount)}원</span>
@@ -90,7 +89,7 @@ function MyReviewsPage() {
                                 </div>
                             </div>
                             <div css={s.container6}>
-                                <button css={s.buttons3} onClick={() => navigate(`/account/mypage/review/write/${userOrder.productId}/?productId=${userOrder.productId}&userId=${userOrder.userId}&productOrderId=${userOrder.productOrderId}`)}>리뷰 작성</button>
+                                <button css={s.buttons3} onClick={() => navigate(`/account/mypage/review/write/${userOrder.productId}/?productOrderId=${userOrder.productOrderId}`)}>리뷰 작성</button>
                                 <button css={s.buttons3} onClick={() => handlehideProduct(userOrder.productOrderId)}>숨기기</button>
                             </div>
                         </div>

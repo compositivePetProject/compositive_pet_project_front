@@ -227,7 +227,7 @@ export const productDetailBox2 = css`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    // css 안 먹음 quill
+
     & > img {
         height: 100%;
         width: 100%;
@@ -239,7 +239,7 @@ export const contentBox2 = css`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    // css 안 먹음 quill
+
     & > img {
         
         height: 100%;
@@ -250,7 +250,7 @@ export const contentBox2 = css`
 export const productFooter = css`
     width: 100%;
     height: 100%;
-    margin-top: 30px;
+    margin-top: 90px;
     border-top: 2px solid #3a3a35;
     color: rgb(60, 57, 52);
     font-family: "Spoqa Han Sans Neo", "Noto Sans KR", sans-serif;

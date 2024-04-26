@@ -54,8 +54,8 @@ function MyReviewWritePage() {
             return;
         }
         postProductCommentQuery.mutate({
-            userId : searchParams.get("userId"),
-            productId : searchParams.get("productId"),
+            userId : userOrder.userId,
+            productId : userOrder.productId,
             productCommentContent: quillValue,
             productCommentRatingValue : rating
         })

@@ -23,8 +23,7 @@ function AdoptCommunity() {
     const searchCount = 7;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
-    const boardId = searchParams.get("boardId")
-    const {adoptationBoardId} = useParams();
+    const boardId = parseInt(searchParams.get("boardId"))
     const page = parseInt(searchParams.get("page")) || 1;
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
@@ -71,6 +70,7 @@ function AdoptCommunity() {
         }
     })
 
+
     
 
   
@@ -109,6 +109,7 @@ function AdoptCommunity() {
             try {
                 const response = await getAdoptAll();
                 const index = response.slice(firstPage, lastPage)
+                console.log(index)
                 setAdoptList(index);
             
             } catch (error) {
@@ -121,6 +122,7 @@ function AdoptCommunity() {
     }, [page,likeStatus]);
 
 
+  
  
 
 
@@ -174,12 +176,11 @@ function AdoptCommunity() {
                         </div>
                         <div css={s.boardListItem}>
                             {adoptList.map((data) => (
-                                <div 
-                                key={data.adoptationBoardId} >
+                                <div key={data.adoptationBoardId} >
                                     <div>{data.username}</div>
-                                    <div  onClick={(event) => {
-                                        navigate(`/adoptCommunityDetail?boardId=${data.adoptationBoardId}`)
-                                        console.log(event.target)}}>{data.adoptationBoardTitle}</div>
+                                    <div onClick={(event) => {
+                                    navigate(`/adoptCommunityDetail?page=${page}&boardId=${data.adoptationBoardId}`)}} 
+                                  >{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
                                     <div>{date(data.createDate)}</div>
                                     <div css={s.status}>
@@ -195,6 +196,7 @@ function AdoptCommunity() {
                                         </div>
                                         <MdOutlineRemoveRedEye css={s.likeHeart} />
                                         <div css={s.viewCount}>0</div>
+                                        
                                     </div>
                                 </div>
                             ))}

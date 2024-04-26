@@ -110,7 +110,7 @@ function ProductPetShopPaymentPage({ onClose, order, option, productOrderCount }
 
             if(success) {
                 postProductOrderQuery.mutate({
-                    userId : order.userId,
+                    userId : principal?.data?.data?.userId,
                     productId : order.productId,
                     productOrderAddress: productOrderAddress, 
                     productOrderDetailAddress: productOrderDetailAddress,

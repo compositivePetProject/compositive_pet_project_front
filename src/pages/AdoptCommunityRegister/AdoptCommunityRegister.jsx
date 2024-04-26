@@ -61,12 +61,16 @@ function AdoptCommunityRegister() {
 
 
     const handleSubmit = () => {
-        postAdoptRequestMutation.mutate({
-            adoptationBoardTitle: adopTitle,
-            userId: queryClient.getQueryState("principalQuery").data?.data.userId,
-            adoptationBoardContent: adoptContent,
-            boardAnimalCategoryId: animalCategoryId
-        })
+        if(!animalCategoryId || !adoptContent || !adopTitle ){
+            alert("다시 한번 확인해주세요.")
+        } else {
+                postAdoptRequestMutation.mutate({
+                    adoptationBoardTitle: adopTitle,
+                    userId: queryClient.getQueryState("principalQuery").data?.data.userId,
+                    adoptationBoardContent: adoptContent,
+                    boardAnimalCategoryId: animalCategoryId
+                })
+        }
     }
 
 

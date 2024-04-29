@@ -34,9 +34,9 @@ export const linkButtons = css`
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 600;
-    /* transition: all 0.3s; */
     &:hover {
         font-weight: 700;
+        font-size: 18px;
         border-bottom: 3px solid #00005cff;
         color: #00005cff;
     }
@@ -95,10 +95,6 @@ export const searchBarInput = css`
 `;
 
 export const searchBarButton = css`
-    /* font-size: 27px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer; */
     margin-left: 5px;
     width: 50px;
     height: 40px;

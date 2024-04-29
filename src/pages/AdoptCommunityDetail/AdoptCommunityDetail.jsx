@@ -57,15 +57,6 @@ function AdoptCommunityDetail() {
                 </div>
             }
 
-            <div css={s.buttonList}>
-                {adoptationBoard && adoptationBoard.userId === userId &&
-                    
-                    <button css={s.writeButton} onClick={
-                        () => {navigate
-                        (`/adoptCommunity/edit?adoptBoardId=${adoptationBoard.adoptationBoardId}`)}}>수정</button>
-                        
-                }
-            </div>      
 
             {adoptationBoard &&   
             <div css={s.status}>
@@ -79,7 +70,16 @@ function AdoptCommunityDetail() {
                     <div>댓글 2</div>
                 </div>
             </div>
+            <div css={s.buttonList}>
+                    
             <button css={s.writeButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
+                {adoptationBoard && adoptationBoard.userId === userId &&
+                   ( <button css={s.writeButton} onClick={
+                        () => {navigate
+                        (`/adoptCommunity/edit?adoptBoardId=${adoptationBoard.adoptationBoardId}`)}}>수정</button>)}
+            </div>      
+                        
+                
         </div>
     </div>
           

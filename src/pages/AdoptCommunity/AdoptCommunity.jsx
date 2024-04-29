@@ -111,6 +111,10 @@ function AdoptCommunity() {
                 const index = response.slice(firstPage, lastPage)
                 console.log(index)
                 setAdoptList(index);
+                const savedLikeStatus = localStorage.getItem('likeStatus');
+                if (savedLikeStatus) {
+                    setLikeStatus(JSON.parse(savedLikeStatus));
+                }
             
             } catch (error) {
                 setError(error);
@@ -137,26 +141,29 @@ function AdoptCommunity() {
         setSearchParams({ page: pageNumber });
     };
 
-    const handleLikeSubmit = async (boardId) => {
-        try {
-            if (!likeStatus[boardId]) {
-                await postAdoptLikeMutation.mutate({
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
-            } else {
-                await DeleteAdoptLikeMutation.mutate({
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
-            }
-        } catch (error) {
-            console.error("좋아요 처리 중 오류 발생:", error);
-        }
-    };
+    
 
+const handleLikeSubmit = (boardId) => {
+    try {
+        if (!likeStatus[boardId]) {
+            postAdoptLikeMutation.mutate({
+                adoptationBoardId: boardId,
+                userId: userId
+            });
+            setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
+            localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: true })); // 이 부분 수정
+        } else {
+             DeleteAdoptLikeMutation.mutate({
+                adoptationBoardId: boardId,
+                userId: userId
+            });
+            setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
+            localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: false })); // 이 부분 수정
+        }
+    } catch (error) {
+        console.error("좋아요 처리 중 오류 발생:", error);
+    }
+};
 
   
 

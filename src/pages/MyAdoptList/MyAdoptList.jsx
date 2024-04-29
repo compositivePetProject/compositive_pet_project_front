@@ -2,7 +2,7 @@
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { DeleteAdoptBoardByID, deleteAdoptBoardByID, deleteAdoptBoardById, getAdoptByUserId, getAdoptCountByUserId} from '../../apis/api/Adopt';
 import { AiOutlineLike } from "react-icons/ai";
 import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/AdoptationPageNumbers";
@@ -120,6 +120,8 @@ const handleDeleteSelected = () => {
     const handleClick = () => {
         console.log("입력이 감지되었습니다.")
     }
+
+  
     
     return (
         <div css={s.layout}>
@@ -164,7 +166,8 @@ const handleDeleteSelected = () => {
                 <AdoptationPageNumbersUser maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
                 <div>
                     <button css={s.writeButton} onClick={handleDeleteBoard}>삭제</button>
-                    <button css={s.writeButton} >수정</button>
+                    <button css={s.writeButton} onClick={() => {navigate
+                        (`/adoptCommunity/edit?adoptBoardId=${checkedBoards}`)}}>수정</button>
                     <button css={s.writeButton} 
                         onClick={()=> navigate("/adoptCommunity/register")} 
                     >글쓰기</button>

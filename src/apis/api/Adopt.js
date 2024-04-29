@@ -78,3 +78,8 @@ export const deleteAdoptLike = async (params) => {
 export const putAdoptRequest = async (data) => {
     const response = await instance.put("/adoptation/board",data);
 }
+
+export const postAdoptCommentRequest = async (data) => {
+    const response = await instance.post("/adoptation/comment", data)
+    return response.data;
+}

@@ -7,6 +7,7 @@ import { useQueryClient } from "react-query";
 import { FaHeart } from "react-icons/fa6";
 
 function AdoptCommunityDetail() {
+    const [ commentContent, setCommentContent ] = useState("");
     const [ searchParams, setSearchParams ] = useSearchParams();
     const adoptationBoardId = searchParams.get("boardId");
     const queryClient = useQueryClient();
@@ -34,6 +35,12 @@ function AdoptCommunityDetail() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleContentChange = (event) => {
+        const content = event.target.value
+        setCommentContent(content)
+        console.log(commentContent)
     }
 
     useEffect(() => {
@@ -70,8 +77,8 @@ function AdoptCommunityDetail() {
                     <div>댓글 2</div>
                 </div>
             </div>
+            <input type="text" onChange={handleContentChange} />
             <div css={s.buttonList}>
-                    
             <button css={s.writeButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
                 {adoptationBoard && adoptationBoard.userId === userId &&
                    ( <button css={s.writeButton} onClick={

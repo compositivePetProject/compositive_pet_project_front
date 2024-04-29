@@ -7,8 +7,8 @@ import AdoptCommunityRegister from '../../pages/AdoptCommunityRegister/AdoptComm
 import AdoptCommunityDetail from '../../pages/AdoptCommunityDetail/AdoptCommunityDetail';
 import AdoptCommunityAdmin from '../../pages/AdoptCommunityAdmin/AdoptCommunityAdmin';
 import AdoptCommunityAdminDetail from '../../pages/AdoptCommunityAdminDetail/AdoptCommunityDetail';
-import AdoptCommunityUpdate from '../../pages/AdoptCommunityUpdate/AdoptCommunityEdit';
-import AdoptCommunityEdit from '../../pages/AdoptCommunityUpdate/AdoptCommunityEdit';
+import AdoptCommunityUpdate from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
+import AdoptCommunityEdit from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
 
 function AdoptRoute(props) {
 

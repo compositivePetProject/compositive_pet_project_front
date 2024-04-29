@@ -100,11 +100,9 @@ const deleteAdoptRequestMutation = useMutation({
 const handleDeleteBoard = () => {
     for(let boardId of checkedBoards) {
         deleteAdoptRequestMutation.mutate({boardIds: boardId})
-    }
-   
-    alert("해당 게시글이 삭제되었습니다.")
-    window.location.replace("/account/mypage/Adopt?page=1");
-};
+        alert("해당 게시글이 삭제되었습니다.")
+        window.location.replace("/account/mypage/Adopt?page=1");
+}};
 
 
 const handleDeleteSelected = () => {

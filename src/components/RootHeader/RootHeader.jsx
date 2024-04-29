@@ -58,7 +58,7 @@ function RootHeader() {
                     <button
                         css={s.buttons}
                         onMouseEnter={() => handleHover("adoptCommunity")}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/adoptCommunity?page=1")}
                     >
                         분양 게시판
                     </button>

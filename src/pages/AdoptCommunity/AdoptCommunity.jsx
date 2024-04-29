@@ -109,7 +109,6 @@ function AdoptCommunity() {
             try {
                 const response = await getAdoptAll();
                 const index = response.slice(firstPage, lastPage)
-                console.log(index)
                 setAdoptList(index);
                 const savedLikeStatus = localStorage.getItem('likeStatus');
                 if (savedLikeStatus) {

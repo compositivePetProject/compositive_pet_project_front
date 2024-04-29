@@ -47,3 +47,21 @@ cursor: pointer;
 }
 
 `
+
+export const deletebutton = css`
+box-sizing: border-box;
+border: 1px solid #dbdbdb;
+border-radius: 3px;
+padding: 5px;
+background-color: white;
+font-size: 12px;
+cursor: pointer;
+
+&:hover {
+  background-color: #dbdbdb;
+}
+& :active {
+  background-color: #eeeeee;
+}
+
+`

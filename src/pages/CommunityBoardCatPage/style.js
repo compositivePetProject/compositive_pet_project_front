@@ -1,46 +1,92 @@
 import { css } from "@emotion/react";
-export const ul = css`
+
+
+
+export const layout = css`
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 10px;
+`
+
+export const headerTitle = css`
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+`
+
+export const boardListLayout = css`
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    width: 900px;
+    height: 500px;
+
+`
+
+export const boardListHeader = css`
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-right: 10px;
-`;
+    flex-direction: row;
+    border-bottom: 2px solid #dbdbdb;
+    width: 100%;
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
+    }
 
-export const li = css`
+    `
+export const CommunityboardListItem = css`
+    text-decoration: none;
+    cursor: pointer;
+    overflow:hidden;
+
+        & > div {
+            box-sizing: border-box;
+            display: flex;
+            border-bottom: 1px solid #dbdbdb;
+            width: 100%;
+            &:hover {
+                background-color: #adadad;
+            }
+            
+            & > div{
+                box-sizing: border-box;
+                border-right: 1px solid #dbdbdb;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow : 1;
+                height: 40px;
+                width: 25%;
+            }
+
+            }
+            `;
+
+export const boardListwrite = css`
     box-sizing: border-box;
+    font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+    padding-right: 0px;
     margin: 10px;
-    text-align: center;
+    text-align: justify;
 
 `
 
-export const boardholder = css`
-    padding: 10px 0px;
-    font: 12px;
-    padding-top: 10px;
-    padding-bottom : 10px;
-
-`
-
-
-export const imgbox = css`
-width: 170px;
-height: 170px;
-`
-
-export const boardTitle = css`
-
-`
-
-
-export const container = css`
-
-padding: 0px 15px;
-position: relative;
+export const writeButton = css`
 box-sizing: border-box;
-flex-grow: 1;
-width: 100%;
-overflow-x: hidden;
+border: 2px solid #dbdbdb;
+bottom: 0%;
+width: 50px;
+height: 50px;
+
 
 `

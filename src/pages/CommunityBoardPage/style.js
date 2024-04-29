@@ -1,6 +1,27 @@
 import { css } from "@emotion/react";
 
+export const container = css`
+width: 770px;
+height: 1560px;
+padding: 10px;
+display: block;
+line-height: 17.25px;
+padding-top: 10px;
 
+`
+
+export const span = css`
+font-family: NanumBarunGothic, sans-serif;
+font-size: 12px;
+font-weight: 700px;
+overflow-x: hidden;
+overflow-y: hidden;
+text-align: center;
+height: 13.8px;
+width: 47px;
+
+
+`
 
 export const layout = css`
 display: flex;
@@ -48,7 +69,9 @@ export const CommunityboardListItem = css`
     text-decoration: none;
     cursor: pointer;
     overflow:hidden;
-
+    font-family: NanumBarunGothic, sans-serif;
+    color: rgb(54, 54, 54);
+    font-size: 13px;
         & > div {
             box-sizing: border-box;
             display: flex;
@@ -65,8 +88,8 @@ export const CommunityboardListItem = css`
                 justify-content: center;
                 align-items: center;
                 flex-grow : 1;
-                height: 40px;
-                width: 25%;
+                height: 25px;
+                width: 408px;
             }
 
             }

@@ -1,4 +1,4 @@
-
+/** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react'
 import { getCommunityBoardAdminListRequest } from '../../apis/api/communityBoardAdmin';
@@ -28,12 +28,12 @@ import { useQueryClient } from "react-query";
   }, []);
 
   const handleOnClicToWritePage = () => {
-    navigate("/community/board/write")
+    navigate("/community/admin/noticewrite")
   }
 
   return (
     <div css= {s.layout}>
-      <div>
+      <div css= {s.layout}>
       <h1 css={s.headerTitle}>관리자 공지사항 게시판</h1>
         <div css ={s.boardListLayout}>
           <div css={s.boardListHeader}>
@@ -41,20 +41,20 @@ import { useQueryClient } from "react-query";
                 <div>관리자 아이디</div>
                 <div>공지사항 제목</div>
                 <div>공지사항 내용</div>
-                <div>작성일 </div>
+                <div>작성일</div>
             </div>
         </div>
       <div css={s.CommunityboardListItem}>
+
         {communityBoardAdminList.map((data) => (
-            <div
-            key={data.communityBoardAdminId}
-            onClick={() => navigate(`/community/admin/?communityNoticeId${data.communityBoardAdminId}`)}>
-            <div>관리자</div>
+            <div key={data.communityBoardAdminId}
+            onClick={() => navigate(`/community/admin/${data.communityBoardAdminId}/?communityBoardAdminId=${data.communityBoardAdminId}`)}>
             <div>{data.userId}</div>
             <div>{data.communityBoardAdminTitle}</div>
-            <div>{data.communityBoardAdminContent}</div>
+            <div dangerouslySetInnerHTML={{__html:data.communityBoardAdminContent}}></div>
             <div>{data.createDate}</div>
             </div>
+
           ))}
       </div>
     </div>

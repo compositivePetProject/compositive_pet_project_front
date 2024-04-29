@@ -4,8 +4,12 @@ import * as s from "./style";
 
 import { useEffect, useState } from "react";
 import { getCommunityBoardCatRequest } from "../../apis/api/communityBoard";
+import { Navigate, useNavigate } from "react-router-dom";
+import { FaPencil } from "react-icons/fa6";
 
 function CommunityBoardCatPage(props) {
+
+    const navigate = useNavigate();
     const [communityBoardList, setCommunityBoardList] = useState([])
     const [error, setError] = useState(null)
 
@@ -24,24 +28,44 @@ function CommunityBoardCatPage(props) {
     fetchData();
 }, []);
 
+const handleOnclickToWritePage = () => {
+    navigate("/community/board/write")
+
+}
+    
+
+
 
     return (
-        <div>
-            <h2>고양이 커뮤니티 게시판</h2>
-            <div css={s.container}>
-                {communityBoardList.map((data) => (
-                    <div key={data.communityBoardId}>
-                        <div css={s.ul}>
-                            <div css={s.li}>제목: {data.communityBoardTitle}</div>
-                            <div css={s.li}>내용 {data.communityBoardContent}</div>
-                            <div css={s.li}>닉네임: {data.userName}</div>
-                            <div css={s.li}>작성일: {data.createDate}</div>
+        <div css={s.layout}>
+            <div>
+                <h1 css={s.headerTitle}>고양이 게시판</h1>
+                    <div css= {s.boardListLayout}>
+                        <div css= {s.boardListHeader}>
+                            <div css={s.boardListHeader}>
+                                <div>제목</div>
+                                <div>내용</div>
+                                <div>닉네임</div>
+                                <div>등록일</div>
+                            </div>
                         </div>
+                    <div css={s.CommunityboardListItem}>
+                        {communityBoardList.map((data) => (
+                            <div
+                            key={data.communityBoardId} >
+                            <div onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
+                            {data.communityBoardTitle}</div>
+                            <div dangerouslySetInnerHTML={{__html:data.communityBoardContent}}></div>
+                            <div>{data.userName}</div>
+                            <div>{data.createDate}</div>
+                            </div>         
+                        ))}
+                        </div>    
                     </div>
-                ))}
+                 </div>
+                 <FaPencil css={s.writeButton} onClick={handleOnclickToWritePage}></FaPencil>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 export default CommunityBoardCatPage;

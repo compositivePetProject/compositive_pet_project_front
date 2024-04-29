@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { getCommunityBoardListRequest } from "../../apis/api/communityBoard";
 import * as s from "./style";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ import { FaPencil } from "react-icons/fa6";
                 setError(error);
                 console.log(error);
             }
-        };
+        }
 
     fetchData();
  }, []);
@@ -48,16 +48,17 @@ import { FaPencil } from "react-icons/fa6";
                         </div>
                     </div>
                 <div css={s.CommunityboardListItem}>
+        
                     {communityBoardList.map((data) => (
-                        <div
-                        key={data.communityBoardId} >
-                        <div onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
-                        {data.communityBoardTitle}</div>
-                        <div>{data.userName}</div>
-                        <div>{data.communityBoardContent}</div>
+                        <div key={data.communityBoardId}
+                        onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
+                        <div>{data.communityBoardTitle}</div>
+                        <div dangerouslySetInnerHTML={{__html:data.communityBoardContent}}></div>
                         <div>{data.communityBoardAnimalCategoryNameKor}</div>
+                        <div>{data.userName}</div>
                         <div>{data.createDate}</div>
                        </div>
+                       
                     ))}
                    </div>
                 </div>

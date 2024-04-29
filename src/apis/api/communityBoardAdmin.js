@@ -6,9 +6,9 @@ export const getPrincipalRequest = async () => {
 }
 
 
-export const getCommunityBoardAdminRequestById = async (communityNoticeId) => {
-    const response = await instance.get("/community/admin/${communityNoticeId}",{communityNoticeId});
-    return response.data
+export const getCommunityBoardAdminRequestById = async (params) => {
+    return await instance.get("/community/admin",{params});
+
 }
 
 export const getCommunityBoardAdminListRequest = async () => {
@@ -16,7 +16,11 @@ export const getCommunityBoardAdminListRequest = async () => {
     return response.data
 }
 
-export const postCommunityBoardRequest = async (data) => {
+export const postCommunityBoardAdminRequest = async (data) => {
     return await instance.post("/community/admin/noticewrite", (data))
 
+}
+
+export const deleteCommunityBoardAdminById = async (params) => {
+    return await instance.post(`/community/delete/admin/${params}`)
 }

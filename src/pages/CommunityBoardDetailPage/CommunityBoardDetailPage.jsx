@@ -1,16 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { useMutation, useQuery } from 'react-query';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardRequestById,  getCommunityBoardRequestById, putCommunityBoardRequest } from "../../apis/api/communityBoard";
+
 
 function CommunityBoardDetailPage(props) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
+  const principalQueryState = queryClient.getQueryState("principalQuery")
   const navigate = useNavigate();
   const communityBoardId = parseInt(searchParams.get("communityBoardId"))
   const [board, setBoard ] = useState("");
+  const userId = principalQueryState.data?.data.userId;
   
  
   const getCommunityBoardQuery = useQuery(
@@ -41,24 +45,11 @@ function CommunityBoardDetailPage(props) {
       navigate ("/community/getboards")
     },
     onError: error => {
-      alert('오류떴다 메롱')
+      alert('오류')
       console.log(error)
     }
   })
  
-
-  const updateCommunityBoardQuery = useMutation ({
-    mutationKey: "updateCommunityBoardQuery",
-    mutationFn: putCommunityBoardRequest,
-    onSuccess: response => {
-      alert("댓글 수정이 완료 되었습니다.")
-      window.location.reload()
-    },
-
-    onError: error => {
-
-    }
-  })
 
   const handleChangeCommuniteyBoardDelete  = () => {
     const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
@@ -69,31 +60,39 @@ function CommunityBoardDetailPage(props) {
     }
   } 
 
-
-
-  const handleChangeCommunityBoardUpdate  = () => {
-    const boardUpdate = window.confirm("게시글을 수정하시겠습니까?")
-    if(boardUpdate) {
-    updateCommunityBoardQuery.mutate(
-      communityBoardId
-
-      )
-    }
-  }
-
-    return (
+  return (
     <div css={s.containter}>
       <div css={s.boardContent}>  
-      {board.communityBoardTitle} 
-      {board.communityBoardContent} 
-      {board.communityBoardAnimalCategoryNameKor} 
-      {board.createDate}
+        {board && 
+          <>
+            <div>{board.communityBoardTitle}</div>
+            <div dangerouslySetInnerHTML={{ __html: board.communityBoardContent }}></div>
+            <div>{board.communityBoardAnimalCategoryNameKor}</div>
+            <div>{board.createDate}</div>
+  
+            <div css={s.buttonContainer}>
+              {board.userId === userId && (
+                <button 
+                  css={s.updatebutton} 
+                  onClick={() => {
+                    navigate(`/community/update/board/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`);
+                  }}
+                >
+                 게시글 수정
+                </button>
+              )}
+  
+              <div>
+                <button css={s.deletebutton} onClick={handleChangeCommuniteyBoardDelete}>
+                  게시글 삭제
+                </button>
+              </div>
+            </div>
+          </>
+        }
       </div>
-     
-     <button css={s.deletebutton} onClick={handleChangeCommuniteyBoardDelete}>게시글 삭제</button>
-   
-     
     </div>
   );
 }
 export default CommunityBoardDetailPage;
+

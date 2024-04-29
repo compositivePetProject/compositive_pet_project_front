@@ -7,6 +7,7 @@ align-items: center;
 height: 100%;
 
 `;
+
 export const submitButton = css`
     box-sizing: border-box;
     margin-top: 50px;
@@ -25,3 +26,4 @@ export const submitButton = css`
     }
 
 `;
+

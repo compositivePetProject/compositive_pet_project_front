@@ -91,7 +91,7 @@ import ReactQuill from 'react-quill';
         mutationFn : postCommunityBoardRequest,
         onSuccess : response => {
           alert("게시글이 작성되었습니다.")
-          window.location.replace("/CommunityBoard")
+          window.location.replace("/CommunityBoard/getboards")
         }, 
 
         onError : (error) => {
@@ -129,7 +129,7 @@ import ReactQuill from 'react-quill';
        modules={modules}  onChange={handleChange} 
       />
 
-    <button onClick={handleSubmit}>작성하기</button>
+    <button css={s.submitButton} onClick={handleSubmit}>작성하기</button>
 
     </div>
     )

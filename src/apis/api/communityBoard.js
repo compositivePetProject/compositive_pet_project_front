@@ -41,7 +41,7 @@ export const getCommunityBoardCatRequest = async (data) => {
 
 
 export const putCommunityBoardRequest = async (data) => {
-    return await instance.put ("/community/update/board/{boardId}")
+    return await instance.put ("/community/update/board", (data))
     
 
 }

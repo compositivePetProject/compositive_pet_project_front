@@ -97,14 +97,13 @@ function MyWroteReviewsPage() {
                         <div css={s.orderHeader}>
                             <div>작성일 : {review.createDate}</div>
                         </div>
-                       
                         <div css={s.container2}>
                             <div css={s.container3}>
-                                <div css={s.imgBox} >
+                                <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${review.productId}/?productId=${review.productId}&page=1`)}>
                                     <img src={review.productImageUrl} alt="" />
                                 </div>
                                 <div css={s.container4}>
-                                    <div>{review.productNameKor}</div>
+                                    <div onClick={() => navigate(`/product/pet/detail/${review.productId}/?productId=${review.productId}&page=1`)}>{review.productNameKor}</div>
                                     <div css={s.container5}>
                                         <div>
                                         {renderRatingStars(review.productCommentRatingValue)}

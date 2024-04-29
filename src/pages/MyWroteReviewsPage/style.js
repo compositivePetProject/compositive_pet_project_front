@@ -147,6 +147,7 @@ export const imgBox = css`
     width: 100px;
     height: 120px;
     overflow: hidden;
+    cursor: pointer;
     & > img {
         height: 100%;   
     }  
@@ -159,6 +160,7 @@ export const container4 = css`
     
     & > div:nth-of-type(1) {
         margin-bottom: 5px;
+        cursor: pointer;
     }
     & > div {
         margin-bottom: 5px;

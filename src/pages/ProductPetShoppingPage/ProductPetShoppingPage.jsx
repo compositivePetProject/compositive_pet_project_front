@@ -9,6 +9,7 @@ import { getAllCategoryRequest, getAllProductTypeRequest } from "../../apis/api/
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { CiSearch } from "react-icons/ci";
 import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
+import { FaSearch } from "react-icons/fa";
 
 
 function ProductPetShoppingPage(props) {
@@ -93,44 +94,46 @@ function ProductPetShoppingPage(props) {
     return (
         <div css={s.layout}>
             <div css={s.categoryHeader}>
-                <Link css={s.linkButtons} to={"http://localhost:3000/product/pet/shopping?page=1"}
-                onClick={() => setSelectedProductType(0)}>
-                전체
-                </Link>
-                {productTypeOptions.map(option  => 
-                    <Link key={option.productType.productCategoryId} 
-                            css={s.linkButtons} 
-                            to={`http://localhost:3000/product/pet/shopping?page=1`}
-                            onClick={() => setSelectedProductType(option.productType.productCategoryId)
-                            }
-                            >
-                        {option.productType.productCategoryNameKor}
+                <div css={s.menuList}>
+                    <Link css={s.linkButtons} to={"http://localhost:3000/product/pet/shopping?page=1"}
+                    onClick={() => setSelectedProductType(0)}>
+                    전체
                     </Link>
-                )}
-                <div css={s.searchBar}>   
+                    {productTypeOptions.map(option  => 
+                        <Link key={option.productType.productCategoryId} 
+                                css={s.linkButtons} 
+                                to={`http://localhost:3000/product/pet/shopping?page=1`}
+                                onClick={() => setSelectedProductType(option.productType.productCategoryId)
+                                }
+                                >
+                            {option.productType.productCategoryNameKor}
+                        </Link>
+                    )}
+                </div>
+                <div css={s.searchBar}>
+                    <div css={s.searchLabel}>상품검색</div>
                     <input css={s.searchBarInput} type="text" 
                         ref={inputRef} 
                         value={searchText.value} 
                         onChange={searchText.handleOnChange} 
                         onKeyUp={searchText.handleOnKeyUp}
-                        placeholder="검색"
+                        placeholder="상품명 검색"
                     />
                     <button css={s.searchBarButton} >
-                        <CiSearch onClick={() => searchSubmit()}/>
+                        <FaSearch onClick={() => searchSubmit()}/>
                     </button>
                 </div>
             </div>
             <div css={s.shoppingFilter}>
-            <div>{totalCount}개의 상품</div>
-            <div>
-                {orderBy === "desc"
-                ?
-                <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
-                :
-                <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
-                }
-            </div>
-
+                <div><span css={s.span}>{totalCount}</span>개의 상품</div>
+                <div>
+                    {orderBy === "desc"
+                    ?
+                    <button css={s.productLikeButtons} onClick={() => setOrderBy("asc")}>좋아요순 <VscChevronDown /></button>
+                    :
+                    <button css={s.productLikeButtons} onClick={() => setOrderBy("desc")}>좋아요순 <VscChevronUp /></button>
+                    }
+                </div>
             </div>
             <div css={s.shoppingContainer}>
                 {

@@ -6,7 +6,7 @@ export const header = css`
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #00005cff;
     padding: 0px 10px;
     width: 100%;
     height: 60px;
@@ -55,15 +55,15 @@ export const login = css`
     height: 30px;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     overflow: hidden;
     text-decoration: none;
-    color: rgb(15, 19, 23);;
+    color: #333333;
     cursor: pointer;
 
     &:hover {
         font-weight: 700;
-        color: rgb(0, 120, 255);;
+        color: #00005cff;
     }
 `;
 
@@ -103,15 +103,17 @@ export const buttons = css`
     height: 65px;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
-    font-weight: 500;
-    color: rgb(15, 19, 23);
+    font-weight: 600;
+    color: #333333;
     background-color: transparent;
     cursor: pointer;
 
     &:hover {
         font-weight: 700;
-        transition: font-weight 0.3s, color 0.5s;
-        border-bottom: 5px solid rgb(15, 19, 23);
+        /* transition: font-weight 0.3s, color 0.5s;
+        border-bottom: 5px solid rgb(15, 19, 23); */
+        border-bottom: 6px solid #00005cff;
+        color: #00005cff;
     }
 `;
 
@@ -137,11 +139,11 @@ export const categoryText = css`
     text-decoration: none;
     font-size: 14px;
     color: rgb(15, 19, 23);
-    font-weight: 500;
+    font-weight: 600;
 
     &:hover {
         font-weight: 700;
-        color: rgb(0, 120, 255);;
+        color: #00005cff;
     }
 `;
 

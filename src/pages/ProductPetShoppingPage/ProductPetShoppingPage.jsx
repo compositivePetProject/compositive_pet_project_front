@@ -84,6 +84,7 @@ function ProductPetShoppingPage(props) {
         })
         getProductsSearchRequestQuery.refetch();
     }
+    
     const searchText = useProductOnKeyUpInput(searchSubmit);
 
     const handleOrderByChange = (value) => {

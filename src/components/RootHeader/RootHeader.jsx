@@ -21,10 +21,12 @@ function RootHeader() {
     const handleHover = (menu) => {
         setIsHovering(true);
         setCurrentMenu(menu);
+
     };
 
     const handleSidebarLeave = () => {
         setIsHovering(false);
+        setCurrentMenu(null);
     };
     
     const handleLogoutClick = () => {
@@ -109,16 +111,13 @@ function RootHeader() {
                 </div>
             </> 
             }   
-            
-            {!!currentMenu && !!isHovering && (
-                <div css={s.sidebar} onMouseLeave={handleSidebarLeave}>
+                <div css={s.sidebar(isHovering)} onMouseLeave={handleSidebarLeave}>
                     {currentMenu === "community" && (
                         <div>
                             <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 전체 커뮤니티</a> </div>
                             <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 커뮤니티</a> </div>
                             <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 커뮤니티</a> </div> 
                         </div>
-                        
                     )}
                     {currentMenu === "adoptCommunity" && (
                         <div>
@@ -141,7 +140,6 @@ function RootHeader() {
                         </div>
                     )}
                 </div>
-            )}
         </div>
     );
 }

@@ -70,7 +70,7 @@ function ProductPetCartPage(props) {
         mutationKey: "postProductOrderCartsQuery",
         mutationFn: postProductOrderCartsRequest,
         onSuccess: response => {
-            alert("주문 완료되었스빈다. \n 배송지는 마이페이지 - 주문 내역 수정 할 수 있습니다.");
+            alert("주문 완료되었습니다. \n 배송지는 마이페이지 - 주문 내역 수정 할 수 있습니다.");
             window.location.reload();
         }
     });

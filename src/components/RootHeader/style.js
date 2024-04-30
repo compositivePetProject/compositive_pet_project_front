@@ -119,14 +119,15 @@ export const buttons = css`
 
 
 
-export const sidebar = css`
+export const sidebar = (isHovering) => css`
+    transition: top 0.4s ease-in-out, height 0.4s ease-in-out; 
     position: absolute;
     top: 75px;
+    opacity: ${isHovering ? 1 : 0};
     left: 0;
     width: 100%;
-    height: 200px;
+    height: ${isHovering ? "200px" : "0px"};
     background-color: white;
-    padding: 16px 30px 24px;
     z-index: 99;
     border-bottom: 1px solid #dbdbdb;
 `;

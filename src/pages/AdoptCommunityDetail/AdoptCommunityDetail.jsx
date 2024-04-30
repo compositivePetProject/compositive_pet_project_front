@@ -2,14 +2,16 @@
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptById, getAdoptLike} from '../../apis/api/Adopt';
-import { useQueryClient } from "react-query";
+import { getAdoptById, getAdoptCommentRequest, getAdoptLike, postAdoptCommentRequest} from '../../apis/api/Adopt';
+import { useMutation, useQueryClient } from "react-query";
 import { FaHeart } from "react-icons/fa6";
 
 function AdoptCommunityDetail() {
-    const [ commentContent, setCommentContent ] = useState("");
+    const [ inputContent, setInputContent ] = useState();
+    const [ commentContent, setCommentContent ] = useState([]);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const adoptationBoardId = searchParams.get("boardId");
+    const page = searchParams.get("page")
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
@@ -31,23 +33,58 @@ function AdoptCommunityDetail() {
     const fetchAdoptationFavorite = async () => {
         try {
             const response = await getAdoptLike({adoptationBoardId : adoptationBoardId})
-            setLikeCount(response)
+            setCommentContent(response.data)
         } catch (error) {
             console.log(error)
         }
     }
 
+    const fetchAdoptationComments = async () => {
+        try {
+            const response = await getAdoptCommentRequest({boardId : adoptationBoardId})
+           
+            setCommentContent(response)
+            console.log(commentContent)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const postAdoptCommentMutation = useMutation({
+        mutationKey: "postAdoptCommentMutation",
+        mutationFn: postAdoptCommentRequest,
+        onSuccess: (response) => {
+            alert("작성을 완료했습니다.");
+            window.location.replace(`/adoptCommunityDetail?page=${page}&boardId=${adoptationBoardId}`);
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+      })
+
     const handleContentChange = (event) => {
         const content = event.target.value
-        setCommentContent(content)
-        console.log(commentContent)
+        setInputContent(content)
+        console.log(inputContent)
+    }
+
+    const handleSubmitClick = () => {
+        postAdoptCommentMutation.mutate({
+            adoptationBoardId:adoptationBoardId,
+            adoptationBoardCommentContent:inputContent,
+            userId:userId
+        })
     }
 
     useEffect(() => {
-        fetchAdoptationFavorite();
-        fetchAdoptationBoard();
-       
+        const fetchData = async () => {
+            await fetchAdoptationFavorite();
+            await fetchAdoptationBoard();
+            await fetchAdoptationComments();
+        };
+        fetchData();
     }, [adoptationBoardId]);
+
 
     return (
         <div css={s.layout}>
@@ -71,13 +108,20 @@ function AdoptCommunityDetail() {
                 <div>{likeCount}</div>
             </div>
             }
-            <div css={s.commentBox}>
-                <div>
-                    <div>댓글 1</div>
-                    <div>댓글 2</div>
-                </div>
+            <div  css={s.commentBox}>
+                {
+                commentContent && commentContent.map((comment) => (
+                    <div key={comment.commentId}>
+                        <div>{comment.adoptationBoardCommentContent}</div>
+                    </div>
+                ))
+                }
             </div>
-            <input type="text" onChange={handleContentChange} />
+            <div css={s.commentInput}>
+                <input type="text" onChange={handleContentChange} />
+                <button onClick={handleSubmitClick}>댓글 작성</button>
+            </div>
+
             <div css={s.buttonList}>
             <button css={s.writeButton} onClick={() => {navigate("/adoptCommunity?page=1")}}>목록</button>
                 {adoptationBoard && adoptationBoard.userId === userId &&

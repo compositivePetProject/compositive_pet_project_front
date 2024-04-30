@@ -27,3 +27,4 @@ export const deleteProductReviewRequest = async (data) => {
 export const putProductReviewRequest = async (data) => {
     return await instance.put("/product/comment/update", data);
 }
+

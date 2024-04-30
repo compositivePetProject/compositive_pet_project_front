@@ -122,7 +122,7 @@ function AdoptCommunity() {
         };
 
         fetchData();
-    }, [page,likeStatus]);
+    }, [page]);
 
 
   

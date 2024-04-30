@@ -213,10 +213,16 @@ function AuthenticationPage() {
         )
     }
 
+    const submitHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+            handleSigninSubmit();
+        }
+      }
+
     return (
         <div css={s.layout}>
             <div css={s.container}>
-                <div css={s.header}>
+                <div css={s.header(authState)}>
                     <div onClick={() => setAuthState(1)}>로그인</div>
                     <div onClick={() => setAuthState(2)}>회원가입</div>
                 </div>
@@ -227,7 +233,7 @@ function AuthenticationPage() {
                                 <div css={s.inputLayout}>
                                     <div css={s.input}>
                                         <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={usernameChange} />
-                                        <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} />
+                                        <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} onKeyDown={submitHandleKeyDown} />
                                     </div>
                                     <button css={s.logInButton} onClick={handleSigninSubmit}>로그인</button>
                                 </div>

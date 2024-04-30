@@ -9,12 +9,11 @@ export const layout = css`
 
 export const container = css`
     width: 600px;
-    /* height: 1200px; */
     border: 1px solid #d7e2eb;
     border-radius: 15px;
 `;
 
-export const header = css`
+export const header = (authState) => css`
     box-sizing: border-box;
     display: flex;
     width: 100%;
@@ -23,7 +22,6 @@ export const header = css`
     font-weight: 800;
     color: #eeeeee;
     
-
     & > div {
         width: 50%;
         background-color: #00005cff;
@@ -35,7 +33,7 @@ export const header = css`
         box-sizing: border-box;
         border-top-left-radius: 15px;
         border-right: 1px solid #eeeeee;
-
+        cursor: pointer;
         &:hover{
             background-color: #00003cff;
         }
@@ -44,10 +42,14 @@ export const header = css`
     & > div:nth-of-type(2) {
         box-sizing: border-box;
         border-top-right-radius: 15px;
-
+        cursor: pointer;
         &:hover{
             background-color: #00003cff;
         }
+    }
+
+    & > div:nth-of-type(${authState}) {
+        background-color: #00002cff;
     }
 `;
 

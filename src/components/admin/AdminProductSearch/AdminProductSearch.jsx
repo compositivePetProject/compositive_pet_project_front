@@ -46,6 +46,7 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       refetchInterval: false,
         onSuccess: (response) => {
           setProductList(() => response.data.map((product) => {
+            console.log(response);
             return {
               ...product,
               checked: false
@@ -181,6 +182,10 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       setSelectedProduct(() => lastSelectedProduct);
     }
   }, [productList]);
+
+  useEffect(() => {
+    console.log(productList)
+  }, [productList])
 
   return (
     <div css={s.layout}>

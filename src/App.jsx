@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import './App.css';
 import { getPrincipalRequest } from './apis/api/acoountPrincipal';
+import FixBar from './components/FixBar/FixBar';
 import PageContainer from './components/PageContainer/PageContainer';
 import RootContainer from './components/RootContainer/RootContainer';
 import RootFooter from './components/RootFooter/RootFooter';
@@ -24,9 +26,11 @@ function App() {
         }
     });
 
+
   return (
     <RootLayout>
       <RootContainer>
+        {principalQuery.status === "success" ? <FixBar/> : <></>}
         <RootHeader />
           <PageContainer>
             <AuthRoute /> 

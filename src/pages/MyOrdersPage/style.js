@@ -24,16 +24,16 @@ export const infoBox = css`
     border: 1px solid #d7e2eb;
 
     & > h3:nth-of-type(1) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
         margin: 40px 0px 15px;
     }
 
     & > h3:nth-of-type(2) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
     }
 `;
 
@@ -41,11 +41,13 @@ export const buttons = css`
     padding: 10px 15px;
     border-radius: 5px;
     margin-bottom: 2px;
+    color: #333333;
+    font-weight: 800;
     cursor: pointer;
     &:hover {
         background-color: #fafafa;
-        color : #0078ff;
-        font-weight: 700;
+        color : #00005cff;
+        font-weight: 800;
     }
 `;
 

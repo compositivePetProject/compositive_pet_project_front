@@ -6,11 +6,12 @@ export const layout = css`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #dbdbdb;
+    /* background-color: #dbdbdb; */
     overflow: hidden;
 `;
 
 export const categoryHeader = css`
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,6 +22,7 @@ export const categoryHeader = css`
 `;
 
 export const menuList = css`
+    box-sizing: border-box;
     height: 100%;
     display: flex;
     align-items: center;
@@ -29,14 +31,17 @@ export const menuList = css`
 export const linkButtons = css`
     box-sizing: border-box;
     text-decoration: none;
-    color: rgb(32, 40, 49);
-    padding: 30px;
+    color: #333333;
+    display: flex;
+    align-items: center;
     font-size: 16px;
+    justify-content: center;
+    width: 150px;
+    height: 100%;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 600;
     &:hover {
         font-weight: 700;
-        font-size: 18px;
         border-bottom: 3px solid #00005cff;
         color: #00005cff;
     }
@@ -69,13 +74,6 @@ export const searchLabel = css`
 `;
 
 export const searchBarInput = css`
-    /* padding: 0px 45px;
-    border: none;
-    width: 100%;
-    height: 80%;
-    outline: none;
-    font-size: 15px;
-    background-color: transparent; */
     width: 300px;
     padding: 0px 45px;
     box-sizing: border-box;
@@ -181,32 +179,24 @@ export const imageBox = css`
     width: 350px;
     height: 450px;
     
-    /* background-color: #dbdbdb; */
     cursor: pointer;
     & > img {
-        /* height: 100%; */
         width: 100%;
     }
 `;
 
 export const nameBox = css`
-    /* position: absolute;
-    bottom: -60px; */
     margin: 10px 0 20px 0;
     font-size: 22px;
     font-weight: 700;
-    color: #3d3a35;
+    color: #333333;
 `;
 
 export const moneyBox = css`
-    /* position: absolute;
-    bottom: -85px;
-    margin-bottom: 20px;
-    right: 0; */
     text-align: right;
     font-size: 18px;
     font-weight: 500;
-    color: #3d3a35;
+    color: #333333;
 `;
 
 

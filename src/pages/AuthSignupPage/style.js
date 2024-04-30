@@ -18,8 +18,7 @@ export const container = css`
     margin-top: 60px;
     margin-bottom: 60px;
     background: #ffffff;
-    border: 1px solid #aacdff;
-    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border: 1px solid #d7e2eb;
     border-radius: 20px;
 `;
 
@@ -43,7 +42,7 @@ export const titleHeader = css`
     font-weight: 700;
     font-size: 32px;
     line-height: 47px;
-    color: #0068ff;
+    color: #00005cff;
 `
 export const header = css`
     width: 100%;
@@ -52,7 +51,6 @@ export const header = css`
     font-weight: 700;
     font-size: 32px;
     line-height: 47px;
-    color: #0068ff;
 `
 
 export const idCheckvbutton = css`
@@ -61,10 +59,16 @@ export const idCheckvbutton = css`
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #00005cff;
+    color: #eeeeee;
+    font-weight: 800;
+    font-size: 14px;
     text-decoration: none;
     cursor: pointer;
+
+    &:hover{
+        background-color: #00003cff;
+    }
 `;
 
 export const imgUrlBox = css`
@@ -113,8 +117,12 @@ export const button = css`
     font-size: 18px;
     line-height: 27px;
     text-align: center;
-    color: #0068ff;
-    background: #ffffff;
-    border: 1px solid #0068ff;
+    color: #eeeeee;
+    background: #00005cff;
+    font-weight: 800;
     border-radius: 10px;
+
+    &:hover{
+        background-color: #00003cff;
+    }
 `;

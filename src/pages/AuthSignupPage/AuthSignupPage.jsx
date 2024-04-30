@@ -185,7 +185,6 @@ function AuthSignupPage() {
                 });
             }
         )
-
     }
     // css 수정 예정
     return (

@@ -24,15 +24,15 @@ export const infoBox = css`
     border: 1px solid #d7e2eb;
 
     & > h3:nth-of-type(1) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
         margin: 40px 0px 15px;
     }
     & > h3:nth-of-type(2) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
     }
 `;
 
@@ -40,11 +40,13 @@ export const buttons = css`
     padding: 10px 15px;
     border-radius: 5px;
     margin-bottom: 2px;
+    color: #333333;
+    font-weight: 800;
     cursor: pointer;
     &:hover {
         background-color: #fafafa;
-        color : #0078ff;
-        font-weight: 700;
+        color : #00005cff;
+        font-weight: 800;
     }
 `;
 
@@ -53,10 +55,17 @@ export const buttons2 = css`
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #00005cff;
+    font-weight: 800;
+    color: #eeeeee;
     text-decoration: none;
     cursor: pointer;
+    margin-top: 35px;
+
+    &:hover {
+        background-color: #00003cff;
+        font-weight: 800;
+    }
 `;
 
 export const buttons3 = css`
@@ -65,10 +74,16 @@ export const buttons3 = css`
     margin-right: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #00005cff;
+    color: #eeeeee;
+    font-weight: 600;
     text-decoration: none;
     cursor: pointer;
+    margin-top: 30px;
+
+    &:hover {
+        background: #00003cff;
+    }
 `;
 
 export const userDetails = css`
@@ -88,10 +103,10 @@ export const userDetails = css`
 export const title = css`
     font-size: 25px;
     margin-bottom: 24px;
-
 `;
 
 export const box = css`
+    margin: 10px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,7 +116,6 @@ export const box = css`
     padding: 40px;
     row-gap: 10px;
     background-color: #ffffff;
-    
 `;
 
 export const imgBox = css`
@@ -112,7 +126,6 @@ export const imgBox = css`
     width: 124px;
     height: 124px;
     direction: none;
-    
 `;
 
 export const editimgBox = css`
@@ -137,13 +150,15 @@ export const editimgBox = css`
 
 
 export const nicknameEditBox = css`
+    display: flex;
     width: 100%;
 `;
 
 export const nicknameEdit = css`
     width: 100%;
-    color: #424242;
+    color: #333333;
     font-size: 12px;
+    font-weight : 600;
 `;
 
 export const nickInputEdit = css`
@@ -153,20 +168,27 @@ export const nickInputEdit = css`
     border: 2px solid #e6eef5;
     border-radius: 5px;
     width: 80%;
-    color: #424242;
+    color: #333333;
     font-size: 12px;
     background-color: #fbfbfd;
 `;
 
 export const nickCheckButton = css`
-    width: 147px;
+    width: 15%;
+    height: 38px;
+    margin-left: 10px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #00005cff;
+    font-weight: 600;
+    color: #eeeeee;
     text-decoration: none;
     cursor: pointer;
+
+    &:hover{
+        background: #00003cff;
+    }
 `;
 
 
@@ -185,6 +207,16 @@ export const profileImg = css`
     }  
 `;
 
+export const fileEditbutton = css`
+    &>* {
+        color : #00005cff;
+    }
+`;
+
+export const passwordEdit = css`
+    margin-bottom: 10px;
+`;
+
 export const passwordBox = css`
     display: flex;
     flex-direction: column;
@@ -194,8 +226,7 @@ export const passwordBox = css`
     border-radius: 15px;
     padding: 40px;
     row-gap: 10px;
-    background-color: #ffffff;
-    
+    background-color: #ffffff;   
 `
 
 

@@ -214,12 +214,12 @@ function MyProfilePage() {
                                     ref={fileRef}
                             />
                         </div>
-                        <div onClick={() => fileRef.current.click()}><HiOutlinePencilAlt /></div>
+                        <div css={s.fileEditbutton} onClick={() => fileRef.current.click()}><HiOutlinePencilAlt /></div>
                     </div>
                     <div css={s.nicknameEdit}>닉네임 변경</div>
                     <div css={s.nicknameEditBox}>
                         <AuthPageInput type="text"  name={"newNickname"} value={newNickname} onChange={newNicknameChange} message={newNicknameMessage} />
-                        <button css={s.nickCheckButton} onClick={handleNicknameCheck}>닉네임 중복확인</button>
+                        <button css={s.nickCheckButton} onClick={handleNicknameCheck}>중복확인</button>
                     </div>
                     <div>
                         <button css={s.buttons3} onClick={() => setIsEditng(false)}>취소</button>
@@ -230,7 +230,7 @@ function MyProfilePage() {
                     <div>
                 </div>
             </div>
-                <div>비밀번호 변경</div>
+                <div css={s.passwordEdit}>비밀번호 변경</div>
                 <div css={s.passwordBox}>
                     <AuthPageInput  type="password" name={"oldPassword"} placeholder={"현재 비밀번호를 입력하세요."} value={oldPassword} onChange={oldPasswordChange} message={oldPasswordMessage}/>
                     <AuthPageInput  type="password" name={"newPassword"} placeholder={"새로운 비밀번호를 입력하세요."} value={newPassword} onChange={newPasswordChange} message={newPasswordMessage}/>

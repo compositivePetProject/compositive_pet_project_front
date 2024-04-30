@@ -4,14 +4,18 @@ export const layout = css`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 72px;
     width: 100%;
     height: 100%;
 `;
 
 export const font = css`
-    font-size: 25px;
+    font-size: 32px;
     margin-bottom: 24px;
+    color: #00005cff;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 72px;
 `;
 
 export const loginContainer = css`
@@ -31,8 +35,10 @@ export const buttons = css`
     margin-right: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #00005cff;
+    color: #eeeeee;
+    font-weight: 800;
+    font-size: 14px;
     text-decoration: none;
     cursor: pointer;
 `;

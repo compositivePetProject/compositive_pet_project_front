@@ -14,6 +14,8 @@ import { VscChevronDown, VscChevronUp  } from "react-icons/vsc";
 import {getProductReviewsCountRequest, getProductReviewsPageRequest } from "../../apis/api/productComment";
 import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDetailPageNumbers/ProductPetPageDetailPageNumbers";
 import ProductPayment from "../../components/ProductPayment/ProductPayment"
+import ProductImage from "../../components/ProductImage/ProductImage";
+
 
 function ProductPetDetailPage() {
     const navigate = useNavigate();
@@ -226,8 +228,9 @@ function ProductPetDetailPage() {
     return (
         <div css={s.layout} >
             <div css={s.sideImg}>
-                <div css={s.productImg}>
-                    <img src={user.productImageUrl} alt="" />
+                <div css={s.productImg}>  
+                    <ProductImage src={user.productImageUrl} /> 
+                    {/* <img src={user.productImageUrl} alt="" /> */}
                 </div>
             </div>
             <div css={s.productBox}>

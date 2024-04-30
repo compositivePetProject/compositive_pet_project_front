@@ -138,6 +138,10 @@ export const idCheckButton = css`
     background-color: #00005cff;
     font-weight: 700;
     color: #eeeeee;
+
+    &:hover {
+        background-color: #00003cff;
+    }
 `;
 
 export const signUpLayoutInputList = css`
@@ -146,6 +150,26 @@ export const signUpLayoutInputList = css`
 
     & * {
         margin-bottom: 2.5px;
+    }
+`;
+
+export const addressLayout = css`
+    display: flex;
+    padding: 0px 20px;
+`;
+
+export const addressCheckButton = css`
+    margin-left: 5px;
+    width: 130px;
+    height: 38px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00005cff;
+    font-weight: 700;
+    color: #eeeeee;
+
+    &:hover {
+        background-color: #00003cff;
     }
 `;
 

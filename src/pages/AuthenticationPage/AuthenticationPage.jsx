@@ -11,6 +11,8 @@ import { storage } from "../../apis/firebase/firebaseConfig";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { CiSquarePlus } from "react-icons/ci";
 import { v4 as uuid } from "uuid";
+import DaumPostcode from "react-daum-postcode";
+import ReactModal from 'react-modal';
 
 function AuthenticationPage() {
     const fileRef = useRef();
@@ -25,13 +27,15 @@ function AuthenticationPage() {
     const [ passWord, passWordChange, passWordMessage ] = useInput("password");
     const [ checkPassword, checkPasswordChange ] = useInput("checkPassword");
     const [ name, nameChange, nameMessage ] = useInput("name");
-    const [ address, addressChange, addressMessage ] = useInput("address");
+    const [ address, addressChange, addressMessage, setAddressValue, setAddressMessage] = useInput("address");
     const [ detailAddress, detailAddressChange, detailAddressMessage ] = useInput("detailAddress");
     const [ telNumber, telNumberChange, telNumberMessage ] = useInput("telNumber");
     const [ nickname, nicknameChange, nicknameMessage, setNicknameValue, setNicknameMessage ] = useInput("nickname");
     const [ email, emailChange, emailMessage ] = useInput("email");
     const [ profileImageUrl, profileImageUrlChange, profileImageUrlMessage, setProfileImageUrl ] = useInput("profileImageUrl");
     const [ checkPasswordMessage, setCheckPasswordMessage ] = useState(null);
+
+    const [ addressModalOpen, setAddressModalOpen ] = useState(false);
 
     const authSigninMutation = useMutation({
         mutationKey: "authSigninMutation",
@@ -217,7 +221,29 @@ function AuthenticationPage() {
         if(e.key === "Enter") {
             handleSigninSubmit();
         }
-      }
+    }
+
+    const handlePostCode = (data) => {
+        let fullAddress = data.address;
+        let extraAddress = ''; 
+        
+        if (data.addressType === 'R') {
+          if (data.bname !== '') {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== '') {
+            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+          }
+          fullAddress += (extraAddress !== '' ? ` ${extraAddress}` : '');
+        }
+        console.log(data)
+        console.log(fullAddress)
+        console.log(data.zonecode)
+        setAddressValue(fullAddress);
+        setAddressModalOpen(false);
+    }
+
+
 
     return (
         <div css={s.layout}>
@@ -262,7 +288,33 @@ function AuthenticationPage() {
                                     <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={passWord} onChange={passWordChange} message={passWordMessage} />
                                     <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호 확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage} />
                                     <AuthPageInput type={"text"} name={"name"} placeholder={"성명"} value={name} onChange={nameChange} message={nameMessage} />
+                                </div>
+                                <div css={s.addressLayout}>
                                     <AuthPageInput type={"text"} name={"address"} placeholder={"주소"} value={address} onChange={addressChange} message={addressMessage} />
+                                    <button css={s.addressCheckButton} onClick={() => setAddressModalOpen(true)}>주소찾기</button>
+                                    
+                                    <ReactModal
+                                     isOpen={addressModalOpen}
+                                     onRequestClose={() => setAddressModalOpen(false)}
+                                     style={
+                                        {
+                                            content: {
+                                                margin: "150px auto",
+                                                width: "500px",
+                                                height: "400px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center"
+                                            }
+                                        }
+                                    }
+                                    >
+                                        <DaumPostcode
+                                            onComplete={handlePostCode}
+                                        />
+                                    </ReactModal>
+                                </div>
+                                <div css={s.signUpLayoutInputList}>
                                     <AuthPageInput type={"text"} name={"detailAddress"} placeholder={"상세주소"} value={detailAddress} onChange={detailAddressChange} message={detailAddressMessage} />
                                     <AuthPageInput type={"text"} name={"telNumber"} placeholder={"전화번호"} value={telNumber} onChange={telNumberChange} message={telNumberMessage} />
                                     <AuthPageInput type={"text"} name={"nickname"} placeholder={"닉네임"} value={nickname} onChange={nicknameChange} message={nicknameMessage} />
@@ -286,6 +338,7 @@ function AuthenticationPage() {
                                     />
                                     <button css={s.fileButton} onClick={() => fileRef.current.click()}><CiSquarePlus /></button>
                                 </div>
+                                
                                 <div css={s.regiseterButton}>
                                     <button onClick={handleSignupSubmit}>가입하기</button>
                                 </div>

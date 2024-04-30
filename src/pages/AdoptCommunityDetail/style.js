@@ -250,7 +250,10 @@ export const status = css`
 
 export const commentBox = css`
     box-sizing: border-box;
-    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
     height: 30%;
     text-align: center;
     border: 1px solid #dbdbdb;

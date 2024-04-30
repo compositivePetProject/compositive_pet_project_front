@@ -2,9 +2,10 @@
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getAdoptById, getAdoptCommentRequest, getAdoptLike, postAdoptCommentRequest} from '../../apis/api/Adopt';
+import { getAdoptById, getAdoptCommentRequest, getAdoptLike, getAdoptViewCount, postAdoptCommentRequest} from '../../apis/api/Adopt';
 import { useMutation, useQueryClient } from "react-query";
 import { FaHeart } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 function AdoptCommunityDetail() {
     const [ inputContent, setInputContent ] = useState();
@@ -18,7 +19,8 @@ function AdoptCommunityDetail() {
     const navigate = useNavigate();
     const [adoptationBoard , setAdoptationBoard ] = useState(null);
     const [ boardDetail, setBoardDetail ] = useState(null);
-    const [ likeCount, setLikeCount] = useState();
+    const [ likeCount, setLikeCount] = useState(0);
+    const [ viewCount, setViewCount] = useState(0);
     
     const fetchAdoptationBoard = async () => {
         try {
@@ -32,8 +34,19 @@ function AdoptCommunityDetail() {
 
     const fetchAdoptationFavorite = async () => {
         try {
-            const response = await getAdoptLike({adoptationBoardId : adoptationBoardId})
-            setCommentContent(response.data)
+            const response = await getAdoptLike({ adoptationBoardId: adoptationBoardId });
+            console.log(response)
+            setLikeCount(response); // 좋아요 수를 설정
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchAdoptationView = async () => {
+        try {
+            const response = await getAdoptViewCount({ boardId: adoptationBoardId });
+            console.log(response)
+            setViewCount(response)
         } catch (error) {
             console.log(error)
         }
@@ -78,9 +91,10 @@ function AdoptCommunityDetail() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetchAdoptationFavorite();
             await fetchAdoptationBoard();
+            await fetchAdoptationFavorite();
             await fetchAdoptationComments();
+            await fetchAdoptationView();
         };
         fetchData();
     }, [adoptationBoardId]);
@@ -106,14 +120,22 @@ function AdoptCommunityDetail() {
             <div css={s.status}>
                 <FaHeart css={s.likeHeart} />
                 <div>{likeCount}</div>
+                <MdOutlineRemoveRedEye css={s.likeHeart} />
+                <div>{viewCount}</div>
             </div>
             }
+
             <div  css={s.commentBox}>
                 {
                 commentContent && commentContent.map((comment) => (
-                    <div key={comment.commentId}>
-                        <div>{comment.adoptationBoardCommentContent}</div>
-                    </div>
+                    (
+                        <div key={comment.commentId}>
+                            <div>{comment.userId}</div>
+                            <div>{comment.adoptationBoardCommentContent}</div>
+                            <div>{comment.createDate}</div>
+                        </div>
+
+                    )
                 ))
                 }
             </div>

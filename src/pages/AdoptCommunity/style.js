@@ -146,6 +146,14 @@ export const status = css`
    
 `
 
+export const viewStatus = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+`
+
 
 
 

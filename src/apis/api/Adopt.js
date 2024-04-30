@@ -89,3 +89,12 @@ export const getAdoptCommentRequest = async (params) => {
     const response = await instance.get("/adoptation/comments", {params})
     return response.data;
 }
+
+export const postAdoptView = async (data) => {
+    const response = await instance.post("/adoptation/view", data);
+}
+
+export const getAdoptViewCount = async (params) => {
+    const response = await instance.get("/adoptation/view", {params});
+    return response.data;
+}

@@ -24,16 +24,16 @@ export const infoBox = css`
     border: 1px solid #d7e2eb;
 
     & > h3:nth-of-type(1) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
         margin: 40px 0px 15px;
     }
 
     & > h3:nth-of-type(2) {
-        color: #9b9b9b;
+        color: #333333;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
     }
 `;
 
@@ -41,10 +41,12 @@ export const buttons = css`
     padding: 10px 15px;
     border-radius: 5px;
     margin-bottom: 2px;
+    color: #333333;
+    font-weight: 800;
     cursor: pointer;
     &:hover {
         background-color: #fafafa;
-        color : #0078ff;
+        color : #00005cff;
         font-weight: 700;
     }
 `;
@@ -80,15 +82,12 @@ export const reviews = css`
         width: 150px;
         margin-bottom: 10px;
         margin-right: 5px;
-        background-color: transparent;
+        background-color: #00005cff;
+        color: #eeeeee;
         cursor: pointer;
 
-
         &:hover {
-            background-color: #f9f9f9;
-        }
-        &:active {
-            background-color: #f3f3f3;
+            background-color: #00003cff;
         }
     }
     & > div:nth-of-type(1) {  

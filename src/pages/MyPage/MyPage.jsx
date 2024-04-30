@@ -7,7 +7,6 @@ import MyReviewWritePage from '../MyReviewWritePage/MyReviewWritePage';
 import MyWroteReviewsPage from '../MyWroteReviewsPage/MyWroteReviewsPage';
 
 function MyPage() {
-    // useAuthCheck();
     return (
         <>
             <Routes>

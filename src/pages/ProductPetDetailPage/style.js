@@ -45,10 +45,10 @@ export const productBoxHeader = css`
     flex-direction: column;
     width: 100%;
     height: 120px;
-    border-bottom: 2px solid #3a3a35;
+    border-bottom: 2px solid #00005cff;
 
     & > div {
-        color: #3d3a35;
+        color: #333333;
         font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif
     }
 
@@ -102,7 +102,7 @@ export const productOrderContainer = css`
     flex-direction: column;
     width: 100%;
     font-size: 14px;
-    color: #3d3a35;
+    color: #333333;
     font-family: 'Spoqa Han Sans Neo','Noto Sans KR',sans-serif;
     & > div { 
         padding: 10px 0px;
@@ -161,28 +161,29 @@ export const productDeliveryBox = css`
 
 
 export const productOrderButtons = css`
-    color: #e2e2e2;
+    color: #eeeeee;
     font-weight: 700;
-    background-color: #444444;
+    background-color: #00005cff;
     padding: 3px;
     border: none;
     width: 30%;
     height: 50px;
     cursor: pointer;
-    
+    border-radius: 3px;
+
     & > button:nth-of-type(1) {
         margin-right: 20px;
     }
 
     &:hover {
-        background-color: #333333;
+        background-color: #00003bff;
     }
 `;
 
 export const productOrderButton = css` 
-    color: #e2e2e2;
+    color: #eeeeee;
     font-weight: 700;
-    background-color: #444444;
+    background-color: #00005cff;
     border: none;
     width: 15%;
     height: 50px;
@@ -193,7 +194,7 @@ export const productOrderButton = css`
     }
 
     &:hover {
-        background-color: #333333;
+        background-color: #00003bff;
     }
 `;
 
@@ -207,17 +208,18 @@ export const productOrderbox = css`
 `;
 
 export const productDetailButtons = css`
-    color: #3d3a35;
+    color: #eeeeee;
     font-weight: 700;
-    background-color: #eeeeee;
+    background-color: #00005cff;
     padding: 3px;
     border: none;
     width: 100%;
     height: 50px;
+    border-radius: 3px;
     cursor: pointer;
 
     &:hover {
-        background-color: #dbdbdb;
+        background-color: #00003bff;
     }
 `;
 
@@ -251,7 +253,7 @@ export const productFooter = css`
     width: 100%;
     height: 100%;
     margin-top: 90px;
-    border-top: 2px solid #3a3a35;
+    border-top: 2px solid #00005cff;
     color: rgb(60, 57, 52);
     font-family: "Spoqa Han Sans Neo", "Noto Sans KR", sans-serif;
     background-color: transparent;
@@ -264,7 +266,8 @@ export const reviewBox = css`
     font-size: 18px;
     font-weight: 700;
     line-height: 85px;
-    border-bottom: 1px solid rgb(60, 57, 52);
+    border-bottom: 1px solid #00005cff;
+    color: #333333;
 `;
 
 export const reviewBox1 = css`

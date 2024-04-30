@@ -35,12 +35,12 @@ function AuthSigninPage() {
     return (
         <div css={s.layout}> 
             <div>
-                <div css={s.font}>로그인</div>
                 <div css={s.loginContainer}>
+                    <div css={s.font}>로그인</div>
                     <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={usernameChange} />
                     <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} />
                     <div>
-                        <button css={s.buttons} onClick={handleSigninSubmit}>로그인하기</button>
+                        <button css={s.buttons} onClick={handleSigninSubmit}>로그인</button>
                         <Link css={s.buttons}  to={"/auth/sign-up"}>회원가입</Link>
                     </div>
                     <div css={s.imgBox}>

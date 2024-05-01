@@ -22,9 +22,10 @@ export const sideImg = css`
 
 export const productImg = css`
     display: flex;
+    justify-content: center;
     padding-top: 30px;
-    width: 700px;
-    height: 600px;
+    width: 750px;
+    height: 650px;
     cursor: pointer;
     & > img {
         height: 100%;
@@ -53,13 +54,13 @@ export const productBoxHeader = css`
     }
 
     & > div:nth-of-type(1) {
-        font-size: 30px;
+        font-size: 26px;
         font-weight: bold;
         padding-bottom: 3px;
         margin: 10px 0px;
     }
     & > div:nth-of-type(2) {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 600;
         margin-bottom: 20px;
     }
@@ -75,7 +76,7 @@ export const contentBox = css`
         box-sizing: border-box;
         border: none;
         background-color: transparent;
-        font-size: 35px;
+        font-size: 32px;
         font-weight: 700;
         
     }
@@ -185,8 +186,9 @@ export const productOrderButton = css`
     font-weight: 700;
     background-color: #00005cff;
     border: none;
-    width: 15%;
+    width: 40%;
     height: 50px;
+    border-radius: 3px;
     cursor: pointer;
     
     & > button:nth-of-type(1) {
@@ -270,6 +272,34 @@ export const reviewBox = css`
     color: #333333;
 `;
 
+export const ratingBox = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 35px;
+    font-weight: 700;
+    border-bottom: 1px solid #00005cff;
+    color: #333333;
+    flex-grow: 1;
+    & > div:nth-of-type(2) {
+        margin: 20px 0px;
+        border-left: 1px solid;
+    }
+`;
+
+export const ratingBox1 = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    row-gap: 15px;
+    & > div:nth-of-type(2) {
+        font-size: 12px;
+    }
+`;
+
 export const reviewBox1 = css`
     display: flex;
     padding: 32px 0px;
@@ -304,6 +334,10 @@ export const starButton = css`
 export const activeStarButton = css`
     color: gold;
     font-size: 25px;
+`;
+export const activeStarButton2 = css`
+    color: gold;
+    font-size: 35px;
 `;
 
 export const reviewBox4 = css`

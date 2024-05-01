@@ -10,6 +10,7 @@ import ReactQuill from "react-quill";
 import { QUILL_MODULES } from "../../constants/quillModules";
 import { useQuillInput } from "../../hooks/useQuillInput";
 import { postProductCommentRequest } from "../../apis/api/productComment";
+import { ratingTextMap } from "../../constants/prductRatingText";
 
 function MyReviewWritePage() {
     const navigate = useNavigate();
@@ -92,6 +93,9 @@ function MyReviewWritePage() {
                                 {value <= rating ? <FaStar css={s.activeStarButton}/> : <FaRegStar css={s.starButton}/>}
                             </button>
                         ))}
+                        {rating !== 0 && (
+                            <div>{ratingTextMap[rating]}</div>
+                        )}
                     </div>
                 </div>
                 <div css={s.reviewBox}>

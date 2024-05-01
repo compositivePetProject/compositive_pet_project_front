@@ -57,7 +57,7 @@ function AdoptCommunityDetail() {
             const response = await getAdoptCommentRequest({boardId : adoptationBoardId})
            
             setCommentContent(response)
-            console.log(commentContent)
+            console.log(response)
         } catch (error) {
             console.log(error)
         }
@@ -129,8 +129,8 @@ function AdoptCommunityDetail() {
                 {
                 commentContent && commentContent.map((comment) => (
                     (
-                        <div key={comment.commentId}>
-                            <div>{comment.userId}</div>
+                        <div css={s.commentContent} key={comment.commentId}>
+                            <div>{comment.username}</div>
                             <div>{comment.adoptationBoardCommentContent}</div>
                             <div>{comment.createDate}</div>
                         </div>

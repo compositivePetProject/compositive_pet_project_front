@@ -95,7 +95,7 @@ export const box = css`
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 600px;
+    height: 80%;
     border: 1px solid #d7e2eb;
     border-radius: 15px;
     padding: 10px;
@@ -152,18 +152,8 @@ export const profileImg = css`
     }  
 `;
 
-export const passwordBox = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #d7e2eb;
-    border-radius: 15px;
-    padding: 40px;
-    row-gap: 10px;
-    background-color: #ffffff;
-    
-`
+
+
 
 export const boardListHeader = css`
     box-sizing: border-box;
@@ -251,16 +241,25 @@ export const status = css`
 export const commentBox = css`
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 60%;
     height: 30%;
     text-align: center;
     border: 1px solid #dbdbdb;
-    & > div {
+    `
 
-    }
+
+export const commentContent = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 80%;
+    height: 20%;
 `
+
 
 export const commentInput = css`
     box-sizing: border-box;

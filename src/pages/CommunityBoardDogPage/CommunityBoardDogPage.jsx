@@ -1,17 +1,51 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { getCommunityBoardDogRequest } from "../../apis/api/communityBoard";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { getBoardDogPageCountRequest, getCommunityBoardDogRequest, getCommunityBoardPageCountRequest } from "../../apis/api/communityBoard";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { FaPencil } from "react-icons/fa6";
 import { useQuery } from "react-query";
+import { count } from "firebase/firestore";
+import CommunityDogBoardPageCount from "../../components/CommunityDogBoardPageCount/CommunityDogBoardPageCount";
 
 function CommunityBoardDogPage() {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams(0)
     const [communityBoardList, setCommunityBoardList] = useState([]);
     const [error, setError] = useState(null)
-   
+    const [maxPageNumber, setMaxPageNumber] = useState(0)
+    const [totalCount, setTotalCount] = useState(0)
+    const page = parseInt (searchParams.get("page")) || 1;
+    const pageSearchCount = 10;
+    const firstPage = (page - 1) * pageSearchCount + 1;
+    const lastPage = page  * pageSearchCount ;
 
+    console.log(firstPage)
+    console.log(lastPage)
+
+    const getBoardPageQuery = useQuery (
+        ["getBoardPageQuery"],
+        async () => getBoardDogPageCountRequest({
+            page,
+            count : pageSearchCount
+
+
+        }),
+
+        {
+            refetchOnWindowFocus : false,
+            onSuccess :response => {
+                console.log(response)
+                setMaxPageNumber(response.data.maxPageNumber)
+                setTotalCount(response.data.totalCount)
+            },
+
+            onError : (error) => {
+                console.log(error);
+            }
+
+        }
+    )
 
     useEffect(() => {
         const fetchData = async() => {
@@ -32,6 +66,10 @@ const handleOnClickToWritePage = () => {
     navigate("/community/board/write")
 
 }
+
+const handleOnPageChange = (pageNumber) => {
+    setSearchParams ({page: pageNumber})
+} 
 
   return (
     <div css= {s.layout}>
@@ -61,7 +99,9 @@ const handleOnClickToWritePage = () => {
                 </div>
             </div>
            
+
         <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
+        <CommunityDogBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} ></CommunityDogBoardPageCount>
         </div>
         )
     }

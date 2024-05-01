@@ -65,3 +65,22 @@ cursor: pointer;
 }
 
 `
+
+export const updatebutton = css`
+    box-sizing: border-box;
+    margin-top: 50px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        background-color: #fafafa;
+    }
+
+    &:active {
+        background-color: #eee;
+    }
+
+`;

@@ -7,9 +7,12 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 function CommunityBoardAdminDetailPage(props) { 
     const [searchParams, setSearchParams] = useSearchParams()
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery")
     const navigate = useNavigate();
     const communityBoardAdminId = parseInt(searchParams.get("communityBoardAdminId"))
     const [adminBoard, setAdminBoard] = useState("");
+    const userId = principalQueryState.data?.data.userId;
     
 
     const getCommunityBoardAdminQuery = useQuery(
@@ -61,15 +64,29 @@ function CommunityBoardAdminDetailPage(props) {
  
     return (
         <div css= {s.container}>
+            <div css={s.boardContent}>
             {adminBoard && 
             <div css={s.boardContent}>
                 <div> {adminBoard.communityBoardAdminTitle} </div>
-                <div dangerouslySetInnerHTML={{__html:adminBoard.communityBoardAdminContent}}></div>
+                <div dangerouslySetInnerHTML={{__html: adminBoard.communityBoardAdminContent }}></div>
                 <div>{adminBoard.createDate}</div>
+
+                {adminBoard.userId === userId && (
+                    <button
+                    css={s.updatebutton}
+                    onClick={() => {
+                        navigate(`/community/update/admin/${adminBoard.communityBoardAdminId}/?communityBoardAdminId=${adminBoard.communityBoardAdminId}`)
+                    }}
+                    >수정</button>
+                )}
+
+                <div>                
                 <button css={s.deletebutton} onClick={handleChangeAdminBoardDelete}>게시글 삭제</button>
+                </div>         
             </div>
-}
+        }
         </div>
+     </div>
     );
 }
 

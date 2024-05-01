@@ -16,7 +16,7 @@ function CommunityBoardEditPage(props) {
     const [newBoard, setNewBoard] = useState("");
 
     
-    const getCommunityBoardQuery = useQuery(``
+    const getCommunityBoardQuery = useQuery(
         ["getCommunityBoardQuery", communityBoardId],
         async () => await getCommunityBoardRequestById ({
             communityBoardId : communityBoardId
@@ -72,7 +72,7 @@ function CommunityBoardEditPage(props) {
         } 
         
         const updateCommunityBoardMutaion = useMutation ({
-          mutationKey: "updateCommunityBoardQuery",
+          mutationKey: "updateCommunityBoardMutaion",
           mutationFn: putCommunityBoardRequest,
           onSuccess: response => {
             alert("댓글 수정이 완료 되었습니다.")
@@ -95,7 +95,7 @@ function CommunityBoardEditPage(props) {
 
         
         
-        const handleChangeCommunityBoardUpdate  = () => {
+        const handleChangeCommunityBoardUpdate = () => {
           const boardUpdate = window.confirm("게시글을 수정하시겠습니까?")
           if(boardUpdate) {
           updateCommunityBoardMutaion.mutate({
@@ -118,7 +118,6 @@ function CommunityBoardEditPage(props) {
                 <option value={1}>개</option>
                 <option value={2}>고양이</option>
             </select>
-            <div>{boardAnimalCategoryId}</div>
             <input
             type="text"
             value={newCommunityBoardTitle}

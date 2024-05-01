@@ -22,5 +22,9 @@ export const postCommunityBoardAdminRequest = async (data) => {
 }
 
 export const deleteCommunityBoardAdminById = async (params) => {
-    return await instance.post(`/community/delete/admin/${params}`)
+    return await instance.delete(`/community/delete/admin/${params}`)
+}
+
+export const updateCommunityBoardAdminByIdRequest = async (data) => {
+    return await instance.put("/community/update/admin", (data))
 }

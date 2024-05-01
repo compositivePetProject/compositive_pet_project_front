@@ -88,8 +88,8 @@ export const CommunityboardListItem = css`
                 justify-content: center;
                 align-items: center;
                 flex-grow : 1;
-                height: 25px;
-                width: 408px;
+                height: 50px;
+                width: 300px;
             }
 
             }
@@ -103,6 +103,26 @@ export const boardListwrite = css`
     text-align: justify;
 
 `
+
+export const pageNumberLayout = (page) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    & > a {
+        box-sizing: border-box;
+        margin: 0px 3px;
+        border: 1px solid #dbdbdb;
+        padding: 3px;
+        text-decoration: none;
+        color: #222;
+        font-weight: 700;
+        &:nth-of-type(${page === 1 ? 1 : page + 3}) {
+            background-color: #eee;
+        }
+    }
+`;
+
 
 export const writeButton = css`
 box-sizing: border-box;

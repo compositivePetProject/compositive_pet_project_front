@@ -16,6 +16,7 @@ import CoummunityBoardAdminPage from '../../pages/CommunityBoardAdminPage/Coummu
 import CommunityBoardAdminDetailPage from '../../pages/CommunityBoardAdminDetailPage/CommunityBoardAdminDetailPage';
 import CommunityBoardAdminRegisterPage from '../../pages/CommunityBoardAdminRegisterPage/CommunityBoardAdminRegisterPage';
 import CommunityBoardEditPage from '../../pages/CommunityBoardEditPage/CommunityBoardEditPage';
+import CommunityBoardAdminEditPage from '../../pages/CommunityBoardAdminEditPage/CommunityBoardAdminEditPage';
 
 
 
@@ -43,10 +44,11 @@ function AuthRoute(props) {
                     <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
                     <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
                     <Route path="/community/board/:boardId" element={<CommunityBoardDetailPage />} />
+                    <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
                     <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
                     <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />
                     <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
-                    <Route path="/community/update/board/:boardId" element={<CommunityBoardEditPage />} />                   
+                    <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />                   
                 </Routes>
             </PageContainer>
             <RootFooter />

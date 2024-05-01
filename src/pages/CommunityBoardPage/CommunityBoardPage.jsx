@@ -1,18 +1,61 @@
 /** @jsxImportSource @emotion/react */
 
-import { useNavigate} from "react-router-dom";
-import { getCommunityBoardListRequest } from "../../apis/api/communityBoard";
+import { useNavigate, useSearchParams} from "react-router-dom";
+import { deleteCommunityBoardLiketRequest, getCommunityBoardListRequest, getCommunityBoardPageCountRequest, postCommunityBoardLikeRequest } from "../../apis/api/communityBoard";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
+import { useMutation, useQuery } from "react-query";
+import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/CommunityBoardPageCount";
 
 
 
  function CommunityBoardPage() {
     
     const navigate = useNavigate();
-    const[communityBoardList, setCommunityBoardList] = useState([]);
-    const[error, setError] = useState(null);
+    const [searchParams , setSearchParams] = useSearchParams();
+    const [communityBoardList, setCommunityBoardList] = useState([]);
+    const [error, setError] = useState(null);
+    const [maxPageNumber, setMaxPageNumber] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+    const page = parseInt(searchParams.get("page")) || 1;
+    const pageSearchCount = 10;
+    const firstPage = (page - 1) * pageSearchCount + 1;
+    const lastPage = page * pageSearchCount;
+     
+
+    console.log(firstPage)
+    console.log(lastPage)
+
+  
+
+
+    const getBoardPageQuery = useQuery (
+        ["getBoardPageQuery"],
+        async () => getCommunityBoardPageCountRequest({
+            page,
+            count : pageSearchCount
+        }),
+
+    {
+        
+        refetchOnWindowFocus : false,
+        onSuccess : response => {
+            console.log(response) 
+            setMaxPageNumber(response.data.maxPageNumber)
+            setTotalCount(response.data.totalCount)
+        },
+
+        onError : (error) => {
+            console.log(error);
+            }
+            
+        }
+
+    )
+
+   
+
 
     useEffect(() => {
         const fetchData = async() => { 
@@ -31,6 +74,10 @@ import { FaPencil } from "react-icons/fa6";
 
  const handleOnClickToWritePage = () => {
     navigate("/community/board/write")
+ }
+
+ const handleOnPageChange = (pageNumber) => {
+    setSearchParams ({page: pageNumber})
  }
  
   return (
@@ -65,7 +112,7 @@ import { FaPencil } from "react-icons/fa6";
             </div>
         
         <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
-
+        <CommunityBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handleOnPageChange} />
         </div>
         ) 
     }

@@ -73,6 +73,11 @@ export const updatebutton = css`
 
 `;
 
+export const HeartIcon = css`
+  color: red;
+
+`
+
 
 
 

@@ -4,17 +4,106 @@ import React, { useState } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { deleteCommunityBoardRequestById,  getCommunityBoardRequestById, putCommunityBoardRequest } from "../../apis/api/communityBoard";
+import { deleteCommunityBoardLiketRequest, deleteCommunityBoardRequestById,  getCommunityBoardLikeRequest,  getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest } from "../../apis/api/communityBoard";
+import { AiFillHeart } from "react-icons/ai";
 
 
 function CommunityBoardDetailPage(props) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isLiked, setIsLiked] = useState(false);
+  const [user, SetUser] = useState("")
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery")
   const navigate = useNavigate();
   const communityBoardId = parseInt(searchParams.get("communityBoardId"))
   const [board, setBoard ] = useState("");
   const userId = principalQueryState.data?.data.userId;
+
+
+  const getCommunityBoardLikeStatusQuery = useQuery(
+    ["getCommunityBoardLikeStatusQuery" , userId, communityBoardId],
+    async() => await getCommunityBoardLikeStatusRequest({
+      communityBoardId : communityBoardId,
+      userId : userId
+    }),
+    {
+      retry : 0,
+      refetchOnWindowFocus : false,
+      onSuccess: response  => {
+        console.log(response.data)
+        setIsLiked(response.data)
+
+      }
+    }
+  )
+
+
+  const getBoardLikeCountQuery = useQuery(
+    ["getBoardLikeCountQuery", communityBoardId],
+    async () => await getCommunityBoardLikeRequest ( {
+      communityBoardId : communityBoardId
+    }),
+
+    {
+      retry : 0,
+      refetchOnWindowFocus: false,
+      onSuccess: response=> {
+        SetUser(response.data)
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    }
+
+  )
+
+
+  const postBoardLikeQuery = useMutation({
+    mutationKey: "postBoardLikeMutation",
+    mutationFn: postCommunityBoardLikeRequest,
+    onSuccess: (response) => {
+
+    },
+    onError: (error) => {
+
+    }
+})
+
+const deleteBoardLikeQuery = useMutation({
+    mutationKey: "deleteBoardLikeMutation",
+    mutationFn: deleteCommunityBoardLiketRequest,
+    onSuccess : response => {
+
+    },
+
+    onError: error => {
+
+    }
+})
+
+
+
+const toggleBoardFavoriteStatusButton = async () => {
+  if (isLiked) {
+      await deleteBoardLikeQuery.mutateAsync({
+          communityBoardId : communityBoardId,
+          userId : userId
+      });
+    }else{
+      await postBoardLikeQuery.mutateAsync( {
+        communityBoardId : communityBoardId,
+        userId : userId
+      });
+    }
+
+    const response = await getCommunityBoardLikeRequest({
+      communityBoardId : communityBoardId
+    });
+    SetUser(response.data)
+    setIsLiked(Liked => !Liked);
+
+  }
+
   
  
   const getCommunityBoardQuery = useQuery(
@@ -75,7 +164,7 @@ function CommunityBoardDetailPage(props) {
                 <button 
                   css={s.updatebutton} 
                   onClick={() => {
-                    navigate(`/community/update/board/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`);
+                    navigate(`/community/board/update/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`);
                   }}
                 >
                  게시글 수정
@@ -83,6 +172,9 @@ function CommunityBoardDetailPage(props) {
               )}
   
               <div>
+                <button onClick={toggleBoardFavoriteStatusButton}>
+                  {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
+                </button>
                 <button css={s.deletebutton} onClick={handleChangeCommuniteyBoardDelete}>
                   게시글 삭제
                 </button>

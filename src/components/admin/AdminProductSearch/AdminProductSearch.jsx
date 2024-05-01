@@ -46,7 +46,6 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       refetchInterval: false,
         onSuccess: (response) => {
           setProductList(() => response.data.map((product) => {
-            console.log(response);
             return {
               ...product,
               checked: false

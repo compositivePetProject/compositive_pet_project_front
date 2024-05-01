@@ -35,16 +35,6 @@ function ProductManagementPage({title}) {
   useEffect(() => {
       setProductData(selectedProduct);
   }, [selectedProduct]);
-
-  // useEffect(() => {
-  //   console.log(deleteProducts);
-  // }, [deleteProducts])
-  // useEffect(() => {
-  //   console.log(productData);
-  // }, [productData])
-  // useEffect(() => {
-  //   console.log(searchProductData);
-  // }, [searchProductData])
   
   const productRegisterMutation = useMutation({
     mutationKey: "productRegisterMutation",
@@ -119,7 +109,7 @@ function ProductManagementPage({title}) {
   
   const registerInputs =  [
     [
-      <TopInput label={"ID"} name={"productId"} setState={setProductData} disabled={true} inputSize={5} value={productData.productCategoryId}/>,
+      <TopInput label={"ID"} name={"productId"} setState={setProductData} disabled={true} inputSize={5} value={productData.productId}/>,
       <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setProductData} disabled={buttonState === 0 ? true : false} options={productCategoryOptions} value={productData.productCategoryId} buttonState={buttonState} />,
       <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setProductData} disabled={buttonState === 0 ? true : false} options={productAnimalCategoryOptions} value={productData.productAnimalCategoryId} buttonState={buttonState} />,
     ],
@@ -134,6 +124,9 @@ function ProductManagementPage({title}) {
     ]
   ];
 
+  useEffect(() => {
+    console.log(productData)
+  }, [productData])
 
   return (
     <AdminPageLayout>

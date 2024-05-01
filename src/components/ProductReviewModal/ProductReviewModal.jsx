@@ -8,6 +8,7 @@ import { QUILL_MODULES } from "../../constants/quillModules";
 import { useQuillInput } from "../../hooks/useQuillInput";
 import { useMutation } from "react-query";
 import { putProductReviewRequest } from "../../apis/api/productComment";
+import { ratingTextMap } from "../../constants/prductRatingText";
 
 
 function ProductReviewModal ({ onClose, review })  {
@@ -47,6 +48,8 @@ function ProductReviewModal ({ onClose, review })  {
         })
     };
     
+    
+
     return (
         <div css={s.background}>
             <div css={s.layout}>
@@ -64,6 +67,7 @@ function ProductReviewModal ({ onClose, review })  {
                                         {value <= rating ? <FaStar css={s.activeStarButton}/> : <FaRegStar css={s.starButton}/>}
                                     </button>
                                 ))}
+                                <div>{ratingTextMap[rating]}</div>
                             </div>
                         </div>
                         <div css={s.reviewBox}>

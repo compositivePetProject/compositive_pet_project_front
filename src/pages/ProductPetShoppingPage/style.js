@@ -176,7 +176,7 @@ export const imageBox = css`
     flex-direction: column;
     box-sizing: border-box;
     margin-bottom: 20px;
-    width: 350px;
+    width: 300px;
     height: 450px;
     
     cursor: pointer;
@@ -187,14 +187,14 @@ export const imageBox = css`
 
 export const nameBox = css`
     margin: 10px 0 20px 0;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 700;
     color: #333333;
 `;
 
 export const moneyBox = css`
     text-align: right;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     color: #333333;
 `;

@@ -8,6 +8,8 @@ import { FaStar } from "react-icons/fa";
 import { deleteProductReviewRequest, getProductReviewsRequest } from "../../apis/api/productComment";
 import ProductReviewModal from "../../components/ProductReviewModal/ProductReviewModal";
 
+
+
 function MyWroteReviewsPage() {
     const navigate = useNavigate();
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -73,7 +75,7 @@ function MyWroteReviewsPage() {
         setIsModalOpen(true);
     };
     
-    
+   
 
     return (
         <div css={s.layout}>
@@ -106,7 +108,7 @@ function MyWroteReviewsPage() {
                                     <div onClick={() => navigate(`/product/pet/detail/${review.productId}/?productId=${review.productId}&page=1`)}>{review.productNameKor}</div>
                                     <div css={s.container5}>
                                         <div>
-                                        {renderRatingStars(review.productCommentRatingValue)}
+                                            {renderRatingStars(review.productCommentRatingValue)}
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +121,7 @@ function MyWroteReviewsPage() {
                     </div>
                      ))}
                      {isModalOpen && (
-                        <ProductReviewModal onClose={() => setIsModalOpen(false)} review={selectedReview} />
+                        <ProductReviewModal onClose={() => setIsModalOpen(false)} review={selectedReview}/>
                     )}
                 </div>
         </div>

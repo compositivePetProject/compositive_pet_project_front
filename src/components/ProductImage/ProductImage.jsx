@@ -1,66 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import * as s from "./style";
 import { useEffect, useRef, useState } from "react";
-
-const container = css`
-    position: relative;
-    display: flex;
-    border-radius: 15px;
-    overflow: hidden;
-    width: 100%;
-    height: 100%
-`;
-
-const image = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.3s ease-in-out;
-    img {
-        width: 100%;
-        height: 100%;
-    }
-`;
-
-const target = (offset, opacity) => css`
-    ${image}
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: ${offset.left}px; 
-    top: ${offset.top}px;
-    width: 120px; 
-    height: 120px;
-    border: 1px solid #00adb7;
-    opacity: ${opacity};
-    transition: left 0.1s, top 0.1s;
-    cursor: pointer;
-`;
-
-const enlargedImage = (src, offset, sourceRect) =>  css`
-    position: absolute;
-    top: 200px; 
-    left: 500px; 
-    width: ${sourceRect.width}px; 
-    height: ${sourceRect.height}px; 
-    background-image: url(${src});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: ${-offset.left}px ${-offset.top}px; 
-    z-index: 50;
-    img {
-        width: 100%;
-        height: 100%;  
-    }
-    &:hover {
-        transform: scale(4);
-    }
-`;
-
-
 
 function ProductImage({ src }) {
   const sourceRef = useRef(null);
@@ -109,18 +49,17 @@ function ProductImage({ src }) {
       top: top * -yRatio
     });
   };
-
   console.log(offset)
   return (
     <div>
-      <div css={container} ref={containerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>
+      <div css={s.container} ref={containerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>
         <div>
-          <img css={image} src={src} alt="Product" ref={sourceRef} />
-          <div css={() => target(offset, opacity)} ref={targetRef}></div>
+          <img css={s.image} src={src} alt="Product" ref={sourceRef} />
+          <div css={() => s.target(offset, opacity)} ref={targetRef}></div>
         </div>
       </div>
         {opacity === 1 && offset.left !== 0 && offset.top !== 0 && (
-          <div css={() => enlargedImage(src, offset, sourceRect)} ref={enlargedImageRef}>
+          <div css={() => s.enlargedImage(src, offset, sourceRect)} ref={enlargedImageRef}>
           </div>
         )}
     </div>

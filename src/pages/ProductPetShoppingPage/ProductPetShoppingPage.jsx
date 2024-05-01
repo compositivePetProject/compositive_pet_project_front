@@ -21,7 +21,7 @@ function ProductPetShoppingPage(props) {
     const [ selectedProductType, setSelectedProductType ] = useState(0);
     const [ selectedCategory, setSelectedCategory ] = useState(0);
     const [totalCount, setTotalCount ] = useState(0);
-    const searchCount = 16;
+    const searchCount = 20;
     const inputRef = useRef();
     const [orderBy, setOrderBy] = useState("desc");
     

@@ -117,6 +117,7 @@ export const listItem = css`
     flex-direction: column;
     margin-bottom: 10px;
     border: 1px solid #00005c6b;
+    border-radius: 5px;
     padding: 10px;
     width: 260px;
     color:  rgb(51, 51, 51);

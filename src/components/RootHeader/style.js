@@ -9,7 +9,7 @@ export const header = css`
     border-bottom: 1px solid #00005cff;
     padding: 0px 10px;
     width: 100%;
-    height: 60px;
+    height: 70px;
 `;
 
 export const logoButton = css`
@@ -86,8 +86,8 @@ export const profileImg = css`
     align-items: center;
     border: 1px solid #dbdbdb;
     border-radius: 50%;
-    width: 95%;
-    height: 95%;
+    width: 90%;
+    height: 80%;
     overflow: hidden;
     & > img {
         height: 100%;
@@ -100,7 +100,7 @@ export const buttons = css`
     border: none;
     padding: 20px;
     width: 160px;
-    height: 65px;
+    height: 70px;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 600;
@@ -110,8 +110,6 @@ export const buttons = css`
 
     &:hover {
         font-weight: 700;
-        /* transition: font-weight 0.3s, color 0.5s;
-        border-bottom: 5px solid rgb(15, 19, 23); */
         border-bottom: 6px solid #00005cff;
         color: #00005cff;
     }
@@ -122,7 +120,7 @@ export const buttons = css`
 export const sidebar = (isHovering) => css`
     transition: top 0.4s ease-in-out, height 0.4s ease-in-out; 
     position: absolute;
-    top: 75px;
+    top: 85px;
     opacity: ${isHovering ? 1 : 0};
     left: 0;
     width: 100%;

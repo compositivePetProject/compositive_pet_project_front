@@ -3,11 +3,11 @@ import { useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getProductStocksAdminRequest, getProductStocksCountAdminRequest } from "../../../apis/api/productAdmin";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { searchCurrentProductDataState } from "../../../atoms/admin/searchCurrentProductDataAtom";
 import { useRecoilState } from "recoil";
 import { currentProductDataState } from "../../../atoms/admin/currentProductDataAtom";
+import { getProductStocksAdminRequest, getProductStocksCountAdminRequest } from "../../../apis/api/Admin/productStockAdmin";
 
 function AdminCurrentStockSearch({refetch, setRefetch}) {
     const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);
@@ -86,14 +86,11 @@ function AdminCurrentStockSearch({refetch, setRefetch}) {
     }
 
     useEffect(() => {
-       console.log(currentProductData)
-    }, [currentProductData])
-
-    useEffect(() => {
         if(currentProductList.filter((product) => product.checked === true).length !== 0) {
             setCurrentProductData(currentProductList.filter((product) => product.checked === true)[0]);
         }
     }, [currentProductList])
+    
     return (
         <div css={s.layout}>
         <div css={s.row}>

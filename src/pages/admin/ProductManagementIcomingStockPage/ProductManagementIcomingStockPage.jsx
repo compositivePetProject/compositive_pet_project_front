@@ -13,11 +13,11 @@ import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
 import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import { useMutation, useQueryClient } from "react-query";
-import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest } from "../../../apis/api/productAdmin";
 import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
 import AdminIncomingStockSearch from "../../../components/admin/AdminIncomingStockSearch/AdminIncomingStockSearch";
 import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
-import { updateProductIncomingStocktoProductStock } from "../../../apis/api/Admin/productIncomingStockAdmin";
+import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest, updateProductIncomingStocktoProductStock } from "../../../apis/api/Admin/productIncomingStockAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementIcomingStockPage({title}) {
     const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
@@ -157,13 +157,9 @@ function ProductManagementIcomingStockPage({title}) {
         }
     }
     
-
-    useEffect(() => {
-        console.log(searchIncomingProductData)
-    }, [searchIncomingProductData]);
-    
     return (
         <AdminPageLayout>
+            <AdminSales/>
             <div css={s.header}>
                 <h1 css={s.title}>{title}</h1>
                 <div>

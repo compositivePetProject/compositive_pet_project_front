@@ -12,11 +12,12 @@ import { productCategoryOptions } from "../../../constants/productCategoryOption
 import { productAnimalCategoryOptions } from "../../../constants/productAnimalCategoryOptions";
 import { productSizeCategoryOptions } from "../../../constants/productSizeCategoryOptions";
 import { useMutation } from "react-query";
-import { postProductCurrentStockRequest, updateProductCurrentStockRequest } from "../../../apis/api/productAdmin";
 import { searchCurrentProductDataState } from "../../../atoms/admin/searchCurrentProductDataAtom";
 import AdminCurrentStockSearch from "../../../components/admin/AdminCurrentStockSearch/AdminCurrentStockSearch";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import { selectedCurrentProductData } from "../../../atoms/admin/selectedCurrentProductData";
+import { updateProductCurrentStockRequest } from "../../../apis/api/Admin/productStockAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementCurrentStockPage({title}) {
   const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);
@@ -72,6 +73,7 @@ function ProductManagementCurrentStockPage({title}) {
 
   return (
     <AdminPageLayout>
+        <AdminSales/>
         <div css={s.header}>
             <h1 css={s.title}>{title}</h1>
             <div>

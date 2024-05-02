@@ -12,17 +12,17 @@ import { useEffect, useMemo, useState } from "react";
 import ProductDetailModal from "../../../components/admin/ProductDetailModal/ProductDetailModal";
 import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { deleteProductsAdminRequest, getProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/productAdmin";
+import { useMutation } from "react-query";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
+import { deleteProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/Admin/productAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementPage({title}) {
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const [ productData, setProductData ] = useRecoilState(productDataState);
   const [ isOpen, setIsOpen ] = useState(false);
-  const queryClient = useQueryClient();
   const [ buttonState, setButtonState ] = useState(0);
   const [ selectedProduct, setSelectedProduct ] = useRecoilState(selectedProductData);
   const [ refetch, setRefetch ] = useState(false);
@@ -124,12 +124,9 @@ function ProductManagementPage({title}) {
     ]
   ];
 
-  useEffect(() => {
-    console.log(productData)
-  }, [productData])
-
   return (
     <AdminPageLayout>
+      <AdminSales/>
       <div css={s.header}>
         <h1 css={s.title}>{title}</h1>
         <div>

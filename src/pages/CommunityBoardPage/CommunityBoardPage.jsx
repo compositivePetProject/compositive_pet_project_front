@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
 import { useMutation, useQuery } from "react-query";
 import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/CommunityBoardPageCount";
+import { page } from "../../components/CommunityBoardPageCount/style";
 
 
 
@@ -32,7 +33,7 @@ import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/Co
 
     const getBoardPageQuery = useQuery (
         ["getBoardPageQuery"],
-        async () => getCommunityBoardPageCountRequest({
+        async () => await getCommunityBoardPageCountRequest({
             page,
             count : pageSearchCount
         }),
@@ -54,6 +55,26 @@ import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/Co
 
     )
 
+    useEffect (() => {
+        const fetchData = async () => {
+            try  { 
+                const response = await getCommunityBoardListRequest()
+                const index = response.slice(firstPage,lastPage)
+                setCommunityBoardList(index)
+                console.log(index)
+            }catch(error) {
+                setError(error)
+                console.log(error)
+            }
+        }
+            
+
+            fetchData();
+
+        }, [page])
+       
+
+ 
    
 
 
@@ -112,7 +133,7 @@ import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/Co
             </div>
         
         <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
-        <CommunityBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handleOnPageChange} />
+       <CommunityBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handleOnPageChange}/>
         </div>
         ) 
     }

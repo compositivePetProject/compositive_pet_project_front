@@ -13,7 +13,7 @@ function CommunityBoardDogPage() {
     const [searchParams, setSearchParams] = useSearchParams(0)
     const [communityBoardList, setCommunityBoardList] = useState([]);
     const [error, setError] = useState(null)
-    const [maxPageNumber, setMaxPageNumber] = useState(0)
+    const [dogMaxPageNumber, setDogMaxPageNumber] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
     const page = parseInt (searchParams.get("page")) || 1;
     const pageSearchCount = 10;
@@ -25,7 +25,7 @@ function CommunityBoardDogPage() {
 
     const getBoardPageQuery = useQuery (
         ["getBoardPageQuery"],
-        async () => getBoardDogPageCountRequest({
+        async () => await getBoardDogPageCountRequest({
             page,
             count : pageSearchCount
 
@@ -36,7 +36,7 @@ function CommunityBoardDogPage() {
             refetchOnWindowFocus : false,
             onSuccess :response => {
                 console.log(response)
-                setMaxPageNumber(response.data.maxPageNumber)
+                setDogMaxPageNumber(response.data.dogMaxPageNumber)
                 setTotalCount(response.data.totalCount)
             },
 
@@ -46,6 +46,24 @@ function CommunityBoardDogPage() {
 
         }
     )
+
+    useEffect (() => {
+        const fetchData  = async () => {
+            try {
+                const response = await getCommunityBoardDogRequest()
+                const index = response.slice(firstPage,lastPage)
+                setCommunityBoardList(index)
+                console.log(index)
+            }catch(error) {
+                setError(error)
+                console.log(error)
+            }
+        }
+
+            fetchData();
+    }, [page])
+
+    
 
     useEffect(() => {
         const fetchData = async() => {
@@ -101,7 +119,7 @@ const handleOnPageChange = (pageNumber) => {
            
 
         <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
-        <CommunityDogBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} ></CommunityDogBoardPageCount>
+        <CommunityDogBoardPageCount dogMaxPageNumber={dogMaxPageNumber} totalCount={totalCount} onChange={handleOnPageChange} />
         </div>
         )
     }

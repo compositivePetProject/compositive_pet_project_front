@@ -15,15 +15,15 @@ function CommunityBoardDetailPage(props) {
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery")
   const navigate = useNavigate();
-  const communityBoardId = parseInt(searchParams.get("communityBoardId"))
+  // const communityBoardId = parseInt(searchParams.get("communityBoardId"))
   const [board, setBoard ] = useState("");
   const userId = principalQueryState.data?.data.userId;
 
 
   const getCommunityBoardLikeStatusQuery = useQuery(
-    ["getCommunityBoardLikeStatusQuery" , userId, communityBoardId],
+    ["getCommunityBoardLikeStatusQuery" , userId, searchParams.get("communityBoardId")],
     async() => await getCommunityBoardLikeStatusRequest({
-      communityBoardId : communityBoardId,
+      communityBoardId : searchParams.get("communityBoardId"),
       userId : userId
     }),
     {
@@ -39,9 +39,9 @@ function CommunityBoardDetailPage(props) {
 
 
   const getBoardLikeCountQuery = useQuery(
-    ["getBoardLikeCountQuery", communityBoardId],
+    ["getBoardLikeCountQuery", searchParams.get("communityBoardId")],
     async () => await getCommunityBoardLikeRequest ( {
-      communityBoardId : communityBoardId
+      communityBoardId : searchParams.get("communityBoardId")
     }),
 
     {
@@ -86,18 +86,18 @@ const deleteBoardLikeQuery = useMutation({
 const toggleBoardFavoriteStatusButton = async () => {
   if (isLiked) {
       await deleteBoardLikeQuery.mutateAsync({
-          communityBoardId : communityBoardId,
+          communityBoardId : searchParams.get("communityBoardId"),
           userId : userId
       });
     }else{
       await postBoardLikeQuery.mutateAsync( {
-        communityBoardId : communityBoardId,
+        communityBoardId : searchParams.get("communityBoardId"),
         userId : userId
       });
     }
 
     const response = await getCommunityBoardLikeRequest({
-      communityBoardId : communityBoardId
+      communityBoardId : searchParams.get("communityBoardId")
     });
     SetUser(response.data)
     setIsLiked(Liked => !Liked);
@@ -107,9 +107,9 @@ const toggleBoardFavoriteStatusButton = async () => {
   
  
   const getCommunityBoardQuery = useQuery(
-    ["getCommunityBoardQuery", communityBoardId],
+    ["getCommunityBoardQuery", searchParams.get("communityBoardId")],
     async () => await getCommunityBoardRequestById ({
-      communityBoardId : communityBoardId
+      communityBoardId : searchParams.get("communityBoardId")
     }),
   {
     retry: 0,
@@ -144,7 +144,7 @@ const toggleBoardFavoriteStatusButton = async () => {
     const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
     if(boardDelete) {
       deleteCommunityBoardQuery.mutate(
-        communityBoardId
+        searchParams.get("communityBoardId")
       )
     }
   } 

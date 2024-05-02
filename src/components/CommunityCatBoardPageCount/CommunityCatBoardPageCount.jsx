@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { pageNumbers } from '../CommunityBoardPageCount/style';
 
 function CommunityCatBoardPageCount({catMaxPageNumber, totalCount}) {
@@ -29,7 +29,7 @@ function CommunityCatBoardPageCount({catMaxPageNumber, totalCount}) {
             {
                 page !== 1 &&
                 <Link css= {s.pageButton(false)}
-                        to={`/board?page=${page -1}`}>&#60;</Link>
+                        to={`/community/cat?page=${page -1}`}>&#60;</Link>
 
             }
             {
@@ -37,13 +37,13 @@ function CommunityCatBoardPageCount({catMaxPageNumber, totalCount}) {
                     <Link
                     key={number}
                     css={s.pageButton(number === page)}
-                    to={`/board?page=${number}`}
+                    to={`/community/cat?page=${number}`}
                     >{number}</Link>
                 )
             }
             {
                 page !== catMaxPageNumber &&
-                <Link css={s.pageButton(false)} to={`/board?page=${page + 1}`}>&#62;</Link>                
+                <Link css={s.pageButton(false)} to={`/community/cat?page=${page + 1}`}>&#62;</Link>                
             }
             </div>
         <div css = {s.pageCount}>

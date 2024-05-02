@@ -3,23 +3,26 @@ import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-function CommunityBoardPageCount({maxPageNumber, totalCount}) {
+
+
+function CommunityBoardPageCount({maxPageNumber,totalCount}) {
 
     const [searchParams] = useSearchParams();
     const [boardNumbers, setBoardNumbers] = useState([])
     const page = parseInt(searchParams.get("page"))
+    
 
     useEffect(() => {
-        const startBoardPageNumber  = page % 5 === 0 ? page - 4 : (page - (page % 5)) + 1;
+        const startBoardPageNumber = page % 5 === 0 ? page - 4 : (page - (page % 5)) + 1;
         const endBoardPageNumber = startBoardPageNumber + 4 > maxPageNumber ? maxPageNumber : startBoardPageNumber + 4;
         let pageNumbers = [];
 
         for(let i = startBoardPageNumber; i <= endBoardPageNumber; i++) {
-            pageNumbers = [... pageNumbers, i];
+            pageNumbers = [...pageNumbers, i];
         }
 
         setBoardNumbers(() => pageNumbers);
-    }, [page, maxPageNumber,totalCount])
+    }, [page, maxPageNumber, totalCount])
 
 
     return (
@@ -28,21 +31,22 @@ function CommunityBoardPageCount({maxPageNumber, totalCount}) {
             {
                 page !== 1 &&
                 <Link css={s.pageButton(false)}
-                    to={`/communityBoard?page=${page - 1}`}>&#60;</Link>
+                    to={`/community/getboards?page=${page - 1}`}>&#60;</Link>
             }
             {
                 boardNumbers.map(number =>
                     <Link
                     key={number}
                     css={s.pageButton(number === page)}
-                    to={`/communityBoard?page=${number}`}
+                    to={`/community/getboards?page=${number}`}
                     >{number}</Link>
                 )
             }
             {
                 page !== maxPageNumber &&
-                <Link css={s.pageButton(false)} 
-                to={`/communityBoard?page=${page + 1}`}>&#62;</Link>    
+                <Link 
+                css={s.pageButton(false)} 
+                to={`/community/getboards?page=${page + 1}`}>&#62;</Link>    
             }
             </div>
             <div css={s.pageCount}>

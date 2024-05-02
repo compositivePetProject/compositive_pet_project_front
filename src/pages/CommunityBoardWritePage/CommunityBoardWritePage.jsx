@@ -13,7 +13,6 @@ import ReactQuill from 'react-quill';
   const [communityTitle, setCommunityTitle] = useState("")
   const [communityContent, setCommunityContent ] = useState("")
   const [BoardAnimalCategoryId, setBoardAnimalCategoryId] = useState();
-  // const [checkedList, setCheckedList ] = useState([]);
   const userId = principalQueryState.data?.data.userId;
   
   const handleOnChange = (e) => {
@@ -24,7 +23,7 @@ import ReactQuill from 'react-quill';
     setCommunityContent(() => value);
 
   }
-// id랑 동물카테고리 id 변경해야함
+
   const handleSubmit = () => {
     postCommunityBoardQuery.mutate({
       userId: userId,
@@ -65,24 +64,6 @@ import ReactQuill from 'react-quill';
 
     console.log(communityTitle);
     console.log(communityContent)
-
-  // const handleSubmitClick = async () => {
-  //   try {
-
-  //     const newCommunityBoard ={
-  //       userId : userId,
-  //       communityBoardTitle : communityBoardInputValue,
-  //       communityBoardContent: communityQuillValue,
-  //       communityBoardAnimalCategoryId : communityBoardInputValue
-  //     }
-
-  //     await postCommunityBoardRequest(newCommunityBoard);
-  //     navigate("/community/getboards")
-  //   }catch(error){
-  //     console.error("게시물 작성 중 오류 발생", error);
-  //   }
-     
-  // }
 
 
 

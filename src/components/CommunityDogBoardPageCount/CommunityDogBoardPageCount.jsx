@@ -3,7 +3,7 @@ import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
-function CommunityDogBoardPageCount({dogMaxPageNumber, totalCount}) {
+function CommunityDogBoardPageCount({dogMaxPageNumber,totalCount}) {
 
     const [searchParams] = useSearchParams();
     const [boardNumbers, setBoardNumbers] = useState([])
@@ -20,7 +20,7 @@ function CommunityDogBoardPageCount({dogMaxPageNumber, totalCount}) {
 
         setBoardNumbers(() => pageNumbers);
 
-    }, [page, dogMaxPageNumber, totalCount])
+    }, [page,totalCount])
 
     
     return (
@@ -29,20 +29,20 @@ function CommunityDogBoardPageCount({dogMaxPageNumber, totalCount}) {
                 {
                     page !== 1 &&
                     <Link css={s.pageButton(false)}
-                            to={`/board?page=${page -1}`}>&#60;</Link>
+                            to={`/community/dog?page=${page -1}`}>&#60;</Link>
                 }
                 {
                     boardNumbers.map(number =>
                         <Link
                         key={number}
                         css={s.pageButton(number === page)}
-                        to={`/board?page=${number}`}
+                        to={`/community/dog?page=${number}`}
                         >{number}</Link>
                     )
                 }
                 {
                     page !== dogMaxPageNumber &&
-                    <Link css={s.pageButton(false)} to={`/board?page=${page + 1}`}>&#62;</Link>
+                    <Link css={s.pageButton(false)} to={`/community/dog?page=${page + 1}`}>&#62;</Link>
                 }
                 </div>
             <div css= {s.pageCount}>

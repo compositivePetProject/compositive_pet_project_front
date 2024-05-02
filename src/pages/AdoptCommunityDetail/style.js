@@ -255,9 +255,22 @@ export const commentContent = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    width: 80%;
+    border: 1px solid #dbdbdb;
+    width: 100%;
     height: 20%;
+    & > div {
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 15%;
+        width: 100%;
+        font-weight: 700;
+        cursor: default;
+    }
+
 `
 
 
@@ -276,9 +289,18 @@ export const commentHeader = css`
     align-items: center;
     border: 1px solid #dbdbdb;
     width: 100%;
-    height: 15%;
+    height: 20%;
     & > div {
-        border: 1px solid black;
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
     }
 `
 

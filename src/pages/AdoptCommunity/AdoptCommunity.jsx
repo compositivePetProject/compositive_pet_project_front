@@ -17,6 +17,7 @@ function AdoptCommunity() {
     const [viewedPosts,setViewedPost ]= useState(new Set());
     const [likeStatus, setLikeStatus] = useState({});
     const [likeCounts, setLikeCounts] = useState({});
+    const [ animalCategoryId, setAnimalCategoryId ] = useState()
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const userId = principalQueryState.data?.data.userId;
@@ -45,7 +46,10 @@ function AdoptCommunity() {
     
 
     
-
+    const handleAnimalChange = (event) => {
+        console.log(animalCategoryId)
+        setAnimalCategoryId(event.target.value)
+    }
 
     const postAdoptLikeMutation = useMutation({
         mutationKey: "postAdoptLikeMutation",
@@ -106,6 +110,7 @@ function AdoptCommunity() {
     )
 
 
+
   
 
 
@@ -122,6 +127,7 @@ function AdoptCommunity() {
                 const response = await getAdoptAll();
                 const index = response.slice(firstPage, lastPage)
                 setAdoptList(index);
+                console.log(index)
                 const savedLikeStatus = localStorage.getItem('likeStatus');
                 if (savedLikeStatus) {
                     setLikeStatus(JSON.parse(savedLikeStatus));
@@ -134,12 +140,14 @@ function AdoptCommunity() {
         };
 
         fetchData();
-    }, [page]);
+
+    },[page])
 
 
+
+      
   
  
-
 
   
 
@@ -196,7 +204,17 @@ function AdoptCommunity() {
     return (
             <div css={s.layout}>
                 <div>
-                    <h1 css={s.headerTitle}>전체 분양 게시글</h1>
+                    <h1 css={s.headerTitle}>분양 게시글</h1>
+                    <div>
+                        <select 
+                            value={animalCategoryId}
+                            onChange={handleAnimalChange}>
+                            <option value={0}>애완동물의 종류를 선택하세요</option>
+                            <option value={1}>개</option>
+                            <option value={2}>고양이</option>
+                        </select>
+                        <button onClick={()=> {handleSearchClick}}>검색</button>
+                    </div>
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
@@ -217,20 +235,14 @@ function AdoptCommunity() {
                                     <div>{date(data.createDate)}</div>
                                     <div css={s.status}>
                                         <div onClick={()=>{handleLikeSubmit(data.adoptationBoardId)}}>
-                                        {!likeStatus[data.adoptationBoardId] ? (
-                                            <FaRegHeart css={s.likeHeart} />
-                                        ) : (
-                                            <FaHeart css={s.likeHeart} />
-                                        )}
-                                         </div>
-                                         <div css={s.likeCount}>
-                                           0
+                                            {!likeStatus[data.adoptationBoardId] ? (
+                                                <FaRegHeart css={s.likeHeart} />
+                                            ) : (
+                                                <FaHeart css={s.likeHeart} />
+                                            )}
+                                            <div>{data.totalCount}</div>
                                         </div>
-                                        <div css={s.viewStatus}>
-                                            <MdOutlineRemoveRedEye css={s.likeHeart} />
-                                            <div css={s.viewCount}>0</div>
-                                        </div>
-                                        
+                                    
                                     </div>
                                 </div>
                             ))}

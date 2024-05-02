@@ -93,7 +93,6 @@ function AdoptCommunityRegister() {
                     <option value={1}>개</option>
                     <option value={2}>고양이</option>
                 </select>
-                <div>{animalCategoryId}</div>
                 <input
                 type="text"
                 value={adopTitle}

@@ -240,9 +240,12 @@ function AdoptCommunity() {
                                             ) : (
                                                 <FaHeart css={s.likeHeart} />
                                             )}
-                                            <div>{data.totalCount}</div>
+                                       </div>
+                                        <div>{data.totalCount}</div>
+                                        <div>
+                                            <MdOutlineRemoveRedEye css={s.likeHeart}/>
                                         </div>
-                                    
+                                        <div>{data.viewCount}</div>
                                     </div>
                                 </div>
                             ))}

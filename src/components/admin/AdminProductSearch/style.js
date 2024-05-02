@@ -67,28 +67,33 @@ export const rowData = css`
 
     & > div:nth-of-type(1) {
         width: 5%;
+        justify-content: center;
     }
     & > div:nth-of-type(2) {
         width: 5%;
+        justify-content: right;
     }
     & > div:nth-of-type(3) {
         width: 30%;
+        justify-content: left;
     }
     & > div:nth-of-type(4) {
         width: 30%;
+        justify-content: right;
     }
     & > div:nth-of-type(5) {
         width: 15%;
+        justify-content: left;
     }
     & > div:nth-of-type(6) {
         width: 15%;
+        justify-content: left;
     }
 `;
 
 export const labelData = css`
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
     align-items: center;
     border: 1px solid #0e004a24;
     padding: 0px 30px;

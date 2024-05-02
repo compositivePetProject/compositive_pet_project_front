@@ -6,6 +6,8 @@ import { SlBasket } from "react-icons/sl";
 import { useQueryClient } from "react-query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLogout } from "react-icons/ai";
+import instance from "../../apis/utils/instance";
 
 function FixBar() {
     const navigate = useNavigate();
@@ -40,6 +42,17 @@ function FixBar() {
         }
     }
 
+    const handleLogoutClick = () => {
+        localStorage.removeItem("AccessToken");
+        instance.interceptors.request.use((config) => {
+            config.headers.Authorization = null;
+            return config;
+        });
+        queryClient.refetchQueries("principalQuery");
+        alert("로그아웃 되었습니다");
+        navigate("/");
+    }
+
 
     return (
         <div css={s.layout}>
@@ -59,6 +72,10 @@ function FixBar() {
             <div css={s.menuContainer} onClick={handleAdminClick}>
                 <div><RiAdminLine/></div>
                 <div>Admin</div>
+            </div>
+            <div css={s.menuContainer} onClick={handleLogoutClick}>
+                <div><AiOutlineLogout/></div>
+                <div>로그아웃</div>
             </div>
         </div>
     )

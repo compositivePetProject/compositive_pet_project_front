@@ -105,9 +105,11 @@ export const listContainer = css`
     overflow-x: hidden;
     &::-webkit-scrollbar{
         background-color: #eeeeee;
+        border-radius: 5px;
     }
     &::-webkit-scrollbar-thumb{
         background-color: #00005cff;
+        border-radius: 5px;
     }
 `;
 

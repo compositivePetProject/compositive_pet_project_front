@@ -5,10 +5,14 @@ export const productCategoryOptions = [
     },
     {
         value: 2,
-        label: "분유"
+        label: "간식"
     },
     {
         value: 3,
-        label: "간식"
-    }
+        label: "위생/배변"
+    },
+    {
+        value: 4,
+        label: "미용/목욕용품"
+    },
 ];

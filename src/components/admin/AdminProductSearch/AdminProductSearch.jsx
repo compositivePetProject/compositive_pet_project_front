@@ -182,6 +182,10 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
     }
   }, [productList]);
 
+  useEffect(() => {
+    console.log(productList)
+  }, [productList])
+
   return (
     <div css={s.layout}>
       <div css={s.row}>

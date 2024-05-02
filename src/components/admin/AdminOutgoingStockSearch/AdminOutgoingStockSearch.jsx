@@ -4,9 +4,9 @@ import * as s from "./style";
 import { useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { getProductOutgoingAdminCountRequest, getProductOutgoingStocksAdminRequest } from "../../../apis/api/productAdmin";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { searchOutgoingProductDataState } from "../../../atoms/admin/searchOutgoingProductDataAtom";
+import { getProductOutgoingAdminCountRequest, getProductOutgoingStocksAdminRequest } from "../../../apis/api/Admin/productOutgoingAdmin";
 
 function AdminOutgoingStockSearch({refetch, setRefetch}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -35,7 +35,6 @@ function AdminOutgoingStockSearch({refetch, setRefetch}) {
             retry: 0,
             refetchInterval: false,
             onSuccess: (response) => {
-                console.log(response);
                 setOutgoingList(() => response.data.map((product) => {
                     return {
                         ...product

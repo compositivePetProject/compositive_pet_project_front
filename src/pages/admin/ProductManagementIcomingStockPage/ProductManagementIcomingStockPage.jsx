@@ -13,11 +13,10 @@ import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
 import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import { useMutation, useQueryClient } from "react-query";
-import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest } from "../../../apis/api/productAdmin";
 import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
 import AdminIncomingStockSearch from "../../../components/admin/AdminIncomingStockSearch/AdminIncomingStockSearch";
 import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
-import { updateProductIncomingStocktoProductStock } from "../../../apis/api/Admin/productIncomingStockAdmin";
+import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest, updateProductIncomingStocktoProductStock } from "../../../apis/api/Admin/productIncomingStockAdmin";
 
 function ProductManagementIcomingStockPage({title}) {
     const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
@@ -156,11 +155,6 @@ function ProductManagementIcomingStockPage({title}) {
             alert("가입고 상품 삭제가 취소되었습니다.");
         }
     }
-    
-
-    useEffect(() => {
-        console.log(searchIncomingProductData)
-    }, [searchIncomingProductData]);
     
     return (
         <AdminPageLayout>

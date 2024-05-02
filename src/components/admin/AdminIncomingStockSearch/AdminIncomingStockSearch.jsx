@@ -3,13 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getProductIncomingAdminCountRequest, getProductInocmingStocksRequest } from "../../../apis/api/productAdmin";
 import { count } from "firebase/firestore";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { incomingProductDataState } from "../../../atoms/admin/incomingProductDataAtom";
 import { useRecoilState } from "recoil";
 import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
 import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncomingProductDataAtom";
+import { getProductIncomingAdminCountRequest, getProductInocmingStocksRequest } from "../../../apis/api/Admin/productIncomingStockAdmin";
 
 function AdminIncomingStockSearch({ refetch, setRefetch, setIncomingProductsIds}) {
     const [ searchParams, setSearchParams ] = useSearchParams();

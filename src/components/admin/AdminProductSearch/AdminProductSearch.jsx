@@ -2,22 +2,23 @@
 import * as s from "./style";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { deleteProductsAdminRequest, getProductsAdminCountRequest, getProductsAdminRequest, updateProductAdminRequest } from "../../../apis/api/productAdmin";
+
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import { useMutation } from "react-query";
+import { getProductsAdminCountRequest, getProductsAdminRequest } from "../../../apis/api/Admin/productAdmin";
 
-function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCategoryId, searchText, onSetDeleteProducts, refetch, setRefetch }) {
+function AdminProductSearch({ onSetDeleteProducts, refetch, setRefetch }) {
   const [ searchParams, setSearchParams ] = useSearchParams();
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const searchCount = 10;
   const [ productList, setProductList ] = useState([]);
   const [ checkAll, setCheckAll ] = useState({
     checked : false,
-    target: 1  // 1 => 전체 선택, 2 => 부분 선택
+    target: 1
   });
   const [ selectedProduct, setSelectedProduct ] = useRecoilState(selectedProductData);
   const [ lastCheckedProductId, setLastCheckedProductId ] = useState(0);
@@ -113,15 +114,6 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
     setLastCheckedProductId(() => productId);
   }
 
-  // useEffect(() => {
-  //   console.log(selectedProduct)
-  //   console.log(lastCheckedProductId)
-  // }, [selectedProduct])
-  useEffect(() => {
-    console.log(deleteProducts)
-    // console.log(lastCheckedProductId)
-  }, [deleteProducts])
-
   useEffect(() => {
     onSetDeleteProducts(deleteProducts);
   }, [deleteProducts, onSetDeleteProducts])
@@ -181,10 +173,6 @@ function AdminProductSearch({ selectedProductCategory, selectedProductAnimalCate
       setSelectedProduct(() => lastSelectedProduct);
     }
   }, [productList]);
-
-  useEffect(() => {
-    console.log(productList)
-  }, [productList])
 
   return (
     <div css={s.layout}>

@@ -12,11 +12,11 @@ import { productCategoryOptions } from "../../../constants/productCategoryOption
 import { productAnimalCategoryOptions } from "../../../constants/productAnimalCategoryOptions";
 import { productSizeCategoryOptions } from "../../../constants/productSizeCategoryOptions";
 import { useMutation } from "react-query";
-import { postProductCurrentStockRequest, updateProductCurrentStockRequest } from "../../../apis/api/productAdmin";
 import { searchCurrentProductDataState } from "../../../atoms/admin/searchCurrentProductDataAtom";
 import AdminCurrentStockSearch from "../../../components/admin/AdminCurrentStockSearch/AdminCurrentStockSearch";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import { selectedCurrentProductData } from "../../../atoms/admin/selectedCurrentProductData";
+import { updateProductCurrentStockRequest } from "../../../apis/api/Admin/productStockAdmin";
 
 function ProductManagementCurrentStockPage({title}) {
   const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);

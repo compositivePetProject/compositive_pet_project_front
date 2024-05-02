@@ -72,7 +72,7 @@ export const rowData = css`
 
     & > div:nth-of-type(1) {
         width: 5%;
-        justify-content: right;
+        text-align: right;
     }
     & > div:nth-of-type(2) {
         width: 15%;

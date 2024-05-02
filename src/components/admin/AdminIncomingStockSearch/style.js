@@ -73,6 +73,7 @@ export const rowData = css`
         width: 5%;
         border-right: 1px solid #eee;
         text-align: right;
+        overflow-x: auto;
     }
     & > div:nth-of-type(3) {
         width: 30%;
@@ -97,8 +98,6 @@ export const labelData = css`
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: default;

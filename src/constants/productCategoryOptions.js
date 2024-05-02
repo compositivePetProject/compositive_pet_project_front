@@ -13,6 +13,6 @@ export const productCategoryOptions = [
     },
     {
         value: 4,
-        label: "미용/목욕용품"
+        label: "미용/목욕용품/기타"
     },
 ];

@@ -77,6 +77,7 @@ export const rowData = css`
     & > div:nth-of-type(2) {
         width: 15%;
         justify-content: left;
+        overflow-x: auto;
     }
     & > div:nth-of-type(3) {
         width: 10%;
@@ -106,8 +107,6 @@ export const labelData = css`
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: default;

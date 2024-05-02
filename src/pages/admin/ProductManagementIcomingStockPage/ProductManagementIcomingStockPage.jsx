@@ -17,6 +17,7 @@ import { searchIncomingProductDataState } from "../../../atoms/admin/searchIncom
 import AdminIncomingStockSearch from "../../../components/admin/AdminIncomingStockSearch/AdminIncomingStockSearch";
 import { deleteIncomingStocksState } from "../../../atoms/admin/deleteIncomingStocksState";
 import { deleteProductIncomingStocksAdminRequest, postProductIncomingStockRequest, updateProductIncomingStockAdminRequest, updateProductIncomingStocktoProductStock } from "../../../apis/api/Admin/productIncomingStockAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementIcomingStockPage({title}) {
     const [ searchIncomingProductData, setSearchIncomingProductData ] = useRecoilState(searchIncomingProductDataState);
@@ -158,6 +159,7 @@ function ProductManagementIcomingStockPage({title}) {
     
     return (
         <AdminPageLayout>
+            <AdminSales/>
             <div css={s.header}>
                 <h1 css={s.title}>{title}</h1>
                 <div>

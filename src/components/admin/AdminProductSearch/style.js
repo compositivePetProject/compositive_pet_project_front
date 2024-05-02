@@ -48,8 +48,6 @@ export const label = css`
     justify-content: center;
     align-items: center;
     height: 40px;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     background-color: #00005cff;
@@ -96,7 +94,6 @@ export const labelData = css`
     display: flex;
     align-items: center;
     border: 1px solid #0e004a24;
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     height: 40px;

@@ -17,6 +17,7 @@ import AdminCurrentStockSearch from "../../../components/admin/AdminCurrentStock
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import { selectedCurrentProductData } from "../../../atoms/admin/selectedCurrentProductData";
 import { updateProductCurrentStockRequest } from "../../../apis/api/Admin/productStockAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementCurrentStockPage({title}) {
   const [ searchCurrentProductData, setSearchCurrentProductData ] = useRecoilState(searchCurrentProductDataState);
@@ -72,6 +73,7 @@ function ProductManagementCurrentStockPage({title}) {
 
   return (
     <AdminPageLayout>
+        <AdminSales/>
         <div css={s.header}>
             <h1 css={s.title}>{title}</h1>
             <div>

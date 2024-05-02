@@ -17,6 +17,7 @@ import { searchProductDataState } from "../../../atoms/admin/searchProductDataAt
 import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
 import { deleteProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/Admin/productAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementPage({title}) {
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
@@ -125,6 +126,7 @@ function ProductManagementPage({title}) {
 
   return (
     <AdminPageLayout>
+      <AdminSales/>
       <div css={s.header}>
         <h1 css={s.title}>{title}</h1>
         <div>

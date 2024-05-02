@@ -268,7 +268,19 @@ export const commentInput = css`
 `
 
 
-
+export const commentHeader = css`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dbdbdb;
+    width: 100%;
+    height: 15%;
+    & > div {
+        border: 1px solid black;
+    }
+`
 
 
 

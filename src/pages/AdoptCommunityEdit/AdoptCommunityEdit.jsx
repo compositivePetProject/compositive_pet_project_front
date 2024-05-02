@@ -116,7 +116,7 @@ function AdoptCommunityEdit() {
                 onChange={handleTitleChange}
                 placeholder="제목을 입력하세요"
                 ></input>
-                <ReactQuill value={adoptContent} modules={modules} onChange={handleQuillChange}/>
+                <ReactQuill readOnly={true} alue={adoptContent} modules={modules} onChange={handleQuillChange}/>
             <div>
                 <button css = {s.submitButton} onClick={handleSubmit}>작성</button>
             </div>

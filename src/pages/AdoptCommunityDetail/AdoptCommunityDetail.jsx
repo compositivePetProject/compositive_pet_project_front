@@ -126,12 +126,17 @@ function AdoptCommunityDetail() {
             }
 
             <div  css={s.commentBox}>
+                <div css ={s.commentHeader}>
+                    <div>내용</div>
+                    <div>닉네임</div>
+                    <div>작성일</div>
+                </div>
                 {
                 commentContent && commentContent.map((comment) => (
                     (
                         <div css={s.commentContent} key={comment.commentId}>
-                            <div>{comment.username}</div>
                             <div>{comment.adoptationBoardCommentContent}</div>
+                            <div>{comment.username}</div>
                             <div>{comment.createDate}</div>
                         </div>
 

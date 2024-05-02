@@ -180,7 +180,7 @@ function AdoptCommunity() {
                     userId: userId
                 });
                 setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
-                localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: true })); // 이 부분 수정
+                localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: true })); 
             } else {
                 DeleteAdoptLikeMutation.mutate({
                     adoptationBoardId: boardId,

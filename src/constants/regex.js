@@ -12,7 +12,7 @@ export const REGEX = {
         text: "한글문자 형식이어야 합니다"
     },
     address: {
-        regexr: /^(?=.*[가-힣])[가-힣A-Za-z0-9~\-\. ]+(읍|면|동|가|리|길|로)+$/,
+        regexr: /^.+$/,
         text: "도로명 or 지번 주소 형식이어야 합니다."
     },
     detailAddress: {

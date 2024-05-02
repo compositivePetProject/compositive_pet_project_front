@@ -23,8 +23,6 @@ export const label = css`
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     background-color: #00005cff;
@@ -37,6 +35,7 @@ export const label = css`
     }
     &:nth-of-type(2) {
         width: 50%;
+        overflow-x: auto;
     }
     &:nth-of-type(3) {
         width: 15%;
@@ -67,25 +66,29 @@ export const labelData = css`
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
+
     font-size: 14px;
     font-weight: 600;
     cursor: default;
 
     &:nth-of-type(1) {
         width: 10%;
+        justify-content: right;
     }
     &:nth-of-type(2) {
         width: 50%;
+        justify-content: left;
     }
     &:nth-of-type(3) {
         width: 15%;
+        justify-content: left;
     }
     &:nth-of-type(4) {
         width: 15%;
+        justify-content: right;
     }
     &:nth-of-type(5) {
         width: 30%;
+        justify-content: left;
     }
 `;

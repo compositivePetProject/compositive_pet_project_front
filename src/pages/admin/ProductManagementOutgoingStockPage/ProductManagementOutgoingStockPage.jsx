@@ -11,6 +11,7 @@ import TopInput from "../../../components/admin/TopInput/TopInput";
 import { useRecoilState } from "recoil";
 import { searchOutgoingProductDataState } from "../../../atoms/admin/searchOutgoingProductDataAtom";
 import AdminOutgoingStockSearch from "../../../components/admin/AdminOutgoingStockSearch/AdminOutgoingStockSearch";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementOutgoingStockPage({title}) {
     const [ searchOutgoingProductData, setSearchOutgoingProductData ] = useRecoilState(searchOutgoingProductDataState);
@@ -36,13 +37,15 @@ function ProductManagementOutgoingStockPage({title}) {
 
     return (
         <AdminPageLayout>
-        <div css={s.header}>
-            <h1 css={s.title}>{title}</h1>
-        </div>
-        <SearchTop searchInputs={searchInputs} submit={searchSubmit}/>
-        <AdminOutgoingStockSearch refetch={refetch} setRefetch={setRefetch}/>
+            <AdminSales/>
+            <div css={s.header}>
+                <h1 css={s.title}>{title}</h1>
+            </div>
+            <SearchTop searchInputs={searchInputs} submit={searchSubmit}/>
+            <AdminOutgoingStockSearch refetch={refetch} setRefetch={setRefetch}/>
         </AdminPageLayout>
   )
+  
 }
 
 export default ProductManagementOutgoingStockPage;

@@ -105,9 +105,11 @@ export const listContainer = css`
     overflow-x: hidden;
     &::-webkit-scrollbar{
         background-color: #eeeeee;
+        border-radius: 5px;
     }
     &::-webkit-scrollbar-thumb{
         background-color: #00005cff;
+        border-radius: 5px;
     }
 `;
 
@@ -117,6 +119,7 @@ export const listItem = css`
     flex-direction: column;
     margin-bottom: 10px;
     border: 1px solid #00005c6b;
+    border-radius: 5px;
     padding: 10px;
     width: 260px;
     color:  rgb(51, 51, 51);

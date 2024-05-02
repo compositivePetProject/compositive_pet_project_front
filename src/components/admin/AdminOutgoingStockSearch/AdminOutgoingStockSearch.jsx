@@ -4,9 +4,9 @@ import * as s from "./style";
 import { useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { getProductOutgoingAdminCountRequest, getProductOutgoingStocksAdminRequest } from "../../../apis/api/productAdmin";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
 import { searchOutgoingProductDataState } from "../../../atoms/admin/searchOutgoingProductDataAtom";
+import { getProductOutgoingAdminCountRequest, getProductOutgoingStocksAdminRequest } from "../../../apis/api/Admin/productOutgoingAdmin";
 
 function AdminOutgoingStockSearch({refetch, setRefetch}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -35,7 +35,6 @@ function AdminOutgoingStockSearch({refetch, setRefetch}) {
             retry: 0,
             refetchInterval: false,
             onSuccess: (response) => {
-                console.log(response);
                 setOutgoingList(() => response.data.map((product) => {
                     return {
                         ...product
@@ -68,6 +67,23 @@ function AdminOutgoingStockSearch({refetch, setRefetch}) {
         }
     )
 
+    const dateFormatChange = (date) => {
+        const dateData = new Date(date);
+
+        const year = dateData.getFullYear();
+        const month = dateData.getMonth() + 1;
+        const day = dateData.getDate();
+        const hour = dateData.getHours() < 10 ? "0" + dateData.getHours() : dateData.getHours();
+        const minute = dateData.getMinutes() < 10 ? "0" + dateData.getMinutes() : dateData.getMinutes();
+
+        const formattedMonth = month < 10 ? `0${month}` : month;
+        const formattedDay = day < 10 ? `0${day}` : day;
+
+        const formattedDate = `${year}년${formattedMonth}월${formattedDay}일 ${hour}시${minute}분`;
+
+        return formattedDate;
+    }
+
     return (
         <div css={s.layout}>
             <div css={s.row}>
@@ -85,7 +101,7 @@ function AdminOutgoingStockSearch({refetch, setRefetch}) {
                             <div css={s.labelData}>{product.productNameKor}</div>
                             <div css={s.labelData}>{product.productSizeCategoryName}</div>
                             <div css={s.labelData}>{product.productOutgoingStockCount}</div>
-                            <div css={s.labelData}>{product.updateDate}</div>
+                            <div css={s.labelData}>{dateFormatChange(product.updateDate)}</div>
                         </div>
                     )
                 }

@@ -4,9 +4,9 @@ import * as s from "./style";
 import { searchOrderProductDataState } from "../../../atoms/admin/searchOrderProductDataAtom";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { getOrderProductsCountRequest, getOrderProductsRequest } from "../../../apis/api/productAdmin";
 import { useEffect, useState } from "react";
 import AdminProductSearchPageNumbers from "../AdminProductSearchPageNumbers/AdminProductSearchPageNumbers";
+import { getOrderProductsCountRequest, getOrderProductsRequest } from "../../../apis/api/Admin/productOrderAdmin";
 
 function AdminOrderSearch({refetch, setRefetch}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -69,10 +69,6 @@ function AdminOrderSearch({refetch, setRefetch}) {
             }
         }
     )
-
-    useEffect(() => {
-        console.log(orderList)
-    }, [orderList])
 
     return (
         <div css={s.layout}>

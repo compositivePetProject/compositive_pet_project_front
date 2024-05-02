@@ -11,6 +11,7 @@ import { productSizeCategoryOptions } from "../../../constants/productSizeCatego
 import { useRecoilState } from "recoil";
 import { searchOrderProductDataState } from "../../../atoms/admin/searchOrderProductDataAtom";
 import AdminOrderSearch from "../../../components/admin/AdminOrderSearch/AdminOrderSearch";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementOrderPage({title}) {
     const [ searchOrderProductData, setSearchOrderProductData ] = useRecoilState(searchOrderProductDataState);
@@ -36,11 +37,12 @@ function ProductManagementOrderPage({title}) {
 
     return (
         <AdminPageLayout>
-        <div css={s.header}>
-            <h1 css={s.title}>{title}</h1>
-        </div>
-        <SearchTop searchInputs={searchInput} />
-        <AdminOrderSearch refetch={refetch} setRefetch={setRefetch}/>
+            <AdminSales/>
+            <div css={s.header}>
+                <h1 css={s.title}>{title}</h1>
+            </div>
+            <SearchTop searchInputs={searchInput} />
+            <AdminOrderSearch refetch={refetch} setRefetch={setRefetch}/>
         </AdminPageLayout>
     )
 }

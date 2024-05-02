@@ -45,8 +45,6 @@ export const label = css`
     justify-content: center;
     align-items: center;
     height: 40px;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     background-color: #00005cff;
@@ -67,34 +65,37 @@ export const rowData = css`
         border-top-left-radius: 5px;
         width: 5%;
         border-right: 1px solid #eee;
+        justify-content: center;
     }
     & > div:nth-of-type(2) {
         width: 5%;
         border-right: 1px solid #eee;
+        text-align: right;
+        overflow-x: auto;
     }
     & > div:nth-of-type(3) {
         width: 30%;
         border-right: 1px solid #eee;
+        justify-content: left;
     }
     & > div:nth-of-type(4) {
         width: 30%;
         border-right: 1px solid #eee;
+        justify-content: left;
     }
     & > div:nth-of-type(5) {
         width: 30%;
         border-right: 1px solid #eee;
+        justify-content: right;
     }
 `;
 
 export const labelData = css`
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: default;

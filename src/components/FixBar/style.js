@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 export const layout = css`
     position: fixed;
     top: 20%;
-    right: 35px; 
+    right: 30px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +21,11 @@ export const layout = css`
     }
 
     & > div:nth-of-type(5) {
+        box-sizing: border-box;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    & > div:nth-of-type(6) {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
     }
@@ -38,6 +43,7 @@ export const title = css`
     border-top-right-radius: 5px;
     background-color: #00005cff;
     color: #eeeeee;
+    font-weight: 600;
 `;
 
 export const info = css`
@@ -47,7 +53,7 @@ export const info = css`
     margin-bottom: 20px;
     width: 100px;
     color: #333333;
-    font-weight: 600;
+    font-weight: 700;
     & > img {
         border-radius: 50%;
     }
@@ -72,6 +78,7 @@ export const menuContainer = css`
     background-color: #00005cff;
     color: #eeeeee;
     cursor: pointer;
+    font-weight: 600;
     & > div:nth-of-type(1) {
         width: 30%;
         display: flex;

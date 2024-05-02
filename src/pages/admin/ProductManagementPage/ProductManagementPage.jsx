@@ -12,17 +12,17 @@ import { useEffect, useMemo, useState } from "react";
 import ProductDetailModal from "../../../components/admin/ProductDetailModal/ProductDetailModal";
 import { useRecoilState } from "recoil";
 import { productDataState } from "../../../atoms/admin/productDataAtom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { deleteProductsAdminRequest, getProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/productAdmin";
+import { useMutation } from "react-query";
 import { searchProductDataState } from "../../../atoms/admin/searchProductDataAtom";
 import AdminProductSearch from "../../../components/admin/AdminProductSearch/AdminProductSearch";
 import { selectedProductData } from "../../../atoms/admin/selectedProductDataAtom";
+import { deleteProductsAdminRequest, postProductAdminRequest, updateProductAdminRequest } from "../../../apis/api/Admin/productAdmin";
+import AdminSales from "../../../components/admin/AdminSales/AdminSales";
 
 function ProductManagementPage({title}) {
   const [ searchProductData, setSearchProductData ] = useRecoilState(searchProductDataState);
   const [ productData, setProductData ] = useRecoilState(productDataState);
   const [ isOpen, setIsOpen ] = useState(false);
-  const queryClient = useQueryClient();
   const [ buttonState, setButtonState ] = useState(0);
   const [ selectedProduct, setSelectedProduct ] = useRecoilState(selectedProductData);
   const [ refetch, setRefetch ] = useState(false);
@@ -35,16 +35,6 @@ function ProductManagementPage({title}) {
   useEffect(() => {
       setProductData(selectedProduct);
   }, [selectedProduct]);
-
-  // useEffect(() => {
-  //   console.log(deleteProducts);
-  // }, [deleteProducts])
-  // useEffect(() => {
-  //   console.log(productData);
-  // }, [productData])
-  // useEffect(() => {
-  //   console.log(searchProductData);
-  // }, [searchProductData])
   
   const productRegisterMutation = useMutation({
     mutationKey: "productRegisterMutation",
@@ -119,7 +109,7 @@ function ProductManagementPage({title}) {
   
   const registerInputs =  [
     [
-      <TopInput label={"ID"} name={"productId"} setState={setProductData} disabled={true} inputSize={5} value={productData.productCategoryId}/>,
+      <TopInput label={"ID"} name={"productId"} setState={setProductData} disabled={true} inputSize={5} value={productData.productId}/>,
       <TopSelect label={"상품구분"} name={"productCategoryId"} setState={setProductData} disabled={buttonState === 0 ? true : false} options={productCategoryOptions} value={productData.productCategoryId} buttonState={buttonState} />,
       <TopSelect label={"동물구분"} name={"productAnimalCategoryId"} setState={setProductData} disabled={buttonState === 0 ? true : false} options={productAnimalCategoryOptions} value={productData.productAnimalCategoryId} buttonState={buttonState} />,
     ],
@@ -134,9 +124,9 @@ function ProductManagementPage({title}) {
     ]
   ];
 
-
   return (
     <AdminPageLayout>
+      <AdminSales/>
       <div css={s.header}>
         <h1 css={s.title}>{title}</h1>
         <div>

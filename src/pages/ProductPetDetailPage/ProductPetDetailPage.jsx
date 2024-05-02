@@ -15,6 +15,7 @@ import {getProductReviewsCountRequest, getProductReviewsPageRequest } from "../.
 import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDetailPageNumbers/ProductPetPageDetailPageNumbers";
 import ProductPayment from "../../components/ProductPayment/ProductPayment"
 import ProductImage from "../../components/ProductImage/ProductImage";
+import ProductReviewRatingChart from "../../components/ProductReviewRatingChart/ProductReviewRatingChart";
 
 
 function ProductPetDetailPage() {
@@ -36,7 +37,13 @@ function ProductPetDetailPage() {
     const [ totalCount, setTotalCount ] = useState(0);
     const searchCount = 5;
     const totalRating  = reviews.reduce((sum, review) => sum + review.productCommentRatingValue, 0);
-    const averageRating = totalRating / reviews.length;
+    const averageRating = (totalRating / reviews.length).toFixed(1);
+    const positiveRatingPercentage = reviews.reduce((count, review) => {
+        if (review.productCommentRatingValue >= 4) {
+            return count + 1;
+        }
+        return count;
+    }, 0) / reviews.length * 100;
 
     const getProductFavoriteStatusQuery = useQuery(
         ["getProductFavoriteStatusQuery", userId, productId],
@@ -230,7 +237,6 @@ function ProductPetDetailPage() {
             <div css={s.sideImg}>
                 <div css={s.productImg}>  
                     <ProductImage src={user.productImageUrl} /> 
-                    {/* <img src={user.productImageUrl} alt="" /> */}
                 </div>
             </div>
             <div css={s.productBox}>
@@ -302,10 +308,14 @@ function ProductPetDetailPage() {
                     <div css={s.productFooter}>
                         <div css={s.reviewBox}>
                             <div> 리뷰 ({totalCount})</div>
-                            <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>리뷰 작성하기</button>
                         </div>
-                        <div>
-                        <FaStar css={s.activeStarButton} /> { isNaN(averageRating) ? 0 : averageRating }
+                        <div css={s.ratingBox}>
+                            <div  css={s.ratingBox1}>
+                                <div><FaStar css={s.activeStarButton2} /> { isNaN(averageRating) ? 0 : averageRating }</div>
+                                <div>{positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
+                                <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>상품 리뷰 작성하기</button>
+                            </div>
+                            <ProductReviewRatingChart reviews={reviews} />
                         </div>
                         {reviews.map(review => 
                             <div key={review.productCommentId} css={s.reviewBox1}>

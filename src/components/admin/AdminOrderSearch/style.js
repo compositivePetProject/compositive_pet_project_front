@@ -72,36 +72,41 @@ export const rowData = css`
 
     & > div:nth-of-type(1) {
         width: 5%;
+        text-align: right;
     }
     & > div:nth-of-type(2) {
         width: 15%;
+        justify-content: left;
+        overflow-x: auto;
     }
     & > div:nth-of-type(3) {
         width: 10%;
+        justify-content: left;
     }
     & > div:nth-of-type(4) {
         width: 10%;
+        justify-content: right;
     }
     & > div:nth-of-type(5) {
         width: 15%;
+        justify-content: left;
     }
     & > div:nth-of-type(6) {
         width: 20%;
+        justify-content: left;
     }
     & > div:nth-of-type(7) {
         width: 25%;
+        justify-content: left;
     }
 `;
 
 export const labelData = css`
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 40px;
     border: 1px solid #dbdbdb;
-    
-    padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: default;

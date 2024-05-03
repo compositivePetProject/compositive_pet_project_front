@@ -9,6 +9,8 @@ import AdoptCommunityAdmin from '../../pages/AdoptCommunityAdmin/AdoptCommunityA
 import AdoptCommunityAdminDetail from '../../pages/AdoptCommunityAdminDetail/AdoptCommunityDetail';
 import AdoptCommunityUpdate from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
 import AdoptCommunityEdit from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
+import AdoptCommunityBoardListPageEx from '../../pages/AdoptCommunityExample/AdoptCommunityBoardListPageEx/AdoptCommunityBoardListPageEx';
+import AdoptCommunityBoardDetailPage from '../../pages/AdoptCommunityExample/AdoptCommunityBoardDetailPage/AdoptCommunityBoardDetailPage';
 
 function AdoptRoute(props) {
 
@@ -23,6 +25,8 @@ function AdoptRoute(props) {
                 <Route path="/adoptCommunity/edit" element={ <AdoptCommunityEdit />} />
                 <Route path="/adoptCommunityDetail" element={<AdoptCommunityDetail />}/>
                 <Route path="/adoptCommunity/admin/:noticeId" element={ <AdoptCommunityAdminDetail />} /> 
+                <Route path="/ex/adoptcommunity" element={<AdoptCommunityBoardListPageEx/>} />
+                <Route path="/ex/adoptcommunity/detail" element={<AdoptCommunityBoardDetailPage/>} />
             </Routes>
         </>
     );

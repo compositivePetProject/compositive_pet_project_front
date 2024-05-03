@@ -18,7 +18,7 @@ function Quill({value, onChange, ref}) {
     }
     return (
         <ReactQuill 
-        modules={modules} 
+        modules={modules}
         onChange={onChange} 
         ref={ref} 
         style={{

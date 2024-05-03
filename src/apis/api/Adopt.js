@@ -1,7 +1,7 @@
 import instance from "../utils/instance"
 
-export const getAdoptAll = async () => {
-    const response = await instance.get("/adoptation/board");
+export const getAdoptAll = async (params) => {
+    const response = await instance.get("/adoptation/board", {params});
     return response.data;
 }
 

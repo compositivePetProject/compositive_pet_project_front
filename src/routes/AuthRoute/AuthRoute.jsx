@@ -46,7 +46,7 @@ function AuthRoute(props) {
                     <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
                     <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />
                     <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
-                    <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />                   
+                    <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />                  
                 </Routes>
         </>
     );

@@ -273,6 +273,20 @@ export const boardListItem = css`
 `;
 
 
+export const likeHeart = css`
+    width: 25px;
+    height: 25px;
+`
+
+export const status = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+`
+
+
 
 
 

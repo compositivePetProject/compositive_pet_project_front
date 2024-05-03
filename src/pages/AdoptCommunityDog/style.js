@@ -40,6 +40,14 @@ export const boardListHeader = css`
         font-weight: 700;
         cursor: default;
     }
+
+    & > div:nth-of-type(1) {
+        width: 80px;
+    }
+
+    & > div:nth-of-type(5) {
+        width: 20px;
+    }
    
 `;
 
@@ -66,6 +74,14 @@ export const boardListItem = css`
             flex-grow: 1;
             height: 40px;
             width: 25%;
+        }
+
+        & > div:nth-of-type(1) {
+        width: 80px;
+        }
+
+        & > div:nth-of-type(5) {
+        width: 20px;
         }
         
     }
@@ -107,6 +123,19 @@ export const writeButton = css`
     }
 `;
 
+
+export const likeHeart = css`
+    width: 25px;
+    height: 25px;
+`
+
+export const status = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+`
 
 
 

@@ -43,7 +43,11 @@ export const boardListHeader = css`
     }
 
     & > div:nth-of-type(1) {
-        width: 70px;
+        width: 80px;
+    }
+
+    & > div:nth-of-type(5) {
+            width: 20px;
     }
    
 `;
@@ -74,8 +78,15 @@ export const boardListItem = css`
         }
         
         & > div:nth-of-type(1) {
-            width: 70px;
+            width: 80px;
         }
+
+        & > div:nth-of-type(5) {
+            width: 20px;
+        }
+
+
+        
 
     
         

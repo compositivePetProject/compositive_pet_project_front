@@ -122,7 +122,9 @@ function RootHeader() {
                     {currentMenu === "adoptCommunity" && (
                         <div>
                             <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체 분양 게시글</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이</Link> </div>
                         </div>
                     )}
                     {currentMenu === "shop" && (

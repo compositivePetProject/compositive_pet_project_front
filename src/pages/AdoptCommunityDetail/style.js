@@ -242,7 +242,6 @@ export const commentBox = css`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 60%;
     height: 30%;
@@ -284,15 +283,14 @@ export const commentInput = css`
 export const commentHeader = css`
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: 1px solid #dbdbdb;
-    width: 100%;
-    height: 20%;
+    width: 60%;
+    height: 30px;
     & > div {
+        
         box-sizing: border-box;
-        border-right: 1px solid #dbdbdb;
+        border: 1px solid #dbdbdb;
         display: flex;
         justify-content: center;
         align-items: center;

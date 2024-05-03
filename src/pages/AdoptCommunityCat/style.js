@@ -20,7 +20,6 @@ export const boardListLayout = css`
     border: 1px solid #dbdbdb;
     width: 900px;
     height: 400px;
-    overflow: scroll;
 `;
 
 export const boardListHeader = css`
@@ -107,6 +106,21 @@ export const writeButton = css`
         background-color: #eee;
     }
 `;
+
+
+export const likeHeart = css`
+    width: 25px;
+    height: 25px;
+`
+
+export const status = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+`
+
 
 
 

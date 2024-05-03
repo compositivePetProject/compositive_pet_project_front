@@ -179,6 +179,10 @@ function AdoptCommunity() {
         }
     };
 
+    const handleinputChange = (event) => {
+        
+    }
+
 
     const handleLikeSubmit = (boardId) => {
         try {
@@ -205,16 +209,6 @@ function AdoptCommunity() {
             <div css={s.layout}>
                 <div>
                     <h1 css={s.headerTitle}>분양 게시글</h1>
-                    <div>
-                        <select 
-                            value={animalCategoryId}
-                            onChange={handleAnimalChange}>
-                            <option value={0}>애완동물의 종류를 선택하세요</option>
-                            <option value={1}>개</option>
-                            <option value={2}>고양이</option>
-                        </select>
-                        <button onClick={()=> {handleSearchClick}}>검색</button>
-                    </div>
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
@@ -242,10 +236,6 @@ function AdoptCommunity() {
                                             )}
                                        </div>
                                         <div>{data.totalCount}</div>
-                                        <div>
-                                            <MdOutlineRemoveRedEye css={s.likeHeart}/>
-                                        </div>
-                                        <div>{data.viewCount}</div>
                                     </div>
                                 </div>
                             ))}

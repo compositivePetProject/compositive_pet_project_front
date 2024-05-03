@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
-
+export const layout = css`
+    width: 100%;
+`;
 
 export const buttonBox = css`
     display: flex;

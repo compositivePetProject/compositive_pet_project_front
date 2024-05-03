@@ -17,7 +17,7 @@ export const boardHeader = css`
 export const boardContent = css`
     border: 1px solid #dbdbdb;
     width: 100%;
-    height: 400px;
+    height: 80%;
 `;
 
 export const title = css`

@@ -151,7 +151,7 @@ function AdoptCommunityBoardDetailPage() {
   }, [boardDetail])
 
   return (
-    <div>
+    <div css={s.layout}>
       { principalQueryState.data?.data.username === boardDetail.username
         ? <div css={s.buttonBox}>
             { buttonState === 1

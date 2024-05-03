@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { FaRegHeart } from "react-icons/fa6";
-import { BiError } from 'react-icons/bi';
-import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
+import React, { useEffect, useState } from 'react';
+import { BiError } from 'react-icons/bi';
+import PageContainer from '../../components/PageContainer/PageContainer';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { deleteAdoptLike, getAdoptAll, getAdoptCount, getAdoptLike, getAdoptLikeCount, postAdoptLike, postAdoptView } from '../../apis/api/Adopt';
-import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import { count } from 'firebase/firestore';
-import AdoptationPageNumbers from '../../components/AdoptationPageNumbers/AdoptationPageNumbers';
-import { AiOutlineLike } from "react-icons/ai";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
+import { deleteAdoptLike, getAdoptAll, getAdoptCat, getAdoptCatCount, getAdoptDog, postAdoptLike, postAdoptView } from '../../apis/api/Adopt';
+import Pagination from 'react-js-pagination';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/AdoptationPageNumbers";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
-function AdoptCommunity() {
+function AdoptCommunityCat() {
     const [viewedPosts,setViewedPost ]= useState(new Set());
     const [likeStatus, setLikeStatus] = useState({});
     const [likeCounts, setLikeCounts] = useState({});
@@ -23,142 +20,13 @@ function AdoptCommunity() {
     const userId = principalQueryState.data?.data.userId;
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 7;
-    const [maxPageNumber, setMaxPageNumber] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
+    const [maxPageNumberCat, setMaxPageNumberCat] = useState(0);
+    const [totalCountCat, setTotalCountCat] = useState(0);
     const boardId = parseInt(searchParams.get("boardId"))
     const page = parseInt(searchParams.get("page")) || 1;
     const lastPage = page * searchCount;
     const firstPage = lastPage - searchCount;
 
-    
-
-    const formatDate = (date) => {
-        const newDate = new Date(date);
-        const year = newDate.getFullYear();
-        const month = String(newDate.getMonth() + 1).padStart(2, '0');
-        const day = String(newDate.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-    const date = (date) => {
-        return formatDate(date);
-    }
-    
-
-    
-    const handleAnimalChange = (event) => {
-        console.log(animalCategoryId)
-        setAnimalCategoryId(event.target.value)
-    }
-
-    const postAdoptLikeMutation = useMutation({
-        mutationKey: "postAdoptLikeMutation",
-        mutationFn: postAdoptLike,
-        onSuccess: (response) => {
-          
-        },
-        onError: (error) => {
-            
-        }
-    })
-
-    const PostAdoptViewMutation = useMutation({
-        mutationKey: "PostAdoptViewMutation",
-        mutationFn: postAdoptView,
-        onSuccess: (response) => {
-            console.log("조회 완료입니다")
-        },
-        onError: (error) => {
-            console.log(`에러:${error}`)
-        }
-    })
-
-
-    const DeleteAdoptLikeMutation = useMutation({
-        mutationKey: "DeleteAdoptLikeMutation",
-        mutationFn: deleteAdoptLike,
-        onSuccess: (response) => {
-            console.log("좋아요 성공")
-            
-        },
-        onError: (error) => {
-            
-        }
-    })
-
-
-    
-
-  
-
-    const getAdoptCountQuery = useQuery(
-        ["getAdoptCountQuery"],
-        async () => getAdoptCount({
-            page,
-            count : searchCount
-        }),
-        {
-            refetchOnWindowFocus: false,
-            onSuccess: (response) => {
-                setMaxPageNumber(response.data.maxPageNumber);
-                setTotalCount(response.data.totalCount);
-            },
-            onError: (error) => {
-                console.log(error);
-            }
-        }
-    )
-
-
-
-  
-
-
-
-   
-
-    const navigate = useNavigate();
-    const [adoptList, setAdoptList] = useState([]); 
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getAdoptAll();
-                const index = response.slice(firstPage, lastPage)
-                setAdoptList(index);
-                console.log(index)
-                const savedLikeStatus = localStorage.getItem('likeStatus');
-                if (savedLikeStatus) {
-                    setLikeStatus(JSON.parse(savedLikeStatus));
-                }
-            
-            } catch (error) {
-                setError(error);
-                console.log(error);
-            }
-        };
-
-        fetchData();
-
-    },[page])
-
-
-
-      
-  
- 
-
-  
-
-    const handleWriteClick = () => {
-        navigate("/adoptCommunity/register")
-    }
-
-
-    const handlePageChange = (pageNumber) => {
-        setSearchParams({ page: pageNumber });
-    };
 
     const handleClick = async (boardId) => {
         try {
@@ -179,9 +47,101 @@ function AdoptCommunity() {
         }
     };
 
-    const handleinputChange = (event) => {
-        
+
+    const PostAdoptViewMutation = useMutation({
+        mutationKey: "PostAdoptViewMutation",
+        mutationFn: postAdoptView,
+        onSuccess: (response) => {
+            console.log("조회 완료입니다")
+        },
+        onError: (error) => {
+            console.log(`에러:${error}`)
+        }
+    })
+
+
+    const postAdoptLikeMutation = useMutation({
+        mutationKey: "postAdoptLikeMutation",
+        mutationFn: postAdoptLike,
+        onSuccess: (response) => {
+          
+        },
+        onError: (error) => {
+            
+        }
+    })
+
+    
+    const DeleteAdoptLikeMutation = useMutation({
+        mutationKey: "DeleteAdoptLikeMutation",
+        mutationFn: deleteAdoptLike,
+        onSuccess: (response) => {
+            console.log("좋아요 성공")
+            
+        },
+        onError: (error) => {
+            
+        }
+    })
+
+
+    const getAdoptCatCountQuery = useQuery(
+        ["getAdoptCatCountQuery"],
+        async () => getAdoptCatCount({
+            page,
+            count : searchCount
+        }),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                setMaxPageNumberCat(response.data.maxPageNumberCat);
+                setTotalCountCat(response.data.totalCountCat);
+                console.log(response.data)
+              
+                
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+
+    const navigate = useNavigate();
+    const [adoptList, setAdoptList] = useState([]); 
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdoptCat();
+                const index = response.slice(firstPage, lastPage)
+                setAdoptList(index);
+                console.log(index)
+                const savedLikeStatus = localStorage.getItem('likeStatusCat');
+                if (savedLikeStatus) {
+                    setLikeStatus(JSON.parse(savedLikeStatus));
+                }
+            
+            } catch (error) {
+                setError(error);
+                console.log(error);
+            }
+        };
+
+        fetchData();
+
+    },[page])
+
+
+    const handleWriteClick = () => {
+        navigate("/adoptCommunity/register")
     }
+
+
+    
+    const handlePageChange = (pageNumber) => {
+        setSearchParams({ page: pageNumber });
+    };
 
 
     const handleLikeSubmit = (boardId) => {
@@ -192,41 +152,44 @@ function AdoptCommunity() {
                     userId: userId
                 });
                 setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
-                localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: true })); 
+                localStorage.setItem('likeStatusCat', JSON.stringify({ ...likeStatus, [boardId]: true })); 
             } else {
                 DeleteAdoptLikeMutation.mutate({
                     adoptationBoardId: boardId,
                     userId: userId
                 });
                 setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
-                localStorage.setItem('likeStatus', JSON.stringify({ ...likeStatus, [boardId]: false })); // 이 부분 수정
+                localStorage.setItem('likeStatusCat', JSON.stringify({ ...likeStatus, [boardId]: false })); // 이 부분 수정
             }
         } catch (error) {
             console.error("좋아요 처리 중 오류 발생:", error);
         }
     }
+   
+
     return (
+       
             <div css={s.layout}>
                 <div>
-                    <h1 css={s.headerTitle}>분양 게시글</h1>
+                    <h1 css={s.headerTitle}>고양이 분양 게시글</h1>
                     <div css={s.boardListLayout}>
                         <div css={s.boardListHeader}>
                             <div css={s.boardListHeader}>
                                 <div>닉네임</div>
                                 <div>제목</div>
                                 <div>카테고리</div>
-                                <div>작성일</div>
+                                <div>등록일</div>
                                 <div></div>
                             </div>
                         </div>
                         <div css={s.boardListItem}>
                             {adoptList.map((data) => (
-                                <div key={data.adoptationBoardId} >
+                                <div 
+                                key={data.adoptationBoardId} >
                                     <div>{data.username}</div>
-                                    <div onClick={() => handleClick(data.adoptationBoardId)} 
-                                  >{data.adoptationBoardTitle}</div>
+                                    <div onClick={() => handleClick(data.adoptationBoardId)}>{data.adoptationBoardTitle}</div>
                                     <div>{data.boardAnimalCategoryNameKor}</div>
-                                    <div>{date(data.createDate)}</div>
+                                    <div>{data.createDate}</div>
                                     <div css={s.status}>
                                         <div onClick={()=>{handleLikeSubmit(data.adoptationBoardId)}}>
                                             {!likeStatus[data.adoptationBoardId] ? (
@@ -243,9 +206,12 @@ function AdoptCommunity() {
                     </div>
                 </div>
                 
-                <button css={s.writeButton} onClick={handleWriteClick}>글쓰기</button>
-                <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/>
-                </div>)
-                };
+                <button css={s.writeButton}v onClick={handleWriteClick}>글쓰기</button>
+                <AdoptationPageNumbers maxPageNumber={maxPageNumberCat} totalCount={totalCountCat} onChange={handlePageChange}/>
+                </div>
 
-export default AdoptCommunity;
+        
+    );
+}
+
+export default AdoptCommunityCat;

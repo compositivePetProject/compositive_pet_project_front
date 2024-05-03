@@ -19,7 +19,7 @@ export const boardListLayout = css`
     box-sizing: border-box;
     border: 1px solid #dbdbdb;
     width: 900px;
-    height: 50%;
+    height: 400px;
 `;
 
 export const boardListHeader = css`
@@ -39,14 +39,6 @@ export const boardListHeader = css`
         width: 25%;
         font-weight: 700;
         cursor: default;
-    }
-
-    & > div:nth-of-type(1) {
-        width: 80px;
-    }
-
-    & > div:nth-of-type(5) {
-        width: 20px;
     }
    
 `;
@@ -74,14 +66,6 @@ export const boardListItem = css`
             flex-grow: 1;
             height: 40px;
             width: 25%;
-        }
-
-        & > div:nth-of-type(1) {
-        width: 80px;
-        }
-
-        & > div:nth-of-type(5) {
-        width: 20px;
         }
         
     }
@@ -136,6 +120,8 @@ export const status = css`
     align-items: center;
    
 `
+
+
 
 
 

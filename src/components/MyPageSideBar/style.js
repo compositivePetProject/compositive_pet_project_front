@@ -31,6 +31,11 @@ export const infoBox = css`
         font-size: 14px;
         font-weight: 800;
     }
+    & > h3:nth-of-type(3) {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 800;
+    }
 `;
 
 export const buttons = css`

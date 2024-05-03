@@ -11,6 +11,7 @@ import { QUILL_MODULES } from "../../constants/quillModules";
 import { useQuillInput } from "../../hooks/useQuillInput";
 import { postProductCommentRequest } from "../../apis/api/productComment";
 import { ratingTextMap } from "../../constants/prductRatingText";
+import MyPageSideBar from "../../components/MyPageSideBar/MyPageSideBar";
 
 function MyReviewWritePage() {
     const navigate = useNavigate();
@@ -65,16 +66,7 @@ function MyReviewWritePage() {
 
     return (
         <div css={s.layout}>
-            <div css={s.userInfoBox}>
-                <div css={s.infoBox}>
-                    <h3>내 정보 관리</h3>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
-                    <h3>내 쇼핑 관리</h3>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
-                </div>  
-            </div>
-
+            <MyPageSideBar />
             <div css={s.userDetails}>
                 <div css={s.title}>리뷰 작성하기</div>
                 <div css={s.container}>

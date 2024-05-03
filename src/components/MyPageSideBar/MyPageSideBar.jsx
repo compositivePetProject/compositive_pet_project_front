@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Link } from "react-router-dom";
 import * as s from "./style";
-import {profileMenus, shoppingMenus } from "../../constants/myPageMenus";
+import {commnuityMenus, profileMenus, shoppingMenus } from "../../constants/myPageMenus";
 
 function MyPageSideBar() {
     
@@ -24,7 +24,14 @@ function MyPageSideBar() {
                             </div>
                         </Link>
                     })}
-                {/* 게시글 관리 예정 */}
+                <h3>내 게시글 관리</h3>
+                {commnuityMenus.map(menu => {
+                    return <Link key={menu.id} to={menu.path} >
+                        <div css={s.buttons} >
+                            <span>{menu.name}</span>
+                        </div>
+                    </Link>
+                })}
             </div>  
         </div>
     );

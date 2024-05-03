@@ -12,6 +12,7 @@ import { useMutation } from "react-query";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { authNicknameCheckRequest } from "../../apis/api/authSignup";
 import { nicknameAndProfileImageUrlEditRequest, passwordEditRequest } from "../../apis/api/acoountPrincipal";
+import MyPageSideBar from "../../components/MyPageSideBar/MyPageSideBar";
 
 
 function MyProfilePage() {
@@ -169,17 +170,7 @@ function MyProfilePage() {
     
     return (
         <div css={s.layout}>
-            <div css={s.userInfoBox}>
-                <div css={s.infoBox}>
-                    <h3>내 정보 관리</h3>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
-                    <h3>내 쇼핑 관리</h3>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>분양 게시글 관리</div>
-                    <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
-                </div>
-            </div>
-
+            <MyPageSideBar />
             <div css={s.userDetails}>
                 <div css={s.title}>계정 관리</div>
                 <div>기본 정보</div>

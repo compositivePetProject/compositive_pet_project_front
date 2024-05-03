@@ -1,140 +1,116 @@
 /** @jsxImportSource @emotion/react */
-
-import { useNavigate, useSearchParams} from "react-router-dom";
-import { deleteCommunityBoardLiketRequest, getCommunityBoardListRequest, getCommunityBoardPageCountRequest, postCommunityBoardLikeRequest } from "../../apis/api/communityBoard";
 import * as s from "./style";
-import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams} from "react-router-dom";
+import { getCommunityBoardListRequest, getCommunityBoardPageCountRequest, getCommunityBoardPageRequest } from "../../apis/api/communityBoard";
+import { useEffect, useRef, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/CommunityBoardPageCount";
 import { page } from "../../components/CommunityBoardPageCount/style";
+import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
+import { FaSearch } from "react-icons/fa";
 
-
-
- function CommunityBoardPage() {
-    
+function CommunityBoardPage() {
     const navigate = useNavigate();
     const [searchParams , setSearchParams] = useSearchParams();
     const [communityBoardList, setCommunityBoardList] = useState([]);
-    const [error, setError] = useState(null);
-    const [maxPageNumber, setMaxPageNumber] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
-    const page = parseInt(searchParams.get("page")) || 1;
-    const pageSearchCount = 10;
-    const firstPage = (page - 1) * pageSearchCount + 1;
-    const lastPage = page * pageSearchCount;
-     
+    const pageSearchCount = 6;
+    const inputRef = useRef();
 
-    console.log(firstPage)
-    console.log(lastPage)
-
-  
-
-
-    const getBoardPageQuery = useQuery (
-        ["getBoardPageQuery"],
-        async () => await getCommunityBoardPageCountRequest({
-            page,
-            count : pageSearchCount
+    
+    const getBoardsPageQuery = useQuery (
+            ["getBoardsPageQuery", searchParams.get("page")],
+            async () => await getCommunityBoardPageRequest({
+            page: searchParams.get("page"),
+            count : pageSearchCount,
+            searchText: searchText.value,
         }),
 
-    {
-        
+        { 
         refetchOnWindowFocus : false,
         onSuccess : response => {
             console.log(response) 
-            setMaxPageNumber(response.data.maxPageNumber)
-            setTotalCount(response.data.totalCount)
+            setCommunityBoardList(response.data)
         },
 
         onError : (error) => {
             console.log(error);
+                }   
             }
-            
+        )
+
+        const getBoardsSearchCountRequestQuery = useQuery(
+            ["getBoardsSearchCountRequestQuery", getBoardsPageQuery.data],
+            async () => await getCommunityBoardPageCountRequest({
+                count : pageSearchCount,
+                searchText: searchText.value
+            }),
+            {   
+                refetchOnWindowFocus: false,
+                onSuccess: response => {
+                    console.log(response.data)
+                }
+            }
+        );
+    
+        const searchSubmit = () => {
+            setSearchParams({
+                page: 1
+            })
+            getBoardsPageQuery.refetch();
         }
 
-    )
-
-    useEffect (() => {
-        const fetchData = async () => {
-            try  { 
-                const response = await getCommunityBoardListRequest()
-                const index = response.slice(firstPage,lastPage)
-                setCommunityBoardList(index)
-                console.log(index)
-            }catch(error) {
-                setError(error)
-                console.log(error)
-            }
-        }
-            
-
-            fetchData();
-
-        }, [page])
-       
-
- 
-   
-
-
-    useEffect(() => {
-        const fetchData = async() => { 
-            try{
-                const response = await getCommunityBoardListRequest();
-                setCommunityBoardList(response);///
-                console.log(response);
-            }catch(error){
-                setError(error);
-                console.log(error);
-            }
-        }
-
-    fetchData();
- }, []);
-
- const handleOnClickToWritePage = () => {
-    navigate("/community/board/write")
- }
-
- const handleOnPageChange = (pageNumber) => {
-    setSearchParams ({page: pageNumber})
- }
- 
-  return (
-        <div css={s.layout}>
-            <div>
-            <h1 css={s.headerTitle}>커뮤니티 갤러리 게시판</h1>
-                <div css={s.boardListLayout}>
-                    <div css={s.boardListHeader}>
-                        <div css={s.boardListHeader}>
-                            <div>제목</div>
-                            <div>내용</div>
-                            <div>카테고리</div>
-                            <div>닉네임</div>
-                            <div>등록일</div>
+        const searchText = useProductOnKeyUpInput(searchSubmit);
+    
+        return (
+                <div css={s.layout}>
+                    <div>
+                    <h1 css={s.headerTitle}>커뮤니티 갤러리 게시판</h1>
+                        <div css={s.searchBar}>
+                            <div css={s.searchLabel}>게시판 검색</div>
+                            <input css={s.searchBarInput} type="text" 
+                                ref={inputRef} 
+                                value={searchText.value} 
+                                onChange={searchText.handleOnChange} 
+                                onKeyUp={searchText.handleOnKeyUp}
+                                placeholder="제목 + 내용 검색"
+                            />
+                            <button css={s.searchBarButton} >
+                                <FaSearch onClick={() => searchSubmit()}/>
+                            </button>
+                        </div>
+                        <div css={s.boardListLayout}>
+                            <div css={s.boardListHeader}>
+                                <div css={s.boardListHeader}>
+                                    <div>제목</div>
+                                    <div>카테고리</div>
+                                    <div>닉네임</div>
+                                    <div>등록일</div>
+                                </div>
+                            </div>
+                        <div css={s.CommunityboardListItem}>
+                            {communityBoardList.map(board => (
+                                <div key={board.communityBoardId}
+                                onClick={() => navigate(`/community/board/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`)}>
+                                <div>{board.communityBoardTitle}</div>
+                                <div>{board.communityBoardAnimalCategoryNameKor}</div>
+                                <div>{board.userName}</div>
+                                <div>{board.createDate}</div>
+                            </div>
+                            
+                            ))} 
+                        </div>
                         </div>
                     </div>
-                <div css={s.CommunityboardListItem}>
-        
-                    {communityBoardList.map((data) => (
-                        <div key={data.communityBoardId}
-                        onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
-                        <div>{data.communityBoardTitle}</div>
-                        <div dangerouslySetInnerHTML={{__html:data.communityBoardContent}}></div>
-                        <div>{data.communityBoardAnimalCategoryNameKor}</div>
-                        <div>{data.userName}</div>
-                        <div>{data.createDate}</div>
-                       </div>
-                       
-                    ))}
-                   </div>
+                
+                <FaPencil css={s.writeButton} onClick={() => navigate("/community/board/write")}></FaPencil>
+                {
+                    !getBoardsSearchCountRequestQuery.isLoading &&
+                    <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
+                }
                 </div>
-            </div>
-        
-        <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
-       <CommunityBoardPageCount maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handleOnPageChange}/>
-        </div>
-        ) 
+            ) 
     }
+
+    
 export default CommunityBoardPage;

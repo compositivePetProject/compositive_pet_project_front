@@ -13,6 +13,9 @@ import CommunityBoardAdminDetailPage from '../../pages/CommunityBoardAdminDetail
 import CommunityBoardAdminRegisterPage from '../../pages/CommunityBoardAdminRegisterPage/CommunityBoardAdminRegisterPage';
 import CommunityBoardEditPage from '../../pages/CommunityBoardEditPage/CommunityBoardEditPage';
 import CommunityBoardAdminEditPage from '../../pages/CommunityBoardAdminEditPage/CommunityBoardAdminEditPage';
+import RootHeader from '../../components/RootHeader/RootHeader';
+import PageContainer from '../../components/PageContainer/PageContainer';
+import RootFooter from '../../components/RootFooter/RootFooter';
 
 
 
@@ -31,8 +34,7 @@ function AuthRoute(props) {
 
     return (
         <>
-            <RootHeader />
-            <PageContainer>
+
                 <Routes>
                     <Route path="/auth/*" element={ <AuthPage /> } />
                     <Route path="/community/getboards" element={<CommunityBoardPage />} />
@@ -46,8 +48,6 @@ function AuthRoute(props) {
                     <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
                     <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />                   
                 </Routes>
-            </PageContainer>
-            <RootFooter />
         </>
     );
 }

@@ -200,7 +200,7 @@ function AdoptCommunityBoardDetailPage() {
           boardComment.map(comment => 
             <BoardCommentBox
               key={comment.adoptationBoardCommentId}
-              userNickname={comment.userNickName}
+              userNickname={comment.userNickname}
               updateDate={comment.updateDate}
               commentContent={comment.adoptationBoardCommentContent}/>
             )

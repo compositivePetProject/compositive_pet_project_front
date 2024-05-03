@@ -4,7 +4,7 @@ import { HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 
-function BoardCommentBox({updateDate, userNickname, onClick, commentContent }) {
+function BoardCommentBox({updateDate, userNickname, commentContent }) {
   return (
     <div css={s.commentCard}>
         <div css={s.commentHeader}>

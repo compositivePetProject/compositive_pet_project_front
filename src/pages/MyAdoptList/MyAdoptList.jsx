@@ -7,6 +7,7 @@ import { DeleteAdoptBoardByID, deleteAdoptBoardByID, deleteAdoptBoardById, getAd
 import { AiOutlineLike } from "react-icons/ai";
 import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/AdoptationPageNumbers";
 import AdoptationPageNumbersUser from "../../components/AdoptationPageNumbersUser/AdoptationPageNumbersUser";
+import MyPageSideBar from "../../components/MyPageSideBar/MyPageSideBar";
 
 
 function MyAdoptList(props) {
@@ -128,17 +129,7 @@ const handleDeleteSelected = () => {
     
     return (
         <div css={s.layout}>
-            <div css={s.userInfoBox}>
-                <div css={s.infoBox}>
-                <h3>내 정보 관리</h3>
-                <div css={s.buttons} onClick={() => navigate("/account/mypage/profile")}>계정 관리</div>
-                <h3>내 쇼핑 관리</h3>
-                <div css={s.buttons} onClick={() => navigate("/account/mypage/orders")}>주문 내역</div>
-                <div css={s.buttons} onClick={() => navigate("/account/mypage/Adopt?page=1")}>분양 게시글 관리</div>
-                <div css={s.buttons} onClick={() => navigate("/account/mypage/reviews")}>리뷰 관리</div>
-                </div>
-            </div>
-
+            <MyPageSideBar />
             <div css={s.userDetails}>
                <h2>분양 게시글 관리</h2>
                 <div css={s.boardListHeader}>

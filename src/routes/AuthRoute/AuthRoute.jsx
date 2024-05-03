@@ -42,6 +42,7 @@ function AuthRoute(props) {
                     <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
                     <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
                     <Route path="/community/board/:boardId" element={<CommunityBoardDetailPage />} />
+                    {/* 수정예정 */}
                     <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
                     <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
                     <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />

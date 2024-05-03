@@ -49,7 +49,7 @@ function RootHeader() {
                     <button
                         css={s.buttons}
                         onMouseEnter={() => handleHover("community")}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/community/getboards?page=1")}
                     >
                         커뮤니티 게시판
                     </button>

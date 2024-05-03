@@ -108,6 +108,7 @@ function AdoptCommunityBoardListPageEx() {
                             boardTitle={board.adoptationBoardTitle} 
                             userNickname={board.userNickname} 
                             updateDate={board.updateDate}
+                            heartCount={board.totalCount}
                             onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)}
                         />
                     )

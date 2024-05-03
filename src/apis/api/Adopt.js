@@ -20,6 +20,11 @@ export const getAdoptById = async (boardId) => {
     return response.data;
 }
 
+export const getFindLikedUser = async (boardId) => {
+    const response = await instance.get(`/adoptation/favorite/${boardId}`)
+    return response.data;
+}
+
 export const postAdoptRequest = async (data) => {
     return await instance.post("/adoptation/board",data)
 }

@@ -2,7 +2,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { deleteAdoptBoardById, getAdoptById, getAdoptCommentRequest, postAdoptCommentRequest, putAdoptRequest } from "../../../apis/api/Adopt";
+import { deleteAdoptBoardById, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest } from "../../../apis/api/Adopt";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
@@ -12,6 +12,7 @@ import { SlSpeech } from "react-icons/sl";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 
 function AdoptCommunityBoardDetailPage() {
+  const [ likedUsers, setLikedUsers] = useState([]);
   const [ searchParams, setSearchParams ] = useSearchParams();
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery");
@@ -29,9 +30,30 @@ function AdoptCommunityBoardDetailPage() {
     console.log(principalQueryState);
     console.log(boardDetail);
     console.log(boardComment);
-    console.log(inputComment)
+    console.log(inputComment);
+    console.log(likedUsers);
 
-  }, [principalQueryState, boardDetail, boardComment, inputComment])
+  }, [principalQueryState, boardDetail, boardComment, inputComment, likedUsers])
+
+  const getFindUserByBoard = useQuery(
+    ["getFindUserByBoard",likedUsers],
+    async () => await getFindLikedUser (
+      parseInt(searchParams.get("boardid"))
+    ),
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+          response.map(user => {
+            setLikedUsers(user)
+          })
+          
+      },
+      onError: (error) => {
+          console.log(error);
+      }
+  }
+  )
 
   const getAdoptCommunityBoardComment = useQuery(
     ["getAdoptCommunityBoardComment"],
@@ -51,21 +73,20 @@ function AdoptCommunityBoardDetailPage() {
   }
   )
 
-  const getAdoptCommunityBoardDetail= useQuery(
+  const getAdoptCommunityBoardDetail = useQuery(
     ["getAdoptCommunityBoardDetail"],
-    async () => await getAdoptById(
-      parseInt(searchParams.get("boardid"))
-    ),
+    async () => await getAdoptById(parseInt(searchParams.get("boardid"))),
     {
-        retry: 0,
-        refetchOnWindowFocus: false,
-        onSuccess: (response) => {
-            console.log(response)
-            setBoardDetail(response);
-        },
-        onError: (error) => {
-            console.log(error);
-        }
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+        setBoardDetail(response);
+        // 좋아요 상태 확인
+        response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
   );
 
@@ -79,6 +100,7 @@ function AdoptCommunityBoardDetailPage() {
     onError: (error) => {
     }
   })
+
 
   const updateAdoptCommunityBoardDetail = useMutation({
     mutationKey: "updateAdoptCommunityBoardDetail",
@@ -134,6 +156,46 @@ function AdoptCommunityBoardDetailPage() {
       adoptationBoardCommentContent: inputComment
     })
   }
+
+  const deleteAdoptCommunityBoardFavorite = useMutation({
+    mutationKey: "deleteAdoptCommunityBoardFavorite",
+    mutationFn: deleteAdoptLike,
+    onSuccess: (response) => {
+    },
+    onError: (error) => {
+        
+    }
+})
+
+  const postAdoptCommunityBoardFavorite = useMutation({
+    mutationKey: "postAdoptCommunityBoardFavorite",
+    mutationFn: postAdoptLike,
+    onSuccess: (response) => {
+      getAdoptCommunityBoardDetail.refetch();
+    },
+    onError: (error) => {
+    }
+  })
+
+
+  const favoriteBoard = async () => {
+    if (likedUsers.userId !== principalQueryState.data?.data.userId) {
+      await postAdoptCommunityBoardFavorite.mutateAsync({
+        adoptationBoardId: parseInt(searchParams.get("boardid")),
+        userId: principalQueryState.data?.data.userId
+      });
+    } else {
+      await deleteAdoptCommunityBoardFavorite.mutateAsync({
+        adoptationBoardId: parseInt(searchParams.get("boardid")),
+        userId: principalQueryState.data?.data.userId
+      });
+    }
+    // 좋아요 상태 갱신 후 다시 렌더링
+    getAdoptCommunityBoardDetail.refetch();
+    getFindUserByBoard.refetch();
+  }
+
+  
   const updateSubmit = () => {
     if(window.confirm("해당 게시물을 수정하시겠습니까?")) {
       updateAdoptCommunityBoardDetail.mutate({
@@ -188,7 +250,7 @@ function AdoptCommunityBoardDetailPage() {
         <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div><AiOutlineHeart/>{boardDetail.totalCount}</div>
+            <div onClick={favoriteBoard}><AiOutlineHeart/>{boardDetail.totalCount}</div>
           }
           {
             !getAdoptCommunityBoardDetail.isLoading && 

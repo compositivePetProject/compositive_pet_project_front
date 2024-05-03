@@ -40,3 +40,14 @@ export const commentContent = css`
     display: flex;
     
 `;
+
+export const iconBox = css`
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+
+    & > div > * {
+        font-size: 24px;
+        margin: 5px 0px;
+    }
+`

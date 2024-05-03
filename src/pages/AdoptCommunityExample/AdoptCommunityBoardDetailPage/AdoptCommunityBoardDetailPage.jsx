@@ -8,6 +8,7 @@ import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox
 import Quill from "../../../components/Quill/Quill";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
+import { SlSpeech } from "react-icons/sl";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 
 function AdoptCommunityBoardDetailPage() {
@@ -20,6 +21,7 @@ function AdoptCommunityBoardDetailPage() {
 
   const navigate = useNavigate();
   const [ buttonState, setButtonState ] = useState(0); // 1 수정 2 삭제
+  const [ inputButtonState, setInputButtonState ] = useState(0); // 1 댓글 입력창 활성화
   const [ titleValue, setTitleValue ] = useState("");
   const [ contentValue, setContentValue ] = useState("");
 
@@ -71,6 +73,7 @@ function AdoptCommunityBoardDetailPage() {
     mutationKey: "postAdoptCommunityBoardComment",
     mutationFn: postAdoptCommentRequest,
     onSuccess: (response) => {
+      setInputButtonState(0)
       window.location.reload();
     },
     onError: (error) => {
@@ -182,7 +185,7 @@ function AdoptCommunityBoardDetailPage() {
 
       <div>
         {/* 좋아요, 댓글, 조회수 관련 코드 작성해주세요. */}
-        <div css={s.statusBox}>
+        <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 
             <div><AiOutlineHeart/>{boardDetail.totalCount}</div>
@@ -191,7 +194,7 @@ function AdoptCommunityBoardDetailPage() {
             !getAdoptCommunityBoardDetail.isLoading && 
             <div><GrView/>{boardDetail.viewCount}</div>
           }
-         
+          <div onClick={()=>setInputButtonState(1)}><SlSpeech /></div>
         </div>
         {
           boardComment.map(comment => 
@@ -203,8 +206,26 @@ function AdoptCommunityBoardDetailPage() {
             )
         }
         <div>
-          <input type="text" onChange={(event) => {setInputComment(event.target.value)}}/>
-          <button css={s.button} onClick={submitInputComment}>댓글 작성</button>
+        { inputButtonState === 1 
+          ?<>
+            <input type="text" onChange={(event) => {setInputComment(event.target.value)}}/>
+            {
+              // 댓글 입력창에 입력 되지 않으면 댓글 작성 버튼 비활성화
+              inputComment === ""
+              ?
+              <>
+              </>
+              :
+              <>
+                <button css={s.button} onClick={submitInputComment}>댓글 작성</button>
+              </>
+              
+            }
+          </>
+          :
+          <>
+          </>
+        }
         </div>
       </div>
 

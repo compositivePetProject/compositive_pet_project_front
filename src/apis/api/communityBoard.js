@@ -56,10 +56,10 @@ export const getCommunityBoardCatRequest = async (data) => {
 }
 
 export const getCommunityBoardLikeStatusRequest = async (params) => {
-    return await instance.get("/community/board/like",{params})
+    return await instance.get("/community/favorite",{params})
 }
 
-export const getCommunityBoardLikeRequest = async (params) => {
+export const getCommunityBoardLikeCountRequest = async (params) => {
     return await instance.get("/community/favorite/count" , {params})
 }
 
@@ -76,7 +76,7 @@ export const deleteCommunityBoardRequestById = async (params) => {
     return await instance.delete(`/community/delete/board/${params}`);
 }
 
-export const deleteCommunityBoardLiketRequest = async (data) => {
+export const deleteCommunityBoardLikeRequest = async (data) => {
     return await instance.delete("/community/delete/favorite", {data})
 }
 

@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { deleteCommunityBoardLiketRequest, deleteCommunityBoardRequestById,  getCommunityBoardLikeRequest,  getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest } from "../../apis/api/communityBoard";
+import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
 
 
 function CommunityBoardDetailPage(props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLiked, setIsLiked] = useState(false);
-  const [user, SetUser] = useState("")
+  const [user, setUser] = useState("")
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery")
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ function CommunityBoardDetailPage(props) {
 
   const getBoardLikeCountQuery = useQuery(
     ["getBoardLikeCountQuery", searchParams.get("communityBoardId")],
-    async () => await getCommunityBoardLikeRequest ( {
+    async () => await getCommunityBoardLikeCountRequest ({
       communityBoardId : searchParams.get("communityBoardId")
     }),
 
@@ -48,7 +48,7 @@ function CommunityBoardDetailPage(props) {
       retry : 0,
       refetchOnWindowFocus: false,
       onSuccess: response=> {
-        SetUser(response.data)
+        setUser(response.data)
       },
       onError: (error) => {
         console.log(error)
@@ -58,29 +58,26 @@ function CommunityBoardDetailPage(props) {
   )
 
 
-  const postBoardLikeQuery = useMutation({
-    mutationKey: "postBoardLikeMutation",
-    mutationFn: postCommunityBoardLikeRequest,
-    onSuccess: (response) => {
+const postBoardLikeQuery = useMutation({
+  mutationKey: "postBoardLikeQuery",
+  mutationFn: postCommunityBoardLikeRequest,
+  onSuccess: response => {
 
-    },
-    onError: (error) => {
+  },
+  onError: error => {
 
-    }
+  }
+
 })
 
 const deleteBoardLikeQuery = useMutation({
-    mutationKey: "deleteBoardLikeMutation",
-    mutationFn: deleteCommunityBoardLiketRequest,
-    onSuccess : response => {
+  mutationKey : "deleteBoardLikeQuery",
+  mutationFn: deleteCommunityBoardLikeRequest,
+  onSuccess : response => {
+    
+  }
 
-    },
-
-    onError: error => {
-
-    }
 })
-
 
 
 const toggleBoardFavoriteStatusButton = async () => {
@@ -96,10 +93,10 @@ const toggleBoardFavoriteStatusButton = async () => {
       });
     }
 
-    const response = await getCommunityBoardLikeRequest({
+    const response = await getCommunityBoardLikeCountRequest({
       communityBoardId : searchParams.get("communityBoardId")
     });
-    SetUser(response.data)
+    setUser(response.data)
     setIsLiked(Liked => !Liked);
 
   }

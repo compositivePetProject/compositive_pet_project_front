@@ -13,6 +13,8 @@ import MapRoute from './routes/MapRoute/MapRoute';
 import MyPageRoute from './routes/MyPageRoute/MyPageRoute';
 import ProductRoute from './routes/ProductRoute/ProductRoute';
 import { useQuery } from "react-query";
+import MainPage from './pages/MainPage/MainPage';
+import MainRoute from './routes/MainRoute/MainRoute';
 function App() {
   
   const principalQuery = useQuery(["principalQuery"], 
@@ -38,6 +40,7 @@ function App() {
             <AdoptRoute/>
             <MyPageRoute />
             <MapRoute />
+            <MainRoute />
           </PageContainer>
         <RootFooter />
       </RootContainer>

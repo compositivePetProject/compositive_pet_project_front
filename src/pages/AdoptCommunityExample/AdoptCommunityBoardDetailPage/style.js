@@ -26,3 +26,17 @@ export const button = css`
         color: #eeeeee;
     }
 `;
+
+export const statusBox = css`
+    display: flex;
+`;
+
+export const commentBox = css`
+
+`;
+
+
+export const commentContent = css`
+    display: flex;
+    
+`;

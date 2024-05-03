@@ -2,16 +2,22 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { deleteAdoptBoardById, getAdoptById, putAdoptRequest } from "../../../apis/api/Adopt";
+import { deleteAdoptBoardById, getAdoptById, getAdoptCommentRequest, postAdoptCommentRequest, putAdoptRequest } from "../../../apis/api/Adopt";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
+import { AiOutlineHeart } from "react-icons/ai";
+import { GrView } from "react-icons/gr";
+import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 
 function AdoptCommunityBoardDetailPage() {
   const [ searchParams, setSearchParams ] = useSearchParams();
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery");
   const [ boardDetail, setBoardDetail ] = useState({});
+  const [ boardComment, setBoardComment ] = useState([]);
+  const [ inputComment, setInputComment ] = useState("")
+
   const navigate = useNavigate();
   const [ buttonState, setButtonState ] = useState(0); // 1 수정 2 삭제
   const [ titleValue, setTitleValue ] = useState("");
@@ -19,8 +25,29 @@ function AdoptCommunityBoardDetailPage() {
 
   useEffect(() => {
     console.log(principalQueryState);
-    console.log(boardDetail)
-  }, [principalQueryState, boardDetail])
+    console.log(boardDetail);
+    console.log(boardComment);
+    console.log(inputComment)
+
+  }, [principalQueryState, boardDetail, boardComment, inputComment])
+
+  const getAdoptCommunityBoardComment = useQuery(
+    ["getAdoptCommunityBoardComment"],
+    async () => await getAdoptCommentRequest (
+      parseInt(searchParams.get("boardid"))
+    ),
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+          console.log(response)
+          setBoardComment(response)
+      },
+      onError: (error) => {
+          console.log(error);
+      }
+  }
+  )
 
   const getAdoptCommunityBoardDetail= useQuery(
     ["getAdoptCommunityBoardDetail"],
@@ -39,6 +66,16 @@ function AdoptCommunityBoardDetailPage() {
         }
     }
   );
+
+  const postAdoptCommunityBoardComment = useMutation({
+    mutationKey: "postAdoptCommunityBoardComment",
+    mutationFn: postAdoptCommentRequest,
+    onSuccess: (response) => {
+      window.location.reload();
+    },
+    onError: (error) => {
+    }
+  })
 
   const updateAdoptCommunityBoardDetail = useMutation({
     mutationKey: "updateAdoptCommunityBoardDetail",
@@ -87,7 +124,13 @@ function AdoptCommunityBoardDetailPage() {
     })
   }
 
-
+  const submitInputComment = () => {
+    postAdoptCommunityBoardComment.mutate({
+      adoptationBoardId:parseInt(searchParams.get("boardid")),
+      userId:principalQueryState.data?.data.userId,
+      adoptationBoardCommentContent: inputComment
+    })
+  }
   const updateSubmit = () => {
     if(window.confirm("해당 게시물을 수정하시겠습니까?")) {
       updateAdoptCommunityBoardDetail.mutate({
@@ -138,7 +181,31 @@ function AdoptCommunityBoardDetailPage() {
       </div>
 
       <div>
-        좋아요, 댓글, 조회수 관련 코드 작성해주세요.
+        {/* 좋아요, 댓글, 조회수 관련 코드 작성해주세요. */}
+        <div css={s.statusBox}>
+          {
+            !getAdoptCommunityBoardDetail.isLoading && 
+            <div><AiOutlineHeart/>{boardDetail.totalCount}</div>
+          }
+          {
+            !getAdoptCommunityBoardDetail.isLoading && 
+            <div><GrView/>{boardDetail.viewCount}</div>
+          }
+         
+        </div>
+        {
+          boardComment.map(comment => 
+            <BoardCommentBox
+              key={comment.adoptationBoardCommentId}
+              userNickname={comment.userNickName}
+              updateDate={comment.updateDate}
+              commentContent={comment.adoptationBoardCommentContent}/>
+            )
+        }
+        <div>
+          <input type="text" onChange={(event) => {setInputComment(event.target.value)}}/>
+          <button css={s.button} onClick={submitInputComment}>댓글 작성</button>
+        </div>
       </div>
 
     </div>

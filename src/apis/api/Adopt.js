@@ -91,8 +91,8 @@ export const postAdoptCommentRequest = async (data) => {
 }
 
 
-export const getAdoptCommentRequest = async (params) => {
-    const response = await instance.get("/adoptation/comments", {params})
+export const getAdoptCommentRequest = async (boardId) => {
+    const response = await instance.get(`/adoptation/comments/${boardId}`)
     return response.data;
 }
 

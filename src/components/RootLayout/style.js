@@ -8,7 +8,7 @@ export const background = css`
     width: 100%;
     height: 100%;
     background-color: white;
-
+    overflow-x: hidden;
 `;
 
 export const layout = css`
@@ -16,9 +16,8 @@ export const layout = css`
     position: relative;
     margin: 0px auto;
     border: 1px solid #fafafa;
-    width: 1200px;
+    width: 80%;
     height: 100%;
-    overflow: hidden;
-    background-color: #ececec;
+    background-color: transparent;
 `;
 

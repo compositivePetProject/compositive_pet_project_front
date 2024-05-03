@@ -6,10 +6,10 @@ import { useInput } from "../../hooks/useInput";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuid } from "uuid";
-import { CiSquarePlus } from "react-icons/ci";
 import { storage } from "../../apis/firebase/firebaseConfig";
+import { CiSquarePlus } from "react-icons/ci";
 import { useMutation } from "react-query";
-import { oAuth2SignupRequest } from "../../apis/api/authSignup";
+import { oAuth2SignupRequest, usernameCheckRequest } from "../../apis/api/authSignup";
 
 function OAuthSignupPage() {
     const [ searchParams ] = useSearchParams();
@@ -21,6 +21,7 @@ function OAuthSignupPage() {
     const [ checkPassword, checkPasswordChange ] = useInput("checkPassword");
     const [ name, nameChange, nameMessage ] = useInput("name");
     const [ address, addressChange, addressMessage ] = useInput("address");
+    const [ detailAddress, detailAddressChange, detailAddressMessage ] = useInput("detailAddress");
     const [ telNumber, telNumberChange, telNumberMessage ] = useInput("telNumber");
     const [ nickname, nicknameChange, nicknameMessage, setNicknameValue, setNicknameMessage ] = useInput("nickname");
     const [ email, emailChange, emailMessage ] = useInput("email");
@@ -38,7 +39,6 @@ function OAuthSignupPage() {
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
                 const errorEntries = Object.entries(errorMap);
-                console.log(errorEntries);  
                 for(let [ k, v ] of errorEntries) {
                     if(k === "username") {
                         setUsernameMessage(() => {
@@ -62,6 +62,7 @@ function OAuthSignupPage() {
             }
         }});
     
+        
     useEffect(() => {
         if(!checkPassword || !password) {
             setCheckPasswordMessage(() => null);
@@ -85,6 +86,47 @@ function OAuthSignupPage() {
         }
     }, [checkPassword, password]);
 
+    const usernameCheck = useMutation({
+        mutationKey: "usernameCheck",
+        mutationFn: usernameCheckRequest,
+        onSuccess: success => {
+            const successMap = success.data;
+            const successEntries = Object.entries(successMap);
+            for(let [ k, v ] of successEntries) {
+                if(k === "username") {
+                    setUsernameMessage(() => {
+                        return {
+                            type: k,
+                            text: v
+                        }
+                    })
+                }
+            }
+        },
+        onError: error => {
+            if(error.response.status === 400) {
+                const errorMap = error.response.data;
+                const errorEntries = Object.entries(errorMap);
+                for(let [ k, v ] of errorEntries) {
+                    if(k === "username") {
+                        setUsernameMessage(() => {
+                            return {
+                                type: "error",
+                                text: v
+                            }
+                        })
+                    }
+                }
+            } 
+        }
+    })
+
+    const handleUsernameCheck = () => {
+        usernameCheck.mutate({
+            username
+        })
+    }
+
     const handleSignupSubmit = () => {
         const checkFlags = [
             usernameMessage?.type,
@@ -92,6 +134,7 @@ function OAuthSignupPage() {
             checkPasswordMessage?.type,
             nameMessage?.type,
             addressMessage?.type,
+            detailAddressMessage?.type,
             telNumberMessage?.type,
             nicknameMessage?.type,
             emailMessage?.type
@@ -103,14 +146,15 @@ function OAuthSignupPage() {
             return;
         }
         oAuth2SignupMutation .mutate({
-            username,
-            password,
-            name,
-            address,
-            telNumber,
-            nickname,
-            email,
-            profileImageUrl,
+            username: username,
+            password: password,
+            name: name,
+            address: address,
+            detailAddress: detailAddress,
+            telNumber: telNumber,
+            nickname: nickname,
+            email: email,
+            profileImageUrl: profileImageUrl,
             oauth2Name: searchParams.get("name"),
             providerName: searchParams.get("provider")
         })
@@ -146,8 +190,8 @@ function OAuthSignupPage() {
                 });
             }
         )
-
     }
+
     // css 수정 예정
     return (
         <div>
@@ -159,10 +203,12 @@ function OAuthSignupPage() {
                         </div>
                         <div css={s.header}>
                             <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={userNameChange} message={usernameMessage} />
+                            <button css={s.idCheckvbutton} onClick={handleUsernameCheck}>아이디 중복체크</button>
                             <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} message={passwordMessage} />
                             <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호 확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage} />
                             <AuthPageInput type={"text"} name={"name"} placeholder={"성명"} value={name} onChange={nameChange} message={nameMessage} />
                             <AuthPageInput type={"text"} name={"address"} placeholder={"주소"} value={address} onChange={addressChange} message={addressMessage} />
+                            <AuthPageInput type={"text"} name={"detailAddress"} placeholder={"상세주소"} value={detailAddress} onChange={detailAddressChange} message={detailAddressMessage} />
                             <AuthPageInput type={"text"} name={"telNumber"} placeholder={"전화번호"} value={telNumber} onChange={telNumberChange} message={telNumberMessage} />
                             <AuthPageInput type={"text"} name={"nickname"} placeholder={"닉네임"} value={nickname} onChange={nicknameChange} message={nicknameMessage} />
                             <AuthPageInput type={"text"} name={"email"} placeholder={"이메일"} value={email} onChange={emailChange} message={emailMessage} />

@@ -7,6 +7,5 @@ export const container = css`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background-color: white;
 `;

@@ -13,3 +13,14 @@ export const oAuth2SignupRequest = async (data) => {
     return await instance.post("/auth/oauth2/sign-up", data);
 }
 
+
+export const authNicknameCheckRequest = async (data) => {
+    return await instance.post("/auth/nickname-check", data);
+}
+
+export const usernameCheckRequest = async (data) => {
+    return await instance.post("/auth/username-check", data);
+}
+
+
+

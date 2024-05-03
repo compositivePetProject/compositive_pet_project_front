@@ -8,5 +8,5 @@ export const footer = css`
     border-top: 1px solid #dbdbdb;
     padding: 0px 10px;
     width: 100%;
-    height: 380px;
+    height: 200px;
 `;

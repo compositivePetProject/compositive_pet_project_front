@@ -6,10 +6,10 @@ export const header = css`
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #00005cff;
     padding: 0px 10px;
     width: 100%;
-    height: 60px;
+    height: 70px;
 `;
 
 export const logoButton = css`
@@ -51,49 +51,81 @@ export const login = css`
     justify-content: center;
     align-items: center;
     padding-right: 10px;
-    width: 50px;
+    width: 70px;
     height: 30px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
+    font-weight: 600;
     overflow: hidden;
     text-decoration: none;
-    color: rgb(15, 19, 23);;
+    color: #333333;
     cursor: pointer;
 
     &:hover {
         font-weight: 700;
-        color: rgb(0, 120, 255);;
+        color: #00005cff;
     }
 `;
+
+
+export const imgBox = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 100%;
+    cursor: pointer;
+`;
+
+
+export const profileImg = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    width: 90%;
+    height: 80%;
+    overflow: hidden;
+    & > img {
+        height: 100%;
+    }
+`;
+
 
 export const buttons = css`
     box-sizing: border-box;
     border: none;
     padding: 20px;
-    width: 150px;
-    height: 65px;
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(15, 19, 23);
+    width: 160px;
+    height: 70px;
+    font-size: 16px;
+    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    color: #333333;
     background-color: transparent;
     cursor: pointer;
 
     &:hover {
         font-weight: 700;
-        border-bottom: 3px solid rgb(15, 19, 23);
+        border-bottom: 6px solid #00005cff;
+        color: #00005cff;
     }
 `;
 
 
 
-export const sidebar = css`
+export const sidebar = (isHovering) => css`
+    transition: top 0.4s ease-in-out, height 0.4s ease-in-out; 
     position: absolute;
-    top: 75px;
+    top: 85px;
+    opacity: ${isHovering ? 1 : 0};
     left: 0;
     width: 100%;
-    height: 200px;
+    height: ${isHovering ? "200px" : "0px"};
     background-color: white;
-    padding: 16px 30px 24px;
     z-index: 99;
     border-bottom: 1px solid #dbdbdb;
 `;
@@ -106,11 +138,11 @@ export const categoryText = css`
     text-decoration: none;
     font-size: 14px;
     color: rgb(15, 19, 23);
-    font-weight: 500;
+    font-weight: 600;
 
     &:hover {
         font-weight: 700;
-        color: rgb(0, 120, 255);;
+        color: #00005cff;
     }
 `;
 

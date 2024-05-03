@@ -15,6 +15,7 @@ function AuthPage() {
                 <Route path="/sign-in" element={ <AuthSigninPage /> } />
                 <Route path="/oauth2/sign-up" element={ <OAuthSignupPage /> } />
                 <Route path="/oauth2/sign-in" element={ <OAuthSigninPage /> } />
+                
             </Routes>
         </>
     );

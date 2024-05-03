@@ -60,7 +60,7 @@ function RootHeader() {
                     <button
                         css={s.buttons}
                         onMouseEnter={() => handleHover("adoptCommunity")}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/adoptCommunity?page=1")}
                     >
                         분양 게시판
                     </button>
@@ -114,16 +114,17 @@ function RootHeader() {
                 <div css={s.sidebar(isHovering)} onMouseLeave={handleSidebarLeave}>
                     {currentMenu === "community" && (
                         <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 전체 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 커뮤니티</a> </div> 
+                            <div css={s.category}><a css={s.categoryText} href= "/community/getboards?page=1"> 전체 커뮤니티</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="/community/dog?page=1"> 강아지 커뮤니티</a> </div>
+                            <div css={s.category}><a css={s.categoryText} href="/community/cat?page=1"> 고양이 커뮤니티</a> </div> 
                         </div>
                     )}
                     {currentMenu === "adoptCommunity" && (
                         <div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity"> 전체 분양 게시글</Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog"> 강아지 분양 게시글</Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat"> 고양이 분양 게시글</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지</Link> </div>
+                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이</Link> </div>
                         </div>
                     )}
                     {currentMenu === "shop" && (

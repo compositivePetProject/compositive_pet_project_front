@@ -17,7 +17,6 @@ export const container = css`
     height: 40px;
     font-size: 14px;
     margin: 10px 0px;
-    
 `;
 
 export const selectContainer = css`

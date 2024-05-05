@@ -17,9 +17,9 @@ function CommunityBoardWritePage() {
     const [ quillValue, handleQuillValueChange ] = useQuillInput();
     const [ selectedState, setSelectedState ] = useState({value : 1, label : "개"}); 
     const [BoardAnimalCategoryId, setBoardAnimalCategoryId] = useState();
-    const userId = principalQueryState.data?.data.userId;
+    const userId = principalQueryState.data?.data.userId; 
 
-    const postCommunityBoardQuery = useMutation ({
+    const postCommunityBoardQuery = useMutation ({ 
           mutationKey : "postCommunityBoardQuery",
           mutationFn : postCommunityBoardRequest,
           onSuccess : response => {

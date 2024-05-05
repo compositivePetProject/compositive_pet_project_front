@@ -2,43 +2,105 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { deleteAdoptBoardById, getAdoptById, putAdoptRequest } from "../../../apis/api/Adopt";
+import { deleteAdoptBoardById, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest } from "../../../apis/api/Adopt";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
+import { AiOutlineHeart } from "react-icons/ai";
+import { GrView } from "react-icons/gr";
+import { SlSpeech } from "react-icons/sl";
+import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 
 function AdoptCommunityBoardDetailPage() {
+  const [ likedUsers, setLikedUsers] = useState([]);
   const [ searchParams, setSearchParams ] = useSearchParams();
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery");
   const [ boardDetail, setBoardDetail ] = useState({});
+  const [ boardComment, setBoardComment ] = useState([]);
+  const [ inputComment, setInputComment ] = useState("")
+
   const navigate = useNavigate();
   const [ buttonState, setButtonState ] = useState(0); // 1 수정 2 삭제
+  const [ inputButtonState, setInputButtonState ] = useState(0); // 1 댓글 입력창 활성화
   const [ titleValue, setTitleValue ] = useState("");
   const [ contentValue, setContentValue ] = useState("");
 
   useEffect(() => {
     console.log(principalQueryState);
-    console.log(boardDetail)
-  }, [principalQueryState, boardDetail])
+    console.log(boardDetail);
+    console.log(boardComment);
+    console.log(inputComment);
+    console.log(likedUsers);
 
-  const getAdoptCommunityBoardDetail= useQuery(
-    ["getAdoptCommunityBoardDetail"],
-    async () => await getAdoptById(
+  }, [principalQueryState, boardDetail, boardComment, inputComment, likedUsers])
+
+  const getFindUserByBoard = useQuery(
+    ["getFindUserByBoard",likedUsers],
+    async () => await getFindLikedUser (
       parseInt(searchParams.get("boardid"))
     ),
     {
-        retry: 0,
-        refetchOnWindowFocus: false,
-        onSuccess: (response) => {
-            console.log(response)
-            setBoardDetail(response);
-        },
-        onError: (error) => {
-            console.log(error);
-        }
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+          response.map(user => {
+            setLikedUsers(user)
+          })
+          
+      },
+      onError: (error) => {
+          console.log(error);
+      }
+  }
+  )
+
+  const getAdoptCommunityBoardComment = useQuery(
+    ["getAdoptCommunityBoardComment"],
+    async () => await getAdoptCommentRequest (
+      parseInt(searchParams.get("boardid"))
+    ),
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+          console.log(response)
+          setBoardComment(response)
+      },
+      onError: (error) => {
+          console.log(error);
+      }
+  }
+  )
+
+  const getAdoptCommunityBoardDetail = useQuery(
+    ["getAdoptCommunityBoardDetail"],
+    async () => await getAdoptById(parseInt(searchParams.get("boardid"))),
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: (response) => {
+        setBoardDetail(response);
+        // 좋아요 상태 확인
+        response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
   );
+
+  const postAdoptCommunityBoardComment = useMutation({
+    mutationKey: "postAdoptCommunityBoardComment",
+    mutationFn: postAdoptCommentRequest,
+    onSuccess: (response) => {
+      setInputButtonState(0)
+      window.location.reload();
+    },
+    onError: (error) => {
+    }
+  })
+
 
   const updateAdoptCommunityBoardDetail = useMutation({
     mutationKey: "updateAdoptCommunityBoardDetail",
@@ -87,7 +149,53 @@ function AdoptCommunityBoardDetailPage() {
     })
   }
 
+  const submitInputComment = () => {
+    postAdoptCommunityBoardComment.mutate({
+      adoptationBoardId:parseInt(searchParams.get("boardid")),
+      userId:principalQueryState.data?.data.userId,
+      adoptationBoardCommentContent: inputComment
+    })
+  }
 
+  const deleteAdoptCommunityBoardFavorite = useMutation({
+    mutationKey: "deleteAdoptCommunityBoardFavorite",
+    mutationFn: deleteAdoptLike,
+    onSuccess: (response) => {
+    },
+    onError: (error) => {
+        
+    }
+})
+
+  const postAdoptCommunityBoardFavorite = useMutation({
+    mutationKey: "postAdoptCommunityBoardFavorite",
+    mutationFn: postAdoptLike,
+    onSuccess: (response) => {
+      getAdoptCommunityBoardDetail.refetch();
+    },
+    onError: (error) => {
+    }
+  })
+
+
+  const favoriteBoard = async () => {
+    if (likedUsers.userId !== principalQueryState.data?.data.userId) {
+      await postAdoptCommunityBoardFavorite.mutateAsync({
+        adoptationBoardId: parseInt(searchParams.get("boardid")),
+        userId: principalQueryState.data?.data.userId
+      });
+    } else {
+      await deleteAdoptCommunityBoardFavorite.mutateAsync({
+        adoptationBoardId: parseInt(searchParams.get("boardid")),
+        userId: principalQueryState.data?.data.userId
+      });
+    }
+    // 좋아요 상태 갱신 후 다시 렌더링
+    getAdoptCommunityBoardDetail.refetch();
+    getFindUserByBoard.refetch();
+  }
+
+  
   const updateSubmit = () => {
     if(window.confirm("해당 게시물을 수정하시겠습니까?")) {
       updateAdoptCommunityBoardDetail.mutate({
@@ -105,7 +213,7 @@ function AdoptCommunityBoardDetailPage() {
   }, [boardDetail])
 
   return (
-    <div>
+    <div css={s.layout}>
       { principalQueryState.data?.data.username === boardDetail.username
         ? <div css={s.buttonBox}>
             { buttonState === 1
@@ -138,7 +246,49 @@ function AdoptCommunityBoardDetailPage() {
       </div>
 
       <div>
-        좋아요, 댓글, 조회수 관련 코드 작성해주세요.
+        {/* 좋아요, 댓글, 조회수 관련 코드 작성해주세요. */}
+        <div css={s.iconBox}>
+          {
+            !getAdoptCommunityBoardDetail.isLoading && 
+            <div onClick={favoriteBoard}><AiOutlineHeart/>{boardDetail.totalCount}</div>
+          }
+          {
+            !getAdoptCommunityBoardDetail.isLoading && 
+            <div><GrView/>{boardDetail.viewCount}</div>
+          }
+          <div onClick={()=>setInputButtonState(1)}><SlSpeech /></div>
+        </div>
+        {
+          boardComment.map(comment => 
+            <BoardCommentBox
+              key={comment.adoptationBoardCommentId}
+              userNickname={comment.userNickname}
+              updateDate={comment.updateDate}
+              commentContent={comment.adoptationBoardCommentContent}/>
+            )
+        }
+        <div>
+        { inputButtonState === 1 
+          ?<>
+            <input type="text" onChange={(event) => {setInputComment(event.target.value)}}/>
+            {
+              // 댓글 입력창에 입력 되지 않으면 댓글 작성 버튼 비활성화
+              inputComment === ""
+              ?
+              <>
+              </>
+              :
+              <>
+                <button css={s.button} onClick={submitInputComment}>댓글 작성</button>
+              </>
+              
+            }
+          </>
+          :
+          <>
+          </>
+        }
+        </div>
       </div>
 
     </div>

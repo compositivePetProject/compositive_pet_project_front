@@ -66,3 +66,4 @@ export const board = css`
 export const pagination = css`
 
 `;
+

@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
-
+export const layout = css`
+    width: 100%;
+`;
 
 export const buttonBox = css`
     display: flex;
@@ -26,3 +28,28 @@ export const button = css`
         color: #eeeeee;
     }
 `;
+
+export const statusBox = css`
+    display: flex;
+`;
+
+export const commentBox = css`
+
+`;
+
+
+export const commentContent = css`
+    display: flex;
+    
+`;
+
+export const iconBox = css`
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+
+    & > div > * {
+        font-size: 24px;
+        margin: 5px 0px;
+    }
+`

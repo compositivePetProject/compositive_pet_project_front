@@ -3,12 +3,21 @@ import { css } from "@emotion/react";
 export const layout = css`
     display: flex;
     flex-direction: column;
+   
 `;
 
 export const boardHeader = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+
+
+
+export const boardContent = css`
+    border: 1px solid #dbdbdb;
+    width: 100%;
+    height: 80%;
 `;
 
 export const title = css`

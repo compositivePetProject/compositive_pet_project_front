@@ -13,6 +13,7 @@ import { adoptBoardAnimalCategoryOptions } from "../../../constants/adoptBoardAn
 import { FaSearch } from "react-icons/fa";
 import BoardBox from "../../../components/BoardBox/BoardBox";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { TfiWrite } from "react-icons/tfi";
 
 function AdoptCommunityBoardListPageEx() {
     const [ adoptCommunityBoardList, setAdoptCommunityBoardList ] = useState([]);
@@ -119,6 +120,7 @@ function AdoptCommunityBoardListPageEx() {
                     <TopSelect label={"동물구분"} name={"boardAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
                     <TopInput label={"검색게시글"} name={"adoptationBoardTitle"} inputSize={10} setState={setSearch} onKeyDown={searchHandleKeyDown}/>
                     <button css={s.searchButton} onClick={searchSubmit}><FaSearch/></button>
+                    <button css={s.writeButton} onClick={() => navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
                 </div>
             </div>
 

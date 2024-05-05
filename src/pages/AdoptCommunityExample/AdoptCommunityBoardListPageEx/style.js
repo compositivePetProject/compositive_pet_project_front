@@ -43,6 +43,25 @@ export const searchButton = css`
 
 `;
 
+export const writeButton = css`
+    margin-left: 5px;
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 0px 15px;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
+`;
+
 export const board = css`
     display: flex;
     flex-wrap: wrap;

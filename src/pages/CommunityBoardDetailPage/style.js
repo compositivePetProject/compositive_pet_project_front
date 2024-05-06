@@ -78,6 +78,67 @@ export const HeartIcon = css`
 
 `
 
+export const totalLikeCount = css`
+    font-size: 12px;
+`;
+
+export const commentLayout = css`
+
+box-sizing: border-box;
+display: flex;
+justify-content: center;
+
+`
+export const boardListHeader = css`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #dbdbdb;
+    width: 100%;
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
+    }
+
+    `
+export const CommunitycContentboardListItem = css`
+    text-decoration: none;
+    cursor: pointer;
+    overflow:hidden;
+    font-family: NanumBarunGothic, sans-serif;
+    color: rgb(54, 54, 54);
+    font-size: 13px;
+        & > div {
+            box-sizing: border-box;
+            display: flex;
+            border-bottom: 1px solid #dbdbdb;
+            width: 100%;
+            &:hover {
+                background-color: #adadad;
+            }
+            
+            & > div{
+                box-sizing: border-box;
+                border-right: 1px solid #dbdbdb;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow : 1;
+                height: 50px;
+                width: 300px;
+            }
+
+            }
+            `;
+
 
 
 
@@ -98,3 +159,33 @@ cursor: pointer;
 }
 
 `
+
+export const commentbutton = css`
+  box-sizing: border-box;
+  border: 2px solid #dbdbdb;
+  bottom: 0%;
+  width: 50px;
+  height: 50px;
+
+
+`
+
+export const commentbox1 = css`
+    display: flex;
+    padding: 32px 0px;
+    border-bottom: 1px solid rgb(60, 57, 52);
+`;
+
+export const commentbox2 = css`
+  display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      & > img {
+          
+          height: 100%;
+          width: 100%;
+      }
+`;
+

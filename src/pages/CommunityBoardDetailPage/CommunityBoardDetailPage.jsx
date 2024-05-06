@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
+import { getCommunityBoardCommentByBoardIdRequest, getCommunityBoardCommentRequest, postCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
 
 
 function CommunityBoardDetailPage(props) {
@@ -15,49 +16,54 @@ function CommunityBoardDetailPage(props) {
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery")
   const navigate = useNavigate();
-  // const communityBoardId = parseInt(searchParams.get("communityBoardId"))
+  const communityBoardId = parseInt(searchParams.get("communityBoardId"))
   const [board, setBoard ] = useState("");
   const userId = principalQueryState.data?.data.userId;
+  const [boardComment, setBoardCommnent] = useState([])
+  const [inputBoardComments , setInputBoardComments] = useState("") 
 
 
-  const getCommunityBoardLikeStatusQuery = useQuery(
-    ["getCommunityBoardLikeStatusQuery" , userId, searchParams.get("communityBoardId")],
-    async() => await getCommunityBoardLikeStatusRequest({
-      communityBoardId : searchParams.get("communityBoardId"),
+  const getBoardFavoriteStatusQuery = useQuery(
+    ["getBoardFavoriteStatusQuery", userId, communityBoardId],
+    async () => await getCommunityBoardLikeStatusRequest({
+      communityBoardId : communityBoardId,
       userId : userId
-    }),
-    {
-      retry : 0,
-      refetchOnWindowFocus : false,
-      onSuccess: response  => {
-        console.log(response.data)
-        setIsLiked(response.data)
-
-      }
-    }
-  )
-
-
-  const getBoardLikeCountQuery = useQuery(
-    ["getBoardLikeCountQuery", searchParams.get("communityBoardId")],
-    async () => await getCommunityBoardLikeCountRequest ({
-      communityBoardId : searchParams.get("communityBoardId")
     }),
 
     {
       retry : 0,
       refetchOnWindowFocus: false,
-      onSuccess: response=> {
-        setUser(response.data)
+      onSuccess: response => {
+        console.log(response.data)
+        setIsLiked(response.data)
       },
       onError: (error) => {
         console.log(error)
       }
-    }
 
+    }
   )
 
+  const getBoardFavoriteQuery = useQuery(
+    ["getBoardFavoriteQuery",communityBoardId],
+    async () => await getCommunityBoardLikeCountRequest({
+      communityBoardId : communityBoardId
+    }),
+    {
 
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: response => {
+        console.log(response)
+        setUser(response.data)
+      },
+
+      onError: (error) => {
+        console.log (error)
+      }
+    }
+  )
+  
 const postBoardLikeQuery = useMutation({
   mutationKey: "postBoardLikeQuery",
   mutationFn: postCommunityBoardLikeRequest,
@@ -83,43 +89,37 @@ const deleteBoardLikeQuery = useMutation({
 const toggleBoardFavoriteStatusButton = async () => {
   if (isLiked) {
       await deleteBoardLikeQuery.mutateAsync({
-          communityBoardId : searchParams.get("communityBoardId"),
+          communityBoardId : communityBoardId,
           userId : userId
       });
     }else{
       await postBoardLikeQuery.mutateAsync( {
-        communityBoardId : searchParams.get("communityBoardId"),
+        communityBoardId : communityBoardId,
         userId : userId
       });
     }
-
-    const response = await getCommunityBoardLikeCountRequest({
-      communityBoardId : searchParams.get("communityBoardId")
-    });
-    setUser(response.data)
     setIsLiked(Liked => !Liked);
-
   }
 
-  
  
   const getCommunityBoardQuery = useQuery(
-    ["getCommunityBoardQuery", searchParams.get("communityBoardId")],
+    ["getCommunityBoardQuery", communityBoardId],
     async () => await getCommunityBoardRequestById ({
-      communityBoardId : searchParams.get("communityBoardId")
+      communityBoardId : communityBoardId,
+      userId : userId
     }),
   {
-    retry: 0,
-    refetchOnWindowFocus : false,
-    onSuccess: response => {
-      console.log(response)
-      setBoard(response.data)
+      retry: 0,
+      refetchOnWindowFocus : false,
+      onSuccess: response => {
+        console.log(response)
+        setBoard(response.data)
 
-},
-  onError: (error) => {
-    console.log(error);
-  }
-}
+      },
+        onError: (error) => {
+          console.log(error);
+      }
+    }
 )
 
   const deleteCommunityBoardQuery = useMutation ({
@@ -135,7 +135,43 @@ const toggleBoardFavoriteStatusButton = async () => {
       console.log(error)
     }
   })
- 
+
+  const postBoardCommentQuery = useMutation ({
+    mutationKey: "postBoardCommentQuery",
+    mutationFn: postCommunityBoardCommentRequest,
+    onSuccess : response  => {
+      window.location.reload();
+      alert ("댓글이 작성 되었습니다.")
+      navigate ("/community/getboards");
+    },
+    onError: error => {
+      alert("오류")
+      console.log(error)
+    }
+  
+  })
+
+  const getBoardCommentQuery = useQuery(
+    ["getBoardFavoriteQuery"],
+    async () => await getCommunityBoardCommentByBoardIdRequest({
+      communityBoardId : communityBoardId,
+   
+    }),
+    {
+
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: response => {
+        console.log(response)
+        setInputBoardComments(response.data)
+      },
+
+      onError: (error) => {
+        console.log (error)
+      }
+    }
+  )
+  
 
   const handleChangeCommuniteyBoardDelete  = () => {
     const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
@@ -145,6 +181,12 @@ const toggleBoardFavoriteStatusButton = async () => {
       )
     }
   } 
+
+  const handleChangeBoardComment = () => {
+    navigate("/community/comments/")
+  }
+
+
 
   return (
     <div css={s.containter}>
@@ -167,16 +209,39 @@ const toggleBoardFavoriteStatusButton = async () => {
                  게시글 수정
                 </button>
               )}
+
+              <t3>댓글</t3>
+              <div css={s.CommunitycContentboardListItem}>
+
+                {boardComment.map(comment => (
+                  <div key={comment.communityBoardCommentId} css={s.commentbox1}>
+                  
+                  <div css={s.commentbox2}>
+                  <div dangerouslySetInnerHTML={{__html:comment.communityBoardCommentContent}}></div>
+                  </div>
+                  
+                  <div>{comment.createDate}</div>
+                  </div>
+
+
+                ))}
+                </div>
+            </div>
+
   
               <div>
                 <button onClick={toggleBoardFavoriteStatusButton}>
                   {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
+                  <div css={s.totalLikeCount}>{user.totalLikeCount}</div>
                 </button>
                 <button css={s.deletebutton} onClick={handleChangeCommuniteyBoardDelete}>
                   게시글 삭제
                 </button>
+
+                <button css={s.commentbutton} onClick={handleChangeBoardComment}>댓글 작성</button>
               </div>
-            </div>
+             
+        
           </>
         }
       </div>

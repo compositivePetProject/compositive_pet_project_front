@@ -127,7 +127,7 @@ function AdoptCommunityBoardListPageEx() {
             <div css={s.board}>
                 {
                     adoptCommunityBoardList.map(board => 
-                        <BoardBox 
+                        <BoardBox
                             key={board.adoptationBoardId} 
                             boardTitle={board.adoptationBoardTitle} 
                             userNickname={board.userNickname} 

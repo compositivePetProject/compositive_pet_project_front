@@ -2,7 +2,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { deleteAdoptBoardById, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest } from "../../../apis/api/Adopt";
+import { deleteAdoptBoardById, deleteAdoptCommentRequest, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest, updateAdoptCommentRequest } from "../../../apis/api/Adopt";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
@@ -18,22 +18,15 @@ function AdoptCommunityBoardDetailPage() {
   const principalQueryState = queryClient.getQueryState("principalQuery");
   const [ boardDetail, setBoardDetail ] = useState({});
   const [ boardComment, setBoardComment ] = useState([]);
-  const [ inputComment, setInputComment ] = useState("")
 
   const navigate = useNavigate();
   const [ buttonState, setButtonState ] = useState(0); // 1 수정 2 삭제
   const [ inputButtonState, setInputButtonState ] = useState(0); // 1 댓글 입력창 활성화
   const [ titleValue, setTitleValue ] = useState("");
   const [ contentValue, setContentValue ] = useState("");
-
-  useEffect(() => {
-    console.log(principalQueryState);
-    console.log(boardDetail);
-    console.log(boardComment);
-    console.log(inputComment);
-    console.log(likedUsers);
-
-  }, [principalQueryState, boardDetail, boardComment, inputComment, likedUsers])
+  const [ commentValue, setCommentValue ] = useState("");
+  const [ commentButtonState, setCommentButtonState ] = useState(0);
+  const [ commentId, setCommentId ] = useState(0);
 
   const getFindUserByBoard = useQuery(
     ["getFindUserByBoard",likedUsers],
@@ -101,6 +94,18 @@ function AdoptCommunityBoardDetailPage() {
     }
   })
 
+  const updateAdoptCommunityBoardComment = useMutation({
+    mutationKey: "updateAdoptCommunityBoardComment",
+    mutationFn: updateAdoptCommentRequest,
+    onSuccess: response => {
+      alert("댓글 수정이 완료되었습니다.");
+      window.location.reload();
+    },
+    onError: error => {
+      alert("실패");
+    }
+  })
+
 
   const updateAdoptCommunityBoardDetail = useMutation({
     mutationKey: "updateAdoptCommunityBoardDetail",
@@ -149,18 +154,44 @@ function AdoptCommunityBoardDetailPage() {
     })
   }
 
+  
   const submitInputComment = () => {
-    postAdoptCommunityBoardComment.mutate({
-      adoptationBoardId:parseInt(searchParams.get("boardid")),
-      userId:principalQueryState.data?.data.userId,
-      adoptationBoardCommentContent: inputComment
-    })
+    if(commentButtonState !== 1) {
+      if(window.confirm("댓글을 작성하시겠습니까?")) {
+        if(principalQueryState?.status === "success") {
+          if(!commentValue) {
+            alert("댓글을 작성해주세요.");
+            return;
+          }
+          postAdoptCommunityBoardComment.mutate({
+            adoptationBoardId:parseInt(searchParams.get("boardid")),
+            userId:principalQueryState.data?.data.userId,
+            adoptationBoardCommentContent: commentValue
+          });
+        } else {
+          alert("로그인 후 사용이 가능한 서비스 입니다.")
+          window.location.replace("http://localhost:3000/auth/auth");
+        }
+      }
+    } else {
+      if(window.confirm("댓글을 수정하시겠습니까?")) {
+        updateAdoptCommunityBoardComment.mutate({
+          adoptationBoardCommentId: commentId,
+          adoptationBoardCommentContent: commentValue
+        })
+      }
+    }
   }
+
+  useEffect(() => {
+    console.log(commentValue)
+  }, [commentValue])
 
   const deleteAdoptCommunityBoardFavorite = useMutation({
     mutationKey: "deleteAdoptCommunityBoardFavorite",
     mutationFn: deleteAdoptLike,
     onSuccess: (response) => {
+
     },
     onError: (error) => {
         
@@ -174,6 +205,18 @@ function AdoptCommunityBoardDetailPage() {
       getAdoptCommunityBoardDetail.refetch();
     },
     onError: (error) => {
+    }
+  })
+
+  const deleteAdoptCommunityBoardComment = useMutation({
+    mutationKey : "deleteAdoptCommunityBoardComment",
+    mutationFn : deleteAdoptCommentRequest,
+    onSuccess: response => {
+      alert("댓글이 삭제되었습니다.");
+      window.location.reload();
+    }, 
+    onError: error => {
+      alert("실패");
     }
   })
 
@@ -205,12 +248,26 @@ function AdoptCommunityBoardDetailPage() {
           boardAnimalCategoryId: boardDetail.boardAnimalCategoryId
       })
     }
-}
+  }
+
+  const postCommentOnChange = (value) => {
+    setCommentValue(value);
+  }
+
+  const deleteCommentSubmit = (adoptationBoardCommentId) => {
+    if(window.confirm("해당 댓글을 삭제하시겠습니까?")) {
+      deleteAdoptCommunityBoardComment.mutate(adoptationBoardCommentId);
+    }
+  }
 
 
   useEffect(() => {
     console.log(boardDetail)
   }, [boardDetail])
+
+  // useEffect(() => {
+  //   console.log(boardComment);
+  // }, [boardComment])
 
   return (
     <div css={s.layout}>
@@ -241,7 +298,6 @@ function AdoptCommunityBoardDetailPage() {
             </>
           :
             !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
-
         }
       </div>
 
@@ -250,44 +306,48 @@ function AdoptCommunityBoardDetailPage() {
         <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div onClick={favoriteBoard}><AiOutlineHeart/>{boardDetail.totalCount}</div>
+            <div css={s.count} onClick={favoriteBoard}>
+              <AiOutlineHeart/>
+              <div>{boardDetail.totalCount}</div>
+            </div>
           }
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div><GrView/>{boardDetail.viewCount}</div>
+            <div css={s.count}>
+              <GrView/>
+              <div >{boardDetail.viewCount}</div>
+            </div>
           }
-          <div onClick={()=>setInputButtonState(1)}><SlSpeech /></div>
+          {
+            !getAdoptCommunityBoardDetail.isLoading &&
+            <div css={s.count}>
+              <SlSpeech />
+              <div >{boardDetail.commentCount}</div>
+            </div>
+          }
         </div>
-        {
-          boardComment.map(comment => 
-            <BoardCommentBox
-              key={comment.adoptationBoardCommentId}
-              userNickname={comment.userNickname}
-              updateDate={comment.updateDate}
-              commentContent={comment.adoptationBoardCommentContent}/>
-            )
-        }
-        <div>
-        { inputButtonState === 1 
-          ?<>
-            <input type="text" onChange={(event) => {setInputComment(event.target.value)}}/>
-            {
-              // 댓글 입력창에 입력 되지 않으면 댓글 작성 버튼 비활성화
-              inputComment === ""
-              ?
-              <>
-              </>
-              :
-              <>
-                <button css={s.button} onClick={submitInputComment}>댓글 작성</button>
-              </>
-              
-            }
-          </>
-          :
-          <>
-          </>
-        }
+
+        <div css={s.boardCommentBox}>
+          {
+            boardComment.map(comment => 
+              <BoardCommentBox
+                pirincipal={comment.userId}
+                key={comment.adoptationBoardCommentId}
+                commentId={comment.adoptationBoardCommentId}
+                commentIdState={setCommentId}
+                userNickname={comment.userNickname}
+                updateDate={comment.updateDate}
+                commentContent={comment.adoptationBoardCommentContent}
+                deleteComment={() => deleteCommentSubmit(comment.adoptationBoardCommentId)}
+                updateComment={setCommentValue}
+                buttonState={setCommentButtonState}
+              />
+              )
+          }
+        </div>
+        <div css={s.commentBox}>
+          <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
+          <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
         </div>
       </div>
 
@@ -295,4 +355,4 @@ function AdoptCommunityBoardDetailPage() {
   )
 }
 
-export default AdoptCommunityBoardDetailPage
+export default AdoptCommunityBoardDetailPage;

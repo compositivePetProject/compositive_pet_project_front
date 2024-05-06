@@ -133,8 +133,7 @@ function AdoptCommunityBoardDetailPage() {
             </>
           :
             !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
-
-        }
+          }
       </div>
 
       <div>

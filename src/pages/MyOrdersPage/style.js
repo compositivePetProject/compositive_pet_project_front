@@ -64,6 +64,9 @@ export const userDetails = css`
     font-weight: 700;
     font-size: 18px;
 
+    & > div:nth-of-type(2) {
+        margin-bottom: 10px;
+    }
 `;
 
 export const title = css`

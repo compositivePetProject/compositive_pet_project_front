@@ -1,107 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest} from "../../apis/api/communityBoard";
+import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
-
+import BoardContentBox from "../../components/BoardContentBox/BoardContentBox";
+import Quill from "../../components/Quill/Quill";
 
 function CommunityBoardDetailPage(props) {
+  const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [isLiked, setIsLiked] = useState(false);
     const [user, setUser] = useState("")
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery")
-    const navigate = useNavigate();
-    // const communityBoardId = parseInt(searchParams.get("communityBoardId"))
+    const [ buttonState, setButtonState ] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
     const [board, setBoard ] = useState("");
     const userId = principalQueryState.data?.data.userId;
 
-
-  // const getCommunityBoardLikeStatusQuery = useQuery(
-  //   ["getCommunityBoardLikeStatusQuery" , userId, searchParams.get("communityBoardId")],
-  //   async() => await getCommunityBoardLikeStatusRequest({
-  //     communityBoardId : searchParams.get("communityBoardId"),
-  //     userId : userId
-  //   }),
-  //   {
-  //     retry : 0,
-  //     refetchOnWindowFocus : false,
-  //     onSuccess: response  => {
-  //       console.log(response.data)
-  //       setIsLiked(response.data)
-
-  //     }
-  //   }
-  // )
-  
-
-
-  // const getBoardLikeCountQuery = useQuery(
-  //   ["getBoardLikeCountQuery", searchParams.get("communityBoardId")],
-  //   async () => await getCommunityBoardLikeCountRequest ({
-  //     communityBoardId : searchParams.get("communityBoardId")
-  //   }),
-  //   {
-  //     retry : 0,
-  //     refetchOnWindowFocus: false,
-  //     onSuccess: response=> {
-  //       setUser(response.data)
-  //     },
-  //     onError: (error) => {
-  //       console.log(error)
-  //     }
-  //   }
-  // )
-
-
-// const postBoardLikeQuery = useMutation({
-//     mutationKey: "postBoardLikeQuery",
-//     mutationFn: postCommunityBoardLikeRequest,
-//     onSuccess: response => {
-
-//     },
-//     onError: error => {
-
-//     }
-//   }
-// )
-
-// const deleteBoardLikeQuery = useMutation({
-//   mutationKey : "deleteBoardLikeQuery",
-//   mutationFn: deleteCommunityBoardLikeRequest,
-//   onSuccess : response => {
-    
-//     }
-//   }
-// )
-
-
-// const toggleBoardFavoriteStatusButton = async () => {
-//   if (isLiked) {
-//       await deleteBoardLikeQuery.mutateAsync({
-//           communityBoardId : searchParams.get("communityBoardId"),
-//           userId : userId
-//       });
-//     }else{
-//       await postBoardLikeQuery.mutateAsync( {
-//         communityBoardId : searchParams.get("communityBoardId"),
-//         userId : userId
-//       });
-//     }
-
-//     const response = await getCommunityBoardLikeCountRequest({
-//       communityBoardId : searchParams.get("communityBoardId")
-//     });
-//     setUser(response.data)
-//     setIsLiked(Liked => !Liked);
-
-//   }
-
-  
-    
     const getCommunityBoardQuery = useQuery(
         ["getCommunityBoardQuery", searchParams.get("communityBoardId")],
         async () => await getCommunityBoardRequestById ({
@@ -134,47 +52,84 @@ function CommunityBoardDetailPage(props) {
       }
     )
 
+    const updateCommunityBoardMutaion = useMutation ({
+      mutationKey: "updateCommunityBoardMutaion",
+      mutationFn: putCommunityBoardRequest,
+      onSuccess: response => {
+        alert("댓글 수정이 완료 되었습니다.")
+        navigate("/community/getboards?page=1")
+      },
+      onError: error => {
+        alert('오류')
+        console.log(error)
+
+      }
+    })
+
     const handleChangeCommuniteyBoardDelete  = () => {
-      const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
-      if(boardDelete) {
+      if(window.confirm("게시글을 삭제하시겠습니까?")) {
         deleteCommunityBoardQuery.mutate(
           searchParams.get("communityBoardId")
         )
       }
     } 
 
+    const handleChangeCommunityBoardUpdate = () => {
+      const boardUpdate = window.confirm("게시글을 수정하시겠습니까?")
+      if(boardUpdate) {
+      updateCommunityBoardMutaion.mutate({
+        communityBoardId: board.communityBoardId,
+        communityBoardTitle : board.communityBoardTitle,
+        communityBoardContent : board.communityBoardContent,
+        communityBoardAnimalCategoryId : board.communityBoardAnimalCategoryId
+        })
+      }
+    }
+
+    const updateTitleOnchange = (e) => {
+      setBoard({
+        ...board,
+        communityBoardTitle: e.target.value
+      })
+    }
+  
+    const updateOnchange = (value) => {
+      setBoard({
+        ...board,
+        communityBoardContent : value
+      })
+    }
+
+  
     return (
-      <div css={s.containter}>
-        <div css={s.boardContent}>  
-          {board && 
+      <div>
+        <div>  
+          { principalQueryState.data?.data.userId === board.userId
+          ? <div css={s.buttonBox}>
+              { buttonState === 1
+                ? 
+                <>
+                  <button css={s.button} onClick={handleChangeCommunityBoardUpdate}>확인</button>
+                  <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
+                </>
+                : 
+                <>
+                  <button css={s.button} onClick={() => setButtonState(1)}>수정</button>
+                  <button css={s.button} onClick={handleChangeCommuniteyBoardDelete}>삭제</button>
+                </>
+              }
+            </div>
+          : <></> 
+          }
+          {
+          buttonState === 1
+          ?
             <>
-              <div>{board.communityBoardTitle}</div>
-              <div dangerouslySetInnerHTML={{ __html: board.communityBoardContent }}></div>
-              <div>{board.communityBoardAnimalCategoryNameKor}</div>
-              <div>{board.createDate}</div>
-    
-              <div css={s.buttonContainer}>
-                {board.userId === userId && (
-                  <button 
-                    css={s.updatebutton} 
-                    onClick={() => {
-                      navigate(`/community/board/update/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`);
-                    }}
-                  >
-                  게시글 수정
-                  </button>
-                )}
-    
-                <div>
-                  {/* <button onClick={toggleBoardFavoriteStatusButton}>
-                    {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
-                  </button> */}
-                  <button css={s.deletebutton} onClick={handleChangeCommuniteyBoardDelete}>
-                    게시글 삭제
-                  </button>
-                </div>
-              </div>
+              <input type="text" defaultValue={board.communityBoardTitle} onChange={updateTitleOnchange} />
+              <Quill value={board.communityBoardContent} onChange={updateOnchange}/>
             </>
+          :
+            <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
           }
         </div>
       </div>

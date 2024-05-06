@@ -95,12 +95,13 @@ export const button = css`
 `;
 
 export const listContainer = css`
-    margin-top: 10px;
+    box-sizing: border-box;
+    margin-top: 60px;
     width: 20%;
     display: flex;
     flex-direction: column;
     padding-left: 10px;
-    height: 760px;
+    height: 700px;
     overflow-x: hidden;
     &::-webkit-scrollbar{
         background-color: #eeeeee;
@@ -120,7 +121,7 @@ export const listItem = css`
     border: 1px solid #00005c6b;
     border-radius: 5px;
     padding: 10px;
-    width: 260px;
+    width: 250px;
     color:  rgb(51, 51, 51);
     font-family: "Malgun Gothic", dotum, 돋움, sans-serif;
     font-size: 15px;

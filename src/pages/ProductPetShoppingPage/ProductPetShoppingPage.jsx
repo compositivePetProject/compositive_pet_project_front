@@ -139,10 +139,10 @@ function ProductPetShoppingPage(props) {
             <div css={s.shoppingContainer}>
                 {
                     productList.map(product => 
-                    <div key={product.productId} css={s.imageBox} onClick={() => navigate(`/product/pet/detail/${product.productId}/?productId=${product.productId}&page=1`)}>
+                    <div key={product.productId} css={s.imageBox} onClick={() => navigate(`/product/pet/detail/?productId=${product.productId}&page=1`)}>
                         <img src={product.productImageUrl} alt="" />
                         <div css={s.nameBox}>{product.productNameKor}</div>
-                        <div css={s.moneyBox}>{product.productPrice}원</div>
+                        <div css={s.moneyBox}>{product && product.productPrice.toLocaleString()}원</div>
                     </div>)
                 }
                 {   

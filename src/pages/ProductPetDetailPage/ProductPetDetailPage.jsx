@@ -16,6 +16,10 @@ import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDeta
 import ProductPayment from "../../components/ProductPayment/ProductPayment"
 import ProductImage from "../../components/ProductImage/ProductImage";
 import ProductReviewRatingChart from "../../components/ProductReviewRatingChart/ProductReviewRatingChart";
+import { PiCreditCardThin } from "react-icons/pi";
+import { MdOutlineDirectionsCar } from "react-icons/md";
+import TopSelect from "../../components/admin/TopSelect/TopSelect";
+import ProductSelect from "../../components/ProductSelect/ProductSelect";
 
 
 function ProductPetDetailPage() {
@@ -227,11 +231,12 @@ function ProductPetDetailPage() {
             borderRadius: "0px",
             border: "none",
             outline: "none",
-            boxShadow: "none"
+            boxShadow: "none",
+            height: "38px"
         })
     }
 
-    console.log(user)
+    console.log(selectedSizeType.option)
     return (
         <div css={s.layout} >
             <div css={s.sideImg}>
@@ -242,12 +247,11 @@ function ProductPetDetailPage() {
             <div css={s.productBox}>
                 <div css={s.productBoxHeader}>
                     <div>{user.productNameKor}</div>
+                    <div>
+                        <MdOutlineDirectionsCar />
+                    </div>
                     <div css={s.contentBox}>
-                        <div>{user.productPrice}원</div>
-                        <button onClick={toggleFavoriteStatusButton}>
-                            {isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />}
-                            <div css={s.totalCount}>{user.totalUserIdCount}</div>
-                        </button>
+                        <div>{user && user.productPrice.toLocaleString()}원</div>
                     </div>
                 </div>
                 <div css={s.productBody}>
@@ -263,13 +267,14 @@ function ProductPetDetailPage() {
                         <div css={s.productSizeBox}>
                             <div>사이즈</div>
                             <div>
-                                <Select
+                                {/* <Select
                                 styles={selectStyle2}
                                 options={productSizeOptions}
                                 placeholder={"옵션을 선택해주세요"}
                                 value={selectedSizeType.option}
                                 onChange={selectedSizeType.handleOnChange}
-                                />
+                                /> */}
+                                <ProductSelect options={productSizeOptions} value={selectedSizeType.option} onChange={selectedSizeType.handleOnChange} />
                             </div>
                         </div>
                         <div css={s.productDeliveryBox}>
@@ -283,12 +288,16 @@ function ProductPetDetailPage() {
                             <div>{productOrderCount}</div>
                             <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
                         </div>
+                        <div css={s.productDeliveryBox2}>
+                            <div>총 상품 금액</div>
+                            <div>{user && (user.productPrice * productOrderCount).toLocaleString()}원</div>
+                        </div>
+                        <button css={s.productOrderPayButton} onClick={handleProductPurchase}>구매하기</button>
                         <div css={s.productOrderbox}>
-                            <div css={s.productDeliveryBox}>
-                                <div>총 상품 금액</div>
-                                <div>{user.productPrice * productOrderCount}원</div>
-                            </div>
-                            <button css={s.productOrderButtons} onClick={handleProductPurchase}>구매하기</button>
+                            <button css={s.productOrderButtons} onClick={toggleFavoriteStatusButton}>
+                                {isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />}
+                                <div css={s.totalCount}>{user.totalUserIdCount} 찜하기</div>
+                            </button>
                             <button css={s.productOrderButtons} onClick={handleProductCartAdd}>장바구니</button>
                         </div>
                     </div>
@@ -312,7 +321,7 @@ function ProductPetDetailPage() {
                         <div css={s.ratingBox}>
                             <div  css={s.ratingBox1}>
                                 <div><FaStar css={s.activeStarButton2} /> { isNaN(averageRating) ? 0 : averageRating }</div>
-                                <div>{positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
+                                <div>{isNaN(positiveRatingPercentage.toFixed(1)) ? 0 : positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
                                 <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>상품 리뷰 작성하기</button>
                             </div>
                             <ProductReviewRatingChart reviews={reviews} />

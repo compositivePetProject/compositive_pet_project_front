@@ -27,6 +27,13 @@ function MyAdoptList(props) {
     const [checkedBoards, setCheckedBoards] = useState([]);
 
 
+    const [ checkAll, setCheckAll ] = useState({
+        checked : false,
+        target: 1
+    });
+    const [ myAdoptBoardList, setMyAdoptBoardList ] = useState([]);
+
+
 
     const getMyAdoptBoard = useQuery(
         ["getMyAdoptBoard", userId, page],
@@ -37,8 +44,11 @@ function MyAdoptList(props) {
             enabled: !!userId,
             refetchOnWindowFocus: false,
             onSuccess: response => {
+                console.log(response);
                 const index = response.data.slice(firstPage,lastPage)
                 setAdoptList(index)
+
+                setMyAdoptBoardList(response.data);
             },
             onError: (error) => {
                 console.log(error);
@@ -51,10 +61,9 @@ function MyAdoptList(props) {
     const getMyBoardCount = useQuery(
         ["getMyBoardCount", userId, page],
         async () => await getAdoptCountByUserId({
-        page:page,
-        userId:userId,
+        page: page,
+        userId: userId,
         count: searchCount
-        
     }),
     {
         enabled: !!userId,
@@ -62,9 +71,6 @@ function MyAdoptList(props) {
         onSuccess: response => {
             setMaxPageNumber(response.data.maxPageNumber);
             setTotalCount(response.data.totalCount);
-            console.log(maxPageNumber);
-            console.log(totalCount);
-
         },
         onError: error => {
             console.log(error)
@@ -125,33 +131,48 @@ const handleDeleteSelected = () => {
         console.log("입력이 감지되었습니다.")
     }
 
-  
-    
+
+    const handleCheckAllChange = (e) => {
+        setCheckAll(() => {
+          return {
+            checked: e.target.checked,
+            target: 1
+          }
+        })
+    }
+
+    useEffect(() => {
+        console.log(myAdoptBoardList);
+        if(checkAll.checked === true) {
+            setMyAdoptBoardList(() => {
+                myAdoptBoardList.map(data =>{
+                    return {
+                        ...data,
+                        checked: checkAll.checked
+                    }
+                })
+            })
+        }
+    }, [checkAll.checked])
+
     return (
         <div css={s.layout}>
             <MyPageSideBar />
             <div css={s.userDetails}>
                <h2>분양 게시글 관리</h2>
                 <div css={s.boardListHeader}>
-                    <input name="check-all"type="checkbox"/>
-                    <div>제목</div>
-                    <div>카테고리</div>
-                    <div>등록일</div>
+                    <div css={s.label}><input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange} /></div>
+                    <div css={s.label}>제목</div>
+                    <div css={s.label}>카테고리</div>
+                    <div css={s.label}>등록일</div>
                 </div>
                 <div css={s.boardListItem}>
-                    {adoptList.map((data) => (
-                        <div 
-                        key={data.adoptationBoardId} >
-                
-                           <input
-                                type="checkbox"
-                                name="boardCheck"
-                                checked={checkedBoards.includes(data.adoptationBoardId)}
-                                onChange={(event) => handleCheckboxChange(event, data.adoptationBoardId)}
-                            />
-                            <div onClick={() => navigate(`/adoptCommunity/${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
-                            <div>{data.boardAnimalCategoryNameKor}</div>
-                            <div>{data.createDate}</div>
+                    {myAdoptBoardList.map((data) => (
+                        <div css={s.rowData} key={data.adoptationBoardId} >
+                            <div css={s.labelData}><input type="checkbox" checked={checkedBoards.includes(data.adoptationBoardId)} onChange={(event) => handleCheckboxChange(event, data.adoptationBoardId)}/></div>
+                            <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
+                            <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.boardAnimalCategoryNameKor}</div>
+                            <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.createDate}</div>
                         </div>
                     ))}
                 </div>
@@ -163,7 +184,6 @@ const handleDeleteSelected = () => {
                     <button css={s.writeButton} 
                         onClick={()=> navigate("/adoptCommunity/register")} 
                     >글쓰기</button>
-
                 </div>
             </div>
             

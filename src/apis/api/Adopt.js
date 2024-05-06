@@ -61,6 +61,8 @@ export const getAdoptByUserId = async (params) => {
     return response;
 }
 
+
+
 export const getAdoptCountByUserId = async (params) => {
     const response = await instance.get('/adoptation/board/userCount', {params});
     return response;
@@ -95,10 +97,17 @@ export const postAdoptCommentRequest = async (data) => {
     return response.data;
 }
 
-
 export const getAdoptCommentRequest = async (boardId) => {
     const response = await instance.get(`/adoptation/comments/${boardId}`)
     return response.data;
+}
+
+export const deleteAdoptCommentRequest = async (commentId) => {
+    return await instance.delete(`/adoptation/comment/${commentId}`);
+}
+
+export const updateAdoptCommentRequest = async (data) => {
+    return await instance.put(`/adoptation/comment`, data);
 }
 
 export const postAdoptView = async (data) => {

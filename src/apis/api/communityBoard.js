@@ -9,8 +9,8 @@ export const postCommunityBoardRequest = async (data) => {
     return await instance.post("/community/board/write", (data));
 }
 
-export const postCommunityBoardLikeRequest = async (data) => {
-    return await instance.post("/community/favorite")
+export const postCommunityBoardLikeRequest = async  (data) => {
+    return await instance.post("/community/favorite", (data))
 }
 
 export const getCommunityBoardListRequest = async () => {

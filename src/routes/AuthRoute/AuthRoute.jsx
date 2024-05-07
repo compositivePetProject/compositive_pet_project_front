@@ -16,6 +16,8 @@ import CommunityBoardAdminEditPage from '../../pages/CommunityBoardAdminEditPage
 import RootHeader from '../../components/RootHeader/RootHeader';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import RootFooter from '../../components/RootFooter/RootFooter';
+import CommunityBoardCommentWritePage from '../../pages/CommunityBoardCommentWritePage/CommunityBoardCommentWritePage';
+import CommunityBoardCommentEditPage from '../../pages/CommunityBoardCommentEditPage/CommunityBoardCommentEditPage';
 
 
 
@@ -42,13 +44,14 @@ function AuthRoute(props) {
                     <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
                     <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
                     <Route path="/community/board" element={<CommunityBoardDetailPage />} />
-                    {/* 수정예정 */}
                     <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
                     <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
                     <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />
                     <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
-                    <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />                  
-                </Routes>
+                    <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />
+                    <Route path="/community/comment/:boardId" element={<CommunityBoardCommentWritePage />} />
+                    <Route path="/community/update/comment" element={<CommunityBoardCommentEditPage />}  />               
+                </Routes> 
         </>
     );
 }

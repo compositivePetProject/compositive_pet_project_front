@@ -16,9 +16,8 @@ export const categoryHeader = css`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 85px;
+    height: 80px;
     background-color: white;
-    border-bottom: 1px solid #00005cff;;
 `;
 
 export const menuList = css`
@@ -36,14 +35,24 @@ export const linkButtons = css`
     align-items: center;
     font-size: 16px;
     justify-content: center;
-    width: 150px;
-    height: 100%;
     font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
     font-weight: 600;
+    border: 1px solid #dbdbdbb6;
+    border-radius: 8px;
+    padding: 10px 30px;
+    margin-right: 10px;
+    background-color: transparent;
+
     &:hover {
+        transition: all 0.2s ease-in-out;
         font-weight: 700;
-        border-bottom: 3px solid #00005cff;
-        color: #00005cff;
+        color: rgb(255, 64, 129);
+        background-color: rgb(248, 248, 248);
+    }
+    &:active {
+        transition: all 0.2s ease-in-out;
+        font-weight: 700;
+        background-color: black;
     }
 `;
 
@@ -68,8 +77,8 @@ export const searchLabel = css`
     font-weight: 600;
     background-color: #00005cff;
     color: #eee;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
     cursor: default;
 `;
 
@@ -85,20 +94,20 @@ export const searchBarInput = css`
     border-top: 1px solid #0e004a24;
     border-right: 1px solid #0e004a24;
     border-bottom: 1px solid #0e004a24;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     &:disabled {
         cursor: not-allowed;
     }
 `;
 
 export const searchBarButton = css`
-    margin-left: 5px;
+    margin-left: 2px;
     width: 50px;
     height: 40px;
     box-sizing: border-box;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #0e004a24;
     font-weight: 600;
     cursor: pointer;
@@ -117,10 +126,9 @@ export const shoppingFilter = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0px auto;
     padding: 0px 0px 0px 10px;
     width: 100%;
-    height: 70px;
+    height: 50px;
     background-color: white;
 
     & > div {
@@ -139,7 +147,6 @@ export const span = css`
 export const productLikeButtons = css`
     display: flex;
     align-items: center;
-
     color: black;
     font-weight: 800;
     font-size: 15px;
@@ -173,30 +180,32 @@ export const shoppingContainer = css`
 export const imageBox = css`
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     box-sizing: border-box;
-    margin-bottom: 20px;
-    width: 300px;
-    height: 450px;
-    
+    margin-right: 20px;
+    width: 310px;
+    height: 430px;
     cursor: pointer;
     & > img {
         width: 100%;
+        border-radius: 8px;
     }
 `;
 
 export const nameBox = css`
-    margin: 10px 0 20px 0;
-    font-size: 16px;
-    font-weight: 700;
+    margin: 10px 0 15px 0;
+    font-size: 12px;
+    font-weight: 600;
     color: #333333;
 `;
 
 export const moneyBox = css`
     text-align: right;
-    font-size: 16px;
-    font-weight: 500;
-    color: #333333;
+    font-size: 15px;
+    font-weight: 700;
+    color: #202020;
 `;
 
 

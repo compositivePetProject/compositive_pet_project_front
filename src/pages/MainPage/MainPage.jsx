@@ -5,9 +5,13 @@ import { images, trainCompartment } from "../../constants/mainCommnityImage";
 import { HiChevronRight, HiChevronLeft, HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { VscChevronRight } from "react-icons/vsc";
+import { useQueryClient } from "react-query";
 
 function MainPage(props) {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
     const [curSlide, setCurSlide] = useState(0);
     const [intervalId, setIntervalId] = useState(null);
     const FIRST_SLIDE_INDEX = 0; 
@@ -54,7 +58,6 @@ function MainPage(props) {
       };
 
 
-      console.log(curSlide)
     return (
         <div css={s.layout}>
             <div css={s.train}>
@@ -75,12 +78,12 @@ function MainPage(props) {
                 </div>
                 <HiChevronRight css={s.nextButton} onClick={() => moveToSlide('next')}/>
             </div>
+             
             <div css={s.infoContainer}>
-
               {/* 커뮤니티 게시판 */}
               <div css={s.communityContainer}>
                   <div>커뮤니티게시판 Top3</div>
-                  <div>더보기</div>
+                  <div onClick={() => navigate("/community/getboards?page=1")}>더보기</div>
               </div>
               <div css={s.detailContainer}>
                 {/* 반복문 돌릴 예정 (미완) */}
@@ -140,7 +143,7 @@ function MainPage(props) {
               {/* 분양 */}
               <div css={s.communityContainer}>
                   <div>분양게시판 Top3</div>
-                  <div>더보기</div>
+                  <div onClick={() => navigate("/ex/adoptcommunity?page=1")}>더보기</div>
               </div>
               <div css={s.detailContainer}>
                 {/* 반복문 돌릴 예정 (미완)*/}

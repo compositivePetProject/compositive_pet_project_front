@@ -1,100 +1,32 @@
 import { css } from "@emotion/react"
 
-export const containter = css`
- position: relative;
- display: flex;
- flex-direction: column;
- align-items: center;
- height: 100%;
- width: 90%;
 
-`
+export const buttonBox = css`
+    display: flex;
+    justify-content: end;
+    align-items: center;
+`;
 
-export const detailPageTitle = css`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  font-size: 30px;
-    background-color: #dbdbdb;
-`
-
-export const boardContent = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  height: 100%;
-  border: 1px solid #dbdbdb;
-
-`
-
-export const buttonContainer = css`
-
-
-`
-
-export const deletebutton = css`
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-padding: 5px;
-background-color: white;
-font-size: 12px;
-cursor: pointer;
-
-&:hover {
-  background-color: #dbdbdb;
-}
-& :active {
-  background-color: #eeeeee;
-}
-`
-
-
-
-export const updatebutton = css`
+export const button = css`
     box-sizing: border-box;
-    margin-top: 50px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 100%;
+    margin: 5px 5px 5px 0px;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 5px 10px;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
+
     &:hover {
-        background-color: #fafafa;
+        border: 1px solid #2400c4cb;
     }
 
     &:active {
-        background-color: #eee;
+        background-color: #00005cff;
+        color: #eeeeee;
     }
-
 `;
 
-export const HeartIcon = css`
-  color: red;
-
-`
 
 
 
-
-export const listbutton = css`
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-padding: 5px;
-background-color: white;
-font-size: 12px;
-cursor: pointer;
-
-&:hover {
-  background-color: #dbdbdb;
-}
-& :active {
-  background-color: #eeeeee;
-}
-
-`

@@ -33,14 +33,14 @@ function App() {
     <RootLayout>
       <RootContainer>
         {principalQuery.status === "success" ? <FixBar/> : <></>}
-        <RootHeader />
+        {/* <RootHeader /> */}
           <PageContainer>
+            <MainRoute />
             <AuthRoute /> 
             <ProductRoute />
             <AdoptRoute/>
             <MyPageRoute />
             <MapRoute />
-            <MainRoute />
           </PageContainer>
         <RootFooter />
       </RootContainer>

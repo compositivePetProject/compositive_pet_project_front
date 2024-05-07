@@ -9,6 +9,9 @@ import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/Co
 import { page } from "../../components/CommunityBoardPageCount/style";
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { FaSearch } from "react-icons/fa";
+import BoardBox from "../../components/BoardBox/BoardBox";
+import TopSelect from "../../components/admin/TopSelect/TopSelect";
+import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
 
 function CommunityBoardPage() {
     const navigate = useNavigate();
@@ -16,14 +19,17 @@ function CommunityBoardPage() {
     const [communityBoardList, setCommunityBoardList] = useState([]);
     const pageSearchCount = 6;
     const inputRef = useRef();
-
+    const [ search, setSearch ] = useState({
+        boardAnimalCategoryId: 0,
+    })
     
     const getBoardsPageQuery = useQuery (
             ["getBoardsPageQuery", searchParams.get("page")],
             async () => await getCommunityBoardPageRequest({
             page: searchParams.get("page"),
             count : pageSearchCount,
-            searchText: searchText.value,
+            boardAnimalCategoryId: search.boardAnimalCategoryId,
+            searchText: searchText.value
         }),
 
         { 
@@ -43,6 +49,7 @@ function CommunityBoardPage() {
             ["getBoardsSearchCountRequestQuery", getBoardsPageQuery.data],
             async () => await getCommunityBoardPageCountRequest({
                 count : pageSearchCount,
+                boardAnimalCategoryId: search.boardAnimalCategoryId,
                 searchText: searchText.value
             }),
             {   
@@ -65,41 +72,33 @@ function CommunityBoardPage() {
         return (
                 <div css={s.layout}>
                     <div>
-                    <h1 css={s.headerTitle}>커뮤니티 갤러리 게시판</h1>
-                        <div css={s.searchBar}>
-                            <div css={s.searchLabel}>게시판 검색</div>
-                            <input css={s.searchBarInput} type="text" 
-                                ref={inputRef} 
-                                value={searchText.value} 
-                                onChange={searchText.handleOnChange} 
-                                onKeyUp={searchText.handleOnKeyUp}
-                                placeholder="제목 + 내용 검색"
-                            />
-                            <button css={s.searchBarButton} >
-                                <FaSearch onClick={() => searchSubmit()}/>
-                            </button>
-                        </div>
-                        <div css={s.boardListLayout}>
-                            <div css={s.boardListHeader}>
-                                <div css={s.boardListHeader}>
-                                    <div>제목</div>
-                                    <div>카테고리</div>
-                                    <div>닉네임</div>
-                                    <div>등록일</div>
-                                </div>
+                        <div css={s.headerTitle}>
+                            <div>커뮤니티 갤러리 게시판</div>
+                            <div css={s.searchBar}>
+                                <TopSelect label={"카테고리"} name={"boardAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
+                                <div css={s.searchLabel}>게시판 검색</div>
+                                <input css={s.searchBarInput} type="text" 
+                                    ref={inputRef} 
+                                    value={searchText.value} 
+                                    onChange={searchText.handleOnChange} 
+                                    onKeyUp={searchText.handleOnKeyUp}
+                                    placeholder="제목 + 내용 검색"
+                                />
+                                <button css={s.searchBarButton} >
+                                    <FaSearch onClick={() => searchSubmit()}/>
+                                </button>
                             </div>
-                        <div css={s.CommunityboardListItem}>
+                        </div>
+                        <div css={s.board}>
                             {communityBoardList.map(board => (
-                                <div key={board.communityBoardId}
-                                onClick={() => navigate(`/community/board/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`)}>
-                                <div>{board.communityBoardTitle}</div>
-                                <div>{board.communityBoardAnimalCategoryNameKor}</div>
-                                <div>{board.userName}</div>
-                                <div>{board.createDate}</div>
-                            </div>
-                            
+                                 <BoardBox 
+                                    onClick={() => navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)}
+                                    key={board.communityBoardId}
+                                    boardTitle={board.communityBoardTitle}
+                                    userNickname={board.userName}
+                                    updateDate={board.updateDate}
+                                 />                            
                             ))} 
-                        </div>
                         </div>
                     </div>
                 

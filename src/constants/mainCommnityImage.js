@@ -1,19 +1,19 @@
 export const trainCompartment = [
     {
         img: "https://puppydog.co.kr/web/upload/appfiles/0zdpAngaKBFnlCcCqpCU4A/ff643a9b4816f7173f45188aba4c8707.jpg",
-        path: "/product/pet/detail/601/?productId=601&page=1"
+        path: "/product/pet/detail/?productId=601&page=1"
     },
     {
         img: "https://puppydog.co.kr/web/upload/appfiles/0zdpAngaKBFnlCcCqpCU4A/c4f80a5d10178e13cb76c6b9dcf3fdb2.jpg",
-        path: "/product/pet/detail/602/?productId=602&page=1"
+        path: "/product/pet/detail/?productId=602&page=1"
     },
     {
         img: "https://puppydog.co.kr/web/upload/appfiles/0zdpAngaKBFnlCcCqpCU4A/ab7711ce5651a8440d005cf62293ff12.jpg",
-        path: "/product/pet/detail/603/?productId=603&page=1"
+        path: "/product/pet/detail/?productId=603&page=1"
     },
     {
         img: "https://puppydog09.openhost.cafe24.com/web/upload/appfiles/0zdpAngaKBFnlCcCqpCU4A/db4f9bfbcc7182cdd172831929f8b60d.png",
-        path: "/product/pet/detail/604/?productId=604&page=1"
+        path: "/product/pet/detail/?productId=604&page=1"
     }
 ];
 

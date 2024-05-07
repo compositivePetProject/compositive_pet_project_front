@@ -15,8 +15,7 @@ export const layout = css`
     box-sizing: border-box;
     position: relative;
     margin: 0px auto;
-    border: 1px solid #fafafa;
-    width: 80%;
+    width: 70%;
     height: 100%;
     background-color: transparent;
 `;

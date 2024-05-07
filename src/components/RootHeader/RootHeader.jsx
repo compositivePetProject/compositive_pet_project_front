@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
-
+import { FiShoppingCart } from "react-icons/fi";
+import { TbLogin, TbLogout } from "react-icons/tb";
 
 function RootHeader() {
     const [ currentMenu, setCurrentMenu ] = useState(null);
@@ -37,111 +38,123 @@ function RootHeader() {
         });
         queryClient.refetchQueries("principalQuery");
     }
+    
 
     return (
-        <div css={s.header}>
-            <a css={s.logoButton} href="http://localhost:3000/">
-                <img css={s.logoimage} src="/petLogo.png" alt="" />
-            </a>
-
-            <div css={s.centerSpace}>
-                <div css={s.accountItems}>
-                    <button
-                        css={s.buttons}
-                        onMouseEnter={() => handleHover("community")}
-                        onClick={() => navigate("/community/getboards?page=1")}
-                    >
-                        커뮤니티 게시판
-                    </button>
-                   
-                </div>
-                
-                <div css={s.accountItems}>
-                    <button
-                        css={s.buttons}
-                        onMouseEnter={() => handleHover("adoptCommunity")}
-                        // onClick={() => navigate("/adoptCommunity?page=1")}
-                        onClick={() => navigate("/ex/adoptcommunity?page=1")}
-                    >
-                        분양 게시판
-                    </button>
-                </div>
-                <div css={s.accountItems}>
-                    <button
-                        css={s.buttons}
-                        onMouseEnter={() => handleHover("shop")}
-                        onClick={() => navigate("/product/pet/shopping?page=1")}
-                    >
-                        온라인 쇼핑몰
-                    </button>
-                </div>
-                <div css={s.accountItems}>
-                    <button
-                        css={s.buttons}
-                        onMouseEnter={() => handleHover("map")}
-                        onClick={() => navigate("/kakao/map")}
-                    >
-                        지도
-                    </button>
-                </div>
-            </div>
-
-            { !isLogin ?
-             <div css={s.accountItems}>
-                <a css={s.login} href="http://localhost:3000/auth/sign-in">
-                    로그인
-                </a>
-                <a css={s.login} href="http://localhost:3000/product/pet/cart">
-                    장바구니
-                </a>
-            </div>
-            :   
-            <>
-                <div css={s.accountItems}>
-                    <a css={s.login} onClick={handleLogoutClick} href="http://localhost:3000/">
-                        로그아웃
+        <div css={s.container}  onMouseLeave={handleSidebarLeave}>
+            <div css={s.header}>
+                <div css={s.logoBox}>
+                    <a css={s.logoButton} href="http://localhost:3000/">
+                        <img css={s.logoimage} src="/petLogo.png" alt="" />
                     </a>
-                    <a css={s.login} href="http://localhost:3000/product/pet/cart">
-                        장바구니
-                    </a>
-                </div>                      
-                <div css={s.imgBox}>
-                    <div css={s.profileImg} onClick={() => navigate("/account/mypage/profile")}>
-                        <img src={principalQueryState.data?.data.profileImageUrl} alt="" />
+                </div>
+
+                <div css={s.centerSpace}>
+                    <div css={s.accountItems}>
+                        <button
+                            css={s.buttons}
+                            onMouseEnter={() => handleHover("community")}
+                            onClick={() => navigate("/community/getboards?page=1")}
+                        >
+                            COMMUNITY-BOARD
+                        </button>
+                        <div css={s.sidebar(isHovering && currentMenu === "community")} onMouseLeave={handleSidebarLeave}>
+                            {currentMenu === "community" && (
+                                <div>
+                                    <div css={s.category}><a css={s.categoryText} href= "/community/getboards?page=1"> 전체 커뮤니티</a> </div>
+                                    <div css={s.category}><a css={s.categoryText} href="/community/dog?page=1"> 강아지 커뮤니티</a> </div>
+                                    <div css={s.category}><a css={s.categoryText} href="/community/cat?page=1"> 고양이 커뮤니티</a> </div> 
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <div css={s.accountItems}>
+                        <button
+                            css={s.buttons}
+                            onMouseEnter={() => handleHover("adoptCommunity")}
+                            // onClick={() => navigate("/adoptCommunity?page=1")}
+                            onClick={() => navigate("/ex/adoptcommunity?page=1")}
+                        >
+                            ADOPTATION-COMMUNITY-BOARD
+                        </button>
+                        <div css={s.sidebar(isHovering && currentMenu === "adoptCommunity")} onMouseLeave={handleSidebarLeave}>
+                            {currentMenu === "adoptCommunity" && (
+                                <div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체 분양 게시판</Link> </div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지 분양 게시판</Link> </div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이 분양 게시판</Link> </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div css={s.accountItems}>
+                        <button
+                            css={s.buttons}
+                            onMouseEnter={() => handleHover("shop")}
+                            onClick={() => navigate("/product/pet/shopping?page=1")}
+                        >
+                            ON-SHOP
+                        </button>
+                        <div css={s.sidebar(isHovering && currentMenu === "shop")} onMouseLeave={handleSidebarLeave}>
+                            {currentMenu === "shop" && (
+                                <div>
+                                    <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/product/pet/shopping?page=1"> 전체 쇼핑몰</a> </div>
+                                    <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 쇼핑몰</a> </div>
+                                    <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 쇼핑몰</a> </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div css={s.accountItems}>
+                        <button
+                            css={s.buttons}
+                            onMouseEnter={() => handleHover("map")}
+                            onClick={() => navigate("/kakao/map")}
+                        >
+                            MAP
+                        </button>
+                        {/* <div css={s.sidebar(isHovering && currentMenu === "map")} onMouseLeave={handleSidebarLeave}>
+                            {currentMenu === "map" && (
+                                <div>
+                                    <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/kakao/map">  카카오 맵</a> </div>
+                                    <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  내 주변 동물약국</a> </div>
+                                </div>
+                            )}
+                        </div> */}
                     </div>
                 </div>
-            </> 
-            }   
-                <div css={s.sidebar(isHovering)} onMouseLeave={handleSidebarLeave}>
-                    {currentMenu === "community" && (
-                        <div>
-                            <div css={s.category}><a css={s.categoryText} href= "/community/getboards?page=1"> 전체 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="/community/dog?page=1"> 강아지 커뮤니티</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="/community/cat?page=1"> 고양이 커뮤니티</a> </div> 
+
+                <div css={s.loginBox}>
+                    { !isLogin ?
+                    <div css={s.accountItems}>
+                        <a css={s.login} href="http://localhost:3000/auth/sign-in">
+                            <TbLogin />
+                        </a>
+                        <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                            <FiShoppingCart />
+                        </a>
+                    </div>
+                    :   
+                    <>
+                        <div css={s.accountItems}>
+                            <a css={s.login} onClick={handleLogoutClick} href="http://localhost:3000/">
+                                <TbLogout />
+                            </a>
+                            <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                                <FiShoppingCart />
+                            </a>
+                        </div>                      
+                        <div css={s.imgBox}>
+                            <div css={s.profileImg} onClick={() => navigate("/account/mypage/profile")}>
+                                <img src={principalQueryState.data?.data.profileImageUrl} alt="" />
+                            </div>
                         </div>
-                    )}
-                    {currentMenu === "adoptCommunity" && (
-                        <div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체</Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지</Link> </div>
-                            <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이</Link> </div>
-                        </div>
-                    )}
-                    {currentMenu === "shop" && (
-                        <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/product/pet/shopping?page=1">  전체</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  강아지</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  고양이</a> </div>
-                        </div>
-                    )}
-                    {currentMenu === "map" && (
-                        <div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/kakao/map">  카카오 맵</a> </div>
-                            <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  내 주변 동물약국</a> </div>
-                        </div>
-                    )}
+                    </> 
+                    }   
                 </div>
+            </div>
         </div>
     );
 }

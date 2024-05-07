@@ -184,18 +184,22 @@ export const imageBox = css`
     align-items: center;
     flex-direction: column;
     box-sizing: border-box;
-    margin-right: 20px;
-    width: 310px;
-    height: 430px;
+    margin: 0px 0px 30px 0px;
+    width: 245px;
+    height: 305px;
     cursor: pointer;
     & > img {
         width: 100%;
         border-radius: 8px;
     }
+    &:nth-of-type(5n) {
+        margin-right: 0;
+    }
 `;
 
 export const nameBox = css`
-    margin: 10px 0 15px 0;
+    padding: 10px 0;
+    height: 25px;
     font-size: 12px;
     font-weight: 600;
     color: #333333;

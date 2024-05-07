@@ -11,7 +11,7 @@ function ProductSelect({disabled, options, name, onChange, setState, buttonState
         <div css={s.item}>
             <div css={s.inputBox}>
                 <select disabled={disabled} css={s.select} name={name} onChange={handleSelectChange} value={value}>
-                    {!value && <option value=""> 상품을 선택해주세요</option>}
+                    {!value && <option value=""> 옵션</option>}
                     {options.map(option => {
                         return <option key={option.value} value={option.value}>{option.label}</option>
                     })}

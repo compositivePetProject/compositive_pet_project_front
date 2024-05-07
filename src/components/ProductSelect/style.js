@@ -4,10 +4,12 @@ export const item = css`
     display: flex;
     border-radius: 5px;
     margin-right: 5px;
-    height: 35px;
+    height: 30px;
     overflow: hidden;
+    border: 1px solid #0e004a24;
+
     &:hover {
-        border: 1px solid #0e004a24;
+        border: 1px solid rgb(119, 119, 119);
     }
 `
 
@@ -20,9 +22,9 @@ export const select = css`
     box-sizing: border-box;
     border: none;
     outline: none;
-    padding: 0px 10px;
-    width: 480px;
+    width: 350px;
     height: 100%;
+    padding: 0px 5px;
     font-size: 16px;
     cursor: pointer;
     &:disabled {

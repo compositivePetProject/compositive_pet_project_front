@@ -41,8 +41,7 @@ function RootHeader() {
     
 
     return (
-        <div css={s.container}  onMouseLeave={handleSidebarLeave}>
-            <div css={s.header}>
+            <div css={s.header} onMouseLeave={handleSidebarLeave}>
                 <div css={s.logoBox}>
                     <a css={s.logoButton} href="http://localhost:3000/">
                         <img css={s.logoimage} src="/petLogo.png" alt="" />
@@ -56,7 +55,7 @@ function RootHeader() {
                             onMouseEnter={() => handleHover("community")}
                             onClick={() => navigate("/community/getboards?page=1")}
                         >
-                            COMMUNITY-BOARD
+                            COMMUNITY
                         </button>
                         <div css={s.sidebar(isHovering && currentMenu === "community")} onMouseLeave={handleSidebarLeave}>
                             {currentMenu === "community" && (
@@ -76,12 +75,13 @@ function RootHeader() {
                             // onClick={() => navigate("/adoptCommunity?page=1")}
                             onClick={() => navigate("/ex/adoptcommunity?page=1")}
                         >
-                            ADOPTATION-COMMUNITY-BOARD
+                            ADOPTATION-COMMUNITY
                         </button>
                         <div css={s.sidebar(isHovering && currentMenu === "adoptCommunity")} onMouseLeave={handleSidebarLeave}>
                             {currentMenu === "adoptCommunity" && (
                                 <div>
                                     <div css={s.category}><Link css={s.categoryText} to="/ex/adoptcommunity?page=1"> 전체 분양 게시판</Link> </div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체 분양 게시판</Link> </div>
                                     <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지 분양 게시판</Link> </div>
                                     <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이 분양 게시판</Link> </div>
                                 </div>
@@ -96,7 +96,7 @@ function RootHeader() {
                         >
                             ON-SHOP
                         </button>
-                        <div css={s.sidebar(isHovering && currentMenu === "shop")} onMouseLeave={handleSidebarLeave}>
+                        {/* <div css={s.sidebar(isHovering && currentMenu === "shop")} onMouseLeave={handleSidebarLeave}>
                             {currentMenu === "shop" && (
                                 <div>
                                     <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/product/pet/shopping?page=1"> 전체 쇼핑몰</a> </div>
@@ -104,7 +104,7 @@ function RootHeader() {
                                     <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 쇼핑몰</a> </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                     </div>
                     <div css={s.accountItems}>
                         <button
@@ -154,7 +154,6 @@ function RootHeader() {
                     }   
                 </div>
             </div>
-        </div>
     );
 }
 

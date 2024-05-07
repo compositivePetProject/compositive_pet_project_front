@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useQuery } from "react-query";
-import { getAdoptAll, getAdoptCount } from "../../../apis/api/Adopt";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getAdoptAll, getAdoptCount, postAdoptView } from "../../../apis/api/Adopt";
 import { useEffect, useState } from "react";
 import AdoptationPageNumbers from "../../../components/AdoptationPageNumbers/AdoptationPageNumbers";
 import { HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
@@ -13,11 +13,14 @@ import { adoptBoardAnimalCategoryOptions } from "../../../constants/adoptBoardAn
 import { FaSearch } from "react-icons/fa";
 import BoardBox from "../../../components/BoardBox/BoardBox";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { TfiWrite } from "react-icons/tfi";
 
 function AdoptCommunityBoardListPageEx() {
     const [ adoptCommunityBoardList, setAdoptCommunityBoardList ] = useState([]);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 12;
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
     const [ maxPageNumber, setMaxPageNumber ] = useState(0);
     const [ totalCount, setTotalCount ] = useState(0);
     const navigate = useNavigate();
@@ -26,6 +29,26 @@ function AdoptCommunityBoardListPageEx() {
         adoptationBoardTitle: "",
         boardAnimalCategoryId: 0,
     })
+
+    const postAdoptCommunityBoardView = useMutation({
+        mutationKey:"postAdoptCommunityBoardView",
+        mutationFn:postAdoptView,
+        onSuccess: (response) => {
+        },
+        onError: (error) => {
+            
+        }
+
+    })
+
+
+    const handleOnClick = (board) => {
+        postAdoptCommunityBoardView.mutate({
+            adoptationBoardId:board.adoptationBoardId,
+            userId:principalQueryState.data?.data.userId
+        })
+        navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+    }
 
     const getAdoptCommunityBoardList= useQuery(
         ["getAdoptCommunityBoardList", searchParams.get("page")],
@@ -97,18 +120,22 @@ function AdoptCommunityBoardListPageEx() {
                     <TopSelect label={"동물구분"} name={"boardAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
                     <TopInput label={"검색게시글"} name={"adoptationBoardTitle"} inputSize={10} setState={setSearch} onKeyDown={searchHandleKeyDown}/>
                     <button css={s.searchButton} onClick={searchSubmit}><FaSearch/></button>
+                    <button css={s.writeButton} onClick={() => navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
                 </div>
             </div>
 
             <div css={s.board}>
                 {
                     adoptCommunityBoardList.map(board => 
-                        <BoardBox 
+                        <BoardBox
                             key={board.adoptationBoardId} 
                             boardTitle={board.adoptationBoardTitle} 
                             userNickname={board.userNickname} 
                             updateDate={board.updateDate}
-                            onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)}
+                            heartCount={board.totalCount}
+                            viewCount={board.viewCount}
+                            commentCount={board.commentCount}
+                            onClick={() => handleOnClick(board)}
                         />
                     )
                 }

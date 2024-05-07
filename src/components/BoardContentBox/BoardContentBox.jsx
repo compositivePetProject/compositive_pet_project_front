@@ -11,7 +11,7 @@ function BoardContentBox({ title, userNickname, writeDate, content }) {
                 <div css={s.writeDate}>작성일자: {writeDate}</div>
             </div>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: content}}>
+        <div css={s.boardContent} dangerouslySetInnerHTML={{ __html: content}}>
             
         </div>
     </div>

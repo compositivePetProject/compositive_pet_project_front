@@ -1,5 +1,12 @@
 import { css } from "@emotion/react";
 
+export const layout = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin: 0px auto;
+    background-color: white;
+`;
 
 export const header = css`
     box-sizing: border-box;
@@ -8,7 +15,7 @@ export const header = css`
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
-    width: 1335px;
+    width: 1344px;
     height: 90px;
     z-index: 100;
     background-color: white;

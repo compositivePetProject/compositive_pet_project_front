@@ -41,6 +41,7 @@ function RootHeader() {
     
 
     return (
+        <div css={s.layout}>
             <div css={s.header} onMouseLeave={handleSidebarLeave}>
                 <div css={s.logoBox}>
                     <a css={s.logoButton} href="http://localhost:3000/">
@@ -154,6 +155,7 @@ function RootHeader() {
                     }   
                 </div>
             </div>
+        </div>
     );
 }
 

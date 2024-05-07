@@ -1,19 +1,17 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 10px;
+    width: 100%;
 `
 
 export const headerTitle = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0px 110px 10px;
 
     & > div:nth-of-type(1) {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: 700;
     }
 `
@@ -91,23 +89,24 @@ export const searchBarButton = css`
 
 
 export const board = css`
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    & > div {
+        margin: 0 auto;
+        width: 1120px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
 
-    & > * {
-        margin-bottom: 15px;
+        & > * {
+            margin-bottom: 15px;
+        }
+
+        & > *:nth-of-type(3n - 1) {
+            margin-left: 35px;
+            margin-right: 35px;
+        }
     }
 
-    & > *:nth-of-type(4n - 2) {
-        margin-left: 35px;
-    }
-
-    & > *:nth-of-type(4n - 1) {
-        margin: 0px 35px;
-    }
 `;
-
 
 export const boardListLayout = css`
     box-sizing: border-box;
@@ -196,13 +195,16 @@ export const pageNumberLayout = (page) => css`
 `;
 
 
+export const writeButtonBox = css` 
+    display: flex;
+    justify-content: center;
+`
+
 export const writeButton = css`
-box-sizing: border-box;
-border: 2px solid #dbdbdb;
-bottom: 0%;
-width: 50px;
-height: 50px;
-
-
+    box-sizing: border-box;
+    border: 2px solid #dbdbdb;
+    bottom: 0%;
+    width: 50px;
+    height: 50px;
 `
 

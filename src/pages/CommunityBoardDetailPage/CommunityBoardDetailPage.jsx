@@ -272,6 +272,17 @@ const handleChangeBoardComment = (commentId) => {
                 </button>
               )}
 
+              <div>
+                <button
+                    css={s.commentbutton}
+                    onClick={() => {
+                      navigate(`/community/comment/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`) 
+                    }}
+                  >
+                    댓글 작성
+                    </button>                  
+                 </div>
+
           <div>
               {boardComment.map((comment) => (
                 <div key={comment.communityBoardCommentId} css={s.commentbox1}>

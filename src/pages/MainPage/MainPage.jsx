@@ -17,7 +17,7 @@ function MainPage(props) {
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [curSlide, setCurSlide] = useState(0);
     const [intervalId, setIntervalId] = useState(null);
-    const FIRST_SLIDE_INDEX = 0; 
+    const FIRST_SLIDE_INDEX = 0;
     const LAST_SLIDE_INDEX = trainCompartment.length - 1;
     const MOVE_SLIDE_INDEX = 1;
     const [ top3AdoptBoardList, setTop3AdoptBoardList ] = useState([]);

@@ -65,8 +65,10 @@ export const infoContainer = css`
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    margin: 600px 150px 50px;
+    margin: 600px auto 0 auto;
+    
     width: 80%;
 `;
 

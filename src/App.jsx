@@ -15,7 +15,14 @@ import ProductRoute from './routes/ProductRoute/ProductRoute';
 import { useQuery } from "react-query";
 import MainPage from './pages/MainPage/MainPage';
 import MainRoute from './routes/MainRoute/MainRoute';
+import { Route, Routes, useLocation } from 'react-router-dom';
 function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log(pathname)
+    window.scrollTo(0, 0);
+  }, [pathname]);
   
   const principalQuery = useQuery(["principalQuery"], 
     getPrincipalRequest, 
@@ -32,15 +39,21 @@ function App() {
   return (
     <RootLayout>
       <RootContainer>
-        {principalQuery.status === "success" ? <FixBar/> : <></>}
+        {principalQuery.status === "success" && pathname !== "/" ? <FixBar/> : <></>}
         {/* <RootHeader /> */}
           <PageContainer>
-            <MainRoute />
-            <AuthRoute /> 
-            <ProductRoute />
-            <AdoptRoute/>
-            <MyPageRoute />
-            <MapRoute />
+            <Routes>
+              <Route path='/*' element={
+                <>
+                  <MainRoute />
+                  <AuthRoute /> 
+                  <ProductRoute />
+                  <AdoptRoute/>
+                  <MyPageRoute />
+                  <MapRoute />
+                </>
+              } />
+            </Routes>
           </PageContainer>
         <RootFooter />
       </RootContainer>

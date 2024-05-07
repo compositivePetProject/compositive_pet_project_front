@@ -1,12 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import ProductPage from '../../pages/ProductPage/ProductPage';
 import ProductManagementIcomingStockPage from '../../pages/admin/ProductManagementIcomingStockPage/ProductManagementIcomingStockPage';
 import ProductManagementCurrentStockPage from '../../pages/admin/ProductManagementCurrentStockPage/ProductManagementCurrentStockPage';
 import ProductManagementOrderPage from '../../pages/admin/ProductManagementOrderPage/ProductManagementOrderPage';
 import ProductManagementOutgoingStockPage from '../../pages/admin/ProductManagementOutgoingStockPage/ProductManagementOutgoingStockPage';
 import ProductManagementPage from '../../pages/admin/ProductManagementPage/ProductManagementPage';
+import { useEffect } from 'react';
 
 function ProductRoute(props) {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
   return (
     <>
       <Routes>

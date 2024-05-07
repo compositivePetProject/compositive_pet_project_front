@@ -1,28 +1,5 @@
 import { css } from "@emotion/react";
 
-export const container = css`
-width: 770px;
-height: 1560px;
-padding: 10px;
-display: block;
-line-height: 17.25px;
-padding-top: 10px;
-
-`
-
-export const span = css`
-font-family: NanumBarunGothic, sans-serif;
-font-size: 12px;
-font-weight: 700px;
-overflow-x: hidden;
-overflow-y: hidden;
-text-align: center;
-height: 13.8px;
-width: 47px;
-
-
-`
-
 export const layout = css`
 display: flex;
 flex-direction: column;
@@ -31,11 +8,106 @@ padding: 10px;
 `
 
 export const headerTitle = css`
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div:nth-of-type(1) {
+        font-size: 20px;
+        font-weight: 700;
+    }
 `
+
+export const searchBox = css`
+    box-sizing: border-box;
+    display: flex;
+    padding-right: 10px;;
+`
+
+export const searchBar = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 700px;
+    height: 50px;
+`;
+
+export const searchLabel = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #0e004a24;
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #00005cff;
+    color: #eee;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    cursor: default;
+`;
+
+export const searchBarInput = css`
+    width: 300px;
+    padding: 0px 45px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    height: 40px;
+    font-size: 16px;
+    border-top: 1px solid #0e004a24;
+    border-right: 1px solid #0e004a24;
+    border-bottom: 1px solid #0e004a24;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    &:disabled {
+        cursor: not-allowed;
+    }
+`;
+
+export const searchBarButton = css`
+    margin-left: 5px;
+    width: 50px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #0e004a24;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
+`;
+
+
+export const board = css`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    & > * {
+        margin-bottom: 15px;
+    }
+
+    & > *:nth-of-type(4n - 2) {
+        margin-left: 35px;
+    }
+
+    & > *:nth-of-type(4n - 1) {
+        margin: 0px 35px;
+    }
+`;
+
 
 export const boardListLayout = css`
     box-sizing: border-box;

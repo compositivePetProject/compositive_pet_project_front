@@ -1,15 +1,22 @@
 import { css } from "@emotion/react";
 
+
 export const header = css`
     box-sizing: border-box;
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
-    border-bottom: 1px solid #00005cff;
-    padding: 0px 10px;
-    width: 100%;
-    height: 70px;
+    padding: 5px 10px;
+    width: 1335px;
+    height: 90px;
+    z-index: 100;
+    background-color: white;
+`;
+
+export const logoBox = css`
+    box-sizing: border-box;
+    width: 19%;
 `;
 
 export const logoButton = css`
@@ -28,16 +35,23 @@ export const logoimage = css`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 95%;
     overflow: hidden;
     & > img {
-        height: 100%;
+        height: 95%;
     }
 `;
 
 export const centerSpace = css`
     display: flex;
-    flex-grow: 1; 
+`;
+
+export const loginBox = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    width: 20%;
+    height: 100%;
 `;
 
 export const accountItems = css`
@@ -50,11 +64,9 @@ export const login = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 10px;
-    width: 70px;
-    height: 30px;
-    font-size: 16px;
-    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
+    padding: 20px 15px;
+    font-size: 23px;
+    font-family: "montserrat", "NanumGothicCoding", sans-serif;
     font-weight: 600;
     overflow: hidden;
     text-decoration: none;
@@ -62,8 +74,9 @@ export const login = css`
     cursor: pointer;
 
     &:hover {
+        transition: all 0.2s ease-in-out;
         font-weight: 700;
-        color: #00005cff;
+        color: rgb(255, 64, 129);
     }
 `;
 
@@ -73,7 +86,7 @@ export const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
+    width: 70px;
     height: 100%;
     cursor: pointer;
 `;
@@ -98,41 +111,45 @@ export const profileImg = css`
 export const buttons = css`
     box-sizing: border-box;
     border: none;
-    padding: 20px;
-    width: 160px;
-    height: 70px;
-    font-size: 16px;
-    font-family: 'Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif;
-    font-weight: 600;
-    color: #333333;
+    padding: 0px 30px;
+    font-size: 15px;
+    font-family: 'montserrat', 'NanumGothicCoding', sans-serif;
+    font-weight: 700;
+    color: #212121;
     background-color: transparent;
     cursor: pointer;
 
     &:hover {
+        transition: all 0.2s ease-in-out;
         font-weight: 700;
-        border-bottom: 6px solid #00005cff;
-        color: #00005cff;
+        color: rgb(255, 64, 129);
     }
+    
+
 `;
 
 
 
 export const sidebar = (isHovering) => css`
-    transition: top 0.4s ease-in-out, height 0.4s ease-in-out; 
+    transition: top 0.3s ease-in-out, height 0.3s ease-in-out; 
     position: absolute;
-    top: 85px;
+    top: 85%;
     opacity: ${isHovering ? 1 : 0};
-    left: 0;
-    width: 100%;
-    height: ${isHovering ? "200px" : "0px"};
-    background-color: white;
+    padding: 20px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
     z-index: 99;
-    border-bottom: 1px solid #dbdbdb;
+    background-color: white;
 `;
+
+
+
 
 export const category = css`
     padding: 10px 0px;
 `;
+
 
 export const categoryText = css`
     text-decoration: none;
@@ -141,8 +158,9 @@ export const categoryText = css`
     font-weight: 600;
 
     &:hover {
+        transition: all 0.2s ease-in-out;
         font-weight: 700;
-        color: #00005cff;
+        color: rgb(255, 64, 129);
     }
 `;
 

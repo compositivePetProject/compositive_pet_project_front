@@ -10,7 +10,7 @@ function ProductPage({}) {
     <>
       <Routes>
         <Route path="/pet/shopping" element={ <ProductPetShoppingPage /> } />
-        <Route path="/pet/detail/:productId" element={<ProductPetDetailPage />} />
+        <Route path="/pet/detail" element={<ProductPetDetailPage />} />
         <Route path="/pet/payment" element={<ProductPayment />} />
         <Route path="/pet/cart" element={<ProductPetCartPage />} />
       </Routes>

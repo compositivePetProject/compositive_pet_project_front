@@ -212,66 +212,81 @@ export const passwordBox = css`
 `
 
 export const boardListHeader = css`
+    width: 100%;
+    display: flex;
+    margin: 5px 0px 0px 0px;
+    box-sizing: border-box;
+
+    & > div:nth-of-type(1) {
+        border-top-left-radius: 5px;
+        width: 5%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(2) {
+        width: 40%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(3) {
+        width: 25%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(4) {
+        width: 30%;
+        border-right: 1px solid #eee;
+        border-top-right-radius: 5px;
+    }
+`;
+
+export const label = css`
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    border-bottom: 2px solid #dbdbdb;
-    width: 100%;
-    & > div {
-        box-sizing: border-box;
-        border-right: 1px solid #dbdbdb;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 1;
-        height: 40px;
-        width: 25%;
-        font-weight: 700;
-        cursor: default;
-    }
-
-    & > div:nth-child(1) {
-        width: 50px;
-    }
-   
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #00005cff;
+    color: #eee;
+    cursor: default;
 `;
 
 export const boardListItem = css`
-    color: #222;
-    text-decoration: none;
-    cursor: pointer;
-    overflow: hidden;
-
-    & > div {
-        box-sizing: border-box;
-        display: flex;
-        border-bottom: 1px solid #dbdbdb;
-        width: 100%;
-        &:hover {
-            background-color: #eee;
-        }
-        & > div {
-            box-sizing: border-box;
-            border-right: 1px solid #dbdbdb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            height: 40px;
-            width: 25%;
-        }
-        
-        & > div:nth-child(1) {
-            width: 50px;
-        }
-        
-    }
-
     
-
-
 `;
 
+export const rowData = css`
+    width: 100%;
+    display: flex;
+
+    & > div:nth-of-type(1) {
+        width: 5%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(2) {
+        width: 40%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(3) {
+        width: 25%;
+        border-right: 1px solid #eee;
+    }
+    & > div:nth-of-type(4) {
+        width: 30%;
+        border-right: 1px solid #eee;
+    }
+`;
+
+export const labelData = css`
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #0e004a24;
+    font-size: 14px;
+    font-weight: 600;
+    height: 40px;
+    cursor: default;
+`;
 
 export const likeHeart = css`
     width: 25px;
@@ -283,7 +298,6 @@ export const status = css`
     display: flex;
     justify-content: center;
     align-items: center;
-   
 `
 
 

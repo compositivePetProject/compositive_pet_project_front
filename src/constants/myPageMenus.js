@@ -18,4 +18,16 @@ export const shoppingMenus = [
         path: "/account/mypage/reviews",
     },
 ]
+export const commnuityMenus = [
+    {
+        id: 1,
+        name: "커뮤니티 게시글 관리",
+        path: "/account/mypage/community/boards",
+    },
+    {
+        id: 2,
+        name: "분양 게시글 관리",
+        path: "/account/mypage/Adopt?page=1",
+    },
+]
 

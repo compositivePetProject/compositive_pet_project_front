@@ -16,6 +16,10 @@ import ProductPetPageDetailPageNumbers from "../../components/ProductPetPageDeta
 import ProductPayment from "../../components/ProductPayment/ProductPayment"
 import ProductImage from "../../components/ProductImage/ProductImage";
 import ProductReviewRatingChart from "../../components/ProductReviewRatingChart/ProductReviewRatingChart";
+import ProductSelect from "../../components/ProductSelect/ProductSelect";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { GoCodeReview } from "react-icons/go";
+import { FiShoppingCart } from "react-icons/fi";
 
 
 function ProductPetDetailPage() {
@@ -221,77 +225,116 @@ function ProductPetDetailPage() {
         return stars;
     }
 
+    const scrollToReviews = () => {
+        const reviewsElement = document.getElementById('reviews');
+        if (reviewsElement) {
+            reviewsElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     const selectStyle2 = {
         control: baseStyles => ({
             ...baseStyles,
             borderRadius: "0px",
             border: "none",
             outline: "none",
-            boxShadow: "none"
+            boxShadow: "none",
+            height: "38px"
         })
     }
-
-    console.log(user)
+   
+    console.log(selectedSizeType.option)
     return (
-        <div css={s.layout} >
-            <div css={s.sideImg}>
-                <div css={s.productImg}>  
-                    <ProductImage src={user.productImageUrl} /> 
+        
+        <div>
+
+            <div css={s.layout} >
+                <div css={s.sideImg}>
+                    <div css={s.productImg}>  
+                        <ProductImage src={user.productImageUrl} /> 
+                    </div>
+                    {/* <div>
+                        <div>
+                            <div>리뷰수</div> 
+                            <div>21231</div> 
+                        </div>
+                        <div>
+                            <div>사용자 총 평점</div>
+                            <div>123</div>
+                        </div>
+                    </div> */}
+                </div>
+                <div css={s.productBox}>
+                    <div css={s.productBoxHeader}>
+                        <div css={s.titleContainer}>
+                            <div>{user.productNameKor}</div>
+                            <div css={s.kakaoImg}>
+                                <img src="https://i.namu.wiki/i/hCT_psPprettZiPahW16bpqqcdX1ONz47hgEfPbvb8S7k9MyH-6TZKK4Cn9B2bzBYBUAzQ35V222jl2nfnIOK1GfVbDN--0FJTk-AQeuKsGKKc_Xq08CLAJa8suv2CryxZ6VqsMS4sNoL4N4vEAKjQ.svg" alt="" />
+                            </div>
+                        </div>
+                        <div css={s.icons}>
+                            <CiDeliveryTruck />
+                            <div>오늘출발</div>
+                        </div>
+                        <div css={s.contentBox}>
+                            <div>{user && user.productPrice.toLocaleString()}원</div>
+                        </div>
+                    </div>
+                    <div css={s.productBody}>
+                        <div css={s.productOrderContainer}>
+                            <div css={s.productDetailBox}>
+                                <div>상세옵션</div>
+                                <div>/ 상품 기본정보 입니다.</div>
+                            </div>
+                            <div css={s.productDeliveryBox}>
+                                <div>배송비</div>
+                                <div>무료</div>
+                            </div>
+                            <div css={s.productSizeBox}>
+                                <div>사이즈</div>
+                                <div>
+                                    {/* <Select
+                                    styles={selectStyle2}
+                                    options={productSizeOptions}
+                                    placeholder={"옵션을 선택해주세요"}
+                                    value={selectedSizeType.option}
+                                    onChange={selectedSizeType.handleOnChange}
+                                    /> */}
+                                    <ProductSelect options={productSizeOptions} value={selectedSizeType.option} onChange={selectedSizeType.handleOnChange} />
+                                </div>
+                            </div>
+                        </div>
+                            {!!selectedSizeType.option && 
+                            <div css={s.productDeliveryBox3}>
+                                <div>{user.productNameKor}</div>
+                                <div css={s.selectedSizeTypeOnBox}>
+                                    <button onClick={() => {
+                                                    if (productOrderCount > 1) {
+                                                        setProductOrderCount(productOrderCount - 1);
+                                                    }
+                                                }}><FaMinus />
+                                    </button>
+                                    <div>{productOrderCount}</div>
+                                    <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
+                                </div>
+                            </div>
+                            }
+                        <div css={s.productDeliveryBox2}>
+                            <div>총 상품 금액</div>
+                            <div>{user && (user.productPrice * productOrderCount).toLocaleString()}원</div>
+                        </div>
+                        <button css={s.productOrderPayButton} onClick={handleProductPurchase}>구매하기</button>
+                        <div css={s.productOrderbox}>
+                            <button css={s.productOrderButtons} onClick={scrollToReviews}><GoCodeReview />리뷰</button>
+                            <button css={s.productOrderButtons} onClick={toggleFavoriteStatusButton}>
+                                <div css={s.totalCount}>{isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />} {user.totalUserIdCount}</div>
+                            </button>
+                            <button css={s.productOrderButtons} onClick={handleProductCartAdd}><FiShoppingCart />장바구니</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div css={s.productBox}>
-                <div css={s.productBoxHeader}>
-                    <div>{user.productNameKor}</div>
-                    <div css={s.contentBox}>
-                        <div>{user.productPrice}원</div>
-                        <button onClick={toggleFavoriteStatusButton}>
-                            {isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />}
-                            <div css={s.totalCount}>{user.totalUserIdCount}</div>
-                        </button>
-                    </div>
-                </div>
-                <div css={s.productBody}>
-                    <div css={s.productOrderContainer}>
-                        <div css={s.productDetailBox}>
-                            <div>상세옵션</div>
-                            <div>/ 상품 기본정보 입니다.</div>
-                        </div>
-                        <div css={s.productDeliveryBox}>
-                            <div>배송비</div>
-                            <div>무료</div>
-                        </div>
-                        <div css={s.productSizeBox}>
-                            <div>사이즈</div>
-                            <div>
-                                <Select
-                                styles={selectStyle2}
-                                options={productSizeOptions}
-                                placeholder={"옵션을 선택해주세요"}
-                                value={selectedSizeType.option}
-                                onChange={selectedSizeType.handleOnChange}
-                                />
-                            </div>
-                        </div>
-                        <div css={s.productDeliveryBox}>
-                            <div>수량</div>
-                            <button onClick={() => {
-                                            if (productOrderCount > 1) {
-                                                setProductOrderCount(productOrderCount - 1);
-                                            }
-                                        }}><FaMinus />
-                            </button>
-                            <div>{productOrderCount}</div>
-                            <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
-                        </div>
-                        <div css={s.productOrderbox}>
-                            <div css={s.productDeliveryBox}>
-                                <div>총 상품 금액</div>
-                                <div>{user.productPrice * productOrderCount}원</div>
-                            </div>
-                            <button css={s.productOrderButtons} onClick={handleProductPurchase}>구매하기</button>
-                            <button css={s.productOrderButtons} onClick={handleProductCartAdd}>장바구니</button>
-                        </div>
-                    </div>
+                <div css={s.productFooter}>
                     <div>
                         {!isDetailPage 
                         ?
@@ -305,43 +348,40 @@ function ProductPetDetailPage() {
                         </>
                         }
                     </div>
-                    <div css={s.productFooter}>
-                        <div css={s.reviewBox}>
-                            <div> 리뷰 ({totalCount})</div>
-                        </div>
-                        <div css={s.ratingBox}>
-                            <div  css={s.ratingBox1}>
-                                <div><FaStar css={s.activeStarButton2} /> { isNaN(averageRating) ? 0 : averageRating }</div>
-                                <div>{positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
-                                <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>상품 리뷰 작성하기</button>
-                            </div>
-                            <ProductReviewRatingChart reviews={reviews} />
-                        </div>
-                        {reviews.map(review => 
-                            <div key={review.productCommentId} css={s.reviewBox1}>
-                                <div css={s.reviewBox2}>
-                                    <div css={s.reviewBox3}>
-                                        <div>{renderRatingStars(review.productCommentRatingValue)}</div>
-                                        <div>{review.updateDate}</div>
-                                    </div>
-                                    <div css={s.contentBox2}>
-                                        <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
-                                    </div>
-                                </div>
-                                <div css={s.reviewBox4}>
-                                    {hiddenUsername}님의 리뷰입니다.
-                                </div>
-                            </div>
-                        )}
-                        {   !getProductReviewsCountQuery.isLoading &&
-                            <ProductPetPageDetailPageNumbers reviewsCount={getProductReviewsCountQuery.data?.data} productId={productId}/> 
-                        }
+                    <div id="reviews" css={s.reviewBox}>
+                        <div> 리뷰 ({totalCount})</div>
                     </div>
-                    {isModalOpen && (
-                        <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount} />
+                    <div css={s.ratingBox}>
+                        <div  css={s.ratingBox1}>
+                            <div><FaStar css={s.activeStarButton2} /> { isNaN(averageRating) ? 0 : averageRating }</div>
+                            <div>{isNaN(positiveRatingPercentage.toFixed(1)) ? 0 : positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
+                            <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>상품 리뷰 작성하기</button>
+                        </div>
+                        <ProductReviewRatingChart reviews={reviews} />
+                    </div>
+                    {reviews.map(review => 
+                        <div key={review.productCommentId} css={s.reviewBox1}>
+                            <div css={s.reviewBox2}>
+                                <div css={s.reviewBox3}>
+                                    <div>{renderRatingStars(review.productCommentRatingValue)}</div>
+                                    <div>{review.updateDate}</div>
+                                </div>
+                                <div css={s.contentBox2}>
+                                    <div dangerouslySetInnerHTML={{__html:review.productCommentContent}}></div>
+                                </div>
+                            </div>
+                            <div css={s.reviewBox4}>
+                                {hiddenUsername}님의 리뷰입니다.
+                            </div>
+                        </div>
                     )}
+                    {   !getProductReviewsCountQuery.isLoading &&
+                        <ProductPetPageDetailPageNumbers reviewsCount={getProductReviewsCountQuery.data?.data} productId={productId}/> 
+                    }
                 </div>
-            </div>
+                {isModalOpen && (
+                    <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount} />
+                )}
         </div>
     );
 }

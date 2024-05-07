@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import AdoptCommunity from '../../pages/AdoptCommunity/AdoptCommunity';
 import AdoptCommunityDog from '../../pages/AdoptCommunityDog/AdoptCommunityDog';
 import AdoptCommunityCat from '../../pages/AdoptCommunityCat/AdoptCommunityCat';
@@ -9,8 +9,23 @@ import AdoptCommunityAdmin from '../../pages/AdoptCommunityAdmin/AdoptCommunityA
 import AdoptCommunityAdminDetail from '../../pages/AdoptCommunityAdminDetail/AdoptCommunityDetail';
 import AdoptCommunityUpdate from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
 import AdoptCommunityEdit from '../../pages/AdoptCommunityEdit/AdoptCommunityEdit';
+import AdoptCommunityBoardListPageEx from '../../pages/AdoptCommunityExample/AdoptCommunityBoardListPageEx/AdoptCommunityBoardListPageEx';
+import AdoptCommunityBoardDetailPage from '../../pages/AdoptCommunityExample/AdoptCommunityBoardDetailPage/AdoptCommunityBoardDetailPage';
+import AdoptCommunityBoardWritePage from '../../pages/AdoptCommunityExample/AdoptCommunityBoardWritePage/AdoptCommunityBoardWritePage';
 
 function AdoptRoute(props) {
+    const [ searchParam ] = useSearchParams();
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        console.log(pathname)
+        window.scrollTo(0, 0);
+        // window.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth'
+        // });
+        console.log(searchParam.get("boardid"))
+    }, [searchParam, pathname]);
 
     return (
         <>
@@ -23,6 +38,9 @@ function AdoptRoute(props) {
                 <Route path="/adoptCommunity/edit" element={ <AdoptCommunityEdit />} />
                 <Route path="/adoptCommunityDetail" element={<AdoptCommunityDetail />}/>
                 <Route path="/adoptCommunity/admin/:noticeId" element={ <AdoptCommunityAdminDetail />} /> 
+                <Route path="/ex/adoptcommunity" element={<AdoptCommunityBoardListPageEx/>} />
+                <Route path="/ex/adoptcommunity/detail" element={<AdoptCommunityBoardDetailPage/>} />
+                <Route path="/ex/adoptcommunity/write" element={<AdoptCommunityBoardWritePage />} />
             </Routes>
         </>
     );

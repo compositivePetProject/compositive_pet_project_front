@@ -1,142 +1,92 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-`;
-
-
-export const headerTitle = css`
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 700;
-`;
-
-export const boardListLayout = css`
-    box-sizing: border-box;
-    border: 1px solid #dbdbdb;
-    width: 900px;
-    height: 50%;
-`;
-
-export const boardListHeader = css`
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    border-bottom: 2px solid #dbdbdb;
     width: 100%;
-    & > div {
-        box-sizing: border-box;
-        border-right: 1px solid #dbdbdb;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 1;
-        height: 40px;
-        width: 25%;
-        font-weight: 700;
-        cursor: default;
-    }
-
-    & > div:nth-of-type(1) {
-        width: 80px;
-    }
-
-    & > div:nth-of-type(5) {
-        width: 20px;
-    }
-   
 `;
 
-export const boardListItem = css`
-    color: #222;
-    text-decoration: none;
-    cursor: pointer;
-    overflow: hidden;
-
-    & > div {
-        box-sizing: border-box;
-        display: flex;
-        border-bottom: 1px solid #dbdbdb;
-        width: 100%;
-        &:hover {
-            background-color: #eee;
-        }
-        & > div {
-            box-sizing: border-box;
-            border-right: 1px solid #dbdbdb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            height: 40px;
-            width: 25%;
-        }
-
-        & > div:nth-of-type(1) {
-        width: 80px;
-        }
-
-        & > div:nth-of-type(5) {
-        width: 20px;
-        }
-        
-    }
-`;
-
-export const pageNumberLayout = (page) => css`
+export const search = css`
+    margin: 20px 0px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-top: 10px;
-    & > a {
-        box-sizing: border-box;
-        margin: 0px 3px;
-        border: 1px solid #dbdbdb;
-        padding: 3px;
-        text-decoration: none;
-        color: #222;
-        font-weight: 700;
-        &:nth-of-type(${page === 1 ? 1 : page + 3}) {
-            background-color: #eee;
-        }
-    }
+    justify-content: space-between;
 `;
 
-export const writeButton = css`
+export const searchTitle = css`
     box-sizing: border-box;
-    margin-top: 50px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 50%;
+    font-size: 22px;
+    font-weight: 600;
+    padding-left: 10px;
+`;
+
+export const searchBox = css`
+    box-sizing: border-box;
+    display: flex;
+    padding-right: 10px;
+`;
+
+export const searchButton = css`
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 0px 15px;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
     &:hover {
-        background-color: #fafafa;
+        border: 1px solid #2400c4cb;
     }
+
     &:active {
-        background-color: #eee;
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
+
+`;
+
+export const writeButton = css`
+    margin-left: 5px;
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 0px 15px;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
     }
 `;
 
+export const board = css`
+    
 
-export const likeHeart = css`
-    width: 25px;
-    height: 25px;
-`
+    & > div {
+        margin: 0 auto;
+        width: 1120px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
 
-export const status = css`
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
-`
+        & > * {
+            margin-bottom: 15px;
+        }
+
+        & > *:nth-of-type(3n - 1) {
+            margin-left: 35px;
+            margin-right: 35px;
+        }
+    }
+
+`;
 
 
 
+export const pagination = css`
+
+`;
 

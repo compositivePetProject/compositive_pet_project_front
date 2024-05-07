@@ -7,7 +7,6 @@ export const containter = css`
  align-items: center;
  height: 100%;
  width: 90%;
-
 `
 
 export const detailPageTitle = css`
@@ -54,25 +53,10 @@ cursor: pointer;
 }
 `
 
-
-
-export const updatebutton = css`
-    box-sizing: border-box;
-    margin-top: 50px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 100px;
-    background-color: white;
-    font-weight: 600;
-    cursor: pointer;
-    &:hover {
-        background-color: #fafafa;
-    }
-
-    &:active {
-        background-color: #eee;
-    }
-
+export const buttonBox = css`
+    display: flex;
+    justify-content: end;
+    align-items: center;
 `;
 
 export const HeartIcon = css`
@@ -118,8 +102,8 @@ export const boardListHeader = css`
         font-weight: 700;
         cursor: default;
     }
-
     `
+
 export const CommunityContentboardListItem = css`
     text-decoration: none;
     cursor: pointer;
@@ -149,25 +133,6 @@ export const CommunityContentboardListItem = css`
 
             }
             `;
-
-
-
-
-export const listbutton = css`
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-padding: 5px;
-background-color: white;
-font-size: 12px;
-cursor: pointer;
-
-&:hover {
-  background-color: #dbdbdb;
-}
-& :active {
-  background-color: #eeeeee;
-}
 
 `
 

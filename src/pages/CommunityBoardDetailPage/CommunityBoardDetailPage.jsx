@@ -1,16 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest} from "../../apis/api/communityBoard";
+import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
 import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, getCommunityBoardCommentRequest, postCommunityBoardCommentRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
 import { useQuillInput } from "../../hooks/useQuillInput";
 import { getCommunityBoardViewRequest, postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
 import { BsEye } from "react-icons/bs";
-
 
 function CommunityBoardDetailPage(props) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,9 +24,6 @@ function CommunityBoardDetailPage(props) {
   const userId = principalQueryState.data?.data.userId;
   const [boardComment, setBoardCommnent] = useState([])
  
-
-
-
   const getBoardFavoriteStatusQuery = useQuery(
     ["getBoardFavoriteStatusQuery", userId, communityBoardId],
     async () => await getCommunityBoardLikeStatusRequest({
@@ -90,7 +85,6 @@ const deleteBoardLikeQuery = useMutation({
   }
 
 })
-
 
 const toggleBoardFavoriteStatusButton = async () => {
   if (isLiked) {
@@ -223,7 +217,6 @@ const toggleBoardFavoriteStatusButton = async () => {
 
   })
   
-
   const handleChangeCommuniteyBoardDelete  = () => {
     const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
     if(boardDelete) {
@@ -231,9 +224,6 @@ const toggleBoardFavoriteStatusButton = async () => {
         searchParams.get("communityBoardId")
       )
     }
-  } 
-
-
   const handleChangeBoardCommentDelete = () => {
     const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?")
     if(commentDelete) {
@@ -246,8 +236,6 @@ const toggleBoardFavoriteStatusButton = async () => {
   const handleChangeBoardComment = () => {
     navigate("/community/comments/")
   }
-
-
 
   return (
     <div css={s.containter}>

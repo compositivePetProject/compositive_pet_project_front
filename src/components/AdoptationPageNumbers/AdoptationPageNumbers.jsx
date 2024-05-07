@@ -10,15 +10,15 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
     const [ numbers , setNumbers ] = useState([]);
     
 
-  useEffect(() => {
-    const startPageNumber = page % 10 === 0 ? page - 9 : page - (page % 10) + 1;
-    const endPageNumber = startPageNumber + 9 > maxPageNumber ? maxPageNumber : startPageNumber + 9;
-    let pageNumbers = [];
-    for(let i = startPageNumber; i <= endPageNumber; i++) {
-      pageNumbers = [...pageNumbers, i];
-    }
-    setNumbers(() => pageNumbers);
-  }, [page, maxPageNumber, totalCount])
+    useEffect(() => {
+      const startPageNumber = page % 10 === 0 ? page - 9 : page - (page % 10) + 1;
+      const endPageNumber = startPageNumber + 9 > maxPageNumber ? maxPageNumber : startPageNumber + 9;
+      let pageNumbers = [];
+      for(let i = startPageNumber; i <= endPageNumber; i++) {
+        pageNumbers = [...pageNumbers, i];
+      }
+      setNumbers(() => pageNumbers);
+    }, [page, maxPageNumber, totalCount])
 
  
 
@@ -27,20 +27,20 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
       <div css={s.pageNumbers}>
         {
           page !== 1 &&
-          <Link css={s.pageButton(false)} to={`/adoptCommunity?page=${page - 1}`}>&#60;</Link>
+          <Link css={s.pageButton(false)} to={`/ex/adoptcommunity?page=${page - 1}`}>&#60;</Link>
         }
         {
           numbers.map(number => 
             <Link 
             key={number} 
             css={s.pageButton(number === page)} 
-            to={`/adoptCommunity?page=${number}`}
+            to={`/ex/adoptcommunity?page=${number}`}
             >{number}</Link>
           )
         }
         {
           page !== maxPageNumber &&
-          <Link css={s.pageButton(false)} to={`/adoptCommunity?page=${page + 1}`}>&#62;</Link>
+          <Link css={s.pageButton(false)} to={`/ex/adoptcommunity?page=${page + 1}`}>&#62;</Link>
         }
       </div>
       <div css={s.pageCount}>

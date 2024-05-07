@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 
-function Quill({value, onChange, ref}) {
+function Quill({value, onChange, ref, height}) {
     const modules = {
         toolbar : [
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -18,13 +18,13 @@ function Quill({value, onChange, ref}) {
     }
     return (
         <ReactQuill 
-        modules={modules} 
+        modules={modules}
         onChange={onChange} 
         ref={ref} 
         style={{
             width: "100%",
             marginBottom: "50px",
-            height: "700px"
+            height: height ? height : "700px"
         }}
         value={value}
         />

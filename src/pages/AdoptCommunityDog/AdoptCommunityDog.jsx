@@ -1,216 +1,146 @@
-import React, { useEffect, useState } from 'react';
-import { BiError } from 'react-icons/bi';
-import PageContainer from '../../components/PageContainer/PageContainer';
 /** @jsxImportSource @emotion/react */
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
-import {useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import {deleteAdoptLike, getAdoptDog, getAdoptDogCount, postAdoptLike, postAdoptView } from '../../apis/api/Adopt';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import AdoptationPageNumbersDog from '../../components/AdoptationPageNumbersDog/AdoptationPageNumbersDog';
-import { AiOutlineLike } from 'react-icons/ai';
-import { FaHeart, FaRegHeart } from 'react-icons/fa6';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
+import { TfiWrite } from "react-icons/tfi";
+import { FaSearch } from "react-icons/fa";
+import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/AdoptationPageNumbers";
+import BoardBox from "../../components/BoardBox/BoardBox";
+import TopSelect from "../../components/admin/TopSelect/TopSelect";
+import TopInput from "../../components/admin/TopInput/TopInput";
+import { getAdoptAll, getAdoptCount, postAdoptView } from "../../apis/api/Adopt";
+import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
 
 function AdoptCommunityDog() {
-    const [viewedPosts,setViewedPost ]= useState(new Set());
-    const [likeStatus, setLikeStatus] = useState({});
-    const [likeCounts, setLikeCounts] = useState({});
-    const [ animalCategoryId, setAnimalCategoryId ] = useState()
+    const [ adoptCommunityBoardList, setAdoptCommunityBoardList ] = useState([]);
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const searchCount = 12;
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
-    const userId = principalQueryState.data?.data.userId;
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const searchCount = 7;
-    const [maxPageNumberDog, setMaxPageNumberDog] = useState(0);
-    const [totalCountDog, setTotalCountDog] = useState(0);
-    const boardId = parseInt(searchParams.get("boardId"))
-    const page = parseInt(searchParams.get("page")) || 1;
-    const lastPage = page * searchCount;
-    const firstPage = lastPage - searchCount;
-    
-    const getAdoptDogCountQuery = useQuery(
-        ["getAdoptDogCountQuery"],
-        async () => getAdoptDogCount({
-            page,
-            count : searchCount
+    const [ maxPageNumber, setMaxPageNumber ] = useState(0);
+    const [ totalCount, setTotalCount ] = useState(0);
+    const navigate = useNavigate();
+
+    const [ search, setSearch ] = useState({
+        adoptationBoardTitle: "",
+        boardAnimalCategoryId: 0,
+    })
+
+    const postAdoptCommunityBoardView = useMutation({
+        mutationKey:"postAdoptCommunityBoardView",
+        mutationFn:postAdoptView,
+        onSuccess: (response) => {
+        },
+        onError: (error) => {
+            
+        }
+
+    })
+
+
+    const handleOnClick = (board) => {
+        postAdoptCommunityBoardView.mutate({
+            adoptationBoardId:board.adoptationBoardId,
+            userId:principalQueryState.data?.data.userId
+        })
+        navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+    }
+
+    const getAdoptCommunityBoardList= useQuery(
+        ["getAdoptCommunityBoardList", searchParams.get("page")],
+        async () => await getAdoptAll({
+            page: searchParams.get("page"),
+            count: searchCount,
+            adoptationBoardTitle: search.adoptationBoardTitle,
+            boardAnimalCategoryId: 1
         }),
         {
+            retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                setMaxPageNumberDog(response.data.maxPageNumberDog);
-                setTotalCountDog(response.data.totalCountDog);
-                console.log(response.data)
-              
-                
+                console.log(response)
+                setAdoptCommunityBoardList(response);
             },
             onError: (error) => {
                 console.log(error);
             }
         }
-    )
+    );
 
-    const PostAdoptViewMutation = useMutation({
-        mutationKey: "PostAdoptViewMutation",
-        mutationFn: postAdoptView,
-        onSuccess: (response) => {
-            console.log("조회 완료입니다")
-        },
-        onError: (error) => {
-            console.log(`에러:${error}`)
-        }
-    })
-
-
-    const postAdoptLikeMutation = useMutation({
-        mutationKey: "postAdoptLikeMutation",
-        mutationFn: postAdoptLike,
-        onSuccess: (response) => {
-          
-        },
-        onError: (error) => {
-            
-        }
-    })
-
-    
-    const DeleteAdoptLikeMutation = useMutation({
-        mutationKey: "DeleteAdoptLikeMutation",
-        mutationFn: deleteAdoptLike,
-        onSuccess: (response) => {
-            console.log("좋아요 성공")
-            
-        },
-        onError: (error) => {
-            
-        }
-    })
-
-    const handleClick = async (boardId) => {
-        try {
-            if (!viewedPosts.has(boardId)) {
-                await PostAdoptViewMutation.mutate({
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                viewedPosts.add(boardId);
-                console.log(viewedPosts); // 디버깅 또는 모니터링 용도로 출력
-            } else {
-                navigate(`/adoptCommunityDetail?page=${page}&boardId=${boardId}`);
-            }
-            
-            navigate(`/adoptCommunityDetail?page=${page}&boardId=${boardId}`);
-        } catch (error) {
-            console.error("클릭 처리 중 오류 발생:", error);
-        }
-    };
-
-
-    const handleLikeSubmit = (boardId) => {
-        try {
-            if (!likeStatus[boardId]) {
-                postAdoptLikeMutation.mutate({
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                setLikeStatus(prevState => ({ ...prevState, [boardId]: true }));
-                localStorage.setItem('likeStatusDog', JSON.stringify({ ...likeStatus, [boardId]: true })); 
-            } else {
-                DeleteAdoptLikeMutation.mutate({
-                    adoptationBoardId: boardId,
-                    userId: userId
-                });
-                setLikeStatus(prevState => ({ ...prevState, [boardId]: false }));
-                localStorage.setItem('likeStatusDog', JSON.stringify({ ...likeStatus, [boardId]: false })); // 이 부분 수정
-            }
-        } catch (error) {
-            console.error("좋아요 처리 중 오류 발생:", error);
+    const searchHandleKeyDown = (e) => {
+        if(e.key === "Enter") {
+          searchSubmit();
         }
     }
-    
-    const navigate = useNavigate();
-    const [adoptList, setAdoptList] = useState([]); 
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getAdoptDog();
-                const index = response.slice(firstPage, lastPage)
-                setAdoptList(index);
-                console.log(index)
-                const savedLikeStatus = localStorage.getItem('likeStatusDog');
-                if (savedLikeStatus) {
-                    setLikeStatus(JSON.parse(savedLikeStatus));
-                }
-            
-            } catch (error) {
-                setError(error);
+    const searchSubmit = () => {
+        getAdoptCommunityBoardList.refetch();
+    }
+
+
+    const getAdoptCommunityBoardCount = useQuery(
+        ["getAdoptCommunityBoardCount", getAdoptCommunityBoardList],
+        async () => await getAdoptCount({
+            count: searchCount,
+            adoptationBoardTitle: search.adoptationBoardTitle,
+            boardAnimalCategoryId: 1
+        }),
+        {
+            retry: 0,
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                console.log(response)
+                setMaxPageNumber(response.data.maxPageNumber)
+                setTotalCount(response.data.totalCount)
+            },
+            onError: (error) => {
                 console.log(error);
             }
-        };
+        }
 
-        fetchData();
-
-    },[page])
-
-
-
-
-    const handleWriteClick = () => {
-        navigate("/adoptCommunity/register")
-    }
-
-
-    const handlePageChange = (pageNumber) => {
-        setSearchParams({ page: pageNumber });
-    };
-
-   
+    )
 
     return (
-       
-            <div css={s.layout}>
-                <div>
-                    <h1 css={s.headerTitle}>강아지 분양 게시글</h1>
-                    <div css={s.boardListLayout}>
-                        <div css={s.boardListHeader}>
-                            <div css={s.boardListHeader}>
-                                <div>닉네임</div>
-                                <div>제목</div>
-                                <div>카테고리</div>
-                                <div>등록일</div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div css={s.boardListItem}>
-                            {adoptList.map((data) => (
-                                <div 
-                                key={data.adoptationBoardId}>
-                                    <div>{data.username}</div>
-                                    <div onClick={() => handleClick(data.adoptationBoardId)}>{data.adoptationBoardTitle}</div>
-                                    <div>{data.boardAnimalCategoryNameKor}</div>
-                                    <div>{data.createDate}</div>
-                                    <div css={s.status}>
-                                        <div onClick={()=>{handleLikeSubmit(data.adoptationBoardId)}}>
-                                            {!likeStatus[data.adoptationBoardId] ? (
-                                                <FaRegHeart css={s.likeHeart} />
-                                            ) : (
-                                                <FaHeart css={s.likeHeart} />
-                                            )}
-                                       </div>
-                                        <div>{data.totalCount}</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+        <div css={s.layout}>
+            <div css={s.search}>
+                <div css={s.searchTitle}>강아지 분양 게시판</div>
+                <div css={s.searchBox}>
+                    <TopInput label={"검색게시글"} name={"adoptationBoardTitle"} inputSize={10} setState={setSearch} onKeyDown={searchHandleKeyDown}/>
+                    <button css={s.searchButton} onClick={searchSubmit}><FaSearch/></button>
+                    <button css={s.writeButton} onClick={() => navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
                 </div>
-                
-                <button css={s.writeButton} onClick={handleWriteClick}>글쓰기</button>
-                <AdoptationPageNumbersDog maxPageNumberDog={maxPageNumberDog} totalCountDog={totalCountDog} onChange={handlePageChange}/>
-                </div>
+            </div>
 
-        
-    );
+            <div css={s.board}>
+                <div>
+                    {
+                        adoptCommunityBoardList.map(board => 
+                            <BoardBox
+                                key={board.adoptationBoardId} 
+                                boardTitle={board.adoptationBoardTitle} 
+                                userNickname={board.userNickname} 
+                                updateDate={board.updateDate}
+                                heartCount={board.totalCount}
+                                viewCount={board.viewCount}
+                                commentCount={board.commentCount}
+                                animalCategoryId={board.boardAnimalCategoryId}
+                                contentImg={board.adoptationBoardContent}       
+                                onClick={() => handleOnClick(board)}
+                            />
+                        )
+                    }
+                </div>
+            </div>
+
+            <div>
+                {
+                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount}/>
+                }
+            </div>
+
+        </div>
+    )
 }
 
 export default AdoptCommunityDog;

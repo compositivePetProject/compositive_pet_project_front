@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
 
-
 export const layout = css`
     position: fixed;
     top: 20%;
-    right: 30px; 
+    right: 80px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,17 +11,23 @@ export const layout = css`
     width: 150px;
     border-radius: 5px;
     border: 1px solid #0e004a24;
-    padding-top: 75px;
+    padding-top: 50px;
+    background: #F8F8F8;
+
+    & > div:nth-of-type(3) {
+        box-sizing: border-box;
+        border-top: 1px solid #0e004a24;
+    }
 
     & > div:nth-of-type(4) {
         box-sizing: border-box;
-        border-top: 1px solid #eeeeee;
-        border-bottom: 1px solid #eeeeee;
+        border-top: 1px solid #0e004a24;
+        border-bottom: 1px solid #0e004a24;
     }
 
     & > div:nth-of-type(5) {
         box-sizing: border-box;
-        border-bottom: 1px solid #eeeeee;
+        border-bottom: 1px solid #0e004a24;
     }
 
     & > div:nth-of-type(6) {
@@ -41,20 +46,24 @@ export const title = css`
     align-items: center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: #00005cff;
-    color: #eeeeee;
+    color: #222222;
+    border-bottom: 1px solid #0e004a24;
     font-weight: 600;
+    cursor: default;
 `;
 
 export const info = css`
     flex-direction: column;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    width: 100px;
+    padding: 20px 0px;
+    width: 100%;
+    align-items: center;
     color: #333333;
+    background-color: white;
     font-weight: 700;
     & > img {
+        width: 100px;
         border-radius: 50%;
     }
 
@@ -65,8 +74,7 @@ export const info = css`
 
 export const auth = css`
     width: 100%;
-    background-color: #00005cff;
-    color: #eeeeee;
+    color: #222222;
 `;
 
 export const menuContainer = css`
@@ -75,8 +83,7 @@ export const menuContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #00005cff;
-    color: #eeeeee;
+    color: #222222;
     cursor: pointer;
     font-weight: 600;
     & > div:nth-of-type(1) {
@@ -91,10 +98,10 @@ export const menuContainer = css`
     }
 
     &:hover {
-        background-color: #00003cff;
+        color: rgb(255, 64, 129);
     }
 
     &:active {
-        background-color: #00002cff;
+        color: rgb(255, 64, 129);
     }
 `;

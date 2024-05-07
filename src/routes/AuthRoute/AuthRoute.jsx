@@ -43,7 +43,7 @@ function AuthRoute(props) {
                     <Route path="/community/dog" element={<CommunityBoardDogPage />} />
                     <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
                     <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
-                    <Route path="/community/board/:boardId" element={<CommunityBoardDetailPage />} />
+                    <Route path="/community/board" element={<CommunityBoardDetailPage />} />
                     <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
                     <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
                     <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />

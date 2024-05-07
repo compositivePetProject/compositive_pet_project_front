@@ -271,6 +271,17 @@ const toggleBoardFavoriteStatusButton = async () => {
                 </button>
               )}
 
+          <div>
+            {board.userId === userId && (
+              <button css={s.deletebutton} 
+                onClick={handleChangeCommuniteyBoardDelete}
+                  >
+                    게시글 삭제
+                  </button>
+                )}
+          </div>
+
+
               <div>
                   <button onClick={toggleBoardFavoriteStatusButton}>
                     {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
@@ -302,6 +313,7 @@ const toggleBoardFavoriteStatusButton = async () => {
                  </div>
             
 
+<<<<<<< Updated upstream
                   <div css={s.CommunityContentboardListItem}>
                     {boardComment.map((comment) => (
                       <div key={comment.communityBoardCommentId} css={s.commentbox1}>
@@ -335,6 +347,32 @@ const toggleBoardFavoriteStatusButton = async () => {
                                 </div>
                               ))}
                         </div>
+=======
+
+          <div>
+              {boardComment.map((comment) => (
+                <div key={comment.communityBoardCommentId} css={s.commentbox1}>
+                  <div css={s.commentbox2}>
+                    <div dangerouslySetInnerHTML={{ __html: comment.communityBoardCommentContent }}></div>
+                  </div>
+                    <div>{comment.createDate}</div>
+                    <div>
+                    {userId === comment.userId && (
+                      <button onClick={() => handleChangeBoardCommentDelete(comment.communityBoardCommentId)}>
+                        댓글 삭제
+                      </button>
+                    )}
+              </div>
+          <div>
+            {userId === comment.userId && (
+                <button
+                  css={s.updateCommentButton}
+                  onClick={() => handleChangeBoardComment(comment.communityBoardCommentId)}
+                  >
+                댓글 수정
+              </button>
+                )}
+>>>>>>> Stashed changes
                     </div>
                   </>
                 }

@@ -125,20 +125,24 @@ function AdoptCommunityBoardListPageEx() {
             </div>
 
             <div css={s.board}>
-                {
-                    adoptCommunityBoardList.map(board => 
-                        <BoardBox
-                            key={board.adoptationBoardId} 
-                            boardTitle={board.adoptationBoardTitle} 
-                            userNickname={board.userNickname} 
-                            updateDate={board.updateDate}
-                            heartCount={board.totalCount}
-                            viewCount={board.viewCount}
-                            commentCount={board.commentCount}
-                            onClick={() => handleOnClick(board)}
-                        />
-                    )
-                }
+                <div>
+                    {
+                        adoptCommunityBoardList.map(board => 
+                            <BoardBox
+                                key={board.adoptationBoardId} 
+                                boardTitle={board.adoptationBoardTitle} 
+                                userNickname={board.userNickname} 
+                                updateDate={board.updateDate}
+                                heartCount={board.totalCount}
+                                viewCount={board.viewCount}
+                                commentCount={board.commentCount}
+                                animalCategoryId={board.boardAnimalCategoryId}
+                                contentImg={board.adoptationBoardContent}       
+                                onClick={() => handleOnClick(board)}
+                            />
+                        )
+                    }
+                </div>
             </div>
 
             <div>

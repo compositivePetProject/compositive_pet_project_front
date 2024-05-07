@@ -63,21 +63,25 @@ export const writeButton = css`
 `;
 
 export const board = css`
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    
 
-    & > * {
-        margin-bottom: 15px;
+    & > div {
+        margin: 0 auto;
+        width: 1120px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        & > * {
+            margin-bottom: 15px;
+        }
+
+        & > *:nth-of-type(3n - 1) {
+            margin-left: 35px;
+            margin-right: 35px;
+        }
     }
 
-    & > *:nth-of-type(4n - 2) {
-        margin-left: 35px;
-    }
-
-    & > *:nth-of-type(4n - 1) {
-        margin: 0px 35px;
-    }
 `;
 
 

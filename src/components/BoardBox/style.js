@@ -1,62 +1,77 @@
 import { css } from "@emotion/react";
 export const boardCard = css`
+    box-sizing: border-box;
     width: 350px;
-    height: 380px;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 92, 0.42);
+    height: 450px;
+    border: 1px solid #dbdbdb;
+    border-radius: 15px;
+    box-shadow: 0 0 25px -10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 `;
 
 export const imageBox = css`
-    width: 100%;
-    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    & > img {
+        width: 100%;
+        height: 200px;
+    }
 `
 
 export const contentBox = css`
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    width: 100%;
-    height: 130px;
     padding: 20px;
-    border-top: 1px solid rgba(0, 0, 92, 0.42);
-
+    color: rgb(15, 19, 23);
+    font-weight: 700;
+    font-size: 16px;
 
     & > div:nth-of-type(1) {
-        font-size: 18px;
-        font-weight: 600;
+        position: relative;
+        height: 170px;
+        border-bottom: 1px solid #dbdbdb;
+        margin-bottom: 10px;
+
+        & > div:nth-of-type(2) {
+            position: absolute;
+            top: 150px;
+            right: 0;
+
+            color: #dbdbdb;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+   & > div:nth-of-type(2) {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+
+        & > div:nth-of-type(1) {
+            display: flex;
+            align-items: center;
+
+            &:nth-of-type(1) > span {
+                font-size: 14px;
+            }
+        }
+    }
+`
+
+export const countBox = css`
+    display: flex;
+    justify-content: center;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     & > div:nth-of-type(2) {
-        margin-top: 50px;
-        display: flex;
-        justify-content: flex-end;
-        color: #cccccc;
+        margin: 0px 5px;
     }
-
-`
-
-export const writerInfoBox = css`
-    box-sizing: border-box;
-    width: 100%;
-    height: 50px;
-    padding: 0px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(0, 0, 92, 0.42);
-
-    & > div:nth-of-type(1) {
-        font-weight: 600;
-    }
-
 `;
-
-export const iconBox = css`
-    display: flex;
-    padding-top: 5px;
-    align-items: center;
-
-    & > div > * {
-        font-size: 24px;
-    }
-`

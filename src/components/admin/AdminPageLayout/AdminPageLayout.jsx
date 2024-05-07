@@ -10,8 +10,10 @@ const layout = css`
 `
 
 const left = css`
-    position: sticky;
-    top: 10px;
+    position: fixed;
+    top: 130px;
+    left: 50px;
+    z-index: 9999;
     box-sizing: border-box;
     margin-right: 10px;
     border: 1px solid #0e004a24;
@@ -22,7 +24,7 @@ const left = css`
 `
 
 const right = css`
-    flex-grow: 1;
+    width: 1330.33px;
 `
 
 const menuNav = css`

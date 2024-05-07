@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import AdoptCommunity from '../../pages/AdoptCommunity/AdoptCommunity';
 import AdoptCommunityDog from '../../pages/AdoptCommunityDog/AdoptCommunityDog';
 import AdoptCommunityCat from '../../pages/AdoptCommunityCat/AdoptCommunityCat';
@@ -14,6 +14,18 @@ import AdoptCommunityBoardDetailPage from '../../pages/AdoptCommunityExample/Ado
 import AdoptCommunityBoardWritePage from '../../pages/AdoptCommunityExample/AdoptCommunityBoardWritePage/AdoptCommunityBoardWritePage';
 
 function AdoptRoute(props) {
+    const [ searchParam ] = useSearchParams();
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        console.log(pathname)
+        window.scrollTo(0, 0);
+        // window.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth'
+        // });
+        console.log(searchParam.get("boardid"))
+    }, [searchParam, pathname]);
 
     return (
         <>

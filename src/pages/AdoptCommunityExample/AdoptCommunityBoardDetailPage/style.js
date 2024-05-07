@@ -1,7 +1,23 @@
 import { css } from "@emotion/react";
 export const layout = css`
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0px 200px 0px 130px;
     width: 100%;
+    height: 100%;
+
+    & > div:nth-of-type(1) {
+        position: sticky;
+        top: 0px;
+        margin-right: 20px;
+        height: max-content;
+    }
 `;
+
+export const topIconBox = css`
+    padding-top: 200px;
+`
 
 export const buttonBox = css`
     display: flex;
@@ -81,8 +97,15 @@ export const commentContent = css`
 
 export const iconBox = css`
     display: flex;
+    flex-direction: column;
+    background-color: red;
+    width: 50px;
     padding-top: 5px;
+    justify-content: center;
     align-items: center;
+    border-radius: 40px;
+    background: #F8F8F8;
+    border: 1px solid #0e004a24;
 
     & > div {
        display: flex;
@@ -95,10 +118,43 @@ export const iconBox = css`
     }
 `
 
-export const count = css`
-    margin-right: 10px;
-
-    & div {
-        font-size: 18px;
+export const countBox = css`
+    display: flex;
+    flex-direction: column;
+    &>div:nth-of-type(2) {
+        font-size: 14px;
+        color: #222222;
     }
+`;
+
+export const heartCount = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    border-radius: 50%;
+    border: 1px solid #0e004a24;
+    color: #0e004a24;
+
+    &:hover{
+        color: red;
+        border: 1px solid red;
+    }
+`;
+
+export const count = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    border-radius: 50%;
+    border: 1px solid #222222;
+    color: #222222;
+`;
+
+export const heart = css`
 `;

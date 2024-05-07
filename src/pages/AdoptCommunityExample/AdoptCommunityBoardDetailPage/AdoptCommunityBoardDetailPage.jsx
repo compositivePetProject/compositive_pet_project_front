@@ -9,7 +9,10 @@ import Quill from "../../../components/Quill/Quill";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { SlSpeech } from "react-icons/sl";
+import { GrFormView } from "react-icons/gr";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
+import { AiOutlineComment } from "react-icons/ai";
+import { FaRegComments } from "react-icons/fa";
 
 function AdoptCommunityBoardDetailPage() {
   const [ likedUsers, setLikedUsers] = useState([]);
@@ -260,94 +263,93 @@ function AdoptCommunityBoardDetailPage() {
     }
   }
 
-
-  useEffect(() => {
-    console.log(boardDetail)
-  }, [boardDetail])
-
-  // useEffect(() => {
-  //   console.log(boardComment);
-  // }, [boardComment])
-
   return (
     <div css={s.layout}>
-      { principalQueryState.data?.data.username === boardDetail.username
-        ? <div css={s.buttonBox}>
-            { buttonState === 1
-              ? 
-              <>
-                <button css={s.button} onClick={updateSubmit}>확인</button>
-                <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
-              </>
-              : 
-              <>
-                <button css={s.button} onClick={() => setButtonState(1)}>수정</button>
-                <button css={s.button} onClick={deleteSubmit}>삭제</button>
-              </>
-            }
-          </div>
-        : <></> 
-      }
-      <div>
-        {
-          buttonState === 1
-          ?
-            <>
-              <input type="text" defaultValue={boardDetail.adoptationBoardTitle} onChange={updateTitleOnchange} />
-              <Quill value={boardDetail.adoptationBoardContent} onChange={updateOnchange}/>
-            </>
-          :
-            !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
-        }
-      </div>
-
-      <div>
+      <div css={s.topIconBox}>
         {/* 좋아요, 댓글, 조회수 관련 코드 작성해주세요. */}
         <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div css={s.count} onClick={favoriteBoard}>
-              <AiOutlineHeart/>
+            <div css={s.countBox}>
+              <div css={s.heartCount} onClick={favoriteBoard}>
+                <AiOutlineHeart/>
+              </div>
               <div>{boardDetail.totalCount}</div>
             </div>
           }
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div css={s.count}>
-              <GrView/>
+            <div css={s.countBox}>
+              <div css={s.count}>
+                <GrFormView/>
+              </div>
               <div >{boardDetail.viewCount}</div>
             </div>
           }
           {
             !getAdoptCommunityBoardDetail.isLoading &&
-            <div css={s.count}>
-              <SlSpeech />
-              <div >{boardDetail.commentCount}</div>
+            <div css={s.countBox}>  
+              <div css={s.count}>
+                <FaRegComments />
+              </div>
+              <div>{boardDetail.commentCount}</div>
             </div>
           }
         </div>
-
-        <div css={s.boardCommentBox}>
+      </div>
+      <div>
+        { principalQueryState.data?.data.username === boardDetail.username
+          ? <div css={s.buttonBox}>
+              { buttonState === 1
+                ? 
+                <>
+                  <button css={s.button} onClick={updateSubmit}>확인</button>
+                  <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
+                </>
+                : 
+                <>
+                  <button css={s.button} onClick={() => setButtonState(1)}>수정</button>
+                  <button css={s.button} onClick={deleteSubmit}>삭제</button>
+                </>
+              }
+            </div>
+          : <></> 
+        }
+        <div>
           {
-            boardComment.map(comment => 
-              <BoardCommentBox
-                pirincipal={comment.userId}
-                key={comment.adoptationBoardCommentId}
-                commentId={comment.adoptationBoardCommentId}
-                commentIdState={setCommentId}
-                userNickname={comment.userNickname}
-                updateDate={comment.updateDate}
-                commentContent={comment.adoptationBoardCommentContent}
-                deleteComment={() => deleteCommentSubmit(comment.adoptationBoardCommentId)}
-                updateComment={setCommentValue}
-                buttonState={setCommentButtonState}
-              />
-              )
+            buttonState === 1
+            ?
+              <>
+                <input type="text" defaultValue={boardDetail.adoptationBoardTitle} onChange={updateTitleOnchange} />
+                <Quill value={boardDetail.adoptationBoardContent} onChange={updateOnchange}/>
+              </>
+            :
+              !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
           }
         </div>
-        <div css={s.commentBox}>
-          <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
-          <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
+        <div>
+          <div css={s.boardCommentBox}>
+            {
+              boardComment.map(comment => 
+                <BoardCommentBox
+                  pirincipal={comment.userId}
+                  key={comment.adoptationBoardCommentId}
+                  commentId={comment.adoptationBoardCommentId}
+                  commentIdState={setCommentId}
+                  userNickname={comment.userNickname}
+                  updateDate={comment.updateDate}
+                  commentContent={comment.adoptationBoardCommentContent}
+                  deleteComment={() => deleteCommentSubmit(comment.adoptationBoardCommentId)}
+                  updateComment={setCommentValue}
+                  buttonState={setCommentButtonState}
+                />
+                )
+            }
+          </div>
+          <div css={s.commentBox}>
+            <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
+            <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
+          </div>
         </div>
       </div>
 

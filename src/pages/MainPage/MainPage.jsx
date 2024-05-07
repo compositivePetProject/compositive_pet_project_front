@@ -6,7 +6,10 @@ import { HiChevronRight, HiChevronLeft, HiOutlineChatBubbleOvalLeft } from "reac
 import { AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { VscChevronRight } from "react-icons/vsc";
-import { useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import FixBar from "../../components/FixBar/FixBar";
+import { getTop3AdoptBoard, postAdoptView } from "../../apis/api/Adopt";
+import BoardBox from "../../components/BoardBox/BoardBox";
 
 function MainPage(props) {
     const navigate = useNavigate();
@@ -14,9 +17,10 @@ function MainPage(props) {
     const principalQueryState = queryClient.getQueryState("principalQuery");
     const [curSlide, setCurSlide] = useState(0);
     const [intervalId, setIntervalId] = useState(null);
-    const FIRST_SLIDE_INDEX = 0; 
+    const FIRST_SLIDE_INDEX = 0;
     const LAST_SLIDE_INDEX = trainCompartment.length - 1;
     const MOVE_SLIDE_INDEX = 1;
+    const [ top3AdoptBoardList, setTop3AdoptBoardList ] = useState([]);
 
     const autoMoveSlide = () => {
         if (intervalId !== null) {
@@ -57,6 +61,42 @@ function MainPage(props) {
         }
       };
 
+    const getTop3AdoptBoardList = useQuery(
+      ["getTop3AdoptBoardList"],
+      async () => await getTop3AdoptBoard(),
+      {
+        retry: 0,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        onSuccess: (response) => {
+          setTop3AdoptBoardList(response.data);
+        },
+        onError: (error) => {
+          console.log(error);
+        }
+      }
+    )
+
+    const postAdoptCommunityBoardView = useMutation({
+      mutationKey:"postAdoptCommunityBoardView",
+      mutationFn: postAdoptView,
+      onSuccess: (response) => {
+      },
+      onError: (error) => {
+      }
+    })
+
+    const handleOnClick = (board) => {
+      postAdoptCommunityBoardView.mutate({
+          adoptationBoardId:board.adoptationBoardId,
+          userId:principalQueryState.data?.data.userId
+      })
+      navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+    }
+
+    useEffect(() => {
+      console.log(top3AdoptBoardList);
+    }, [top3AdoptBoardList])
 
     return (
         <div css={s.layout}>
@@ -87,66 +127,6 @@ function MainPage(props) {
               </div>
               <div css={s.detailContainer}>
                 {/* 반복문 돌릴 예정 (미완) */}
-                <div css={s.communityContainerIn}>
-                    <div css={s.communityContainerImage}>
-                      <img src={images[0].img} alt="" />
-                    </div>
-                    <div css={s.communityContainerText}>
-                      <div>
-                        (타이틀) 다양한 강아지,고양이 집사님들과 소통하러 가자
-                      </div>
-                      <div>
-                        <div>글쓴이</div>
-                        <div>
-                          <span> <AiOutlineHeart/> 1</span>
-                          <span> <HiOutlineChatBubbleOvalLeft /> 1</span>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div css={s.communityContainerIn}>
-                    <div css={s.communityContainerImage}>
-                      <img src={images[1].img} alt="" />
-                    </div>
-                    <div css={s.communityContainerText}>
-                      <div>
-                        (타이틀) 다양한 강아지,고양이 집사님들과 소통하러 가자
-                      </div>
-                      <div>
-                        <div>글쓴이</div>
-                        <div>
-                          <span> <AiOutlineHeart/> 1</span>
-                          <span> <HiOutlineChatBubbleOvalLeft /> 1</span>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div css={s.communityContainerIn}>
-                    <div css={s.communityContainerImage}>
-                      <img src={images[2].img} alt="" />
-                    </div>
-                    <div css={s.communityContainerText}>
-                      <div>
-                        (타이틀) 다양한 강아지,고양이 집사님들과 소통하러 가자
-                      </div>
-                      <div>
-                        <div>글쓴이</div>
-                        <div>
-                          <span> <AiOutlineHeart/> 1</span>
-                          <span> <HiOutlineChatBubbleOvalLeft /> 1</span>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-
-              {/* 분양 */}
-              <div css={s.communityContainer}>
-                  <div>분양게시판 Top3</div>
-                  <div onClick={() => navigate("/ex/adoptcommunity?page=1")}>더보기</div>
-              </div>
-              <div css={s.detailContainer}>
-                {/* 반복문 돌릴 예정 (미완)*/}
                 <div css={s.communityContainerIn}>
                     <div css={s.communityContainerImage}>
                       <img src={images[3].img} alt="" />
@@ -198,6 +178,31 @@ function MainPage(props) {
                       </div>
                     </div>
                 </div>
+              </div>
+
+              {/* 분양 */}
+              <div css={s.communityContainer}>
+                  <div>분양게시판 Top3</div>
+                  <div onClick={() => navigate("/ex/adoptcommunity?page=1")}>더보기</div>
+              </div>
+              <div css={s.detailContainer}>
+                {/* 반복문 돌릴 예정 (미완)*/}
+                {
+                  top3AdoptBoardList.map(board => 
+                    <BoardBox
+                      key={board.adoptationBoardId} 
+                      boardTitle={board.adoptationBoardTitle} 
+                      userNickname={board.userNickname} 
+                      updateDate={board.updateDate}
+                      heartCount={board.totalCount}
+                      viewCount={board.viewCount}
+                      commentCount={board.commentCount}
+                      animalCategoryId={board.boardAnimalCategoryId}
+                      contentImg={board.adoptationBoardContent}
+                      onClick={() => handleOnClick(board)}
+                    />
+                  )
+                }
               </div>
             </div>
         </div>

@@ -33,7 +33,7 @@ function App() {
     <RootLayout>
       <RootContainer>
         {principalQuery.status === "success" ? <FixBar/> : <></>}
-        {/* <RootHeader /> */}
+        <RootHeader />
           <PageContainer>
             <MainRoute />
             <AuthRoute /> 

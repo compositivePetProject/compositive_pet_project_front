@@ -81,8 +81,7 @@ function RootHeader() {
                         <div css={s.sidebar(isHovering && currentMenu === "adoptCommunity")} onMouseLeave={handleSidebarLeave}>
                             {currentMenu === "adoptCommunity" && (
                                 <div>
-                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/admin"> 공지사항 </Link> </div>
-                                    <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity?page=1"> 전체 분양 게시판</Link> </div>
+                                    <div css={s.category}><Link css={s.categoryText} to="/ex/adoptcommunity?page=1"> 전체 분양 게시판</Link> </div>
                                     <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지 분양 게시판</Link> </div>
                                     <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이 분양 게시판</Link> </div>
                                 </div>

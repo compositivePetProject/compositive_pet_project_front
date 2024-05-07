@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 
-
 export const layout = css`
     position: fixed;
     top: 20%;

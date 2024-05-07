@@ -118,3 +118,7 @@ export const getAdoptViewCount = async (params) => {
     const response = await instance.get("/adoptation/view", {params});
     return response.data;
 }
+
+export const getTop3AdoptBoard = async () => {
+    return await instance.get("/adoptation/board/top3");
+}

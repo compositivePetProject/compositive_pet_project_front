@@ -25,7 +25,7 @@ function CommunityBoardWritePage() {
           onSuccess : response => {
             alert("게시글이 작성되었습니다.")
             // 마이페이지 만들기 내가 작성한 게시글
-            window.location.replace("/community/getboards?page=1");
+            navigate(`/community/getboards?page=1`);
           }, 
 
           onError : (error) => {

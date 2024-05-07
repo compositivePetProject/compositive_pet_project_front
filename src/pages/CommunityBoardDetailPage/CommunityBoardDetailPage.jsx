@@ -189,9 +189,10 @@ const toggleBoardFavoriteStatusButton = async () => {
   })
 
   const getBoardCommentQuery = useQuery(
-    ["getBoardCommentQuery", searchParams.get("communityBoardId"), userId], 
+    ["getBoardCommentQuery", searchParams.get("communityBoardCommentId"),searchParams.get("communityBoardId"), userId], 
     async () => {
         const response = await getCommunityBoardCommentByBoardIdRequest({
+            communityBoardCommentId: searchParams.get("communityBoardCommentId"),
             communityBoardId: searchParams.get("communityBoardId"),
             userId: userId
         });
@@ -209,12 +210,13 @@ const toggleBoardFavoriteStatusButton = async () => {
     }
   )
 
+
   const deleteBoardCommentQuery = useMutation({
     mutationKey: "deleteBoardCommentQuery",
     mutationFn: deleteCommunityBoardCommentRequest,
     onSuccess: response => {
       alert("작성하신 댓글이 삭제 되었습니다.")
-      window.location.reload("/community/getboards")
+      navigate(`/community/getboards?page=1`)
     },
     onError: error => {
       alert("오류")
@@ -234,19 +236,18 @@ const toggleBoardFavoriteStatusButton = async () => {
   } 
 
 
-  const handleChangeBoardCommentDelete = () => {
-    const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?")
-    if(commentDelete) {
-      deleteBoardCommentQuery.mutate(
-        searchParams.get("communityBoardCommentId")
-      )
-    }
+const handleChangeBoardCommentDelete = async (commentId) => {
+  const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?");
+  if (commentDelete) {
+    await deleteBoardCommentQuery.mutateAsync({
+      communityBoardCommentId: commentId
+    });
   }
+};
 
-  const handleChangeBoardComment = () => {
-    navigate("/community/comments/")
-  }
-
+const handleChangeBoardComment = (commentId) => {
+  navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
+};
 
 
   return (
@@ -271,75 +272,38 @@ const toggleBoardFavoriteStatusButton = async () => {
                 </button>
               )}
 
-              <div>
-                  <button onClick={toggleBoardFavoriteStatusButton}>
-                    {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
-                    <div css={s.totalLikeCount}>{user.totalUserIdCount}</div>
-                  </button>
-
-                  {/* <BsEye css={s.viewIcon} />
-                      <div css={s.totalViewCount}>{user.totalViewCount}</div> */}
-
-                  {board.userId === userId && (
-                  <button css={s.deletebutton} 
-                  onClick={handleChangeCommuniteyBoardDelete}
+          <div>
+              {boardComment.map((comment) => (
+                <div key={comment.communityBoardCommentId} css={s.commentbox1}>
+                  <div css={s.commentbox2}>
+                    <div dangerouslySetInnerHTML={{ __html: comment.communityBoardCommentContent }}></div>
+                  </div>
+                    <div>{comment.createDate}</div>
+                    <div>
+                    {userId === comment.userId && (
+                      <button onClick={() => handleChangeBoardCommentDelete(comment.communityBoardCommentId)}>
+                        댓글 삭제
+                      </button>
+                    )}
+              </div>
+          <div>
+            {userId === comment.userId && (
+                <button
+                  css={s.updateCommentButton}
+                  onClick={() => handleChangeBoardComment(comment.communityBoardCommentId)}
                   >
-                    게시글 삭제
-                  </button>
-                  )}
-            </div>
-
-                <div>
-                    <button
-                    css={s.commentbutton}
-                    onClick={() => {
-                      navigate(`/community/comment/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`) 
-                    }}
-                  >
-                    댓글 작성
-                    </button>  
-                 
-                 </div>
-            
-
-                  <div css={s.CommunityContentboardListItem}>
-                    {boardComment.map((comment) => (
-                      <div key={comment.communityBoardCommentId} css={s.commentbox1}>
-                        
-                        
-                          <div css={s.commentbox2}>
-                              <div dangerouslySetInnerHTML={{ __html: comment.communityBoardCommentContent }}></div>
-                                  </div>
-                                <div>{comment.createDate}</div>
-
-                                <div>
-                                {board.userId === userId && (
-                                    <button onClick={handleChangeBoardCommentDelete}>
-                                    댓글 삭제
-                                    </button>
-                                )}
-                                </div>
-
-                                <div>
-                                  {board.userId === userId && (
-                                    <button
-                                    css={s.updateCommentButton}
-                                    onClick={() => {
-                                      navigate(`/community/update/comment${comment.communityBoardCommentId}/?communityBoardCommentId=${comment.communityBoardCommentId}`) 
-                                    }}
-                                    > 
-                                    댓글 수정</button>
-
-                                  )}
-                                  </div>
-                                </div>
-                              ))}
-                        </div>
+                댓글 수정
+              </button>
+                )}
                     </div>
-                  </>
-                }
+                  </div>
+                ))}
             </div>
         </div>
-      );
-    }
+        </>
+        }
+        </div>
+    </div>
+    );
+  }
 export default CommunityBoardDetailPage;

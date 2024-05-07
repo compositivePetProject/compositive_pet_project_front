@@ -81,7 +81,7 @@ export const HeartIcon = css`
 `
 
 export const totalLikeCount = css`
-    font-size: 30px;
+    font-size: 15px;
 `;
 
 export const viewIcon = css`

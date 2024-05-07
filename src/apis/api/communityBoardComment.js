@@ -17,7 +17,7 @@ export const getCommunityBoardCommentByUserIdRequest = async (params)=> {
 }
 
 export const deleteCommunityBoardCommentRequest = async (data) => {
-    return await instance.delete("/community/delete/comment",(data))
+    return await instance.delete("/community/delete/comment/",{data})
 }
 
 export const putCommunityBoardCommentRequest = async (data) => {

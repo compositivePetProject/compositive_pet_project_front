@@ -37,6 +37,8 @@ export const buttonContainer = css`
 
 export const deletebutton = css`
 box-sizing: border-box;
+display: flex;
+flex-direction: column;
 border: 1px solid #dbdbdb;
 border-radius: 3px;
 padding: 5px;
@@ -59,7 +61,7 @@ export const updatebutton = css`
     margin-top: 50px;
     border: 1px solid #ccc;
     padding: 10px;
-    width: 100%;
+    width: 100px;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
@@ -79,8 +81,17 @@ export const HeartIcon = css`
 `
 
 export const totalLikeCount = css`
-    font-size: 12px;
+    font-size: 30px;
 `;
+
+export const viewIcon = css`
+color : rgb(153, 153, 153);
+margin-right: 5px;
+`
+export const totalViewCount = css`
+  font-size: 10px;
+
+`
 
 export const commentLayout = css`
 
@@ -109,7 +120,7 @@ export const boardListHeader = css`
     }
 
     `
-export const CommunitycContentboardListItem = css`
+export const CommunityContentboardListItem = css`
     text-decoration: none;
     cursor: pointer;
     overflow:hidden;
@@ -167,7 +178,6 @@ export const commentbutton = css`
   width: 50px;
   height: 50px;
 
-
 `
 
 export const commentbox1 = css`
@@ -189,3 +199,12 @@ export const commentbox2 = css`
       }
 `;
 
+
+export const updateCommentButton = css`
+  box-sizing: border-box;
+  border: 2px solid #dbdbdb;
+  bottom: 0%;
+  width: 50px;
+  height: 50px;
+
+`

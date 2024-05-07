@@ -26,13 +26,13 @@ export const target = (offset, opacity) => css`
     border: 1px solid rgb(255, 255, 255, 0.45);
     background-color: #89898947;
     opacity: ${opacity};
-    cursor: pointer;
+    cursor: default;
 `;
 
-export const enlargedImage = (src, offset, sourceRect) =>  css`
+export const enlargedImage = (src, offset, sourceRect) => css`
     position: absolute;
-    top: 30px;
-    left: 620px;
+    top: 0px;
+    left: 610px;
     width: 510px; 
     height: 510px; 
     border-radius: 8px;

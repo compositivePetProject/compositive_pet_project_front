@@ -6,7 +6,7 @@ function RootLayout({ children }) {
     return (
         <>
             <div css={s.background}>
-            <RootHeader />
+            {/* <RootHeader /> */}
                 <div css={s.layout}>
                     { children }
                 </div>

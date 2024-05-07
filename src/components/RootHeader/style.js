@@ -1,8 +1,5 @@
 import { css } from "@emotion/react";
 
-export const container = css`
-    position: relative; 
-`;
 
 export const header = css`
     box-sizing: border-box;
@@ -10,8 +7,8 @@ export const header = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 32px;
-    width: 100%;
+    padding: 5px 10px;
+    width: 1335px;
     height: 90px;
     z-index: 100;
     background-color: white;
@@ -114,7 +111,7 @@ export const profileImg = css`
 export const buttons = css`
     box-sizing: border-box;
     border: none;
-    padding: 0px 40px;
+    padding: 0px 30px;
     font-size: 15px;
     font-family: 'montserrat', 'NanumGothicCoding', sans-serif;
     font-weight: 700;

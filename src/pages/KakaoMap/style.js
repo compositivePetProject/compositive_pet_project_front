@@ -97,7 +97,7 @@ export const button = css`
 export const listContainer = css`
     box-sizing: border-box;
     margin-top: 60px;
-    width: 20%;
+    width: 24%;
     display: flex;
     flex-direction: column;
     padding-left: 10px;

@@ -327,6 +327,12 @@ function AdoptCommunityBoardDetailPage() {
               !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
           }
         </div>
+        <div css={s.commentBox}>
+            <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
+            <div>
+              <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
+            </div>
+        </div>
         <div>
           <div css={s.boardCommentBox}>
             {
@@ -345,10 +351,6 @@ function AdoptCommunityBoardDetailPage() {
                 />
                 )
             }
-          </div>
-          <div css={s.commentBox}>
-            <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
-            <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
           </div>
         </div>
       </div>

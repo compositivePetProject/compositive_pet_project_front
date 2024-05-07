@@ -50,41 +50,35 @@ export const statusBox = css`
 `;
 
 export const boardCommentBox = css`
-    height: 750px;
-    overflow: auto;
 `;
 
 export const commentBox = css`
+    margin: 30px 0px;
     display: flex;
-    
-    & > div {
-        height : 100px;
-    }
+    flex-direction: column;
 
-    & > button {
-        width: 10%;
-        height: 141px;
-        margin-left: 5px;
+    & > div:nth-of-type(2) {
+        display:flex;
+        justify-content: end;
+    }
+    
+    & > div > button {
         box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        border: none;
-        border-radius: 5px;
-        align-items: center;
-        border-right: 1px solid #0e004a24;
-        padding: 0px 30px;
-        font-size: 18px;
+        padding: 5px 10px;
+        border: 1px solid #0e004a24;
+        background-color: white;
         font-weight: 600;
-        background-color: #00005cff;
-        color: #eee;
         cursor: pointer;
+        width: 100px;
+        border-radius: 5px;
 
         &:hover {
-            background-color: #00003cff;
+            border: 1px solid #2400c4cb;
         }
     
         &:active {
-            background-color: #00002cff;
+            background-color: #00005cff;
+            color: #eeeeee;
         }
     }
 `;
@@ -127,7 +121,7 @@ export const countBox = css`
     }
 `;
 
-export const heartCount = css`
+export const heartCount = (favorite) => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,7 +130,7 @@ export const heartCount = css`
     flex-direction: column;
     border-radius: 50%;
     border: 1px solid #0e004a24;
-    color: #0e004a24;
+    color: ${favorite === 1 ? "red" : "#0e004a24"};
 
     &:hover{
         color: red;

@@ -6,7 +6,7 @@ import { GrView } from "react-icons/gr";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 
-function BoardCommentBox({updateDate, userNickname, commentId, commentIdState, commentContent, pirincipal, updateComment, deleteComment, buttonState}) {
+function BoardCommentBox({updateDate, userNickname, commentId, commentIdState, commentContent, pirincipal, updateComment, deleteComment, buttonState, target}) {
 
   const queryClient = useQueryClient();
   const principalQueryState = queryClient.getQueryState("principalQuery");
@@ -15,6 +15,11 @@ function BoardCommentBox({updateDate, userNickname, commentId, commentIdState, c
     updateComment(commentContent);
     buttonState(1);
     commentIdState(commentId);
+    const targetElement = document.getElementById(target);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   }
 
   return (

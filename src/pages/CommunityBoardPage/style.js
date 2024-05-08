@@ -11,7 +11,7 @@ export const headerTitle = css`
     margin: 0px 110px 10px;
 
     & > div:nth-of-type(1) {
-        font-size: 10px;
+        font-size: 22px;
         font-weight: 700;
     }
 `
@@ -143,28 +143,27 @@ export const CommunityboardListItem = css`
     font-family: NanumBarunGothic, sans-serif;
     color: rgb(54, 54, 54);
     font-size: 13px;
-        & > div {
-            box-sizing: border-box;
-            display: flex;
-            border-bottom: 1px solid #dbdbdb;
-            width: 100%;
-            &:hover {
-                background-color: #adadad;
-            }
-            
-            & > div{
-                box-sizing: border-box;
-                border-right: 1px solid #dbdbdb;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-grow : 1;
-                height: 50px;
-                width: 300px;
-            }
+    & > div {
+        box-sizing: border-box;
+        display: flex;
+        border-bottom: 1px solid #dbdbdb;
+        width: 100%;
+    &:hover {
+        background-color: #adadad;
+    }
+    
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow : 1;
+        height: 50px;
+        width: 300px;
+    }
 
-            }
-            `;
+}`;
 
 export const boardListwrite = css`
     box-sizing: border-box;
@@ -193,15 +192,10 @@ export const pageNumberLayout = (page) => css`
         }
     }
 `;
-
-
-
-export const writeButton = css`
-box-sizing: border-box;
-bottom: 0%;
-width: 50px;
-height: 50px;
-
+export const writeButtonBox = css` 
+    display: flex;
+    justify-content: center;
+`
 
 export const writeButton = css`
     box-sizing: border-box;
@@ -210,4 +204,3 @@ export const writeButton = css`
     width: 50px;
     height: 50px;
 `
-

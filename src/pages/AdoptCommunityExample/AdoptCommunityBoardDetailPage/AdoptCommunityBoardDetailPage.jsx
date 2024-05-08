@@ -88,6 +88,7 @@ function AdoptCommunityBoardDetailPage() {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: (response) => {
+        console.log(response)
         setBoardDetail(response);
         // 좋아요 상태 확인
         response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);

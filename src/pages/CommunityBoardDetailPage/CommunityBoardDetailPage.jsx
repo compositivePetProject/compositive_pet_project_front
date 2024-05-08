@@ -292,9 +292,77 @@ const handleChangeBoardCommentDelete = (commentId) => {
   }
 };
 
-const handleChangeBoardComment = (commentId) => {
-  navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
-};
+// <<<<<<< 103-서창현
+//     return (
+//       <div css={s.containter}>
+//         <div css={s.boardContent}>  
+//         <div css={s.topIconBox}>
+//           <div css={s.iconBox}>
+//             {
+//               !getCommunityBoardQuery.isLoading && 
+//               <div css={s.countBox}>
+//                 <div css={s.heartCount} onClick={toggleBoardFavoriteStatusButton}>
+//                   {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
+//                 </div>
+//                 <div>{board.totalCount}</div>
+//               </div>
+//             }
+//             {
+//               !getCommunityBoardQuery.isLoading && 
+//               <div css={s.countBox}>
+//                 <div css={s.count}>
+//                   <GrFormView/>
+//                 </div>
+//                 <div >{board.viewCount}</div>
+//               </div>
+//             }
+//             {
+//               !getCommunityBoardQuery.isLoading &&
+//               <div css={s.countBox}>  
+//                 <div css={s.count}>
+//                   <FaRegComments />
+//                 </div>
+//                 <div>{board.commentCount}</div>
+//               </div>
+//             }
+//           </div>
+//         </div>
+//         <div>  
+//           { principalQueryState.data?.data.userId === board.userId
+//           ? <div css={s.buttonBox}>
+//               { buttonState === 1
+//                 ? 
+//                 <>
+//                   <button css={s.button} onClick={handleChangeCommunityBoardUpdate}>확인</button>
+//                   <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
+//                 </>
+//                 : 
+//                 <>
+//                   <button css={s.button} onClick={() => setButtonState(1)}>수정</button>
+//                   <button css={s.button} onClick={handleChangeCommuniteyBoardDelete}>삭제</button>
+//                 </>
+//               }
+//             </div>
+//           : <></> 
+//           }
+//           {
+//           buttonState === 1
+//           ?
+//             <>
+//               <input type="text" defaultValue={board.communityBoardTitle} onChange={updateTitleOnchange} />
+//               <Quill value={board.communityBoardContent} onChange={updateOnchange}/>
+//             </>
+//           :
+//             <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
+//           }
+//         </div>
+//           {/*   */}
+      
+// =======
+// const handleChangeBoardComment = (commentId) => {
+//   navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
+// };
+// >>>>>>> main
 
 
 

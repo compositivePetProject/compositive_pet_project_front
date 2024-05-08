@@ -20,7 +20,7 @@ export const layout = css`
     margin: 0px auto;
     border: 1px solid #fafafa;
     border-radius: 8px;
-    width: 60%;
+    width: 55%;
     height: 80%;
     color: rgb(30, 30, 35);
     font-family: -apple-system, BlinkMacSystemFont, helvetica, "Apple SD Gothic Neo", 나눔고딕, NanumGothic, "맑은 고딕", MalgunGothic, sans-serif;

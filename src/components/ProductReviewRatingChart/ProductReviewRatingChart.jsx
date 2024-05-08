@@ -31,8 +31,7 @@ function ProductReviewRatingChart({ reviews }) {
             <BarChart layout="vertical" data={chartData}>
                 <XAxis type="number" tick={{ fontSize: 10 }}/>
                 <YAxis dataKey="rating" type="category"  tick={{ fontSize: 10 }} />
-                <Tooltip/>
-                <Bar dataKey="value" fill="#00005cff" />
+                <Bar dataKey="value" fill="rgba(125, 204, 247, 0.493)" />
             </BarChart>
         </ResponsiveContainer>
     );

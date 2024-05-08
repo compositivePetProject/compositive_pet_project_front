@@ -74,7 +74,7 @@ function MyReviewsPage() {
                                     <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
                                     <div css={s.container5}>
                                         <div>
-                                            <span>{parseInt(userOrder.productPrice * userOrder.productOrderCount)}원</span>
+                                            <span>{userOrder && parseInt(userOrder.productPrice * userOrder.productOrderCount).toLocaleString()}원</span>
                                             <span> / {userOrder.productSizeCategoryNameKor} / </span>
                                             <span>{userOrder.productOrderCount}개</span>
                                         </div>

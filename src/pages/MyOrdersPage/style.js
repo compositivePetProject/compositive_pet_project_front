@@ -61,8 +61,8 @@ export const userDetails = css`
     margin-top: 45px;
     padding: 0px 80px 80px 40px;
     color: #263747;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 15px;
 
     & > div:nth-of-type(2) {
         margin-bottom: 10px;
@@ -92,13 +92,20 @@ export const orderHeader = css`
     width: 100%;
     display: flex;
 `;
+export const orderCreateDate = css`
+    width: 100%;
+    display: flex;
+    & > div {
+        font-size: 12px;
+        color: #aaaaac;
+    }
+`;
 
 
 export const container2 = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #d7e2eb;
     border-radius: 15px;
     width: 100%;
     padding: 5px;
@@ -148,7 +155,6 @@ export const container4 = css`
 export const container5 = css`
     display: flex;
     justify-content: space-between;
-    padding: 5px;
     background-color: transparent;
 `;
 

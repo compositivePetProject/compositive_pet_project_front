@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AiFillHeart, AiOutlineHeart  } from "react-icons/ai";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteProductFavoriteRequest, getProductFavoriteStatusRequest, getProductsFavoritesRequest, postProductFavoriteRequest } from "../../apis/api/product";
 import { FaPlus, FaMinus, FaStar, FaRegStar } from "react-icons/fa6";
-import Select from "react-select";
 import { getAllSizeCategoryRequest } from "../../apis/api/options";
 import { useSelect } from "../../hooks/useSelect";
 import { postProductCartAddRequest } from "../../apis/api/productCart";
@@ -48,6 +47,7 @@ function ProductPetDetailPage() {
         }
         return count;
     }, 0) / reviews.length * 100;
+    const reviewBoxRef = useRef("");
 
     const getProductFavoriteStatusQuery = useQuery(
         ["getProductFavoriteStatusQuery", userId, productId],
@@ -139,7 +139,6 @@ function ProductPetDetailPage() {
             }
         }
     );
-
    
     const postProductCartAddQuery = useMutation ({
         mutationKey: "postProductCartAddQuery",
@@ -194,8 +193,6 @@ function ProductPetDetailPage() {
             setIsLiked(Liked => !Liked);
     }
 
-
-
     const handleProductPurchase = () => {
         if (!selectedSizeType.option) {
             alert("옵션을 선택해주세요.");
@@ -226,24 +223,16 @@ function ProductPetDetailPage() {
     }
 
     const scrollToReviews = () => {
-        const reviewsElement = document.getElementById('reviews');
-        if (reviewsElement) {
-            reviewsElement.scrollIntoView({ behavior: 'smooth' });
+        if (reviewBoxRef.current) {
+            reviewBoxRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     };
 
-    const selectStyle2 = {
-        control: baseStyles => ({
-            ...baseStyles,
-            borderRadius: "0px",
-            border: "none",
-            outline: "none",
-            boxShadow: "none",
-            height: "38px"
-        })
+    const handleChangeDetaill = () => {
+        // 수정
+        console.log(selectedSizeType.option)    
     }
-   
-    console.log(selectedSizeType.option)
+    
     return (
         
         <div>
@@ -267,7 +256,8 @@ function ProductPetDetailPage() {
                 <div css={s.productBox}>
                     <div css={s.productBoxHeader}>
                         <div css={s.titleContainer}>
-                            <div>{user.productNameKor}</div>
+                            <div>{user.productNameKor}
+                            </div>
                             <div css={s.kakaoImg}>
                                 <img src="https://i.namu.wiki/i/hCT_psPprettZiPahW16bpqqcdX1ONz47hgEfPbvb8S7k9MyH-6TZKK4Cn9B2bzBYBUAzQ35V222jl2nfnIOK1GfVbDN--0FJTk-AQeuKsGKKc_Xq08CLAJa8suv2CryxZ6VqsMS4sNoL4N4vEAKjQ.svg" alt="" />
                             </div>
@@ -293,20 +283,16 @@ function ProductPetDetailPage() {
                             <div css={s.productSizeBox}>
                                 <div>사이즈</div>
                                 <div>
-                                    {/* <Select
-                                    styles={selectStyle2}
-                                    options={productSizeOptions}
-                                    placeholder={"옵션을 선택해주세요"}
-                                    value={selectedSizeType.option}
-                                    onChange={selectedSizeType.handleOnChange}
-                                    /> */}
                                     <ProductSelect options={productSizeOptions} value={selectedSizeType.option} onChange={selectedSizeType.handleOnChange} />
                                 </div>
                             </div>
                         </div>
                             {!!selectedSizeType.option && 
                             <div css={s.productDeliveryBox3}>
-                                <div>{user.productNameKor}</div>
+                                <div css={s.productKorConunt}>
+                                    <div>{user.productNameKor}</div>
+                                    <div onClick={handleChangeDetaill}>x</div>
+                                </div>
                                 <div css={s.selectedSizeTypeOnBox}>
                                     <button onClick={() => {
                                                     if (productOrderCount > 1) {
@@ -325,11 +311,18 @@ function ProductPetDetailPage() {
                         </div>
                         <button css={s.productOrderPayButton} onClick={handleProductPurchase}>구매하기</button>
                         <div css={s.productOrderbox}>
-                            <button css={s.productOrderButtons} onClick={scrollToReviews}><GoCodeReview />리뷰</button>
-                            <button css={s.productOrderButtons} onClick={toggleFavoriteStatusButton}>
-                                <div css={s.totalCount}>{isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart />} {user.totalUserIdCount}</div>
+                            <button css={s.productOrderButtons} onClick={scrollToReviews}>
+                                <span><GoCodeReview /></span>
+                                <span>리뷰</span>
                             </button>
-                            <button css={s.productOrderButtons} onClick={handleProductCartAdd}><FiShoppingCart />장바구니</button>
+                            <button css={s.productOrderButtons} onClick={toggleFavoriteStatusButton}>
+                                    <span>{isLiked ? <AiFillHeart css={s.fillHeartIcon} /> : <AiOutlineHeart  css={s.HeartIcon}/>}</span>
+                                    <span>{user.totalUserIdCount}</span>
+                            </button>
+                            <button css={s.productOrderButtons} onClick={handleProductCartAdd}>
+                                <span><FiShoppingCart /></span>
+                                <span>장바구니</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -338,17 +331,23 @@ function ProductPetDetailPage() {
                     <div>
                         {!isDetailPage 
                         ?
-                        <button css={s.productDetailButtons} onClick={() => setIsDetailPage(true)}>상세페이지 <VscChevronDown /></button>
-                        : 
-                        <>
-                            <button css={s.productDetailButtons} onClick={() => setIsDetailPage(false)}>상세페이지 <VscChevronUp /></button>
-                            <div css={s.productDetailBox2}>
+                        <div>
+                            <div css={() => s.productDetailBox2(isDetailPage)}>
                                 <img src={user.productBoardContent} alt="" />   
                             </div>
-                        </>
+                            <button css={s.productDetailButtonOn} onClick={() => setIsDetailPage(true)}>상세페이지 <VscChevronDown /></button>
+                        </div>
+                        : 
+                        <div>
+                            <div css={() => s.productDetailBox2(isDetailPage)}>
+                                <img src={user.productBoardContent} alt="" />   
+                            </div>
+                            <button css={s.productDetailButtonOn} onClick={() => setIsDetailPage(false)}>상세페이지 <VscChevronUp /></button>
+                        </div>
                         }
                     </div>
-                    <div id="reviews" css={s.reviewBox}>
+                    <div css={s.reviewBoxRef} ref={reviewBoxRef} ></div>
+                    <div css={s.reviewBox}>
                         <div> 리뷰 ({totalCount})</div>
                     </div>
                     <div css={s.ratingBox}>

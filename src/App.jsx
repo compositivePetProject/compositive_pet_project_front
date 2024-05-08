@@ -16,6 +16,7 @@ import { useQuery } from "react-query";
 import MainPage from './pages/MainPage/MainPage';
 import MainRoute from './routes/MainRoute/MainRoute';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import CommunityBoardRoute from './routes/CommunityBoardRoute/CommunityBoardRoute';
 function App() {
   const { pathname } = useLocation();
 
@@ -48,6 +49,7 @@ function App() {
                   <AuthRoute /> 
                   <ProductRoute />
                   <AdoptRoute/>
+                  <CommunityBoardRoute/>
                   <MyPageRoute />
                   <MapRoute />
                 </>

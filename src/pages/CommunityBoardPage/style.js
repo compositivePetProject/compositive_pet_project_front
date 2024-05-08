@@ -11,7 +11,7 @@ export const headerTitle = css`
     margin: 0px 110px 10px;
 
     & > div:nth-of-type(1) {
-        font-size: 22px;
+        font-size: 10px;
         font-weight: 700;
     }
 `
@@ -195,10 +195,13 @@ export const pageNumberLayout = (page) => css`
 `;
 
 
-export const writeButtonBox = css` 
-    display: flex;
-    justify-content: center;
-`
+
+export const writeButton = css`
+box-sizing: border-box;
+bottom: 0%;
+width: 50px;
+height: 50px;
+
 
 export const writeButton = css`
     box-sizing: border-box;

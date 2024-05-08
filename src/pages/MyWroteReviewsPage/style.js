@@ -61,8 +61,8 @@ export const userDetails = css`
     margin-top: 45px;
     padding: 0px 80px 80px 40px;
     color: #263747;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 15px;
 
 `;
 
@@ -71,23 +71,23 @@ export const title = css`
     margin-bottom: 24px;
 `;
 
+
 export const reviews = css`
     display: flex;
     & > div {  
         display: flex;
         justify-content: center;
-        padding: 15px;
-        border-radius: 7px;
+        padding: 10px;
+        border-radius: 8px;
         border: 1px solid #d7e2eb;
-        width: 150px;
         margin-bottom: 10px;
         margin-right: 5px;
-        background-color: #00005cff;
-        color: #eeeeee;
+        font-weight: 700;
+        color: #000000;
         cursor: pointer;
 
         &:hover {
-            background-color: #00003cff;
+            background-color: #fafafa;
         }
     }
     & > div:nth-of-type(1) {  

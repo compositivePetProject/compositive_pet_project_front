@@ -49,7 +49,7 @@ function ProductImage({ src }) {
       top: top * -yRatio
     });
   };
-  console.log(offset)
+  
   return (
     <div>
       <div css={s.container} ref={containerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>

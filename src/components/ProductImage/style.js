@@ -21,8 +21,8 @@ export const target = (offset, opacity) => css`
     position: absolute;
     left: ${offset.left}px; 
     top: ${offset.top}px;
-    width: 270px; 
-    height: 270px; 
+    width: 280px; 
+    height: 280px; 
     border: 1px solid rgb(255, 255, 255, 0.45);
     background-color: #89898947;
     opacity: ${opacity};
@@ -32,12 +32,12 @@ export const target = (offset, opacity) => css`
 export const enlargedImage = (src, offset, sourceRect) => css`
     position: absolute;
     top: 0px;
-    left: 610px;
-    width: 510px; 
-    height: 510px; 
+    left: 660px;
+    width: 480px; 
+    height: 480px; 
     border-radius: 8px;
     background-image: url(${src});
-    background-size: 149%;
+    background-size: 143%;
     background-repeat: no-repeat;
     background-position: ${-offset.left}px ${-offset.top}px; 
     z-index: 50;

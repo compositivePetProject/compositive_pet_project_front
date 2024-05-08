@@ -21,8 +21,8 @@ export const show = css`
     position: absolute;
     display: flex;
     align-items: center;
-    width: 1344px;
-    height: 500px;
+    width: 1920px;
+    height: 550px;
     overflow: hidden;
     cursor: pointer;
 `;
@@ -30,19 +30,22 @@ export const show = css`
 
 export const compartment = (curSlide) => css`
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-shrink: 0; 
-    height: 100%;
-    transform: translateX(-${1344 * curSlide}px);
+    transform: translateX(-${1920 * curSlide}px);
     transition: all 0.4s ease-in-out;
     & > img {
-        width: 1344px;
+        width: 1920px;
     }
 `;
 
 export const prevButton = css`
     position: absolute;
-    left: 0px;
-    top: 210px;
+    left: 280px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     height: 50px;
     font-size: 50px;
@@ -52,8 +55,9 @@ export const prevButton = css`
 
 export const nextButton = css`
     position: absolute;
-    right: 0px;
-    top: 210px;
+    right: 280px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     height: 50px;
     font-size: 50px;

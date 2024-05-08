@@ -4,9 +4,21 @@ export const layout = css`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    margin: 0px auto;
     background-color: white;
 `;
+
+export const headerOut = css`
+    box-sizing: border-box;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1907px;
+    height: 90px;
+    z-index: 100;
+    background-color: white;
+`;
+
 
 export const header = css`
     box-sizing: border-box;
@@ -20,6 +32,7 @@ export const header = css`
     z-index: 100;
     background-color: white;
 `;
+
 
 export const logoBox = css`
     box-sizing: border-box;

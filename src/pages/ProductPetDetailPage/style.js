@@ -41,7 +41,7 @@ export const productImg = css`
 export const productBox = css`
     box-sizing: border-box;
     width: 100%;
-    height: 600px;
+    height: 550px;
     border-left: 1px solid rgb(237, 237, 237);
     margin-top: 6px;
     padding: 4px 40px 30px 39px;
@@ -52,7 +52,6 @@ export const productBoxHeader = css`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 105px;
     cursor: default;
 
     & > div {
@@ -129,12 +128,15 @@ export const contentBox = css`
     } */
 `;
 
-export const totalCount = css`
-    font-size: 12px;
+export const fillHeartIcon = css`
+    font-size: 20px;
+    padding-right: 2px;
+    color: red; 
 `;
 
-export const fillHeartIcon = css`
-    color: red; 
+export const HeartIcon = css`
+    font-size: 20px;
+    padding-right: 2px;
 `;
 
 export const productBody = css`
@@ -239,6 +241,7 @@ export const productDeliveryBox2 = css`
     display: flex;
     justify-content: space-between;
     margin: 10px 0px;
+    cursor: default;
 
     & > div:nth-of-type(1) {
         font-size: 14px;
@@ -263,11 +266,27 @@ export const productDeliveryBox3 = css`
         font-size: 14px;
         font-weight: 700;
         margin-bottom: 10px;
+        cursor: default;
     }
 
     & > div:nth-of-type(2) {
         font-size: 16px;
         font-weight: 700;
+        cursor: default;
+    }
+`;
+
+export const productKorConunt = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    
+    & > div:nth-of-type(2) {
+        font-size: 15px;
+        font-weight: 500;
+        padding: 0px 5px;
+        cursor: pointer;
     }
 `;
 
@@ -275,9 +294,12 @@ export const productDeliveryBox3 = css`
 export const productOrderPayButton = css`
     box-sizing: border-box;
     color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
     font-weight: 700;
     background-color: #ffffff;
-    padding: 3px;
     border: 1px solid rgba(0, 0, 0, 0.53);
     width: 100%;
     height: 50px;
@@ -296,9 +318,12 @@ export const productOrderPayButton = css`
 
 export const productOrderButtons = css`
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
-    padding: 3px;
-    border: none;
+    font-size: 14px;
+    color: #333333;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.53);
     width: 140px;
@@ -306,19 +331,20 @@ export const productOrderButtons = css`
     background-color: #ffffff;
     cursor: pointer;
 
-    & > button:nth-of-type(1) {
-        margin-right: 20px;
+    
+    & > span:nth-of-type(1) {
+        font-size: 15px;
+        padding-right: 5px;
     }
-
     &:hover {
         background-color: #fafafa;
     }
 `;
 
 export const productOrderButton = css` 
-    color: #eeeeee;
+    color: #222222;
     font-weight: 700;
-    background-color: #00005cff;
+    background-color: #f3f5f7;
     border: none;
     padding: 15px;
     border-radius: 5px;
@@ -329,7 +355,7 @@ export const productOrderButton = css`
     }
 
     &:hover {
-        background-color: #00003bff;
+        background-color: #e8e8e9ab;
     }
 `;
 
@@ -342,27 +368,25 @@ export const productOrderbox = css`
     } 
 `;
 
-export const productDetailButtons = css`
-    color: #eeeeee;
-    font-weight: 700;
-    background-color: #00005cff;
-    padding: 3px;
-    border: none;
+export const productDetailButtonOn = css`
     width: 100%;
-    height: 50px;
+    height: 60px;
+    color: #000000;
+    font-weight: bold;
+    border: 1.5px solid #000000;
     border-radius: 5px;
+    box-shadow : 0px 10px 10px 0px rgba(80, 80, 80, 0.1);
+    background-color: #ffffff;
     cursor: pointer;
-
-    &:hover {
-        background-color: #00003bff;
-    }
+    
 `;
 
 
-export const productDetailBox2 = css`
+export const productDetailBox2 = (isDetailPage) => css`
     display: flex;
     width: 100%;
     height: 100%;
+    max-height: ${isDetailPage ? "" : "860px"};
     overflow: hidden;
 
     & > img {
@@ -370,6 +394,8 @@ export const productDetailBox2 = css`
         width: 100%;
     }
 `;
+
+
 
 export const contentBox2 = css`
     display: flex;
@@ -394,6 +420,13 @@ export const productFooter = css`
     color: rgb(60, 57, 52);
     font-family: "Spoqa Han Sans Neo", "Noto Sans KR", sans-serif;
     background-color: transparent;
+    cursor: default;
+`;
+
+export const reviewBoxRef = css`
+    width: 100%;
+    height: 100px;
+
 `;
 
 export const reviewBox = css`
@@ -402,8 +435,9 @@ export const reviewBox = css`
     align-items: center;
     font-size: 18px;
     font-weight: 700;
-    line-height: 85px;
-    border-bottom: 2px solid #00005cff;
+    line-height: 80px;
+    border-top: 2px solid rgb(119, 119, 119);
+    border-bottom: 2px solid rgb(119, 119, 119);
     color: #333333;
 `;
 
@@ -414,7 +448,7 @@ export const ratingBox = css`
     width: 100%;
     font-size: 28px;
     font-weight: 700;
-    border-bottom: 2px solid #00005cff;
+    border-bottom: 2px solid rgb(119, 119, 119);
     color: #333333;
     flex-grow: 1;
     & > div:nth-of-type(2) {

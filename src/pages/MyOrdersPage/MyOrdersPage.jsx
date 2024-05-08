@@ -191,25 +191,27 @@ function MyOrdersPage(props) {
                     { userOrders.map(userOrder => 
                         <div key={userOrder.productOrderId} css={s.container}>
                             <div css={s.orderHeader}>
-                                <div>{userOrder.createDate} 주문</div>
-                            </div>
+                                <div>결제완료</div>
+                           </div>
                             <div css={s.container2}>
                                 <div css={s.container3}>
-                                    <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>
+                                    <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/?productId=${userOrder.productId}&page=1`)}>
                                         <img src={userOrder.productImageUrl} alt="" />
                                     </div>
                                     <div css={s.container4}>
-                                        <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
-                                        <div css={s.container7}>
-                                            <div>{userOrder.productOrderAddress}</div>
-                                            <div>{userOrder.productDetailOrderAddress}</div>
+                                        <div css={s.orderCreateDate}>
+                                            <div>{userOrder.createDate} 결제</div>
                                         </div>
-                                        <div css={s.container5}>
+                                        <div onClick={() => navigate(`/product/pet/detail/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
+                                        <div css={s.container7}>
                                             <div>
-                                                <span>{parseInt(userOrder.productPrice * userOrder.productOrderCount)}원</span>
+                                                <span>{userOrder && parseInt(userOrder.productPrice * userOrder.productOrderCount).toLocaleString()}원</span>
                                                 <span> / {userOrder.productSizeCategoryNameKor} / </span>
                                                 <span>{userOrder.productOrderCount}개</span>
                                             </div>
+                                        </div>
+                                        <div css={s.container5}>
+                                            <div>{userOrder.productOrderAddress} {userOrder.productDetailOrderAddress}</div>
                                             <button css={s.buttons3} onClick={() => handleProductCartAdd(userOrder.userId, userOrder.productId, userOrder.productSizeCategoryId, userOrder.productOrderCount)}>장바구니</button>
                                         </div>
                                     </div>

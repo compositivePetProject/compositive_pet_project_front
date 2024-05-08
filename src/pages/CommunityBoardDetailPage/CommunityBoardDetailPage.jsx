@@ -323,7 +323,7 @@ function CommunityBoardDetailPage(props) {
             <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
           }
         </div>
-
+          {/*   */}
       
 
 

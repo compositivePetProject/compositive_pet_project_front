@@ -60,7 +60,7 @@ export const userDetails = css`
     padding: 0px 80px 80px 40px;
     color: #263747;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
 
 `;
 

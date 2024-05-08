@@ -21,9 +21,8 @@ export const show = css`
     position: absolute;
     display: flex;
     align-items: center;
-    width: 1334px;
+    width: 1344px;
     height: 500px;
-    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
 `;

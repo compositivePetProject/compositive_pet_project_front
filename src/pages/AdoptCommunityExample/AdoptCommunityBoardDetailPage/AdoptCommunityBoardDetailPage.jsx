@@ -13,6 +13,9 @@ import { GrFormView } from "react-icons/gr";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaRegComments } from "react-icons/fa";
+import { LiaCommentAltSolid } from "react-icons/lia";
+import { FaRegCommentDots } from "react-icons/fa";
+import { IoMdHeart } from "react-icons/io";
 
 function AdoptCommunityBoardDetailPage() {
   const [ likedUsers, setLikedUsers] = useState([]);
@@ -30,9 +33,10 @@ function AdoptCommunityBoardDetailPage() {
   const [ commentValue, setCommentValue ] = useState("");
   const [ commentButtonState, setCommentButtonState ] = useState(0);
   const [ commentId, setCommentId ] = useState(0);
+  const [ favoriteState, setFavoriteState ] = useState(0);
 
   const getFindUserByBoard = useQuery(
-    ["getFindUserByBoard",likedUsers],
+    ["getFindUserByBoard", likedUsers],
     async () => await getFindLikedUser (
       parseInt(searchParams.get("boardid"))
     ),
@@ -40,16 +44,25 @@ function AdoptCommunityBoardDetailPage() {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: (response) => {
-          response.map(user => {
-            setLikedUsers(user)
-          })
-          
+        setLikedUsers(prevLikedUsers => {
+          const newUserIdSet = new Set([...prevLikedUsers, ...response.map(user => user.userId)]);
+          return [...newUserIdSet];
+        });
       },
       onError: (error) => {
           console.log(error);
       }
   }
   )
+
+  useEffect(() => {
+    console.log(likedUsers)
+    if(likedUsers.filter((userId) => userId === principalQueryState.data?.data.userId).length > 0) {
+      setFavoriteState(1);
+    } else {
+      setFavoriteState(0);
+    }
+  }, [likedUsers])
 
   const getAdoptCommunityBoardComment = useQuery(
     ["getAdoptCommunityBoardComment"],
@@ -60,7 +73,6 @@ function AdoptCommunityBoardDetailPage() {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: (response) => {
-          console.log(response)
           setBoardComment(response)
       },
       onError: (error) => {
@@ -225,7 +237,9 @@ function AdoptCommunityBoardDetailPage() {
 
 
   const favoriteBoard = async () => {
-    if (likedUsers.userId !== principalQueryState.data?.data.userId) {
+    const currentUserLiked = likedUsers.includes(principalQueryState.data?.data.userId);
+
+    if (!currentUserLiked) {
       await postAdoptCommunityBoardFavorite.mutateAsync({
         adoptationBoardId: parseInt(searchParams.get("boardid")),
         userId: principalQueryState.data?.data.userId
@@ -236,6 +250,7 @@ function AdoptCommunityBoardDetailPage() {
         userId: principalQueryState.data?.data.userId
       });
     }
+
     // 좋아요 상태 갱신 후 다시 렌더링
     getAdoptCommunityBoardDetail.refetch();
     getFindUserByBoard.refetch();
@@ -271,10 +286,19 @@ function AdoptCommunityBoardDetailPage() {
           {
             !getAdoptCommunityBoardDetail.isLoading && 
             <div css={s.countBox}>
-              <div css={s.heartCount} onClick={favoriteBoard}>
-                <AiOutlineHeart/>
+              <div css={s.heartCount(favoriteState)} onClick={favoriteBoard}>
+                <IoMdHeart/>
               </div>
-              <div>{boardDetail.totalCount}</div>
+              <div>{boardDetail.favoriteCount}</div>
+            </div>
+          }
+          {
+            !getAdoptCommunityBoardDetail.isLoading &&
+            <div css={s.countBox}>  
+              <div css={s.countView}>
+                <LiaCommentAltSolid />
+              </div>
+              <div>{boardDetail.commentCount}</div>
             </div>
           }
           {
@@ -284,15 +308,6 @@ function AdoptCommunityBoardDetailPage() {
                 <GrFormView/>
               </div>
               <div >{boardDetail.viewCount}</div>
-            </div>
-          }
-          {
-            !getAdoptCommunityBoardDetail.isLoading &&
-            <div css={s.countBox}>  
-              <div css={s.count}>
-                <FaRegComments />
-              </div>
-              <div>{boardDetail.commentCount}</div>
             </div>
           }
         </div>
@@ -315,17 +330,26 @@ function AdoptCommunityBoardDetailPage() {
             </div>
           : <></> 
         }
-        <div>
+        <div id="target">
           {
             buttonState === 1
             ?
-              <>
-                <input type="text" defaultValue={boardDetail.adoptationBoardTitle} onChange={updateTitleOnchange} />
+              <div>
+                <div css={s.inputContainer}>
+                  <div css={s.selectLabel}>제목</div>
+                  <input css={s.input} type="text" defaultValue={boardDetail.adoptationBoardTitle} onChange={updateTitleOnchange} />
+                </div>
                 <Quill value={boardDetail.adoptationBoardContent} onChange={updateOnchange}/>
-              </>
+              </div>
             :
               !getAdoptCommunityBoardDetail.isLoading && <BoardContentBox title={boardDetail.adoptationBoardTitle} userNickname={boardDetail.userNickname} writeDate={boardDetail.updateDate} content={boardDetail.adoptationBoardContent} />
           }
+        </div>
+        <div css={s.commentBox}>
+            <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
+            <div>
+              <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
+            </div>
         </div>
         <div>
           <div css={s.boardCommentBox}>
@@ -342,13 +366,10 @@ function AdoptCommunityBoardDetailPage() {
                   deleteComment={() => deleteCommentSubmit(comment.adoptationBoardCommentId)}
                   updateComment={setCommentValue}
                   buttonState={setCommentButtonState}
+                  target={"target"}
                 />
                 )
             }
-          </div>
-          <div css={s.commentBox}>
-            <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
-            <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
           </div>
         </div>
       </div>

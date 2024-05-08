@@ -82,3 +82,7 @@ export const deleteCommunityBoardLikeRequest = async (data) => {
     return await instance.delete("/community/delete/favorite", { data })
 }
 
+export const getTop3Board = async () => {
+    return await instance.get("/community/board/top3");
+}
+

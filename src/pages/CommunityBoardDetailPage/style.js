@@ -7,7 +7,6 @@ export const containter = css`
  align-items: center;
  height: 100%;
  width: 90%;
-
 `
 
 export const detailPageTitle = css`
@@ -27,7 +26,6 @@ export const boardContent = css`
   width: 90%;
   height: 100%;
   border: 1px solid #dbdbdb;
-
 `
 
 export const buttonContainer = css`
@@ -208,3 +206,95 @@ export const updateCommentButton = css`
   height: 50px;
 
 `
+
+export const topIconBox = css`
+    padding-top: 200px;
+`
+
+
+export const iconBox = css`
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    width: 50px;
+    padding-top: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    background: #F8F8F8;
+    border: 1px solid #0e004a24;
+
+    & > div {
+       display: flex;
+       align-items: center; 
+    }
+
+    & > div > * {
+        font-size: 24px;
+        margin: 5px 0px;
+    }
+`
+
+export const countBox = css`
+    display: flex;
+    flex-direction: column;
+    &>div:nth-of-type(2) {
+        font-size: 14px;
+        color: #222222;
+    }
+`;
+
+export const heartCount = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    border-radius: 50%;
+    border: 1px solid #0e004a24;
+    color: #0e004a24;
+
+    &:hover{
+        color: red;
+        border: 1px solid red;
+    }
+`;
+
+export const count = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    border-radius: 50%;
+    border: 1px solid #222222;
+    color: #222222;
+`;
+
+export const buttonBox = css`
+    display: flex;
+    justify-content: end;
+    align-items: center;
+`;
+
+export const button = css`
+    box-sizing: border-box;
+    margin: 5px 5px 5px 0px;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
+`;

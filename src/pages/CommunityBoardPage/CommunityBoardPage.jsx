@@ -115,7 +115,7 @@ function CommunityBoardPage() {
                                         key={board.communityBoardId}
                                         boardTitle={board.communityBoardTitle}
                                         userNickname={board.userNickname}
-                                        heartCount={board.totalCount}
+                                        heartCount={board.favoriteCount}
                                         viewCount={board.viewCount}
                                         commentCount={board.commentCount}
                                         animalCategoryId={board.communityBoardAnimalCategoryId}

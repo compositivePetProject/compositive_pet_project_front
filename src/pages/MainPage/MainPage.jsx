@@ -170,7 +170,7 @@ function MainPage(props) {
                       boardTitle={board.communityBoardTitle} 
                       userNickname={board.userNickname} 
                       updateDate={board.updateDate}
-                      heartCount={board.totalCount}
+                      heartCount={board.favoriteCount}
                       viewCount={board.viewCount}
                       commentCount={board.commentCount}
                       animalCategoryId={board.communityBoardAnimalCategoryId}

@@ -9,80 +9,82 @@ import { QUILL_MODULES } from '../../constants/quillModules';
 import { getCommunityBoardCommentByBoardIdRequest, putCommunityBoardCommentRequest } from '../../apis/api/communityBoardComment';
 
 function CommunityBoardCommentEditPage(props) {
-    const [searchParmas, setSearchParams] = useSearchParams();
-    const communityBoardId = parseInt(searchParmas.get("communityBoardId"))
-    const communityBoardCommentId = parseInt(searchParmas.get("communityBoardCommentId"))
-    const navigate = useNavigate();
-    const [newCommunityBoardComment, setNewCommunityBoardComment] = useState("")
-    const [newComment, setNewComment] = useState("")
-    const [quillValue, handleQuillValueChange, setQuillValue] = useQuillInput();
-    const quertClient = useQueryClient();
-    const principalQueryState = quertClient.getQueryState("principalQuery")
-    const userId = principalQueryState.data?.data.userId;
+    const [searchParams, setSearchParams] = useSearchParams(); 
+    const communityBoardId = parseInt(searchParams.get("communityBoardId")); 
+    const communityBoardCommentId = parseInt(searchParams.get("communityBoardCommentId")); 
+    const navigate = useNavigate(); 
+    const [newComment, setNewComment] = useState(""); 
+    const [quillValue, handleQuillValueChange, setQuillValue] = useQuillInput(); 
+    const queryClient = useQueryClient(); 
+    const principalQueryState = queryClient.getQueryState("principalQuery"); 
+    const userId = principalQueryState.data?.data.userId; 
 
+ 
     const getBoardCommentQuery = useQuery(
-        ["getBoardCommentQuery", searchParmas.get("communityBoardCommentId"), userId], 
+        ["getBoardCommentQuery", communityBoardCommentId, userId], 
         async () => {
             const response = await getCommunityBoardCommentByBoardIdRequest({
-                communityBoardCommentId: searchParmas.get("communityBoardCommentId"),
-                userId: userId
+                communityBoardCommentId,
+                userId
             });
             return response.data; 
         },
         {
             retry: 0, 
             refetchOnWindowFocus: false, 
-            onSuccess: data => {
-                setNewComment(data); 
+            onSuccess: response => {
+                console.log(response);
+                setNewComment(response.data); 
             },
             onError: error => {
                 console.error(error); 
             }
         }
-      )
+    );
 
 
     const updateBoardCommentQuery = useMutation({
         mutationKey: "updateBoardCommentQuery",
         mutationFn: putCommunityBoardCommentRequest,
         onSuccess: response => {
-          alert('작성하신 댓글이 수정 되었습니다')
-          window.location.reload("/community/getboards")
+            alert('작성하신 댓글이 수정 되었습니다.');
+            navigate("/community/getboards"); 
         },
         onError: error => {
-            alert("오류")
-            console.log(error)
+            alert("오류 발생");
+            console.log(error);
         }
-      })
+    });
 
-      const hadnleChangeCommunityBoardCommentUpdate = () => {
-        const commentUpdate = window.confirm("작성하신 댓글을 수정하시겠습니까.")
-        if(commentUpdate) {
+
+    const handleChangeCommunityBoardCommentUpdate = () => {
+        const commentUpdate = window.confirm("작성하신 댓글을 수정하시겠습니까?");
+        if (commentUpdate) {
+        
             updateBoardCommentQuery.mutate({
-            communityBoardCommentId : searchParmas.get("communityBoardCommentId"),
-            communityBoardContentComment : quillValue
-
-            })
+                communityBoardCommentId,
+                communityBoardCommentContent: quillValue
+            });
         }
-            
-      }
-    
+    };
 
     return (
         <div>
-        <div css={s.title}> 댓글 수정하기</div>
-        <div css={s.commentcontainer}>
-            <ReactQuill
-                style={{
-                    width: "100px",
-                    height: "800px"
-            }}
-            modules={QUILL_MODULES}
-            onChange={handleQuillValueChange}
-        />
+            <div css={s.title}>댓글 수정하기</div>
+            <div css={s.commentcontainer}>
+       
+                <ReactQuill
+                    style={{
+                        width: "100%",
+                        height: "800px"
+                    }}
+                    modules={QUILL_MODULES}
+                    onChange={handleQuillValueChange}
+                />
+            </div>
+          
+            <button css={s.writebutton} onClick={handleChangeCommunityBoardCommentUpdate}>작성하기</button>
         </div>
-        <button css={s.writebutton} onClick={hadnleChangeCommunityBoardCommentUpdate}>작성하기</button>
-    </div>
     );
 }
 

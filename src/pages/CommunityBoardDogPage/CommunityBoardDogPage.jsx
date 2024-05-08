@@ -1,12 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBoardDogPageCountRequest, getCommunityBoardDogRequest, getCommunityBoardPageCountRequest } from "../../apis/api/communityBoard";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { FaPencil } from "react-icons/fa6";
 import { useQuery } from "react-query";
 import { count } from "firebase/firestore";
 import CommunityDogBoardPageCount from "../../components/CommunityDogBoardPageCount/CommunityDogBoardPageCount";
+import BoardBox from "../../components/BoardBox/BoardBox";
+import { board } from "../CommunityBoardPage/style";
+import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
+import { FaSearch } from "react-icons/fa";
 
 function CommunityBoardDogPage() {
     const navigate = useNavigate();
@@ -19,6 +23,7 @@ function CommunityBoardDogPage() {
     const pageSearchCount = 10;
     const firstPage = (page - 1) * pageSearchCount + 1;
     const lastPage = page  * pageSearchCount ;
+    const inputRef = useRef();
 
     console.log(firstPage)
     console.log(lastPage)
@@ -89,35 +94,47 @@ const handleOnPageChange = (pageNumber) => {
     setSearchParams ({page: pageNumber})
 } 
 
+const searchSubmit = () => { 
+    setSearchParams({
+        page: 1
+    })
+    getBoardPageQuery.refetch();
+
+} 
+
+const searchText = useProductOnKeyUpInput(searchSubmit)
+
   return (
     <div css= {s.layout}>
         <div>
-        <h1 css={s.headerTitle}>강아지 게시판</h1>
-            <div css={s.boardListLayout}>
-                <div css={s.boardListHeader}>
-                    <div css={s.boardListHeader}>
-                        <div>제목</div> 
-                        <div>내용</div> 
-                        <div>닉네임</div> 
-                        <div>등록일</div> 
-                    </div>  
-                </div>
-            <div css={s.CommunityboardListItem}>
-                {communityBoardList.map((data) => (
-                        <div
-                        key={data.communityBoardId} >
-                        <div onClick={() => navigate(`/community/board/${data.communityBoardId}/?communityBoardId=${data.communityBoardId}`)}>
-                        {data.communityBoardTitle}</div>
-                        <div dangerouslySetInnerHTML={{__html:data.communityBoardContent}}></div>
-                        <div>{data.userName}</div>
-                        <div>{data.createDate}</div>
-                        </div>
-                    ))}
-                    </div> 
-                </div>
+        <div css={s.headerTitle}>
+            <div>강아지 커뮤니티 게시판</div>
+            <div css={s.searchBar}>
+                <div css={s.searchLabel}>게시판 검색</div>
+                <input css={s.searchBarInput} type="text"
+                    ref={inputRef}
+                    value={searchText.value}
+                    onChange={searchText.handleOnChange}
+                    onKeyUp={searchText.handleOnKeyUp}
+                    placeholder="제목 + 내용 검색"
+                />
+                <button css={s.searchBarButton} >
+                    <FaSearch onClick={() => searchSubmit() }/>
+                </button>
             </div>
-           
-
+        </div>
+        <div css={s.CommunityboardListItem}>
+            {communityBoardList.map(board => (
+                <BoardBox
+                    onClick={() => navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)}
+                    key={board.communityBoardId}
+                    boardTitle={board.communityBoardTitle}
+                    userNickname={board.userName}
+                    updateDate={board.updateDate}
+                        />
+                    ))}
+                 </div> 
+            </div>
         <FaPencil css={s.writeButton} onClick={handleOnClickToWritePage}></FaPencil>
         <CommunityDogBoardPageCount dogMaxPageNumber={dogMaxPageNumber} totalCount={totalCount} onChange={handleOnPageChange} />
         </div>

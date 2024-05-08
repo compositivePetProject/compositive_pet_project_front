@@ -95,7 +95,7 @@ export const userDetails = css`
     color: #263747;
     font-weight: 700;
     font-size: 18px;
-
+    border: 1px solid green;
 `;
 
 export const title = css`
@@ -251,7 +251,8 @@ export const label = css`
 `;
 
 export const boardListItem = css`
-    
+    /* flex-wrap: wrap;
+    display: flex; */
 `;
 
 export const rowData = css`

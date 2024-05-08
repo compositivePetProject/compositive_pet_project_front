@@ -104,11 +104,12 @@ const toggleBoardFavoriteStatusButton = async () => {
           userId : userId
         });
     }
+    setIsLiked(Liked => !Liked);
+
     const response = await getCommunityBoardLikeCountRequest({
         communityBoardId: communityBoardId 
     })
     setUser(response.data)
-    setIsLiked(Liked => !Liked);
   }
 
   // const postBoardViewQuery = useMutation({
@@ -189,9 +190,10 @@ const toggleBoardFavoriteStatusButton = async () => {
   })
 
   const getBoardCommentQuery = useQuery(
-    ["getBoardCommentQuery", searchParams.get("communityBoardId"), userId], 
+    ["getBoardCommentQuery", searchParams.get("communityBoardCommentId"),searchParams.get("communityBoardId"), userId], 
     async () => {
         const response = await getCommunityBoardCommentByBoardIdRequest({
+            communityBoardCommentId: searchParams.get("communityBoardCommentId"),
             communityBoardId: searchParams.get("communityBoardId"),
             userId: userId
         });
@@ -209,12 +211,13 @@ const toggleBoardFavoriteStatusButton = async () => {
     }
   )
 
+
   const deleteBoardCommentQuery = useMutation({
     mutationKey: "deleteBoardCommentQuery",
     mutationFn: deleteCommunityBoardCommentRequest,
     onSuccess: response => {
       alert("작성하신 댓글이 삭제 되었습니다.")
-      window.location.reload("/community/getboards")
+      navigate(`/community/getboards?page=1`)
     },
     onError: error => {
       alert("오류")
@@ -228,24 +231,24 @@ const toggleBoardFavoriteStatusButton = async () => {
     const boardDelete = window.confirm("게시글을 삭제하시겠습니까?")
     if(boardDelete) {
       deleteCommunityBoardQuery.mutate(
-        searchParams.get("communityBoardId")
+        searchParams.get("communityBoardCommentId")
       )
     }
   } 
 
 
-  const handleChangeBoardCommentDelete = () => {
-    const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?")
-    if(commentDelete) {
-      deleteBoardCommentQuery.mutate(
-        searchParams.get("communityBoardCommentId")
-      )
-    }
-  }
+const handleChangeBoardCommentDelete = (commentId) => {
+  console.log(commentId)
+  const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?");
+  if (commentDelete) {
+    deleteBoardCommentQuery.mutate(commentId)
 
-  const handleChangeBoardComment = () => {
-    navigate("/community/comments/")
   }
+};
+
+const handleChangeBoardComment = (commentId) => {
+  navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
+};
 
 
 
@@ -271,83 +274,37 @@ const toggleBoardFavoriteStatusButton = async () => {
                 </button>
               )}
 
-          <div>
-            {board.userId === userId && (
-              <button css={s.deletebutton} 
+            <div>
+              {board.userId === userId && (
+                <button css={s.deletebutton} 
                 onClick={handleChangeCommuniteyBoardDelete}
                   >
                     게시글 삭제
-                  </button>
-                )}
-          </div>
+                </button>
+                  )}
+            </div>
 
-
-              <div>
+            <div>
                   <button onClick={toggleBoardFavoriteStatusButton}>
-                    {isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />}
-                    <div css={s.totalLikeCount}>{user.totalUserIdCount}</div>
+                    <div css={s.totalLikeCount}>{isLiked ? <AiFillHeart css={s.HeartIcon} /> : <AiFillHeart />} {user.totalUserIdCount}</div>
                   </button>
 
                   {/* <BsEye css={s.viewIcon} />
                       <div css={s.totalViewCount}>{user.totalViewCount}</div> */}
+            </div>        
 
-                  {board.userId === userId && (
-                  <button css={s.deletebutton} 
-                  onClick={handleChangeCommuniteyBoardDelete}
-                  >
-                    게시글 삭제
-                  </button>
-                  )}
-            </div>
 
-                <div>
-                    <button
+
+              <div>
+                <button
                     css={s.commentbutton}
                     onClick={() => {
                       navigate(`/community/comment/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`) 
                     }}
                   >
                     댓글 작성
-                    </button>  
-                 
+                    </button>                  
                  </div>
-            
-
-<<<<<<< Updated upstream
-                  <div css={s.CommunityContentboardListItem}>
-                    {boardComment.map((comment) => (
-                      <div key={comment.communityBoardCommentId} css={s.commentbox1}>
-                        
-                        
-                          <div css={s.commentbox2}>
-                              <div dangerouslySetInnerHTML={{ __html: comment.communityBoardCommentContent }}></div>
-                                  </div>
-                                <div>{comment.createDate}</div>
-
-                                <div>
-                                {board.userId === userId && (
-                                    <button onClick={handleChangeBoardCommentDelete}>
-                                    댓글 삭제
-                                    </button>
-                                )}
-                                </div>
-
-                                <div>
-                                  {board.userId === userId && (
-                                    <button
-                                    css={s.updateCommentButton}
-                                    onClick={() => {
-                                      navigate(`/community/update/comment${comment.communityBoardCommentId}/?communityBoardCommentId=${comment.communityBoardCommentId}`) 
-                                    }}
-                                    > 
-                                    댓글 수정</button>
-
-                                  )}
-                                  </div>
-                                </div>
-                              ))}
-                        </div>
-=======
 
           <div>
               {boardComment.map((comment) => (
@@ -372,12 +329,15 @@ const toggleBoardFavoriteStatusButton = async () => {
                 댓글 수정
               </button>
                 )}
->>>>>>> Stashed changes
                     </div>
-                  </>
-                }
+                  </div>
+                ))}
             </div>
         </div>
-      );
-    }
+        </>
+        }
+        </div>
+    </div>
+    );
+  }
 export default CommunityBoardDetailPage;

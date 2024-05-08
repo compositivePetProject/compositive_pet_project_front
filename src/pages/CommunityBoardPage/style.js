@@ -13,7 +13,7 @@ export const headerTitle = css`
     align-items: center;
 
     & > div:nth-of-type(1) {
-        font-size: 20px;
+        font-size: 10px;
         font-weight: 700;
     }
 `
@@ -198,7 +198,6 @@ export const pageNumberLayout = (page) => css`
 
 export const writeButton = css`
 box-sizing: border-box;
-border: 2px solid #dbdbdb;
 bottom: 0%;
 width: 50px;
 height: 50px;

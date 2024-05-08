@@ -7,7 +7,6 @@ export const containter = css`
  align-items: center;
  height: 100%;
  width: 90%;
-
 `
 
 export const detailPageTitle = css`
@@ -27,7 +26,6 @@ export const boardContent = css`
   width: 90%;
   height: 100%;
   border: 1px solid #dbdbdb;
-
 `
 
 export const buttonContainer = css`

@@ -27,12 +27,6 @@ function MyAdoptList(props) {
     const [totalCount, setTotalCount] = useState(0);
     const [checkedBoards, setCheckedBoards] = useState([]);
 
-
-    const [ checkAll, setCheckAll ] = useState({
-        checked : false,
-        target: 1 // 전체 선택 / 2: 부분선택
-    });
-
     const [ myAdoptBoardList, setMyAdoptBoardList ] = useState([]);
     const [ deleteMyAdoptBoardIds, setDeleteMyAdoptBoardIds ] = useState();
 
@@ -57,79 +51,72 @@ function MyAdoptList(props) {
         }
     )
 
-    
-
     const getMyBoardCount = useQuery(
         ["getMyBoardCount", userId, page],
         async () => await getAdoptCountByUserId({
         page: page,
         userId: userId,
         count: searchCount
-    }),
-    {
-        enabled: !!userId,
-        refetchOnWindowFocus: false,
-        onSuccess: response => {
-            setMaxPageNumber(response.data.maxPageNumber);
-            setTotalCount(response.data.totalCount);
-        },
-        onError: error => {
-            console.log(error)
+        }),
+        {
+            enabled: !!userId,
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                setMaxPageNumber(response.data.maxPageNumber);
+                setTotalCount(response.data.totalCount);
+            },
+            onError: error => {
+                console.log(error)
+            }
         }
-    }
+    )
 
-)
+    const handleCheckboxChange = (event, adoptationBoardId) => {
+        const isChecked = event.target.checked;
 
-const handleCheckboxChange = (event, adoptationBoardId) => {
-    const isChecked = event.target.checked;
+        if (isChecked) {
+            setCheckedBoards(prevState => [...prevState, adoptationBoardId]);
+            console.log(isChecked, adoptationBoardId)
+        } else {
+            setCheckedBoards(prevState => prevState.filter(id => id !== adoptationBoardId));
+            console.log(isChecked, adoptationBoardId)
+        }
+    };
 
-    if (isChecked) {
-        setCheckedBoards(prevState => [...prevState, adoptationBoardId]);
-        console.log(isChecked, adoptationBoardId)
-    } else {
-        setCheckedBoards(prevState => prevState.filter(id => id !== adoptationBoardId));
-        console.log(isChecked, adoptationBoardId)
-    }
-};
-
-
-
-
-
-
-const deleteAdoptRequestMutation = useMutation({
-    mutationKey: "deleteAdoptRequestMutation",
-    mutationFn: deleteAdoptBoardById,
-    onSuccess: (response) => {
-       
-    },
-    onError: (error) => {
-        console.log(error);
-    }
-})
-
-
-
-const handleDeleteBoard = () => {
-
-    // myAdoptBoardList
-    const arr = myAdoptBoardList.filter((board) => board.checked === true);
-    console.log(arr);
-    setDeleteMyAdoptBoardIds((pre) => {
-        arr.map((board) => board.adoptationBoardId);
+    const deleteAdoptRequestMutation = useMutation({
+        mutationKey: "deleteAdoptRequestMutation",
+        mutationFn: deleteAdoptBoardById,
+        onSuccess: (response) => {
+            alert("해당 게시물이 삭제되었습니다");
+            window.location.replace("http://localhost:3000/account/mypage/Adopt?page=1");
+        },
+        onError: (error) => {
+            alert("오류");
+        }
     })
 
-    // for(let boardId of checkedBoards) {
-    //     deleteAdoptRequestMutation.mutate({boardIds: boardId})
-    //     alert("해당 게시글이 삭제되었습니다.")
-    //     window.location.replace("/account/mypage/Adopt?page=1");    
-    // }
-};
 
 
-const handleDeleteSelected = () => {
-    console.log("Selected items:", checkedBoards);
-};
+    const handleDeleteBoard = () => {
+
+        // myAdoptBoardList
+        const arr = myAdoptBoardList.filter((board) => board.checked === true);
+        console.log(arr);
+        setDeleteMyAdoptBoardIds((pre) => {
+            arr.map((board) => board.adoptationBoardId);
+        })
+
+        // for(let boardId of checkedBoards) {
+        //     deleteAdoptRequestMutation.mutate({boardIds: boardId})
+        //     alert("해당 게시글이 삭제되었습니다.")
+        //     window.location.replace("/account/mypage/Adopt?page=1");    
+        // }
+    };
+
+
+    const handleDeleteSelected = () => {
+        console.log("Selected items:", checkedBoards);
+    };
 
 
 
@@ -141,14 +128,6 @@ const handleDeleteSelected = () => {
         console.log("입력이 감지되었습니다.")
     }
 
-    const handleCheckAllChange = (e) => {
-        setCheckAll(() => {
-            return {
-                checked: e.target.checked,
-                target: 1
-            }
-        })
-    }
 
     const handleCheckOnChange = (e) => {
         const adoptationBoardId = parseInt(e.target.value);
@@ -166,53 +145,26 @@ const handleDeleteSelected = () => {
         );
     }
 
-    useEffect(() => {
-        if(checkAll.target === 1) {
-            setMyAdoptBoardList(() => 
-                myAdoptBoardList.map((board) => {
-                        return {
-                            ...board,
-                            checked: checkAll.checked
-                        }
-                })
-            );
-        }
-    }, [checkAll.checked]);
+    const moveToDetailPage = (adoptationBoardId) => {
+        navigate(`/ex/adoptcommunity/detail?boardid=${adoptationBoardId}`)
+    }
 
-    useEffect(() => {
-        const findCount = myAdoptBoardList.filter((board) => board.checked === true).length;
-        if(findCount === 5) {
-            setCheckAll(() => {
-                return {
-                    checked : true,
-                    target: 2
-                }
-            })
-        } else {
-            setCheckAll(() => {
-                return {
-                    checked : false,
-                    target: 2
-                }
-            })
-        }
-    }, [myAdoptBoardList])
+    const moveToEditPage = (adoptationBoardId) => {
+        navigate(`/ex/adoptcommunity/detail?boardid=${adoptationBoardId}&edit=true`)
+    }
 
-    useEffect(() => {
-        console.log(myAdoptBoardList)
-    }, [myAdoptBoardList])
+    const handleDeleteAdoptBoard = (adoptationBoardId) => {
+        if(window.confirm("해당 게시물을 삭제하시겠습니까?")) {
+            deleteAdoptRequestMutation.mutate({boardIds : adoptationBoardId});
+        }
+    }
+
 
     return (
         <div css={s.layout}>
             <MyPageSideBar />
             <div css={s.userDetails}>
-               <h2>분양 게시글 관리</h2>
-                {/* <div css={s.boardListHeader}>
-                    <div css={s.label}><input type="checkbox" checked={checkAll.checked} onChange={handleCheckAllChange}/></div>
-                    <div css={s.label}>제목</div>
-                    <div css={s.label}>카테고리</div>
-                    <div css={s.label}>등록일</div>
-                </div> */}
+                <h2>분양 게시글 관리</h2>
                 <div css={s.boardListItem}>
                     {myAdoptBoardList.map((board) => (
                         <MyBoardBox
@@ -224,20 +176,13 @@ const handleDeleteSelected = () => {
                             commentCount={board.commentCount}
                             animalCategoryId={board.boardAnimalCategoryId}
                             contentImg={board.adoptationBoardContent}
+                            onClick={() => moveToDetailPage(board.adoptationBoardId)}
+                            deleteBoard={() => handleDeleteAdoptBoard(board.adoptationBoardId)}
+                            editBoard={() => moveToEditPage(board.adoptationBoardId)}
                         />
-                        // <div css={s.rowData} key={data.adoptationBoardId} >
-                        //     <div css={s.labelData}><input type="checkbox" checked={checkedBoards.includes(data.adoptationBoardId)} onChange={(event) => handleCheckboxChange(event, data.adoptationBoardId)}/></div>
-                        //     <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.adoptationBoardTitle}</div>
-                        //     <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.boardAnimalCategoryNameKor}</div>
-                        //     <div css={s.labelData} onClick={() => navigate(`/ex/adoptcommunity/detail?boardid=${data.adoptationBoardId}`)}>{data.createDate}</div>
-                        // </div>
                     ))}
                 </div>
-                {/* <AdoptationPageNumbersUser maxPageNumber={maxPageNumber} totalCount={totalCount} onChange={handlePageChange}/> */}
                 <div>
-                    <button css={s.writeButton} onClick={handleDeleteBoard}>삭제</button>
-                    <button css={s.writeButton} onClick={() => {navigate
-                        (`/adoptCommunity/edit?adoptBoardId=${checkedBoards}`)}}>수정</button>
                     <button css={s.writeButton}
                         onClick={()=> navigate("/ex/adoptcommunity/write")} 
                     >글쓰기</button>

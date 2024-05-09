@@ -40,8 +40,14 @@ export const commentBox = css`
 
 export const commentContent = css`
     display: flex;
+   
     
 `;
+
+export const commentPage = css`
+    overflow-y: scroll;
+    height: 400px;
+`
 
 export const iconBox = css`
     display: flex;

@@ -250,7 +250,7 @@ function AdoptCommunityBoardDetailPage() {
         <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 
-            <div onClick={favoriteBoard}><AiOutlineHeart/>{boardDetail.totalCount}</div>
+            <div onClick={favoriteBoard}><AiOutlineHeart/>{boardDetail.favoriteCount}</div>
           }
           {
             !getAdoptCommunityBoardDetail.isLoading && 

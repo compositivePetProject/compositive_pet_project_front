@@ -132,7 +132,7 @@ function AdoptCommunityBoardListPageEx() {
                             boardTitle={board.adoptationBoardTitle} 
                             userNickname={board.userNickname} 
                             updateDate={board.updateDate}
-                            heartCount={board.totalCount}
+                            heartCount={board.favoriteCount}
                             viewCount={board.viewCount}
                             commentCount={board.commentCount}
                             onClick={() => handleOnClick(board)}

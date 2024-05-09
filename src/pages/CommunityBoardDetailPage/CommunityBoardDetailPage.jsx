@@ -92,6 +92,11 @@ function CommunityBoardDetailPage(props) {
 
 
    const toggleBoardFavoriteStatusButton = async () => {
+    if (!principalQueryState.data?.data.userId) {
+      alert("로그인 후 이용 바랍니다.")
+      window.location.replace("/auth/sign-in");
+      return;
+    }
     if (isLiked) {
         await deleteBoardLikeQuery.mutateAsync({
             communityBoardId : communityBoardId,

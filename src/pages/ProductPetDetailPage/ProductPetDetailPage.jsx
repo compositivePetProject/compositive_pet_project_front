@@ -19,6 +19,7 @@ import ProductSelect from "../../components/ProductSelect/ProductSelect";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { GoCodeReview } from "react-icons/go";
 import { FiShoppingCart } from "react-icons/fi";
+import { authCheck, useAuthCheck2 } from "../../hooks/AuthCheck2";
 
 
 function ProductPetDetailPage() {
@@ -175,6 +176,11 @@ function ProductPetDetailPage() {
     })
     
     const toggleFavoriteStatusButton = async () => {
+            if (!principalQueryState.data?.data.userId) {
+                alert("로그인 후 이용 바랍니다.")
+                window.location.replace("/auth/sign-in");
+                return;
+            }
             if (isLiked) {
                 await deleteProductFavoriteQuery.mutateAsync({
                     productId: productId,
@@ -194,6 +200,11 @@ function ProductPetDetailPage() {
     }
 
     const handleProductPurchase = () => {
+        if (!principalQueryState.data?.data.userId) {
+            alert("로그인 후 이용 바랍니다.")
+            window.location.replace("/auth/sign-in");
+            return;
+        }
         if (!selectedSizeType.option) {
             alert("옵션을 선택해주세요.");
             return;
@@ -202,6 +213,11 @@ function ProductPetDetailPage() {
     }
 
     const handleProductCartAdd = () => {
+        if (!principalQueryState.data?.data.userId) {
+            alert("로그인 후 이용 바랍니다.")
+            window.location.replace("/auth/sign-in");
+            return;
+        }
         postProductCartAddQuery.mutate({
             userId: userId,
             productId: productId,

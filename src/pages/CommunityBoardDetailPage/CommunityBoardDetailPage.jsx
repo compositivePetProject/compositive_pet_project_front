@@ -1,19 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, getCommunityBoardCommentRequest, postCommunityBoardCommentRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
-import { useQuillInput } from "../../hooks/useQuillInput";
-import { getCommunityBoardViewRequest, postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
-import { BsEye } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest } from "../../apis/api/communityBoardComment";
 import BoardContentBox from "../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../components/Quill/Quill"
 import { GrFormView } from "react-icons/gr";
-import { FaRegComments } from "react-icons/fa";
 import { LiaCommentAltSolid } from "react-icons/lia";
 
 
@@ -160,7 +155,6 @@ function CommunityBoardDetailPage(props) {
       }
     })
 
-    
     const handleChangeBoardCommentDelete = (commentId) => {
       console.log(commentId)
       const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?");
@@ -263,6 +257,7 @@ function CommunityBoardDetailPage(props) {
       })
     }
 
+
     const updateBoardCommentQuery = useMutation({
       mutationKey: "updateBoardCommentQuery",
       mutationFn: putCommunityBoardCommentRequest,
@@ -296,24 +291,6 @@ function CommunityBoardDetailPage(props) {
       communityBoardCommentContent : value
     })
   }
-
-
-
-
-
-// <<<<<<< 103-서창현
-//     return (
-//       <div css={s.containter}>
-//         <div css={s.boardContent}>  
-        
-//           {/*   */}
-      
-// =======
-// const handleChangeBoardComment = (commentId) => {
-//   navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
-// };
-
-
 
   return (
     <div css={s.layout}>

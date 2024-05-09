@@ -2,7 +2,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
-import { deleteAdoptBoardById, deleteAdoptCommentRequest, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest, updateAdoptCommentRequest } from "../../../apis/api/Adopt";
+import { deleteAdoptBoardById, deleteAdoptCommentRequest, deleteAdoptLike, getAdoptById, getAdoptCommentRequest, getAdoptLike, getFindLikedUser, postAdoptCommentRequest, postAdoptLike, putAdoptRequest, updateAdoptCommentRequest } from "../../../apis/api/Adopt";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
@@ -34,6 +34,7 @@ function AdoptCommunityBoardDetailPage() {
   const [ commentButtonState, setCommentButtonState ] = useState(0);
   const [ commentId, setCommentId ] = useState(0);
   const [ favoriteState, setFavoriteState ] = useState(0);
+  const [ like, setLike ] = useState("");
 
   const getFindUserByBoard = useQuery(
     ["getFindUserByBoard", likedUsers],
@@ -90,14 +91,38 @@ function AdoptCommunityBoardDetailPage() {
       onSuccess: (response) => {
         console.log(response)
         setBoardDetail(response);
-        // 좋아요 상태 확인
-        response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
+        // // 좋아요 상태 확인
+        // response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
       },
       onError: (error) => {
         console.log(error);
       }
     }
   );
+
+  // 좋아요 갯수
+  const getBoardFavoriteQuery = useQuery(
+    ["getBoardFavoriteQuery", searchParams.get("boardid")],
+    async () => await getAdoptLike({
+      adoptationBoardId : searchParams.get("boardid")
+    }),
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      onSuccess: response => {
+        console.log(response)
+        setLike(response)
+        // 좋아요 상태 확인
+        response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
+      },
+
+      onError: (error) => {
+        console.log (error)
+      }
+    }
+  )
+
+
 
   const postAdoptCommunityBoardComment = useMutation({
     mutationKey: "postAdoptCommunityBoardComment",
@@ -243,7 +268,6 @@ function AdoptCommunityBoardDetailPage() {
     }
   })
 
-
   const favoriteBoard = async () => {
     const currentUserLiked = likedUsers.includes(principalQueryState.data?.data.userId);
 
@@ -260,7 +284,7 @@ function AdoptCommunityBoardDetailPage() {
     }
 
     // 좋아요 상태 갱신 후 다시 렌더링
-    getAdoptCommunityBoardDetail.refetch();
+    getBoardFavoriteQuery.refetch();
     getFindUserByBoard.refetch();
   }
 
@@ -318,7 +342,7 @@ function AdoptCommunityBoardDetailPage() {
               <div css={s.heartCount(favoriteState)} onClick={favoriteBoard}>
                 <IoMdHeart/>
               </div>
-              <div>{boardDetail.favoriteCount}</div>
+              <div>{like}</div>
             </div>
           }
           {

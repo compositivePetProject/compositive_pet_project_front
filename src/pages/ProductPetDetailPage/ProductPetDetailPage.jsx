@@ -230,8 +230,9 @@ function ProductPetDetailPage() {
 
     const handleChangeDetaill = () => {
         // 수정
-        console.log(selectedSizeType.option)    
+        // console.log(selectedSizeType.option)    
     }
+    console.log(selectedSizeType.option)
     
     return (
         
@@ -379,7 +380,7 @@ function ProductPetDetailPage() {
                     }
                 </div>
                 {isModalOpen && (
-                    <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option?.value} productOrderCount={productOrderCount} />
+                    <ProductPayment onClose={() => setIsModalOpen(false)} order={user} option={selectedSizeType.option} productOrderCount={productOrderCount} />
                 )}
         </div>
     );

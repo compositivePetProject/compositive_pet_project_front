@@ -127,13 +127,13 @@ export const starButtons = css`
 
 export const starButton = css`
     background-color: transparent;
-    font-size: 30px;
+    font-size: 27px;
     cursor: pointer;
 `;
 
 export const activeStarButton = css`
     color: gold;
-    font-size: 30px;
+    font-size: 27px;
     cursor: pointer;
 `;
 
@@ -153,17 +153,20 @@ export const box = css`
     position: relative;
 `;
 
-
 export const buttons3 = css`
     width: 150px;
     padding: 10px 20px;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #f4f6f8;
+    color: #222222;
     text-decoration: none;
     cursor: pointer;
+
+    &:hover {
+        background-color: #e7e8e98f;
+    }
 `;
 
 

@@ -105,25 +105,27 @@ export const container = css`
     border-radius: 15px;
     margin-bottom: 10px;
     padding: 10px 20px;
-    row-gap: 10px;
     background-color: #ffffff;
 `;
 
 export const orderHeader = css`
     width: 100%;
     display: flex;
-`;
+    color: #1e1e23;
+    font-weight: bold;
+    font-size: 16px;
 
+    & > div:nth-of-type(1) {
+        cursor: default;
+    }
+`;
 
 export const container2 = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #d7e2eb;
     border-radius: 15px;
     width: 100%;
-    padding: 5px;
-    row-gap: 10px;
     background-color: #ffffff;
 `;
 
@@ -131,7 +133,6 @@ export const container3 = css`
     display: flex;
     align-items: center;
     margin-right: 20px;
-    padding: 5px;
     flex-grow: 1;
     border-right: 1px solid #d7e2eb;
     background-color: transparent;
@@ -143,14 +144,17 @@ export const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
+    border-radius: 8px;
+    margin-top: 10px;
     overflow: hidden;
     cursor: pointer;
     & > img {
         height: 100%;   
     }  
 `;
+
 
 export const container4 = css`
     height: 100px;
@@ -169,7 +173,6 @@ export const container4 = css`
 export const container5 = css`
     display: flex;
     justify-content: space-between;
-    padding: 5px;
     background-color: transparent;
 `;
 
@@ -179,10 +182,14 @@ export const buttons3 = css`
     margin-right: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: #f4f6f8;
+    color: #222222;
     text-decoration: none;
     cursor: pointer;
+
+    &:hover {
+        background-color: #e7e8e98f;
+    }
 `;
 
 
@@ -201,13 +208,6 @@ export const container6 = css`
 
 export const container7 = css`
     display: flex;
-`;
-
-export const editBox = css`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    row-gap: 10px;
 `;
 
 
@@ -230,12 +230,12 @@ export const starButtons = css`
 
 export const starButton = css`
     background-color: transparent;
-    font-size: 30px;
+    font-size: 27px;
 `;
 
 export const activeStarButton = css`
     color: gold;
-    font-size: 30px;
+    font-size: 27px;
 `;
 
 

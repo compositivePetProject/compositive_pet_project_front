@@ -250,7 +250,7 @@ function AdoptCommunityBoardDetailPage() {
     mutationKey: "postAdoptCommunityBoardFavorite",
     mutationFn: postAdoptLike,
     onSuccess: (response) => {
-      getAdoptCommunityBoardDetail.refetch();
+      
     },
     onError: (error) => {
     }
@@ -404,6 +404,7 @@ function AdoptCommunityBoardDetailPage() {
               <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
             </div>
         </div>
+        
         <div>
           <div css={s.boardCommentBox}>
             {

@@ -5,11 +5,12 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
-import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
+import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, postCommunityBoardCommentRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
 import BoardContentBox from "../../components/BoardContentBox/BoardContentBox";
-import Quill from "../../components/Quill/Quill"
 import { GrFormView } from "react-icons/gr";
 import { LiaCommentAltSolid } from "react-icons/lia";
+import Quill from "../../components/Quill/Quill";
+import BoardCommentBox from "../../components/BoardCommentBox/BoardCommentBox";
 
 
 function CommunityBoardDetailPage(props) {
@@ -23,14 +24,13 @@ function CommunityBoardDetailPage(props) {
     const [ board, setBoard ] = useState("");
     const [ like, setLike ] = useState("");
     const userId = principalQueryState.data?.data.userId;
-    
-
-    // 평원
-    ///////////////////////////////////////////////////////////
-
     const communityBoardId = parseInt(searchParams.get("communityBoardId"))
     const communityBoardCommentId = parseInt(searchParams.get("communityBoardCommentId"))
     const [ boardComment, setBoardCommnent ] = useState([])
+    const [ commentButtonState, setCommentButtonState ] = useState(0);
+    const [ commentValue, setCommentValue ] = useState("");
+    const [ commentId, setCommentId ] = useState(0);
+
 
     const getBoardFavoriteStatusQuery = useQuery(
       ["getBoardFavoriteStatusQuery", userId, communityBoardId],
@@ -38,7 +38,6 @@ function CommunityBoardDetailPage(props) {
         communityBoardId : communityBoardId,
         userId : userId
       }),
-
       {
         retry : 0,
         refetchOnWindowFocus: false,
@@ -59,7 +58,6 @@ function CommunityBoardDetailPage(props) {
         communityBoardId : communityBoardId
       }),
       {
-
         retry: 0,
         refetchOnWindowFocus: false,
         onSuccess: response => {
@@ -71,8 +69,6 @@ function CommunityBoardDetailPage(props) {
         }
       }
     )
-
-    
    
     
   const postBoardLikeQuery = useMutation({
@@ -95,8 +91,6 @@ function CommunityBoardDetailPage(props) {
   })
 
 
-   /////////////////////////////////////////////////////////// 
-
    const toggleBoardFavoriteStatusButton = async () => {
     if (isLiked) {
         await deleteBoardLikeQuery.mutateAsync({
@@ -109,12 +103,10 @@ function CommunityBoardDetailPage(props) {
             userId : userId
           });
       }
-      //수정
       const response = await getCommunityBoardLikeCountRequest({
           communityBoardId : searchParams.get("communityBoardId")
       })
       
-      //수정
       setLike(response.data)
       setIsLiked(Liked => !Liked);
     }
@@ -134,6 +126,7 @@ function CommunityBoardDetailPage(props) {
           retry: 0, 
           refetchOnWindowFocus: false, 
           onSuccess: data => {
+              console.log(data)
               setBoardCommnent(data); 
           },
           onError: error => {
@@ -147,7 +140,7 @@ function CommunityBoardDetailPage(props) {
       mutationFn: deleteCommunityBoardCommentRequest,
       onSuccess: response => {
         alert("작성하신 댓글이 삭제 되었습니다.")
-        window.location.reload(`/community/getboards?page=1`)
+        window.location.reload()
       },
       onError: error => {
         alert("오류")
@@ -155,28 +148,15 @@ function CommunityBoardDetailPage(props) {
       }
     })
 
-    const handleChangeBoardCommentDelete = (commentId) => {
-      console.log(commentId)
-      const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?");
-      if (commentDelete) {
-        deleteBoardCommentQuery.mutate(commentId)
-    
+
+    const deleteCommentSubmit = (commentId) => {
+      if(window.confirm("해당 댓글을 삭제하시겠습니까?")) {
+        deleteBoardCommentQuery.mutate(commentId);
+        const params = new URLSearchParams(searchParams);
+        params.delete('edit');
+        setSearchParams(params);
       }
-    };
-  
-
-    const handleChangeBoardComment = (commentId) => {
-      navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
-    };
-    
-
-
-  
-      
-    // 창현
-    ///////////////////////////////////////////////////////////
-    
-
+    }
     const getCommunityBoardQuery = useQuery(
         ["getCommunityBoardQuery", searchParams.get("communityBoardId")],
         async () => await getCommunityBoardRequestById ({
@@ -188,7 +168,6 @@ function CommunityBoardDetailPage(props) {
           onSuccess: response => {
             console.log(response)
             setBoard(response.data)
-
         },
         onError: (error) => {
           console.log(error);
@@ -214,7 +193,7 @@ function CommunityBoardDetailPage(props) {
       mutationFn: putCommunityBoardRequest,
       onSuccess: response => {
         alert("게시글 수정이 완료 되었습니다.")
-        navigate("/community/getboards?page=1")
+        window.location.replace("/community/getboards?page=1");
       },
       onError: error => {
         alert('오류')
@@ -240,6 +219,9 @@ function CommunityBoardDetailPage(props) {
         communityBoardContent : board.communityBoardContent,
         communityBoardAnimalCategoryId : board.communityBoardAnimalCategoryId
         })
+        const params = new URLSearchParams(searchParams);
+        params.delete('edit');
+        setSearchParams(params);
       }
     }
 
@@ -257,13 +239,28 @@ function CommunityBoardDetailPage(props) {
       })
     }
 
+    const postBoardCommentQuery = useMutation({
+      mutationKey: "postBoardCommentQuery",
+        mutationFn: postCommunityBoardCommentRequest,
+        onSuccess: response => {
+            console.log(response);
+            alert("작성하신 댓글이 등록이 되었습니다.");
+            window.location.reload()
+        },
+        onError: error => {
+            console.log(error);
+        }
+    });
+
+  
+
 
     const updateBoardCommentQuery = useMutation({
       mutationKey: "updateBoardCommentQuery",
       mutationFn: putCommunityBoardCommentRequest,
       onSuccess: response => {
           alert('작성하신 댓글이 수정 되었습니다.');
-          navigate("/community/getboards?page=1"); 
+          window.location.reload()
       },
       onError: error => {
           alert("오류 발생");
@@ -271,9 +268,6 @@ function CommunityBoardDetailPage(props) {
       }
   });
 
-
-
-    
     const handleChangeCommunityBoardCommentUpdate = () => {
       const commentUpdate = window.confirm("작성하신 댓글을 수정하시겠습니까?");
       if (commentUpdate) {
@@ -292,9 +286,55 @@ function CommunityBoardDetailPage(props) {
     })
   }
 
+  const submitInputComment = () => {
+    if(commentButtonState !== 1) {
+      if(window.confirm("댓글을 작성하시겠습니까?")) {
+        if(principalQueryState?.status === "success") {
+          if(!commentValue) {
+            alert("댓글을 작성해주세요.");
+            return;
+          }
+          postBoardCommentQuery.mutate({
+            communityBoardId: searchParams.get("communityBoardId"),
+            userId: principalQueryState.data?.data.userId,
+            communityBoardCommentContent: commentValue
+          });
+          const params = new URLSearchParams(searchParams);
+          params.delete('edit');
+          setSearchParams(params);
+        } else {
+          alert("로그인 후 사용이 가능한 서비스 입니다.")
+          window.location.replace("http://localhost:3000/auth/auth");
+        }
+      }
+    } else {
+      if(window.confirm("댓글을 수정하시겠습니까?")) {
+        updateBoardCommentQuery.mutate({
+          communityBoardCommentId: commentId,
+          communityBoardCommentContent: commentValue
+        });
+        const params = new URLSearchParams(searchParams);
+        params.delete('edit');
+        setSearchParams(params);
+      }
+    }
+  }
+
+  
+  const postCommentOnChange = (value) => {
+    setCommentValue(value);
+  }
+
+  const handleCancel = () => {
+    setButtonState(0);
+    if(searchParams.get("edit") === "true") {
+      navigate("/account/mypage/community/boards");
+    }
+  }
+
   return (
     <div css={s.layout}>
-      <div css={s.topIconBox}>
+        <div css={s.topIconBox}>
             <div css={s.iconBox}>
               {
                 !getCommunityBoardQuery.isLoading && 
@@ -325,7 +365,6 @@ function CommunityBoardDetailPage(props) {
               }
             </div>
           </div>
-          <div css={s.commentBox}>
           <div>  
             { principalQueryState.data?.data.userId === board.userId
             ? <div css={s.buttonBox}>
@@ -333,7 +372,7 @@ function CommunityBoardDetailPage(props) {
                   ? 
                   <>
                     <button css={s.button} onClick={handleChangeCommunityBoardUpdate}>확인</button>
-                    <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
+                    <button css={s.button} onClick={handleCancel}>취소</button>
                   </>
                   : 
                   <>
@@ -344,74 +383,47 @@ function CommunityBoardDetailPage(props) {
               </div>
             : <></> 
             }
-            {
-            buttonState === 1
-            ?
-              <>
-                <input type="text" defaultValue={board.communityBoardTitle} onChange={updateTitleOnchange} />
+            <div id="target">
+              {
+              buttonState === 1
+              ?
+                <div>
+                  <div css={s.inputContainer}>
+                    <div css={s.selectLabel}>제목</div>
+                    <input css={s.input} type="text" defaultValue={board.communityBoardTitle} onChange={updateTitleOnchange} />
+                  </div>
                 <Quill value={board.communityBoardContent} onChange={updateOnchange}/>
-              </>
-            :
-              <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
-            }
-          </div>
-
-          {/*  /////////////////*/}
-          
-
-                <div css={s.buttonContainer}>
-                  <div>
-                    <button
-                        css={s.commentbutton}
-                        onClick={() => {
-                          navigate(`/community/comment/${board.communityBoardId}/?communityBoardId=${board.communityBoardId}`) 
-                        }}
-                      >
-                        댓글 작성
-                        </button>                  
-                  </div>
+                </div>
+              :
+                <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
+              }
+            </div>
+            <div css={s.commentBox}>
+              <Quill value={commentValue} onChange={postCommentOnChange} height={"100px"} />
               <div>
-                  {boardComment.map((comment) => (
-                    <div key={comment.communityBoardCommentId} css={s.commentbox1}>
-                      <div css={s.commentbox2}>
-                        <div dangerouslySetInnerHTML={{ __html: comment.communityBoardCommentContent }}></div>
-                      </div>
-                        <div>{comment.createDate}</div>
-
-                        <div css={s.commentBox}>
-                        <div>  
-                          {principalQueryState.data?.data.userId === board.userId
-                          ? <div css={s.buttonBox}>
-                          {buttonState === 1
-                            ?
-                            <>
-                              <button css={s.button} onClick={handleChangeCommunityBoardCommentUpdate}>확인</button>
-                              <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
-                            </>
-                            :
-                            <>
-                            <button css={s.button} onClick={() => setButtonState(1)}>수정</button>
-                            <button css={s.button} onClick={handleChangeBoardCommentDelete}>삭제</button>
-                            </>
-                          }
-                          </div>
-                         : <></>
-                        }
-                        {
-                        buttonState === 1
-                        ?
-                        <>
-                        <Quill value={board.communityBoardContent} onChange={updateOnCommentchange}/>
-                      </>
-                      : 
-                      <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
-                      }
-                      </div>
-                      
-                  </div>
-                </div>
-               ))}
-                </div>
+                <button onClick={submitInputComment}>{commentButtonState === 1 ? "수정하기" : "작성하기"}</button>
+              </div>
+            </div>
+            <div>
+              <div>
+                {
+                  boardComment.map(comment => 
+                    <BoardCommentBox
+                      pirincipal={comment.userId}
+                      key={comment.communityBoardCommentId}
+                      commentId={comment.communityBoardCommentId}
+                      commentIdState={setCommentId}
+                      userNickname={comment.userNickname}
+                      updateDate={comment.updateDate}
+                      commentContent={comment.communityBoardCommentContent}
+                      deleteComment={() => deleteCommentSubmit(comment.communityBoardCommentId)}
+                      updateComment={setCommentValue}
+                      buttonState={setCommentButtonState}
+                      target={"target"}
+                    />
+                    )
+                  }
+              </div>
             </div>
         </div>
     </div>

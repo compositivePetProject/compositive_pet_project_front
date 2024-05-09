@@ -107,6 +107,7 @@ export const totalViewCount = css`
 
 `
 
+
 export const inputContainer = css`
     margin-bottom: 10px;
     box-sizing: border-box;
@@ -117,6 +118,22 @@ export const inputContainer = css`
     width: 300px;
     height: 45px;
     overflow: hidden;
+`
+
+export const selectLabel = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #0e004a24;
+    padding: 0px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #00005cff;
+    color: #eee;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    cursor: default;
 `
 
 export const input = css`   

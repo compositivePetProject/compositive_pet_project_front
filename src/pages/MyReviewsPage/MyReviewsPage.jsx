@@ -62,16 +62,19 @@ function MyReviewsPage() {
                 </div>
                 { userOrders.map(userOrder => 
                     <div key={userOrder.productOrderId} css={s.container}>
-                        <div css={s.orderHeader}>
-                            <div>{userOrder.createDate} 배송</div>
-                        </div>
                         <div css={s.container2}>
                             <div css={s.container3}>
-                                <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>
-                                    <img src={userOrder.productImageUrl} alt="" />
-                                </div>
+                                <div css={s.orderHeader}>
+                                        <div>배송완료</div>
+                                        <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/?productId=${userOrder.productId}&page=1`)}>
+                                            <img src={userOrder.productImageUrl} alt="" />
+                                        </div>
+                                    </div>  
                                 <div css={s.container4}>
-                                    <div onClick={() => navigate(`/product/pet/detail/${userOrder.productId}/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
+                                    <div css={s.orderCreateDate}>
+                                        <div>{userOrder.createDate} 배송완료</div>
+                                    </div>
+                                    <div onClick={() => navigate(`/product/pet/detail/?productId=${userOrder.productId}&page=1`)}>{userOrder.productNameKor}</div>
                                     <div css={s.container5}>
                                         <div>
                                             <span>{userOrder && parseInt(userOrder.productPrice * userOrder.productOrderCount).toLocaleString()}원</span>

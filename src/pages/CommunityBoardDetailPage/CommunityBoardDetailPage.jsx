@@ -1,19 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import React, { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, getCommunityBoardCommentRequest, postCommunityBoardCommentRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
-import { useQuillInput } from "../../hooks/useQuillInput";
-import { getCommunityBoardViewRequest, postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
-import { BsEye } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest } from "../../apis/api/communityBoardComment";
 import BoardContentBox from "../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../components/Quill/Quill"
 import { GrFormView } from "react-icons/gr";
-import { FaRegComments } from "react-icons/fa";
 import { LiaCommentAltSolid } from "react-icons/lia";
 
 
@@ -105,7 +100,7 @@ function CommunityBoardDetailPage(props) {
       mutationFn: deleteCommunityBoardCommentRequest,
       onSuccess: response => {
         alert("작성하신 댓글이 삭제 되었습니다.")
-        window.location.reload("/community/getboards")
+        // window.location.reload("/community/getboards")
       },
       onError: error => {
         alert("오류")
@@ -118,13 +113,13 @@ function CommunityBoardDetailPage(props) {
       const commentDelete = window.confirm("댓글을 삭제 하시겠습니까?")
       if(commentDelete) {
         deleteBoardCommentQuery.mutate(
-          searchParams.get("communityBoardCommentId")
+          searchParams.get("communityBoardId")
         )
       }
     }
 
-    const handleChangeBoardComment = () => {
-      navigate("/community/comments/")
+    const handleChangeBoardComment = (commentId) => {
+      navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
     }
 
     /////////////////////////////////////////////////////////// 
@@ -255,23 +250,6 @@ function CommunityBoardDetailPage(props) {
         communityBoardContent : value
       })
     }
-
-
-
-
-// <<<<<<< 103-서창현
-//     return (
-//       <div css={s.containter}>
-//         <div css={s.boardContent}>  
-        
-//           {/*   */}
-      
-// =======
-// const handleChangeBoardComment = (commentId) => {
-//   navigate(`/community/update/comment?communityBoardCommentId=${commentId}`);
-// };
-
-
 
   return (
     <div css={s.layout}>

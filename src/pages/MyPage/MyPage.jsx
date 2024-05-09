@@ -10,6 +10,7 @@ import MyCommunityBoardsPage from '../MyCommunityBoardsPage/MyCommunityBoardsPag
 
 
 function MyPage() {
+    useAuthCheck()
     return (
         <>
             <Routes>

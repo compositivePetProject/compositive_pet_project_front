@@ -75,6 +75,7 @@ export const container2 = css`
     align-items: center;
     border-radius: 15px;
     width: 100%;
+    padding: 5px;
     background-color: #ffffff;
 `;
 

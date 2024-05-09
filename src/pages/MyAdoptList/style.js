@@ -52,11 +52,11 @@ export const writeButton = css`
 
 export const boardListItem = css`
     border: 1px solid #d7e2eb;
-    height: 500px;
+    height: 570px;
     padding: 25px 25px 25px 30px;
     overflow: auto;
     box-sizing: border-box;
-    gap: 50px;
+    gap: 40px;
     flex-wrap: wrap;
     display: flex;
     border-radius: 8px;

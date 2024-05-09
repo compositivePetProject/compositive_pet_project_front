@@ -121,7 +121,7 @@ function ProductPetShoppingPage(props) {
                         placeholder="상품명 검색"
                     />
                     <button css={s.searchBarButton} >
-                        <FaSearch onClick={() => searchSubmit()}/>
+                        <FaSearch onClick={searchSubmit}/>
                     </button>
                 </div>
             </div>

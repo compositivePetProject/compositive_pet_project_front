@@ -199,8 +199,20 @@ export const writeButtonBox = css`
 
 export const writeButton = css`
     box-sizing: border-box;
-    border: 2px solid #dbdbdb;
-    bottom: 0%;
-    width: 50px;
-    height: 50px;
-`
+    margin-left: 5px;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    padding: 12px;
+    height: 40px;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #2400c4cb;
+    }
+
+    &:active {
+        background-color: #00005cff;
+        color: #eeeeee;
+    }
+`;

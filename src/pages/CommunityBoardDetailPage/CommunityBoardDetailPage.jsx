@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
@@ -329,6 +329,14 @@ function CommunityBoardDetailPage(props) {
   const postCommentOnChange = (value) => {
     setCommentValue(value);
   }
+
+  useEffect(() => {
+    console.log(searchParams.get("edit"))
+    console.log(typeof(searchParams.get("edit")))
+    if(searchParams.get("edit") === "true") {
+      setButtonState(1);
+    }
+  }, [searchParams])
 
   const handleCancel = () => {
     setButtonState(0);

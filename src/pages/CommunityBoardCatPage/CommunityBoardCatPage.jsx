@@ -13,6 +13,7 @@ import BoardBox from "../../components/BoardBox/BoardBox";
 import TopSelect from "../../components/admin/TopSelect/TopSelect";
 import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
 import { postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
+import { TfiWrite } from "react-icons/tfi";
 
 function CommunityBoardCatPage(props) {
 
@@ -102,8 +103,9 @@ function CommunityBoardCatPage(props) {
                             placeholder="제목 + 내용 검색"
                         />
                         <button css={s.searchBarButton} >
-                            <FaSearch onClick={() => searchSubmit()}/>
+                            <FaSearch onClick={searchSubmit}/>
                         </button>
+                        <button css={s.writeButton} onClick={() => navigate("/community/board/write")}><TfiWrite /></button>
                     </div>
                 </div>
                 <div css={s.board}>
@@ -124,9 +126,6 @@ function CommunityBoardCatPage(props) {
                         ))} 
                     </div>
                 </div>
-            <div  css={s.writeButtonBox}>
-                <FaPencil css={s.writeButton} onClick={() => navigate("/community/board/write")}></FaPencil>
-            </div>
             {
                 !getBoardsSearchCountRequestQuery.isLoading &&
                 <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>

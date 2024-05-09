@@ -9,6 +9,7 @@ import AdoptationPageNumbers from "../../components/AdoptationPageNumbers/Adopta
 import AdoptationPageNumbersUser from "../../components/AdoptationPageNumbersUser/AdoptationPageNumbersUser";
 import MyPageSideBar from "../../components/MyPageSideBar/MyPageSideBar";
 import MyBoardBox from "../../components/MyBoardBox/MyBoardBox";
+import { TfiWrite } from "react-icons/tfi";
 
 
 function MyAdoptList(props) {
@@ -164,7 +165,10 @@ function MyAdoptList(props) {
         <div css={s.layout}>
             <MyPageSideBar />
             <div css={s.userDetails}>
-                <h2>분양 게시글 관리</h2>
+                <div>
+                    <div css={s.title}>분양 게시글 관리</div>
+                    <button css={s.writeButton} onClick={()=> navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
+                </div>
                 <div css={s.boardListItem}>
                     {myAdoptBoardList.map((board) => (
                         <MyBoardBox
@@ -182,13 +186,7 @@ function MyAdoptList(props) {
                         />
                     ))}
                 </div>
-                <div>
-                    <button css={s.writeButton}
-                        onClick={()=> navigate("/ex/adoptcommunity/write")} 
-                    >글쓰기</button>
-                </div>
             </div>
-            
         </div>
     );
 }

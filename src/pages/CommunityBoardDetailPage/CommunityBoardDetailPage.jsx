@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteCommunityBoardLikeRequest, deleteCommunityBoardRequestById, getCommunityBoardLikeCountRequest, getCommunityBoardLikeStatusRequest,  getCommunityBoardRequestById, postCommunityBoardLikeRequest, putCommunityBoardRequest} from "../../apis/api/communityBoard";
 import { AiFillHeart } from "react-icons/ai";
-import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest } from "../../apis/api/communityBoardComment";
+import { deleteCommunityBoardCommentRequest, getCommunityBoardCommentByBoardIdRequest, putCommunityBoardCommentRequest } from "../../apis/api/communityBoardComment";
 import BoardContentBox from "../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../components/Quill/Quill"
 import { GrFormView } from "react-icons/gr";

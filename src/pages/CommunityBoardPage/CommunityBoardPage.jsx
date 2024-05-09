@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useNavigate, useSearchParams} from "react-router-dom";
-import { getCommunityBoardListRequest, getCommunityBoardPageCountRequest, getCommunityBoardPageRequest } from "../../apis/api/communityBoard";
-import { useEffect, useRef, useState } from "react";
+import { getCommunityBoardPageCountRequest, getCommunityBoardPageRequest } from "../../apis/api/communityBoard";
+import { useRef, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/CommunityBoardPageCount";
@@ -13,6 +13,7 @@ import BoardBox from "../../components/BoardBox/BoardBox";
 import TopSelect from "../../components/admin/TopSelect/TopSelect";
 import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
 import { postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
+import { TfiWrite } from "react-icons/tfi";
 
 function CommunityBoardPage() {
     const navigate = useNavigate();
@@ -103,8 +104,9 @@ function CommunityBoardPage() {
                                 placeholder="제목 + 내용 검색"
                             />
                             <button css={s.searchBarButton} >
-                                <FaSearch onClick={() => searchSubmit()}/>
+                                <FaSearch onClick={searchSubmit}/>
                             </button>
+                            <button css={s.writeButton} onClick={() => navigate("/community/board/write")}><TfiWrite /></button>
                         </div>
                     </div>
                     <div css={s.board}>
@@ -125,9 +127,6 @@ function CommunityBoardPage() {
                             ))} 
                         </div>
                     </div>
-                <div  css={s.writeButtonBox}>
-                    <FaPencil css={s.writeButton} onClick={() => navigate("/community/board/write")}></FaPencil>
-                </div>
                 {
                     !getBoardsSearchCountRequestQuery.isLoading &&
                     <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>

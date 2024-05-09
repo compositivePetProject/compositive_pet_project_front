@@ -8,6 +8,7 @@ export const layout = css`
 `;
 
 export const userInfoBox = css`
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     box-sizing: border-box;

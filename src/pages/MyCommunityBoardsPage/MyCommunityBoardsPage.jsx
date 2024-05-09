@@ -8,6 +8,7 @@ import Quill from "../../components/Quill/Quill";
 import { useNavigate } from "react-router-dom";
 import MyBoardBox from "../../components/MyBoardBox/MyBoardBox";
 import BoardBox from "../../components/BoardBox/BoardBox";
+import { TfiWrite } from "react-icons/tfi";
 
 function MyCommunityBoardsPage() {
     const navigate = useNavigate();
@@ -77,7 +78,10 @@ function MyCommunityBoardsPage() {
         <div css={s.layout}>
             <MyPageSideBar />
             <div css={s.userDetails}>
-                <h2>커뮤니티 게시글 관리</h2>
+                <div>
+                    <div css={s.title}>커뮤니티 게시글 관리</div>
+                    <button css={s.writeButton} onClick={()=> navigate("/community/board/write")}><TfiWrite /></button>
+                </div>
                 <div css={s.boardListItem}>
                     {communityBoardList.map(board => (
                         <MyBoardBox
@@ -94,11 +98,6 @@ function MyCommunityBoardsPage() {
                             editBoard={() => moveToEditPage(board.communityBoardId)}
                         />
                     ))}
-                </div>
-                <div>
-                    <button css={s.writeButton}
-                        onClick={()=> navigate("/community/board/write")} 
-                    >글쓰기</button>
                 </div>
             </div>
         </div>

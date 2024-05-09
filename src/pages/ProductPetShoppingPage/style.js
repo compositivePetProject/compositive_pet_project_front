@@ -121,6 +121,7 @@ export const searchBarButton = css`
     }
 `;
 
+
 export const shoppingFilter = css`
     box-sizing: border-box;
     display: flex;

@@ -19,7 +19,6 @@ import ProductSelect from "../../components/ProductSelect/ProductSelect";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { GoCodeReview } from "react-icons/go";
 import { FiShoppingCart } from "react-icons/fi";
-import { authCheck, useAuthCheck2 } from "../../hooks/AuthCheck2";
 
 
 function ProductPetDetailPage() {
@@ -245,11 +244,9 @@ function ProductPetDetailPage() {
     };
 
     const handleChangeDetaill = () => {
-        // 수정
-        // console.log(selectedSizeType.option)    
-    }
+        selectedSizeType.handleOnChange(null);  
+    };
     console.log(selectedSizeType.option)
-    
     return (
         
         <div>
@@ -259,16 +256,6 @@ function ProductPetDetailPage() {
                     <div css={s.productImg}>  
                         <ProductImage src={user.productImageUrl} /> 
                     </div>
-                    {/* <div>
-                        <div>
-                            <div>리뷰수</div> 
-                            <div>21231</div> 
-                        </div>
-                        <div>
-                            <div>사용자 총 평점</div>
-                            <div>123</div>
-                        </div>
-                    </div> */}
                 </div>
                 <div css={s.productBox}>
                     <div css={s.productBoxHeader}>

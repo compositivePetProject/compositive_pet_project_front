@@ -1,50 +1,28 @@
 import { css } from "@emotion/react";
 
-
-
 export const layout = css`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 10px;
+    width: 100%;
 `
 
 export const headerTitle = css`
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 110px 10px;
+
+    & > div:nth-of-type(1) {
+        font-size: 22px;
+        font-weight: 700;
+    }
 `
 
-export const boardListLayout = css`
-    box-sizing: border-box;
-    border: 1px solid #dbdbdb;
-    width: 900px;
-    height: 500px;
-
-`
-
-export const boardListHeader = css`
+export const searchBox = css`
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    border-bottom: 2px solid #dbdbdb;
-    width: 100%;
-    & > div{
-        box-sizing: border-box;
-        border-right: 1px solid #dbdbdb;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 1;
-        height: 40px;
-        width: 25%;
-        font-weight: 700;
-        cursor: default;
-    }
+    padding-right: 10px;;
+`
 
-    `
-export const searchBar =  css`
+export const searchBar = css`
     box-sizing: border-box;
     display: flex;
     justify-content: right;
@@ -53,7 +31,7 @@ export const searchBar =  css`
     height: 50px;
 `;
 
-export const searchLabel =css`
+export const searchLabel = css`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -68,8 +46,7 @@ export const searchLabel =css`
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
     cursor: default;
-
-`
+`;
 
 export const searchBarInput = css`
     width: 300px;
@@ -111,23 +88,82 @@ export const searchBarButton = css`
 `;
 
 
-export const CommunityboardListItem = css`
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+export const board = css`
+    & > div {
+        margin: 0 auto;
+        width: 1120px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
 
-    & > * {
-        margin-bottom: 15px;
+        & > * {
+            margin-bottom: 15px;
+        }
+
+        & > *:nth-of-type(3n - 1) {
+            margin-left: 35px;
+            margin-right: 35px;
+        }
     }
 
-    & > *:nth-of-type(4n - 2) {
-        margin-left: 35px;
-    }
-
-    & > *:nth-of-type(4n - 1) {
-        margin: 0px 35px;
-    }
 `;
+
+export const boardListLayout = css`
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    width: 900px;
+    height: 500px;
+
+`
+
+export const boardListHeader = css`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #dbdbdb;
+    width: 100%;
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        height: 40px;
+        width: 25%;
+        font-weight: 700;
+        cursor: default;
+    }
+
+    `
+export const CommunityboardListItem = css`
+    text-decoration: none;
+    cursor: pointer;
+    overflow:hidden;
+    font-family: NanumBarunGothic, sans-serif;
+    color: rgb(54, 54, 54);
+    font-size: 13px;
+    & > div {
+        box-sizing: border-box;
+        display: flex;
+        border-bottom: 1px solid #dbdbdb;
+        width: 100%;
+    &:hover {
+        background-color: #adadad;
+    }
+    
+    & > div{
+        box-sizing: border-box;
+        border-right: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow : 1;
+        height: 50px;
+        width: 300px;
+    }
+
+}`;
 
 export const boardListwrite = css`
     box-sizing: border-box;
@@ -138,12 +174,33 @@ export const boardListwrite = css`
 
 `
 
+export const pageNumberLayout = (page) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    & > a {
+        box-sizing: border-box;
+        margin: 0px 3px;
+        border: 1px solid #dbdbdb;
+        padding: 3px;
+        text-decoration: none;
+        color: #222;
+        font-weight: 700;
+        &:nth-of-type(${page === 1 ? 1 : page + 3}) {
+            background-color: #eee;
+        }
+    }
+`;
+export const writeButtonBox = css` 
+    display: flex;
+    justify-content: center;
+`
+
 export const writeButton = css`
-box-sizing: border-box;
-border: 2px solid #dbdbdb;
-bottom: 0%;
-width: 50px;
-height: 50px;
-
-
+    box-sizing: border-box;
+    border: 2px solid #dbdbdb;
+    bottom: 0%;
+    width: 50px;
+    height: 50px;
 `

@@ -16,11 +16,6 @@ export const layout = css`
     }
 `;
 
-
-
-
-
-
 export const containter = css`
  position: relative;
  display: flex;
@@ -29,8 +24,6 @@ export const containter = css`
  height: 100%;
  width: 90%;
 `
-
-
 
 export const detailPageTitle = css`
   position: relative;
@@ -114,6 +107,34 @@ export const totalViewCount = css`
 
 `
 
+export const inputContainer = css`
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
+    margin-right: 5px;
+    width: 300px;
+    height: 45px;
+    overflow: hidden;
+`
+
+export const input = css`   
+
+    width: 200px;
+    box-sizing: border-box;
+    padding: 5px;
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    &:disabled {
+        cursor: not-allowed;
+    }
+`;
+
+
 export const commentLayout = css`
 
 box-sizing: border-box;
@@ -121,6 +142,8 @@ display: flex;
 justify-content: center;
 
 `
+
+
 export const boardListHeader = css`
     box-sizing: border-box;
     display: flex;

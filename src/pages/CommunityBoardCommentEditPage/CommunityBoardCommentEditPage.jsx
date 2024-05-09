@@ -48,7 +48,7 @@ function CommunityBoardCommentEditPage(props) {
         mutationFn: putCommunityBoardCommentRequest,
         onSuccess: response => {
             alert('작성하신 댓글이 수정 되었습니다.');
-            navigate("/community/getboards"); 
+            navigate("/community/getboards?page=1"); 
         },
         onError: error => {
             alert("오류 발생");

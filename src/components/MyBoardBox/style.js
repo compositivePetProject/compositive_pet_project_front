@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 export const boardCard = css`
     box-sizing: border-box;
-    width: 300px;
+    width: 250px;
     height: 250px;
     border: 1px solid #dbdbdb;
     border-radius: 15px;

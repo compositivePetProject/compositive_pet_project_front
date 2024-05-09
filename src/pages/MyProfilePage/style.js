@@ -97,7 +97,6 @@ export const userDetails = css`
     color: #263747;
     font-weight: 700;
     font-size: 18px;
-
 `;
 
 export const title = css`

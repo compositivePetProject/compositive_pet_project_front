@@ -1,147 +1,137 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-
-
+import { useNavigate, useSearchParams} from "react-router-dom";
+import { getCommunityBoardListRequest, getCommunityBoardPageCountRequest, getCommunityBoardPageRequest } from "../../apis/api/communityBoard";
 import { useEffect, useRef, useState } from "react";
-import { getBoardCatPageCountRequest, getCommunityBoardCatRequest } from "../../apis/api/communityBoard";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { FaPencil } from "react-icons/fa6";
-import { useQuery } from "react-query";
-import CommunityCatBoardPageCount from "../../components/CommunityCatBoardPageCount/CommunityCatBoardPageCount";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import CommunityBoardPageCount from "../../components/CommunityBoardPageCount/CommunityBoardPageCount";
+import { page } from "../../components/CommunityBoardPageCount/style";
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { FaSearch } from "react-icons/fa";
 import BoardBox from "../../components/BoardBox/BoardBox";
-import { board } from "../CommunityBoardPage/style";
+import TopSelect from "../../components/admin/TopSelect/TopSelect";
+import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
+import { postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
 
 function CommunityBoardCatPage(props) {
 
     const navigate = useNavigate();
-    const [communityBoardList, setCommunityBoardList] = useState([])
-    const [error, setError] = useState(null)
-    const [searchParams, setSearchParams] = useSearchParams(0)
-    const [catMaxPageNumber,setCatMaxPageNumber] = useState("")
-    const [totalCount, setTotalCount] = useState(0)
-    const page = parseInt (searchParams.get("page")) || 1;
-    const pageSearchCount = 10;
-    const firstPage = (page - 1) * pageSearchCount + 1;
-    const lastPage = page  * pageSearchCount ;
+    const queryClient = useQueryClient();
+    const principalQueryState = queryClient.getQueryState("principalQuery");
+    const [searchParams , setSearchParams] = useSearchParams();
+    const [communityBoardList, setCommunityBoardList] = useState([]);
+    const pageSearchCount = 12;
     const inputRef = useRef();
 
-    console.log(firstPage)
-    console.log(lastPage)
+    const getBoardsPageQuery = useQuery (
+        ["getBoardsPageQuery", searchParams.get("page")],
+        async () => await getCommunityBoardPageRequest({
+        page: searchParams.get("page"),
+        count : pageSearchCount,
+        boardAnimalCategoryId: 2,
+        searchText: searchText.value
+    }),
+    {   
+    refetchOnWindowFocus : false,
+    onSuccess : response => {
+        console.log(response) 
+        setCommunityBoardList(response.data)
+    },
 
-    const getBoardPageQuery = useQuery (
-        ["getBoardPageQuery"],
-        async () => await getBoardCatPageCountRequest({
-            page,
-            count : pageSearchCount
-        }),
-        {
-            refetchOnWindowFocus : false,
-            onSuccess :response => {
-                console.log(response)
-                setCatMaxPageNumber(response.data.catMaxPageNumber)
-                setTotalCount(response.data.totalCount)
-            },
-
-            onError : (error) => {
-                console.log(error);
-            }
-
+    onError : (error) => {
+        console.log(error);
+            }   
         }
     )
 
-    useEffect (() => {
-        const fetchData = async () => {
-            try  { 
-                const response = await getCommunityBoardCatRequest()
-                const index = response.slice(firstPage,lastPage)
-                setCommunityBoardList(index)
-                console.log(index)
-            }catch(error) {
-                setError(error)
-                console.log(error)
+    const getBoardsSearchCountRequestQuery = useQuery(
+        ["getBoardsSearchCountRequestQuery", getBoardsPageQuery.data],
+        async () => await getCommunityBoardPageCountRequest({
+            count : pageSearchCount,
+            boardAnimalCategoryId: 2,
+            searchText: searchText.value
+        }),
+        {   
+            refetchOnWindowFocus: false,
+            onSuccess: response => {
+                console.log(response.data)
             }
         }
-            
+    );
 
-            fetchData();
-
-        }, [page])
-       
-
-
-
-    useEffect(() => {
-        const fetchData = async() => {
-            try{
-                const response = await getCommunityBoardCatRequest();
-                setCommunityBoardList(response)
-                console.log(response)
-            }catch(error){
-                setError(error)
-                console.log(error)
-            }
+    const postCommunityBoardView = useMutation({
+        mutationKey:"postCommunityBoardView",
+        mutationFn: postCommunityBoardViewRequest,
+        onSuccess: (response) => {
+        },
+        onError: (error) => {
         }
-
-    fetchData();
-}, []);
-
-const handleOnclickToWritePage = () => {
-    navigate("/community/board/write")
-
-}
-
-const handleOnPageChange = (pageNumber) => {
-    setSearchParams ({page: pageNumber})
-} 
-
-const searchSubmit = () => {
-    setSearchParams({
-        page: 1
     })
-    getBoardPageQuery.refetch();
-}
 
-const searchText = useProductOnKeyUpInput(searchSubmit)
-    
+    const handleOnClickBoard = (board) => {
+        postCommunityBoardView.mutate({
+            communityBoardId: board.communityBoardId,
+            userId: principalQueryState.data?.data.userId
+        })
+        navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)
+    }
+
+    const searchSubmit = () => {
+        setSearchParams({
+            page: 1
+        })
+        getBoardsPageQuery.refetch();
+    }
+
+    const searchText = useProductOnKeyUpInput(searchSubmit);
 
 
 
     return (
         <div css={s.layout}>
-            <div>
                 <div css={s.headerTitle}>
                     <div>고양이 게시판</div>
                     <div css={s.searchBar}>
                         <div css={s.searchLabel}>게시판 검색</div>
-                        <input css={s.searchBarInput} type="text"
-                            ref={inputRef}
-                            value={searchText.value}
-                            onChange={searchText.handleOnChange}
+                        <input css={s.searchBarInput} type="text" 
+                            ref={inputRef} 
+                            value={searchText.value} 
+                            onChange={searchText.handleOnChange} 
                             onKeyUp={searchText.handleOnKeyUp}
                             placeholder="제목 + 내용 검색"
                         />
-                        <button css={s.searchBarButton}>
+                        <button css={s.searchBarButton} >
                             <FaSearch onClick={() => searchSubmit()}/>
                         </button>
                     </div>
                 </div>
-                    <div css={s.CommunityboardListItem}>
-                        {communityBoardList.map(data => (
-                            <BoardBox
-                            onClick={() => navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)}
-                            key={board.communityBoardId}
-                            boardTitle={board.communityBoardTitle}
-                            userNickname={board.userName}
-                            updateDate={board.updateDate}
-                            />         
-                        ))}
-                        </div>    
+                <div css={s.board}>
+                    <div>
+                        {communityBoardList.map(board => (
+                                <BoardBox 
+                                    onClick={() => handleOnClickBoard(board)}
+                                    key={board.communityBoardId}
+                                    boardTitle={board.communityBoardTitle}
+                                    userNickname={board.userNickname}
+                                    heartCount={board.favoriteCount}
+                                    viewCount={board.viewCount}
+                                    commentCount={board.commentCount}
+                                    animalCategoryId={board.communityBoardAnimalCategoryId}
+                                    contentImg={board.communityBoardContent}
+                                    updateDate={board.updateDate}
+                                />                            
+                        ))} 
                     </div>
-                 <FaPencil css={s.writeButton} onClick={handleOnclickToWritePage}></FaPencil>
-                 <CommunityCatBoardPageCount catMaxPageNumber={catMaxPageNumber} totalCount={totalCount} onChange={handleOnPageChange}/>
+                </div>
+            <div  css={s.writeButtonBox}>
+                <FaPencil css={s.writeButton} onClick={() => navigate("/community/board/write")}></FaPencil>
             </div>
+            {
+                !getBoardsSearchCountRequestQuery.isLoading &&
+                <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
+            }
+        </div>
         );
     }
 

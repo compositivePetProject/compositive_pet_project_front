@@ -184,6 +184,9 @@ function AdoptCommunityBoardDetailPage() {
             userId:principalQueryState.data?.data.userId,
             adoptationBoardCommentContent: commentValue
           });
+          const params = new URLSearchParams(searchParams);
+          params.delete('edit');
+          setSearchParams(params);
         } else {
           alert("로그인 후 사용이 가능한 서비스 입니다.")
           window.location.replace("http://localhost:3000/auth/auth");
@@ -195,6 +198,10 @@ function AdoptCommunityBoardDetailPage() {
           adoptationBoardCommentId: commentId,
           adoptationBoardCommentContent: commentValue
         })
+
+        const params = new URLSearchParams(searchParams);
+        params.delete('edit');
+        setSearchParams(params);
       }
     }
   }
@@ -266,6 +273,9 @@ function AdoptCommunityBoardDetailPage() {
           adoptationBoardContent: boardDetail.adoptationBoardContent,
           boardAnimalCategoryId: boardDetail.boardAnimalCategoryId
       })
+      const params = new URLSearchParams(searchParams);
+      params.delete('edit');
+      setSearchParams(params);
     }
   }
 
@@ -276,6 +286,24 @@ function AdoptCommunityBoardDetailPage() {
   const deleteCommentSubmit = (adoptationBoardCommentId) => {
     if(window.confirm("해당 댓글을 삭제하시겠습니까?")) {
       deleteAdoptCommunityBoardComment.mutate(adoptationBoardCommentId);
+      const params = new URLSearchParams(searchParams);
+      params.delete('edit');
+      setSearchParams(params);
+    }
+  }
+
+  useEffect(() => {
+    console.log(searchParams.get("edit"))
+    console.log(typeof(searchParams.get("edit")))
+    if(searchParams.get("edit") === "true") {
+      setButtonState(1);
+    }
+  }, [searchParams])
+
+  const handleCancel = () => {
+    setButtonState(0);
+    if(searchParams.get("edit") === "true") {
+      navigate("/account/mypage/Adopt?page=1");
     }
   }
 
@@ -320,7 +348,7 @@ function AdoptCommunityBoardDetailPage() {
                 ? 
                 <>
                   <button css={s.button} onClick={updateSubmit}>확인</button>
-                  <button css={s.button} onClick={() => setButtonState(0)}>취소</button>
+                  <button css={s.button} onClick={handleCancel}>취소</button>
                 </>
                 : 
                 <>

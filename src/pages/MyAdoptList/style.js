@@ -251,8 +251,8 @@ export const label = css`
 `;
 
 export const boardListItem = css`
-    /* flex-wrap: wrap;
-    display: flex; */
+    flex-wrap: wrap;
+    display: flex; 
 `;
 
 export const rowData = css`

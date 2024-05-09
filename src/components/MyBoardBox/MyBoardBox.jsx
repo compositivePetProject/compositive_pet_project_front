@@ -6,7 +6,7 @@ import { GrView } from "react-icons/gr";
 import { images } from "../../constants/mainCommnityImage";
 
 
-function MyBoardBox({ boardTitle, updateDate, userNickname, heartCount, commentCount, viewCount, onClick, animalCategoryId, contentImg }) {
+function MyBoardBox({ boardTitle, updateDate, userNickname, heartCount, commentCount, viewCount, onClick, animalCategoryId, contentImg, deleteBoard, editBoard }) {
     const imgRegex = /<img[^>]+>/;
     const img = imgRegex.exec(contentImg);
 
@@ -28,6 +28,17 @@ function MyBoardBox({ boardTitle, updateDate, userNickname, heartCount, commentC
                     <div>{boardTitle}</div>
                     <div>{updateDate}</div>
                 </div>
+            </div>
+            <div css={s.buttonBox}>
+                <button css={s.button} onClick={(e) => {
+                    e.stopPropagation();
+                    editBoard();
+                }}>수정</button>
+                <button css={s.button} onClick={(e) => {
+                    e.stopPropagation();
+                    deleteBoard();
+                }
+                }>삭제</button>
             </div>
         </div>
     )

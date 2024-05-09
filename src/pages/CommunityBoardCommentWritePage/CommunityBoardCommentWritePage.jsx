@@ -49,7 +49,7 @@ function CommunityBoardCommentWritePage() {
         onSuccess: response => {
             console.log(response);
             alert("작성하신 댓글이 등록이 되었습니다.");
-            navigate("/community/getboards"); 
+            navigate("/community/getboards?page=1"); 
         },
         onError: error => {
             console.log(error);

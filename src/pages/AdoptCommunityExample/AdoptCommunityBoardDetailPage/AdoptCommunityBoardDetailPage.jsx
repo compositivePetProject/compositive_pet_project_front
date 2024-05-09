@@ -335,6 +335,10 @@ function AdoptCommunityBoardDetailPage() {
     }
   }
 
+  useEffect(() => {
+    console.log(favoriteState)
+  }, [favoriteState])
+
   return (
     <div css={s.layout}>
       <div css={s.topIconBox}>

@@ -186,7 +186,7 @@ function CommunityBoardDetailPage(props) {
     const getCommunityBoardQuery = useQuery(
         ["getCommunityBoardQuery", searchParams.get("communityBoardId")],
         async () => await getCommunityBoardRequestById ({
-            communityBoardId : searchParams.get("ocmmunityBoardId")
+            communityBoardId : searchParams.get("communityBoardId")
           }),
         {
           retry: 0,
@@ -394,19 +394,6 @@ function CommunityBoardDetailPage(props) {
                         </button>                  
                   </div>
               <div>
-                {
-                  buttonState === 1
-                  ?
-                  <div>
-                    <div css={s.inputContainer}>
-                    <input css={s.input} type="text" defaultValue={board.communityBoardTitle} onChange={updateTitleOnchange} />
-                  </div>
-                  <Quill value={board.communtityBoardContentComment} onChange={updateOnchange}/>
-                  </div>
-            :
-              !getCommunityBoardQuery.isLoading && <BoardContentBox title={board.adoptationBoardTitle} userNickname={board.userNickname} writeDate={board.updateDate} content={board.adoptationBoardContent} />
-          }
-        </div>
                   {boardComment.map((comment) => (
                     <div key={comment.communityBoardCommentId} css={s.commentbox1}>
                       <div css={s.commentbox2}>
@@ -440,7 +427,7 @@ function CommunityBoardDetailPage(props) {
                         <Quill value={board.communityBoardContent} onChange={updateOnCommentchange}/>
                       </>
                       : 
-                        <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
+                      <BoardContentBox title={board.communityBoardTitle} userNickname={board.userName} writeDate={board.updateDate} content={board.communityBoardContent} />
                       }
                       </div>
                       
@@ -450,7 +437,7 @@ function CommunityBoardDetailPage(props) {
                 </div>
             </div>
         </div>
-  
+    </div>
     );
   }
 export default CommunityBoardDetailPage;

@@ -7,6 +7,52 @@ export const layout = css`
     height: 100%;
 `;
 
+export const userDetails = css`
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-grow: 1;
+    height: 100%;
+    margin-top: 45px;
+    padding: 0px 0px 40px 60px;
+    color: #263747;
+    font-weight: 700;
+    font-size: 18px;
+    border: 1px solid green;
+`;
+
+export const boardListItem = css`
+    flex-wrap: wrap;
+    display: flex; 
+`;
+
+
+
+export const writeButton = css`
+    box-sizing: border-box;
+    margin-top: 50px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-right: 10px;
+    width: 25%;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        background-color: #fafafa;
+    }
+    &:active {
+        background-color: #eee;
+    }
+`;
+
+
+
+
+
+
+
+
 export const containerIn = css`
     display: flex;
     flex-direction: column;

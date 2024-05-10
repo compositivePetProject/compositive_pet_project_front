@@ -29,7 +29,7 @@ function AdoptCommunityBoardListPageEx() {
         adoptationBoardTitle: "",
         boardAnimalCategoryId: 0,
     })
-
+    
     const postAdoptCommunityBoardView = useMutation({
         mutationKey:"postAdoptCommunityBoardView",
         mutationFn:postAdoptView,

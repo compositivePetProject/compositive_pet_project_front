@@ -151,13 +151,13 @@ function ProductPetShopPaymentPage({ onClose, order, option, productOrderCount }
                                 <div>수량</div>
                                 <div>{productOrderCount}개</div>
                             </div>
-                            <div>{orderProductPrice}원</div>
+                            <div>{orderProductPrice.toLocaleString()}원</div>
                         </div>
                     </div>
                 </div>
                 <div css={s.storeContainer2}>
                     <div>총 주문 금액</div>
-                    <div>{orderProductPrice}원</div>
+                    <div>{orderProductPrice.toLocaleString()}원</div>
                 </div>
                 <h3>결제 수단</h3>
                 <div css={s.storeContainer3}>

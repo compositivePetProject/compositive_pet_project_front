@@ -63,23 +63,6 @@ function CommunityBoardPage() {
         }
     );
 
-    const postCommunityBoardView = useMutation({
-        mutationKey:"postCommunityBoardView",
-        mutationFn: postCommunityBoardViewRequest,
-        onSuccess: (response) => {
-        },
-        onError: (error) => {
-        }
-    })
-
-    const handleOnClickBoard = (board) => {
-        postCommunityBoardView.mutate({
-            communityBoardId: board.communityBoardId,
-            userId: principalQueryState.data?.data.userId
-        })
-        navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)
-    }
-
     const searchSubmit = () => {
         setSearchParams({
             page: 1
@@ -113,7 +96,7 @@ function CommunityBoardPage() {
                         <div>
                             {communityBoardList.map(board => (
                                     <BoardBox 
-                                        onClick={() => handleOnClickBoard(board)}
+                                        onClick={() => navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)}
                                         key={board.communityBoardId}
                                         boardTitle={board.communityBoardTitle}
                                         userNickname={board.userNickname}
@@ -129,7 +112,7 @@ function CommunityBoardPage() {
                     </div>
                 {
                     !getBoardsSearchCountRequestQuery.isLoading &&
-                    <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
+                    <CommunityBoardPageCount path={"/getboards"} boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
                 }
             </div>
         ) 

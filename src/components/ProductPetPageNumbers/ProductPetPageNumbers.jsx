@@ -4,7 +4,7 @@ import * as s from "./style";
 
 import React, { useEffect, useState } from 'react';
 
-function ProductPetPageNumbers({productCount}) {
+function ProductPetPageNumbers({productCount, path}) {
     const [ searchParams ] = useSearchParams();
     const page = parseInt(searchParams.get("page"));
     const [ numbers, setNumbers ] = useState([]);
@@ -30,19 +30,19 @@ function ProductPetPageNumbers({productCount}) {
                     page !== 1 &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`/product/pet/shopping?page=${page - 1}`}
+                        to={`/product/pet${path}?page=${page - 1}`}
                     >&#60;</Link>
                 }
                 {
                     numbers.map(number =>
-                        <Link key={number} css={s.pageButton(number === page)} to={`/product/pet/shopping?page=${number}`}>{number}</Link>
+                        <Link key={number} css={s.pageButton(number === page)} to={`/product/pet${path}?page=${number}`}>{number}</Link>
                     )
                 }
                 {
                     page !== maxPageNumber &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`/product/pet/shopping?page=${page + 1}`}
+                        to={`/product/pet${path}?page=${page + 1}`}
                     >&#62;</Link>
                 }
             </div>

@@ -128,7 +128,7 @@ function CommunityBoardCatPage(props) {
                 </div>
             {
                 !getBoardsSearchCountRequestQuery.isLoading &&
-                <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
+                <CommunityBoardPageCount  path={"/cat"} boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
             }
         </div>
         );

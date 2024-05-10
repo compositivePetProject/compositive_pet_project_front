@@ -13,7 +13,7 @@ export const headerOut = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1907px;
+    width: 1908px;
     height: 90px;
     z-index: 100;
     background-color: white;
@@ -80,6 +80,10 @@ export const accountItems = css`
     height: 100%;
 `;
 
+export const activeButton = css`
+    color: rgb(255, 64, 129);
+`;
+
 export const login = css`
     display: flex;
     justify-content: center;
@@ -128,24 +132,22 @@ export const profileImg = css`
 `;
 
 
-export const buttons = css`
+export const buttons = (isSelected) => css`
     box-sizing: border-box;
     border: none;
     padding: 0px 30px;
     font-size: 15px;
     font-family: 'montserrat', 'NanumGothicCoding', sans-serif;
     font-weight: 700;
-    color: #212121;
+    color: ${isSelected ? "rgb(255, 64, 129)" : "#212121"};
     background-color: transparent;
     cursor: pointer;
 
     &:hover {
         transition: all 0.2s ease-in-out;
         font-weight: 700;
-        color: rgb(255, 64, 129);
+        color: ${isSelected ? "rgb(255, 64, 129)" : "#212121"};
     }
-    
-
 `;
 
 
@@ -164,24 +166,25 @@ export const sidebar = (isHovering) => css`
 `;
 
 
-
-
 export const category = css`
     padding: 10px 0px;
-`;
-
-
-export const categoryText = css`
     text-decoration: none;
     font-size: 14px;
     color: rgb(15, 19, 23);
     font-weight: 600;
+    cursor: pointer;
 
     &:hover {
         transition: all 0.2s ease-in-out;
         font-weight: 700;
         color: rgb(255, 64, 129);
+        
     }
+`;
+
+
+export const categoryText = css`
+    
 `;
 
 

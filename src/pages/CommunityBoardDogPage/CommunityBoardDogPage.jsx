@@ -125,7 +125,7 @@ function CommunityBoardDogPage() {
                 </div>
             {
                 !getBoardsSearchCountRequestQuery.isLoading &&
-                <CommunityBoardPageCount boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
+                <CommunityBoardPageCount path={"/dog"} boardCount={getBoardsSearchCountRequestQuery?.data?.data}/>
             }
         </div>
         )

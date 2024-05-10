@@ -8,13 +8,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import instance from "../../apis/utils/instance";
+import { useRecoilState } from "recoil";
+import { adoptCommunityActiveState, communityActiveState, mapActiveState, shopActiveState } from "../../atoms/admin/isButtonSelectedState";
 
 function FixBar() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
+    const [isCommunityActive, setCommunityActive] = useRecoilState(communityActiveState);
+    const [isAdoptCommunityActive, setAdoptCommunityActive] = useRecoilState(adoptCommunityActiveState);
+    const [isShopActive, setShopActive] = useRecoilState(shopActiveState);
+    const [isMapActive, setMapActive] = useRecoilState(mapActiveState);
 
     const handleMypageClick = () => {
+        setCommunityActive(false); 
+        setAdoptCommunityActive(false); 
+        setShopActive(false); 
+        setMapActive(false);
         if(principalQueryState.status === "success") {
             navigate("/account/mypage/profile");
         } else {
@@ -24,6 +34,10 @@ function FixBar() {
     }
 
     const handleCartClick = () => {
+        setCommunityActive(false); 
+        setAdoptCommunityActive(false); 
+        setShopActive(false); 
+        setMapActive(false);
         if(principalQueryState.status === "success") {
             navigate("/product/pet/cart");
         } else {
@@ -33,6 +47,10 @@ function FixBar() {
     }
 
     const handleAdminClick = () => {
+        setCommunityActive(false); 
+        setAdoptCommunityActive(false); 
+        setShopActive(false); 
+        setMapActive(false);
         const authorities = principalQueryState.data?.data?.authorities;
         if(principalQueryState.status === "success" && authorities.length > 1) {
             navigate("/admin/management/product?page=1");
@@ -43,6 +61,10 @@ function FixBar() {
     }
 
     const handleLogoutClick = () => {
+        setCommunityActive(false); 
+        setAdoptCommunityActive(false); 
+        setShopActive(false); 
+        setMapActive(false);
         localStorage.removeItem("AccessToken");
         instance.interceptors.request.use((config) => {
             config.headers.Authorization = null;

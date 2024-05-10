@@ -40,7 +40,7 @@ function App() {
     <RootLayout>
       <RootContainer>
         {principalQuery.status === "success" && pathname !== "/" ? <FixBar/> : <></>}
-        <RootHeader />
+        <RootHeader />  
           <PageContainer>
             <Routes>
               <Route path='/*' element={

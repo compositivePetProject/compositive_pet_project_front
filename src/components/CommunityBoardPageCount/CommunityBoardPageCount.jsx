@@ -3,7 +3,7 @@ import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-function CommunityBoardPageCount({boardCount}) {
+function CommunityBoardPageCount({boardCount, path}) {
     const [ searchParams ] = useSearchParams();
     const page = parseInt(searchParams.get("page"));
     const [ numbers, setNumbers ] = useState([]);
@@ -29,19 +29,19 @@ function CommunityBoardPageCount({boardCount}) {
                     page !== 1 &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`http://localhost:3000/community/getboards?page=${page - 1}`}
+                        to={`http://localhost:3000/community${path}?page=${page - 1}`}
                     >&#60;</Link>
                 }
                 {
                     numbers.map(number =>
-                        <Link key={number} css={s.pageButton(number === page)} to={`http://localhost:3000/community/getboards?page=${number}`}>{number}</Link>
+                        <Link key={number} css={s.pageButton(number === page)} to={`http://localhost:3000/community${path}?page=${number}`}>{number}</Link>
                     )
                 }
                 {
                     page !== maxPageNumber &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`http://localhost:3000/community/getboards?page=${page + 1}`}
+                        to={`http://localhost:3000/community${path}?page=${page + 1}`}
                     >&#62;</Link>
                 }
             </div>

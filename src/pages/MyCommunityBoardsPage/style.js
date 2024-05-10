@@ -56,7 +56,7 @@ export const boardListItem = css`
     flex-wrap: wrap;
     border: 1px solid #d7e2eb;
     border-radius: 8px;
-    height: 570px;
+    height: 610px;
     padding: 25px 25px 25px 30px;
     overflow: auto;
     gap: 40px;

@@ -4,6 +4,7 @@ export const postProductOrderRequest = async (data) => {
     return await instance.post("/product/order", (data));
 }
 
+// 오타수정
 export const postProductOrderCartsRequest = async (data) => {
     return await instance.post("/product/order/cars", (data));
 }

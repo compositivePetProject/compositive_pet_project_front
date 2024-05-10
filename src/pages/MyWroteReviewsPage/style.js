@@ -57,13 +57,13 @@ export const userDetails = css`
     flex-direction: column;
     box-sizing: border-box;
     flex-grow: 1;
-    height: 100%;
+    height: 740px;
     margin-top: 45px;
     padding: 0px 80px 80px 40px;
     color: #263747;
     font-weight: 600;
     font-size: 15px;
-
+    overflow-x: hidden;
 `;
 
 export const title = css`

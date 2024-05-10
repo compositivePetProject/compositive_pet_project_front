@@ -29,6 +29,17 @@ function AdoptCommunityBoardListPageEx() {
         adoptationBoardTitle: "",
         boardAnimalCategoryId: 0,
     })
+    
+    const postAdoptCommunityBoardView = useMutation({
+        mutationKey:"postAdoptCommunityBoardView",
+        mutationFn:postAdoptView,
+        onSuccess: (response) => {
+        },
+        onError: (error) => {
+            
+        }
+
+    })
 
     const handleOnClick = (board) => {
         navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)

@@ -108,14 +108,6 @@ function MainPage(props) {
       navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 
-    const handleOnClickBoard = (board) => {
-      postCommunityBoardView.mutate({
-          communityBoardId: board.communityBoardId,
-          userId: principalQueryState.data?.data.userId
-      })
-      navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)
-    }
-
     useEffect(() => {
       console.log(top3AdoptBoardList);
     }, [top3AdoptBoardList])
@@ -161,7 +153,7 @@ function MainPage(props) {
                       commentCount={board.commentCount}
                       animalCategoryId={board.communityBoardAnimalCategoryId}
                       contentImg={board.communityBoardContent}
-                      onClick={() => handleOnClickBoard(board)}
+                      onClick={() => navigate(`/community/board/?communityBoardId=${board.communityBoardId}`)}
                     />
                   )
                 }

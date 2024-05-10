@@ -6,14 +6,20 @@ import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
 import { FiShoppingCart } from "react-icons/fi";
 import { TbLogin, TbLogout } from "react-icons/tb";
+import { adoptCommunityActiveState, communityActiveState, mapActiveState, shopActiveState } from "../../atoms/admin/isButtonSelectedState";
+import { useRecoilState } from "recoil";
 
 function RootHeader() {
-    const [ currentMenu, setCurrentMenu ] = useState(null);
     const [ isHovering, setIsHovering ] = useState(false);
     const [ isLogin, setLogin ] = useState(false);
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("principalQuery");
+    const [ currentMenu, setCurrentMenu ] = useState(null);
+    const [isCommunityActive, setCommunityActive] = useRecoilState(communityActiveState);
+    const [isAdoptCommunityActive, setAdoptCommunityActive] = useRecoilState(adoptCommunityActiveState);
+    const [isShopActive, setShopActive] = useRecoilState(shopActiveState);
+    const [isMapActive, setMapActive] = useRecoilState(mapActiveState);
 
     useEffect(() => {
         setLogin(() => principalQueryState.status === "success");
@@ -21,15 +27,14 @@ function RootHeader() {
 
     const handleHover = (menu) => {
         setIsHovering(true);
-        setCurrentMenu(menu);
-
+        setCurrentMenu(menu);   
     };
 
     const handleSidebarLeave = () => {
         setIsHovering(false);
-        setCurrentMenu(null);
+        setCurrentMenu(null); 
     };
-    
+
     const handleLogoutClick = () => {
         localStorage.removeItem("AccessToken");
         instance.interceptors.request.use((config) => {
@@ -38,8 +43,47 @@ function RootHeader() {
         });
         queryClient.refetchQueries("principalQuery");
     }
-    
 
+    const handleProfile = () => {
+        setCommunityActive(false); 
+        setAdoptCommunityActive(false); 
+        setShopActive(false); 
+        setMapActive(false);
+        navigate("/account/mypage/profile")
+    }
+
+    const handleMenuClick = (menu, path) => {
+        switch(menu) {
+            case "community":
+                setCommunityActive(true); 
+                setAdoptCommunityActive(false); 
+                setShopActive(false); 
+                setMapActive(false);
+                break;
+            case "adoptCommunity":
+                setCommunityActive(false); 
+                setAdoptCommunityActive(true); 
+                setShopActive(false); 
+                setMapActive(false);
+                break;
+            case "shop":
+                setCommunityActive(false); 
+                setAdoptCommunityActive(false); 
+                setShopActive(true); 
+                setMapActive(false);
+                break;
+            case "map":
+                setCommunityActive(false); 
+                setAdoptCommunityActive(false); 
+                setShopActive(false); 
+                setMapActive(true);
+                break;
+            default:
+                break;
+        }
+        navigate(path);
+    }
+    
     return (
         <div css={s.layout}>
                 <div css={s.headerOut}>
@@ -53,18 +97,19 @@ function RootHeader() {
                     <div css={s.centerSpace}>
                         <div css={s.accountItems}>
                             <button
-                                css={s.buttons}
+                                css={s.buttons(isCommunityActive)}
                                 onMouseEnter={() => handleHover("community")}
-                                onClick={() => navigate("/community/getboards?page=1")}
+                                onMouseLeave={() => handleSidebarLeave}
+                                onClick={() => handleMenuClick("community", "/community/getboards?page=1")}
                             >
                                 COMMUNITY
                             </button>
                             <div css={s.sidebar(isHovering && currentMenu === "community")} onMouseLeave={handleSidebarLeave}>
                                 {currentMenu === "community" && (
                                     <div>
-                                        <div css={s.category}><a css={s.categoryText} href= "/community/getboards?page=1"> 전체 커뮤니티</a> </div>
-                                        <div css={s.category}><a css={s.categoryText} href="/community/dog?page=1"> 강아지 커뮤니티</a> </div>
-                                        <div css={s.category}><a css={s.categoryText} href="/community/cat?page=1"> 고양이 커뮤니티</a> </div> 
+                                        <div css={s.category} onClick={() => handleMenuClick("community", "/community/getboards?page=1")}>전체 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("community", "/community/dog?page=1")}>강아지 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("community", "/community/cat?page=1")}>고양이 커뮤니티</div> 
                                     </div>
                                 )}
                             </div>
@@ -72,57 +117,51 @@ function RootHeader() {
                         
                         <div css={s.accountItems}>
                             <button
-                                css={s.buttons}
+                                css={s.buttons(isAdoptCommunityActive)}
                                 onMouseEnter={() => handleHover("adoptCommunity")}
-                                // onClick={() => navigate("/adoptCommunity?page=1")}
-                                onClick={() => navigate("/ex/adoptcommunity?page=1")}
+                                onMouseLeave={() => handleSidebarLeave}
+                                onClick={() => handleMenuClick("adoptCommunity", "/ex/adoptcommunity?page=1")}
                             >
                                 ADOPTATION-COMMUNITY
                             </button>
                             <div css={s.sidebar(isHovering && currentMenu === "adoptCommunity")} onMouseLeave={handleSidebarLeave}>
                                 {currentMenu === "adoptCommunity" && (
                                     <div>
-                                        <div css={s.category}><Link css={s.categoryText} to="/ex/adoptcommunity?page=1"> 전체 분양 게시판</Link> </div>
-                                        <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/dog?page=1"> 강아지 분양 게시판</Link> </div>
-                                        <div css={s.category}><Link css={s.categoryText} to="/adoptCommunity/cat?page=1"> 고양이 분양 게시판</Link> </div>
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/ex/adoptcommunity?page=1")}>전체 분양 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptCommunity/dog?page=1")}>강아지 분양 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptCommunity/cat?page=1")}>고양이 분양 커뮤니티</div> 
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div css={s.accountItems}>
                             <button
-                                css={s.buttons}
+                                css={s.buttons(isShopActive)}
                                 onMouseEnter={() => handleHover("shop")}
-                                onClick={() => navigate("/product/pet/shopping?page=1")}
+                                onMouseLeave={() => handleSidebarLeave}
+                                onClick={() => handleMenuClick("shop", "/product/pet/shopping?page=1")}
                             >
                                 ON-SHOP
                             </button>
-                            {/* <div css={s.sidebar(isHovering && currentMenu === "shop")} onMouseLeave={handleSidebarLeave}>
+                            <div css={s.sidebar(isHovering && currentMenu === "shop")} onMouseLeave={handleSidebarLeave}>
                                 {currentMenu === "shop" && (
                                     <div>
-                                        <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/product/pet/shopping?page=1"> 전체 쇼핑몰</a> </div>
-                                        <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 강아지 쇼핑몰</a> </div>
-                                        <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/"> 고양이 쇼핑몰</a> </div>
+                                        <div css={s.category} onClick={() => handleMenuClick("shop", "/product/pet/shopping?page=1")}>전체 쇼핑몰</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("shop", "/product/pet/shopping/dog?page=1")}>강아지 쇼핑몰</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("shop", "/product/pet/shopping/cat?page=1")}>고양이 쇼핑몰</div> 
                                     </div>
                                 )}
-                            </div> */}
+                            </div>
                         </div>
                         <div css={s.accountItems}>
                             <button
-                                css={s.buttons}
+                                css={s.buttons(isMapActive)}
                                 onMouseEnter={() => handleHover("map")}
-                                onClick={() => navigate("/kakao/map")}
+                                onMouseLeave={() => handleSidebarLeave}
+                                onClick={() => handleMenuClick("map", "/kakao/map")}
                             >
                                 MAP
                             </button>
-                            {/* <div css={s.sidebar(isHovering && currentMenu === "map")} onMouseLeave={handleSidebarLeave}>
-                                {currentMenu === "map" && (
-                                    <div>
-                                        <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/kakao/map">  카카오 맵</a> </div>
-                                        <div css={s.category}><a css={s.categoryText} href="http://localhost:3000/">  내 주변 동물약국</a> </div>
-                                    </div>
-                                )}
-                            </div> */}
                         </div>
                     </div>
 
@@ -147,7 +186,7 @@ function RootHeader() {
                                 </a>
                             </div>                      
                             <div css={s.imgBox}>
-                                <div css={s.profileImg} onClick={() => navigate("/account/mypage/profile")}>
+                                <div css={s.profileImg} onClick={handleProfile}>
                                     <img src={principalQueryState.data?.data.profileImageUrl} alt="" />
                                 </div>
                             </div>

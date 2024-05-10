@@ -46,7 +46,7 @@ export const linkButtons = (isSelected) => css`
     &:hover {
         transition: all 0.2s ease-in-out;
         font-weight: 700;
-        color: ${isSelected ? "rgb(255, 64, 129)" : "#333333"};
+        color: ${isSelected ? "rgb(255, 64, 129)" : "#f0f0f0"};
         background-color: rgb(248, 248, 248);
     }
     &:active {

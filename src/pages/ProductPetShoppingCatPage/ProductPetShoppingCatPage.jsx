@@ -9,11 +9,8 @@ import { getAllProductTypeRequest } from "../../apis/api/options";
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 import { FaSearch } from "react-icons/fa";
-import TopSelect from "../../components/admin/TopSelect/TopSelect";
-import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
 
-
-function ProductPetShoppingPage(props) {
+function ProductPetShoppingCatPage() {
     const navigate = useNavigate();
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ productList, setProductList ] = useState([]);
@@ -26,18 +23,13 @@ function ProductPetShoppingPage(props) {
     const inputRef = useRef();
     const [orderBy, setOrderBy] = useState("desc");
 
-    const [ search, setSearch ] = useState({
-        productAnimalCategoryId: 0,
-    })
-
-    console.log(search)
     const getProductsSearchRequestQuery = useQuery(
         ["getProductsSearchRequestQuery", searchParams.get("page"), selectedProductType, orderBy],
         async () => await getProductPageRequest({
             page: searchParams.get("page"),
             count: searchCount,
             productCategoryId: selectedProductType,
-            productAnimalCategoryId : search.productAnimalCategoryId,
+            productAnimalCategoryId : 2,
             searchText: searchText.value,
             orderBy : orderBy
         }),
@@ -59,7 +51,7 @@ function ProductPetShoppingPage(props) {
         async () => await getProductsSearchCountRequest({
             count: searchCount,
             productCategoryId: selectedProductType,
-            productAnimalCategoryId : search.productAnimalCategoryId,
+            productAnimalCategoryId : 2,
             searchText: searchText.value
         }),
         {
@@ -99,19 +91,18 @@ function ProductPetShoppingPage(props) {
         setOrderBy(value);
     };
 
-    
     return (
-        <div css={s.layout}>
+          <div css={s.layout}>
             <div css={s.categoryHeader}>
                 <div css={s.menuList}>
-                    <Link css={s.linkButtons(selectedProductType === 0)} to={"http://localhost:3000/product/pet/shopping?page=1"}
+                    <Link css={s.linkButtons(selectedProductType === 0)} to={"http://localhost:3000/product/pet/shopping/cat?page=1"}
                     onClick={() => setSelectedProductType(0)}>
                     전체
                     </Link>
                     {productTypeOptions.map(option  => 
                         <Link key={option.productType.productCategoryId} 
-                                css={s.linkButtons(selectedProductType === option.productType.productCategoryId)} 
-                                to={`http://localhost:3000/product/pet/shopping?page=1`}
+                                css={s.linkButtons(selectedProductType === option.productType.productCategoryId)}  
+                                to={`http://localhost:3000/product/pet/shopping/cat?page=1`}
                                 onClick={() => setSelectedProductType(option.productType.productCategoryId)
                                 }
                                 >
@@ -120,7 +111,6 @@ function ProductPetShoppingPage(props) {
                     )}
                 </div>
                 <div css={s.searchBar}>
-                    <TopSelect label={"카테고리"} name={"productAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
                     <div css={s.searchLabel}>상품검색</div>
                     <input css={s.searchBarInput} type="text" 
                         ref={inputRef} 
@@ -156,10 +146,11 @@ function ProductPetShoppingPage(props) {
                 }
                 {   
                     !getProductsSearchCountRequestQuery.isLoading &&
-                    <ProductPetPageNumbers path={"/shopping"} productCount={getProductsSearchCountRequestQuery.data?.data}/> 
+                    <ProductPetPageNumbers path={"/shopping/cat"} productCount={getProductsSearchCountRequestQuery.data?.data}/> 
                 }
             </div>
         </div>
     );
 }
-export default ProductPetShoppingPage;
+
+export default ProductPetShoppingCatPage;

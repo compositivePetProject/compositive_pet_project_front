@@ -6,15 +6,9 @@ import { deleteAdoptBoardById, deleteAdoptCommentRequest, deleteAdoptLike, getAd
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import BoardContentBox from "../../../components/BoardContentBox/BoardContentBox";
 import Quill from "../../../components/Quill/Quill";
-import { AiOutlineHeart } from "react-icons/ai";
-import { GrView } from "react-icons/gr";
-import { SlSpeech } from "react-icons/sl";
 import { GrFormView } from "react-icons/gr";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
-import { AiOutlineComment } from "react-icons/ai";
-import { FaRegComments } from "react-icons/fa";
 import { LiaCommentAltSolid } from "react-icons/lia";
-import { FaRegCommentDots } from "react-icons/fa";
 import { IoMdHeart } from "react-icons/io";
 
 function AdoptCommunityBoardDetailPage() {
@@ -24,12 +18,9 @@ function AdoptCommunityBoardDetailPage() {
   const principalQueryState = queryClient.getQueryState("principalQuery");
   const [ boardDetail, setBoardDetail ] = useState({});
   const [ boardComment, setBoardComment ] = useState([]);
-
   const navigate = useNavigate();
   const [ buttonState, setButtonState ] = useState(0); // 1 수정 2 삭제
   const [ inputButtonState, setInputButtonState ] = useState(0); // 1 댓글 입력창 활성화
-  const [ titleValue, setTitleValue ] = useState("");
-  const [ contentValue, setContentValue ] = useState("");
   const [ commentValue, setCommentValue ] = useState("");
   const [ commentButtonState, setCommentButtonState ] = useState(0);
   const [ commentId, setCommentId ] = useState(0);
@@ -57,7 +48,6 @@ function AdoptCommunityBoardDetailPage() {
   )
 
   useEffect(() => {
-    console.log(likedUsers)
     if(likedUsers.filter((userId) => userId === principalQueryState.data?.data.userId).length > 0) {
       setFavoriteState(1);
     } else {
@@ -89,10 +79,7 @@ function AdoptCommunityBoardDetailPage() {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: (response) => {
-        console.log(response)
         setBoardDetail(response);
-        // // 좋아요 상태 확인
-        // response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
       },
       onError: (error) => {
         console.log(error);
@@ -100,7 +87,6 @@ function AdoptCommunityBoardDetailPage() {
     }
   );
 
-  // 좋아요 갯수
   const getBoardFavoriteQuery = useQuery(
     ["getBoardFavoriteQuery", searchParams.get("boardid")],
     async () => await getAdoptLike({
@@ -110,9 +96,7 @@ function AdoptCommunityBoardDetailPage() {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: response => {
-        console.log(response)
         setLike(response)
-        // 좋아요 상태 확인
         response.liked ? setLikedUsers([response.user]) : setLikedUsers([]);
       },
 
@@ -121,8 +105,6 @@ function AdoptCommunityBoardDetailPage() {
       }
     }
   )
-
-
 
   const postAdoptCommunityBoardComment = useMutation({
     mutationKey: "postAdoptCommunityBoardComment",
@@ -146,7 +128,6 @@ function AdoptCommunityBoardDetailPage() {
       alert("실패");
     }
   })
-
 
   const updateAdoptCommunityBoardDetail = useMutation({
     mutationKey: "updateAdoptCommunityBoardDetail",
@@ -231,10 +212,6 @@ function AdoptCommunityBoardDetailPage() {
     }
   }
 
-  useEffect(() => {
-    console.log(commentValue)
-  }, [commentValue])
-
   const deleteAdoptCommunityBoardFavorite = useMutation({
     mutationKey: "deleteAdoptCommunityBoardFavorite",
     mutationFn: deleteAdoptLike,
@@ -286,8 +263,7 @@ function AdoptCommunityBoardDetailPage() {
         userId: principalQueryState.data?.data.userId
       });
     }
-
-    // 좋아요 상태 갱신 후 다시 렌더링
+    
     getBoardFavoriteQuery.refetch();
     getFindUserByBoard.refetch();
   }
@@ -321,8 +297,6 @@ function AdoptCommunityBoardDetailPage() {
   }
 
   useEffect(() => {
-    console.log(searchParams.get("edit"))
-    console.log(typeof(searchParams.get("edit")))
     if(searchParams.get("edit") === "true") {
       setButtonState(1);
     }
@@ -335,14 +309,9 @@ function AdoptCommunityBoardDetailPage() {
     }
   }
 
-  useEffect(() => {
-    console.log(favoriteState)
-  }, [favoriteState])
-
   return (
     <div css={s.layout}>
       <div css={s.topIconBox}>
-        {/* 좋아요, 댓글, 조회수 관련 코드 작성해주세요. */}
         <div css={s.iconBox}>
           {
             !getAdoptCommunityBoardDetail.isLoading && 

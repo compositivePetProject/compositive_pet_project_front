@@ -86,6 +86,7 @@ export const menuContainer = css`
     color: #222222;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.3s;
     & > div:nth-of-type(1) {
         width: 30%;
         display: flex;

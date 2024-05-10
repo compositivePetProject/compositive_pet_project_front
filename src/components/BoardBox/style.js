@@ -7,6 +7,11 @@ export const boardCard = css`
     border-radius: 15px;
     box-shadow: 0 0 25px -10px rgba(0, 0, 0, 0.5);
     cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover{
+        transform: translate(0, -10px);
+    }
 `;
 
 export const imageBox = css`

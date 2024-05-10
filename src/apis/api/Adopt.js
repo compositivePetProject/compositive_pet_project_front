@@ -44,24 +44,10 @@ export const getAdoptCount = async (params) => {
     return response;
 }
 
-export const getAdoptDogCount = async (params) => {
-    const response = await instance.get('/adoptation/board/dogCount', { params });
-    return response;
-}
-
-
-export const getAdoptCatCount = async (params) => {
-    const response = await instance.get('/adoptation/board/catCount', { params });
-    return response;
-}
-
-
 export const getAdoptByUserId = async (params) => {
     const response = await instance.get('/adoptation/board/user', { params });
     return response;
 }
-
-
 
 export const getAdoptCountByUserId = async (params) => {
     const response = await instance.get('/adoptation/board/userCount', { params });
@@ -69,15 +55,12 @@ export const getAdoptCountByUserId = async (params) => {
 }
 
 export const deleteAdoptBoardById = async (params) => {
-
     return await instance.delete('/adoptation/board', { params })
 }
-
 
 export const postAdoptLike = async (data) => {
     const response = await instance.post('/adoptation/favorite', data);
 }
-
 
 export const getAdoptLike = async (params) => {
     const response = await instance.get("adoptation/favorite/board", { params });
@@ -108,15 +91,6 @@ export const deleteAdoptCommentRequest = async (commentId) => {
 
 export const updateAdoptCommentRequest = async (data) => {
     return await instance.put(`/adoptation/comment`, data);
-}
-
-export const postAdoptView = async (data) => {
-    const response = await instance.post("/adoptation/view", data);
-}
-
-export const getAdoptViewCount = async (params) => {
-    const response = await instance.get("/adoptation/view", { params });
-    return response.data;
 }
 
 export const getTop3AdoptBoard = async () => {

@@ -21,41 +21,30 @@ import CommunityBoardCommentWritePage from '../../pages/CommunityBoardCommentWri
 import CommunityBoardAdminEditPage from '../../pages/CommunityBoardAdminEditPage/CommunityBoardAdminEditPage';
 import CommunityBoardEditPage from '../../pages/CommunityBoardEditPage/CommunityBoardEditPage';
 
-
-
-// 임시로 추가함.
 function CommunityBoardRoute(props) {
     const [ searchParam ] = useSearchParams();
     const { pathname } = useLocation();
 
     useEffect(() => {
-        console.log(pathname)
         window.scrollTo(0, 0);
-        // window.scrollTo({
-        //     top: 0,
-        //     behavior: 'smooth'
-        // });
-        console.log(searchParam.get("boardid"))
     }, [searchParam, pathname]);
-
 
     return (
         <>
-         <Routes>
-            <Route path="/community/getboards" element={<CommunityBoardPage />} />
-            <Route path="/community/dog" element={<CommunityBoardDogPage />} />
-            <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
-            <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
-            <Route path="/community/board" element={<CommunityBoardDetailPage />} />
-            <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
-            <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
-            <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />
-            <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
-            <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />
-            <Route path="/community/comment/:boardId" element={<CommunityBoardCommentWritePage />} />
-            <Route path="/community/update/comment" element={<CommunityBoardCommentEditPage />}  />           
-        </Routes>
-    
+            <Routes>
+                <Route path="/community/getboards" element={<CommunityBoardPage />} />
+                <Route path="/community/dog" element={<CommunityBoardDogPage />} />
+                <Route path='/community/cat' element={<CommunityBoardCatPage />} /> 
+                <Route path="/community/board/write" element={<CommunityBoardWritePage />} />
+                <Route path="/community/board" element={<CommunityBoardDetailPage />} />
+                <Route path="/community/board/update/:boardId" element={<CommunityBoardEditPage />} />
+                <Route path="/community/admin/list/boards" element={<CoummunityBoardAdminPage />} />
+                <Route path="/community/admin/:adminBoardId" element={<CommunityBoardAdminDetailPage />} />
+                <Route path="/community/admin/noticewrite" element={<CommunityBoardAdminRegisterPage />} />
+                <Route path="/community/update/admin/:communityBoardAdminId" element={<CommunityBoardAdminEditPage />} />
+                <Route path="/community/comment/:boardId" element={<CommunityBoardCommentWritePage />} />
+                <Route path="/community/update/comment" element={<CommunityBoardCommentEditPage />}  />           
+            </Routes>
         </>
     );
 }

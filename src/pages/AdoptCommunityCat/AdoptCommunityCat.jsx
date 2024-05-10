@@ -27,23 +27,7 @@ function AdoptCommunityCat() {
         boardAnimalCategoryId: 0,
     })
 
-    const postAdoptCommunityBoardView = useMutation({
-        mutationKey:"postAdoptCommunityBoardView",
-        mutationFn:postAdoptView,
-        onSuccess: (response) => {
-        },
-        onError: (error) => {
-            
-        }
-
-    })
-
-
     const handleOnClick = (board) => {
-        postAdoptCommunityBoardView.mutate({
-            adoptationBoardId:board.adoptationBoardId,
-            userId:principalQueryState.data?.data.userId
-        })
         navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 
@@ -59,7 +43,6 @@ function AdoptCommunityCat() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setAdoptCommunityBoardList(response);
             },
             onError: (error) => {
@@ -89,7 +72,6 @@ function AdoptCommunityCat() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setMaxPageNumber(response.data.maxPageNumber)
                 setTotalCount(response.data.totalCount)
             },
@@ -133,7 +115,7 @@ function AdoptCommunityCat() {
 
             <div>
                 {
-                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount}/>
+                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers path={"/adoptCommunity/cat"} maxPageNumber={maxPageNumber} totalCount={totalCount}/>
                 }
             </div>
 

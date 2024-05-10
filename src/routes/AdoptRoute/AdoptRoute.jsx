@@ -18,13 +18,7 @@ function AdoptRoute(props) {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        console.log(pathname)
         window.scrollTo(0, 0);
-        // window.scrollTo({
-        //     top: 0,
-        //     behavior: 'smooth'
-        // });
-        console.log(searchParam.get("boardid"))
     }, [searchParam, pathname]);
 
     return (

@@ -31,11 +31,11 @@ function AdoptCommunityDog() {
         mutationKey:"postAdoptCommunityBoardView",
         mutationFn:postAdoptView,
         onSuccess: (response) => {
+
         },
         onError: (error) => {
             
         }
-
     })
 
 
@@ -59,7 +59,6 @@ function AdoptCommunityDog() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setAdoptCommunityBoardList(response);
             },
             onError: (error) => {
@@ -90,7 +89,6 @@ function AdoptCommunityDog() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setMaxPageNumber(response.data.maxPageNumber)
                 setTotalCount(response.data.totalCount)
             },
@@ -135,7 +133,7 @@ function AdoptCommunityDog() {
 
             <div>
                 {
-                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount}/>
+                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers path={"/adoptCommunity/dog"} maxPageNumber={maxPageNumber} totalCount={totalCount}/>
                 }
             </div>
 

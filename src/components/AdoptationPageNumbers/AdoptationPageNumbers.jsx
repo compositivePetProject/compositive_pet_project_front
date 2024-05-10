@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
 import { useEffect, useState } from "react";
 
-function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
+function AdoptationPageNumbers({ maxPageNumber, totalCount, path }) {
     const [ searchParams ] = useSearchParams();
     const navigate = useNavigate();
     const page = parseInt(searchParams.get("page"));
@@ -27,20 +27,20 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount }) {
       <div css={s.pageNumbers}>
         {
           page !== 1 &&
-          <Link css={s.pageButton(false)} to={`/ex/adoptcommunity?page=${page - 1}`}>&#60;</Link>
+          <Link css={s.pageButton(false)} to={`${path}?page=${page - 1}`}>&#60;</Link>
         }
         {
           numbers.map(number => 
             <Link 
             key={number} 
             css={s.pageButton(number === page)} 
-            to={`/ex/adoptcommunity?page=${number}`}
+            to={`${path}?page=${number}`}
             >{number}</Link>
           )
         }
         {
           page !== maxPageNumber &&
-          <Link css={s.pageButton(false)} to={`/ex/adoptcommunity?page=${page + 1}`}>&#62;</Link>
+          <Link css={s.pageButton(false)} to={`${path}?page=${page + 1}`}>&#62;</Link>
         }
       </div>
       <div css={s.pageCount}>

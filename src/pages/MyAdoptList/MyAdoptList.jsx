@@ -13,7 +13,6 @@ import { TfiWrite } from "react-icons/tfi";
 
 
 function MyAdoptList(props) {
-    const [likeStatus, setLikeStatus] = useState({});
     const [ searchParams, setSearchParams ] = useSearchParams();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -26,10 +25,7 @@ function MyAdoptList(props) {
     const firstPage = lastPage - searchCount;
     const [maxPageNumber, setMaxPageNumber] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
-    const [checkedBoards, setCheckedBoards] = useState([]);
-
     const [ myAdoptBoardList, setMyAdoptBoardList ] = useState([]);
-    const [ deleteMyAdoptBoardIds, setDeleteMyAdoptBoardIds ] = useState();
 
     const getMyAdoptBoard = useQuery(
         ["getMyAdoptBoard", userId, page],
@@ -40,7 +36,6 @@ function MyAdoptList(props) {
             enabled: !!userId,
             refetchOnWindowFocus: false,
             onSuccess: response => {
-                console.log(response);
                 const index = response.data.slice(firstPage,lastPage)
                 setAdoptList(index)
 
@@ -72,18 +67,6 @@ function MyAdoptList(props) {
         }
     )
 
-    const handleCheckboxChange = (event, adoptationBoardId) => {
-        const isChecked = event.target.checked;
-
-        if (isChecked) {
-            setCheckedBoards(prevState => [...prevState, adoptationBoardId]);
-            console.log(isChecked, adoptationBoardId)
-        } else {
-            setCheckedBoards(prevState => prevState.filter(id => id !== adoptationBoardId));
-            console.log(isChecked, adoptationBoardId)
-        }
-    };
-
     const deleteAdoptRequestMutation = useMutation({
         mutationKey: "deleteAdoptRequestMutation",
         mutationFn: deleteAdoptBoardById,
@@ -95,40 +78,6 @@ function MyAdoptList(props) {
             alert("오류");
         }
     })
-
-
-
-    const handleDeleteBoard = () => {
-
-        // myAdoptBoardList
-        const arr = myAdoptBoardList.filter((board) => board.checked === true);
-        console.log(arr);
-        setDeleteMyAdoptBoardIds((pre) => {
-            arr.map((board) => board.adoptationBoardId);
-        })
-
-        // for(let boardId of checkedBoards) {
-        //     deleteAdoptRequestMutation.mutate({boardIds: boardId})
-        //     alert("해당 게시글이 삭제되었습니다.")
-        //     window.location.replace("/account/mypage/Adopt?page=1");    
-        // }
-    };
-
-
-    const handleDeleteSelected = () => {
-        console.log("Selected items:", checkedBoards);
-    };
-
-
-
-    const handlePageChange = (pageNumber) => {
-        setSearchParams({ page: pageNumber.toString() });
-    };
-
-    const handleClick = () => {
-        console.log("입력이 감지되었습니다.")
-    }
-
 
     const handleCheckOnChange = (e) => {
         const adoptationBoardId = parseInt(e.target.value);
@@ -159,7 +108,6 @@ function MyAdoptList(props) {
             deleteAdoptRequestMutation.mutate({boardIds : adoptationBoardId});
         }
     }
-
 
     return (
         <div css={s.layout}>

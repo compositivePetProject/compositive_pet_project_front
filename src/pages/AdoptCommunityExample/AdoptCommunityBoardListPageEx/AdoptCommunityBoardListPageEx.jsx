@@ -38,9 +38,7 @@ function AdoptCommunityBoardListPageEx() {
         onError: (error) => {
             
         }
-
     })
-
 
     const handleOnClick = (board) => {
         postAdoptCommunityBoardView.mutate({
@@ -62,7 +60,6 @@ function AdoptCommunityBoardListPageEx() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setAdoptCommunityBoardList(response);
             },
             onError: (error) => {
@@ -81,7 +78,6 @@ function AdoptCommunityBoardListPageEx() {
         getAdoptCommunityBoardList.refetch();
     }
 
-
     const getAdoptCommunityBoardCount = useQuery(
         ["getAdoptCommunityBoardCount", getAdoptCommunityBoardList],
         async () => await getAdoptCount({
@@ -93,7 +89,6 @@ function AdoptCommunityBoardListPageEx() {
             retry: 0,
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response)
                 setMaxPageNumber(response.data.maxPageNumber)
                 setTotalCount(response.data.totalCount)
             },
@@ -103,14 +98,6 @@ function AdoptCommunityBoardListPageEx() {
         }
 
     )
-
-    useEffect(() => {
-        console.log(adoptCommunityBoardList);
-    }, [adoptCommunityBoardList]);
-
-    useEffect(() => {
-        console.log(search);
-    }, [search])
     
     return (
         <div css={s.layout}>
@@ -147,7 +134,7 @@ function AdoptCommunityBoardListPageEx() {
 
             <div>
                 {
-                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers maxPageNumber={maxPageNumber} totalCount={totalCount}/>
+                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers path={"/ex/adoptcommunity"} maxPageNumber={maxPageNumber} totalCount={totalCount}/>
                 }
             </div>
 

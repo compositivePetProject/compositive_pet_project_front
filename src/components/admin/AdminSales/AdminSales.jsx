@@ -15,7 +15,6 @@ function AdminSales() {
             refetchOnWindowFocus: false,
             refetchInterval: false,
             onSuccess: (response) => {
-                console.log(response);
                 setSalesList(response.data);
             },
             onError: (error) => {
@@ -23,11 +22,6 @@ function AdminSales() {
             }
         }
     )
-
-    useEffect(() => {
-        console.log(salesList)
-    }, [salesList])
-
 
     return (
         <div css={s.layout}>

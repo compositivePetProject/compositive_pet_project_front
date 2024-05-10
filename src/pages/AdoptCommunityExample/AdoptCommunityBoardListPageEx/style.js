@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 
 export const layout = css`
     width: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const search = css`
@@ -87,6 +89,9 @@ export const board = css`
 
 
 export const pagination = css`
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 

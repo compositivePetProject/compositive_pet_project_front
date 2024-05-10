@@ -43,10 +43,10 @@ function AdoptationPageNumbers({ maxPageNumber, totalCount, path }) {
           <Link css={s.pageButton(false)} to={`${path}?page=${page + 1}`}>&#62;</Link>
         }
       </div>
-      <div css={s.pageCount}>
+      {/* <div css={s.pageCount}>
         <div css={s.page}>현재 페이지: {page} of {maxPageNumber}</div>
         <div css={s.count}>총 게시글: {totalCount}</div>
-      </div>
+      </div> */}
     </div>
   )
 }

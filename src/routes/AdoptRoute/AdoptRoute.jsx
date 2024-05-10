@@ -17,11 +17,11 @@ function AdoptRoute(props) {
     return (
         <>
             <Routes>
-                <Route path="/adoptCommunity/dog" element={ <AdoptCommunityDog /> }/> 
-                <Route path="/adoptCommunity/cat" element={ <AdoptCommunityCat /> }/> 
-                <Route path="/ex/adoptcommunity" element={<AdoptCommunityBoardListPageEx/>} />
-                <Route path="/ex/adoptcommunity/detail" element={<AdoptCommunityBoardDetailPage/>} />
-                <Route path="/ex/adoptcommunity/write" element={<AdoptCommunityBoardWritePage />} />
+                <Route path="/adoptcommunity/dog" element={ <AdoptCommunityDog /> }/> 
+                <Route path="/adoptcommunity/cat" element={ <AdoptCommunityCat /> }/> 
+                <Route path="/adoptcommunity" element={<AdoptCommunityBoardListPageEx/>} />
+                <Route path="/adoptcommunity/detail" element={<AdoptCommunityBoardDetailPage/>} />
+                <Route path="/adoptcommunity/write" element={<AdoptCommunityBoardWritePage />} />
             </Routes>
         </>
     );

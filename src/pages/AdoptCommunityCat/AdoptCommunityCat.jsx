@@ -28,7 +28,7 @@ function AdoptCommunityCat() {
     })
 
     const handleOnClick = (board) => {
-        navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+        navigate(`/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 
     const getAdoptCommunityBoardList= useQuery(
@@ -81,6 +81,15 @@ function AdoptCommunityCat() {
         }
     )
 
+    const toWrite = () => {
+        if(principalQueryState.status === "success") {
+            navigate("/adoptcommunity/write")
+        } else {
+            alert("로그인 후 이용가능한 서비스입니다.")
+            navigate("/auth/authentication");
+        }
+    }
+
     return (
         <div css={s.layout}>
             <div css={s.search}>
@@ -88,7 +97,7 @@ function AdoptCommunityCat() {
                 <div css={s.searchBox}>
                     <TopInput label={"검색게시글"} name={"adoptationBoardTitle"} inputSize={10} setState={setSearch} onKeyDown={searchHandleKeyDown}/>
                     <button css={s.searchButton} onClick={searchSubmit}><FaSearch/></button>
-                    <button css={s.writeButton} onClick={() => navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
+                    <button css={s.writeButton} onClick={toWrite}><TfiWrite /></button>
                 </div>
             </div>
 

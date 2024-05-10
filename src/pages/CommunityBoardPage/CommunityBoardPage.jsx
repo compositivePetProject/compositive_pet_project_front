@@ -71,6 +71,15 @@ function CommunityBoardPage() {
     }
 
     const searchText = useProductOnKeyUpInput(searchSubmit);
+
+    const toWrite = () => {
+        if(principalQueryState.status === "success") {
+            navigate("/community/board/write")
+        } else {
+            alert("로그인 후 이용가능한 서비스입니다.")
+            navigate("/auth/authentication");
+        }
+    }
     
     return (
             <div css={s.layout}>
@@ -89,7 +98,7 @@ function CommunityBoardPage() {
                             <button css={s.searchBarButton} >
                                 <FaSearch onClick={searchSubmit}/>
                             </button>
-                            <button css={s.writeButton} onClick={() => navigate("/community/board/write")}><TfiWrite /></button>
+                            <button css={s.writeButton} onClick={toWrite}><TfiWrite /></button>
                         </div>
                     </div>
                     <div css={s.board}>

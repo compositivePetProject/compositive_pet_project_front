@@ -177,7 +177,7 @@ function ProductPetDetailPage() {
     const toggleFavoriteStatusButton = async () => {
             if (!principalQueryState.data?.data.userId) {
                 alert("로그인 후 이용 바랍니다.")
-                window.location.replace("/auth/sign-in");
+                window.location.replace("/auth/authentication");
                 return;
             }
             if (isLiked) {
@@ -201,7 +201,7 @@ function ProductPetDetailPage() {
     const handleProductPurchase = () => {
         if (!principalQueryState.data?.data.userId) {
             alert("로그인 후 이용 바랍니다.")
-            window.location.replace("/auth/sign-in");
+            window.location.replace("/auth/authentication");
             return;
         }
         if (!selectedSizeType.option) {
@@ -214,7 +214,7 @@ function ProductPetDetailPage() {
     const handleProductCartAdd = () => {
         if (!principalQueryState.data?.data.userId) {
             alert("로그인 후 이용 바랍니다.")
-            window.location.replace("/auth/sign-in");
+            window.location.replace("/auth/authentication");
             return;
         }
         postProductCartAddQuery.mutate({
@@ -246,7 +246,17 @@ function ProductPetDetailPage() {
     const handleChangeDetaill = () => {
         selectedSizeType.handleOnChange(null);  
     };
-    console.log(selectedSizeType.option)
+
+    const toReview = () => {
+        if(principalQueryState.status === "success") {
+            navigate("/account/mypage/reviews")
+        } else {
+            alert("로그인 후 이용가능한 서비스입니다.")
+            navigate("/auth/authentication");
+        }
+    }
+
+
     return (
         
         <div>
@@ -358,7 +368,7 @@ function ProductPetDetailPage() {
                         <div  css={s.ratingBox1}>
                             <div><FaStar css={s.activeStarButton2} /> { isNaN(averageRating) ? 0 : averageRating }</div>
                             <div>{isNaN(positiveRatingPercentage.toFixed(1)) ? 0 : positiveRatingPercentage.toFixed(1)}%의 구매자가 이 상품을 좋아합니다.</div>
-                            <button css={s.productOrderButton} onClick={() => navigate("/account/mypage/reviews")}>상품 리뷰 작성하기</button>
+                            <button css={s.productOrderButton} onClick={toReview}>상품 리뷰 작성하기</button>
                         </div>
                         <ProductReviewRatingChart reviews={reviews} />
                     </div>

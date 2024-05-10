@@ -37,7 +37,7 @@ export const selectLabel = css`
     padding: 0px 30px;
     font-size: 14px;
     font-weight: 600;
-    background-color: #00005cff;
+    background-color: #212121;
     color: #eee;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
@@ -108,7 +108,7 @@ export const listContainer = css`
         border-radius: 5px;
     }
     &::-webkit-scrollbar-thumb{
-        background-color: #00005cff;
+        background-color: rgba(255, 64, 128, 0.3);
         border-radius: 5px;
     }
 `;
@@ -118,7 +118,7 @@ export const listItem = css`
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    border: 1px solid #00005c6b;
+    border: 1px solid rgba(255, 64, 128, 0.3);
     border-radius: 5px;
     padding: 10px;
     width: 250px;

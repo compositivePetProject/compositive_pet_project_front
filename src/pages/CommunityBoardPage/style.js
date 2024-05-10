@@ -40,7 +40,7 @@ export const searchLabel = css`
     height: 40px;
     font-size: 14px;
     font-weight: 600;
-    background-color: #00005cff;
+    background-color: #212121;
     color: #eee;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;

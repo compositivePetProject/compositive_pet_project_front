@@ -50,7 +50,7 @@ export const label = css`
     height: 40px;
     font-size: 14px;
     font-weight: 600;
-    background-color: #00005cff;
+    background-color: #212121;
     color: #eee;
     cursor: default;
 `;

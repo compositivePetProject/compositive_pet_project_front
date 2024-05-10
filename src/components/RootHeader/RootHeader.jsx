@@ -120,16 +120,16 @@ function RootHeader() {
                                 css={s.buttons(isAdoptCommunityActive)}
                                 onMouseEnter={() => handleHover("adoptCommunity")}
                                 onMouseLeave={() => handleSidebarLeave}
-                                onClick={() => handleMenuClick("adoptCommunity", "/ex/adoptcommunity?page=1")}
+                                onClick={() => handleMenuClick("adoptCommunity", "/adoptcommunity?page=1")}
                             >
                                 ADOPTATION-COMMUNITY
                             </button>
                             <div css={s.sidebar(isHovering && currentMenu === "adoptCommunity")} onMouseLeave={handleSidebarLeave}>
                                 {currentMenu === "adoptCommunity" && (
                                     <div>
-                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/ex/adoptcommunity?page=1")}>전체 분양 커뮤니티</div>
-                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptCommunity/dog?page=1")}>강아지 분양 커뮤니티</div>
-                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptCommunity/cat?page=1")}>고양이 분양 커뮤니티</div> 
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptcommunity?page=1")}>전체 분양 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptcommunity/dog?page=1")}>강아지 분양 커뮤니티</div>
+                                        <div css={s.category} onClick={() => handleMenuClick("adoptCommunity", "/adoptcommunity/cat?page=1")}>고양이 분양 커뮤니티</div> 
                                     </div>
                                 )}
                             </div>
@@ -168,7 +168,7 @@ function RootHeader() {
                     <div css={s.loginBox}>
                         { !isLogin ?
                         <div css={s.accountItems}>
-                            <a css={s.login} href="http://localhost:3000/auth/sign-in">
+                            <a css={s.login} href="http://localhost:3000/auth/authentication">
                                 <TbLogin />
                             </a>
                             <a css={s.login} href="http://localhost:3000/product/pet/cart">

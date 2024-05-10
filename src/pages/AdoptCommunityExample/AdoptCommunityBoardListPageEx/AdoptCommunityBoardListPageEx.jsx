@@ -31,7 +31,7 @@ function AdoptCommunityBoardListPageEx() {
     })
 
     const handleOnClick = (board) => {
-        navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+        navigate(`/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 
     const getAdoptCommunityBoardList= useQuery(
@@ -84,6 +84,15 @@ function AdoptCommunityBoardListPageEx() {
         }
 
     )
+
+    const toWrite = () => {
+        if(principalQueryState.status === "success") {
+            navigate("/adoptcommunity/write")
+        } else {
+            alert("로그인 후 이용가능한 서비스입니다.")
+            navigate("/auth/authentication");
+        }
+    }
     
     return (
         <div css={s.layout}>
@@ -93,7 +102,7 @@ function AdoptCommunityBoardListPageEx() {
                     <TopSelect label={"동물구분"} name={"boardAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
                     <TopInput label={"검색게시글"} name={"adoptationBoardTitle"} inputSize={10} setState={setSearch} onKeyDown={searchHandleKeyDown}/>
                     <button css={s.searchButton} onClick={searchSubmit}><FaSearch/></button>
-                    <button css={s.writeButton} onClick={() => navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
+                    <button css={s.writeButton} onClick={toWrite}><TfiWrite /></button>
                 </div>
             </div>
 
@@ -118,11 +127,12 @@ function AdoptCommunityBoardListPageEx() {
                 </div>
             </div>
 
-            <div>
+            <div css={s.pagination}>
                 {
-                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers path={"/ex/adoptcommunity"} maxPageNumber={maxPageNumber} totalCount={totalCount}/>
+                    !getAdoptCommunityBoardCount.isLoading && <AdoptationPageNumbers path={"/adoptcommunity"} maxPageNumber={maxPageNumber} totalCount={totalCount}/>
                 }
             </div>
+            
 
         </div>
     )

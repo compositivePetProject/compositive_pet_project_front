@@ -96,11 +96,11 @@ function MyAdoptList(props) {
     }
 
     const moveToDetailPage = (adoptationBoardId) => {
-        navigate(`/ex/adoptcommunity/detail?boardid=${adoptationBoardId}`)
+        navigate(`/adoptcommunity/detail?boardid=${adoptationBoardId}`)
     }
 
     const moveToEditPage = (adoptationBoardId) => {
-        navigate(`/ex/adoptcommunity/detail?boardid=${adoptationBoardId}&edit=true`)
+        navigate(`/adoptcommunity/detail?boardid=${adoptationBoardId}&edit=true`)
     }
 
     const handleDeleteAdoptBoard = (adoptationBoardId) => {
@@ -115,7 +115,7 @@ function MyAdoptList(props) {
             <div css={s.userDetails}>
                 <div>
                     <div css={s.title}>분양 게시글 관리</div>
-                    <button css={s.writeButton} onClick={()=> navigate("/ex/adoptcommunity/write")}><TfiWrite /></button>
+                    <button css={s.writeButton} onClick={()=> navigate("/adoptcommunity/write")}><TfiWrite /></button>
                 </div>
                 <div css={s.boardListItem}>
                     {myAdoptBoardList.map((board) => (

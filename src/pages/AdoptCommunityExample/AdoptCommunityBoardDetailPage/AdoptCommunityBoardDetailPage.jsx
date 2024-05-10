@@ -148,7 +148,7 @@ function AdoptCommunityBoardDetailPage() {
     onSuccess: (response) => {
       setButtonState(0);
       alert("게시물이 삭제되었습니다.")
-      navigate(`/ex/adoptcommunity?page=1`);
+      navigate(`/adoptcommunity?page=1`);
     },
     onError: (error) => {
       alert("오류");
@@ -195,7 +195,7 @@ function AdoptCommunityBoardDetailPage() {
           setSearchParams(params);
         } else {
           alert("로그인 후 사용이 가능한 서비스 입니다.")
-          window.location.replace("http://localhost:3000/auth/auth");
+          window.location.replace("http://localhost:3000/auth/authentication");
         }
       }
     } else {
@@ -249,7 +249,7 @@ function AdoptCommunityBoardDetailPage() {
     const currentUserLiked = likedUsers.includes(principalQueryState.data?.data.userId);
     if (!principalQueryState.data?.data.userId) {
       alert("로그인 후 이용 바랍니다.")
-      window.location.replace("/auth/sign-in");
+      window.location.replace("/auth/authentication");
       return;
     }
     if (!currentUserLiked) {

@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 export const layout = css`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 5px;
     width: 100%;
@@ -19,15 +19,21 @@ export const pageButton = (isSelected) => css`
     justify-content: center;
     align-items: center;
     margin-right: 3px;
-    border: ${isSelected ? "none" : "1px solid #dbdbdb"};
+    /* border: ${isSelected ? "none" : "1px solid #dbdbdb"}; */
     border-radius: 2px;
     min-width: 25px;
     height: 25px;
-    background-color: ${isSelected ? "#dbdbdb;" : "white"};
+    background-color: ${isSelected ? "#3d3a35" : "white"};
     text-decoration: none;
     font-size: 10px;
     color: ${isSelected ? "white;" : "#777777;"};
-    
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    outline: none; 
+
+    &:hover {
+        background-color: ${isSelected ? "#3d3a35" : "#f0f0f0"};
+    }
 `;
 
 export const pageCount = css`

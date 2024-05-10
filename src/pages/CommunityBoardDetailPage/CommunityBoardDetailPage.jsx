@@ -94,7 +94,7 @@ function CommunityBoardDetailPage(props) {
    const toggleBoardFavoriteStatusButton = async () => {
     if (!principalQueryState.data?.data.userId) {
       alert("로그인 후 이용 바랍니다.")
-      window.location.replace("/auth/sign-in");
+      window.location.replace("/auth/authentication");
       return;
     }
     if (isLiked) {
@@ -309,7 +309,7 @@ function CommunityBoardDetailPage(props) {
           setSearchParams(params);
         } else {
           alert("로그인 후 사용이 가능한 서비스 입니다.")
-          window.location.replace("http://localhost:3000/auth/auth");
+          window.location.replace("http://localhost:3000/auth/authentication");
         }
       }
     } else {

@@ -9,7 +9,6 @@ import FixBar from "../../components/FixBar/FixBar";
 import { getTop3AdoptBoard } from "../../apis/api/Adopt";
 import BoardBox from "../../components/BoardBox/BoardBox";
 import { getTop3Board } from "../../apis/api/communityBoard";
-import { postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
 
 function MainPage(props) {
     const navigate = useNavigate();
@@ -27,7 +26,6 @@ function MainPage(props) {
         if (intervalId !== null) {
           clearInterval(intervalId);
         }
-    
         setIntervalId(
           setInterval(() => {
             setCurSlide((prevState) =>
@@ -95,14 +93,6 @@ function MainPage(props) {
       }
     )
 
-    const postCommunityBoardView = useMutation({
-      mutationKey:"postCommunityBoardView",
-      mutationFn: postCommunityBoardViewRequest,
-      onSuccess: (response) => {
-      },
-      onError: (error) => {
-      }
-    })
 
     const handleOnClick = (board) => {
       navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)

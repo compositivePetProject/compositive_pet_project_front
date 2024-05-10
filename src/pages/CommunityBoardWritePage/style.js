@@ -100,21 +100,26 @@ export const input = css`
 
 export const submitButton = css`
     box-sizing: border-box;
-    color: #eeeeee;
+    color: #222222;
     font-weight: 700;
-    background-color: #00005cff;
+    background-color: white;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
     padding: 3px;
-    border: none;
     width: 110px;
     height: 45px;
     cursor: pointer;
-    border-radius: 5px;
 
     & > button:nth-of-type(1) {
         margin-right: 20px;
     }
 
     &:hover {
-        background-color: #00003bff;
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
+    }
+
+    &:active {
+        background-color: #dbdbdb49;
     }
 `;

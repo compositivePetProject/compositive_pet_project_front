@@ -90,9 +90,6 @@ export const reviews = css`
             background-color: #fafafa;
         }
     }
-    & > div:nth-of-type(1) {  
-        
-    }
 `;
 
 
@@ -177,18 +174,20 @@ export const container5 = css`
 `;
 
 export const buttons3 = css`
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
     width: 150px;
     padding: 10px 20px;
     margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #f4f6f8;
+    background-color: white;
     color: #222222;
-    text-decoration: none;
+    font-weight: 600;
     cursor: pointer;
 
     &:hover {
-        background-color: #e7e8e98f;
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 `;
 

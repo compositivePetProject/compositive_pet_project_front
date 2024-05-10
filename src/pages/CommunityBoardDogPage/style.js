@@ -8,7 +8,7 @@ export const headerTitle = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0px 110px 10px;
+    margin: 20px 0px;
 
     & > div:nth-of-type(1) {
         font-size: 22px;
@@ -78,12 +78,12 @@ export const searchBarButton = css`
     font-weight: 600;
     cursor: pointer;
     &:hover {
-        border: 1px solid #2400c4cb;
+        border: 1px solid rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 
     &:active {
-        background-color: #00005cff;
-        color: #eeeeee;
+        background-color: #dbdbdb49;
     }
 `;
 
@@ -203,17 +203,17 @@ export const writeButton = css`
     margin-left: 5px;
     border: 1px solid #0e004a24;
     border-radius: 5px;
-    padding: 12px;
+    padding: 13px;
     height: 40px;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
     &:hover {
-        border: 1px solid #2400c4cb;
+        border: 1px solid rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 
     &:active {
-        background-color: #00005cff;
-        color: #eeeeee;
+        background-color: #dbdbdb49;
     }
 `;

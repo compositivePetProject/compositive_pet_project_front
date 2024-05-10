@@ -85,12 +85,12 @@ export const button = css`
     font-weight: 600;
     cursor: pointer;
     &:hover {
-        border: 1px solid #2400c4cb;
+        border: 1px solid rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 
     &:active {
-        background-color: #00005cff;
-        color: #eeeeee;
+        background-color: #dbdbdb49;
     }
 `;
 

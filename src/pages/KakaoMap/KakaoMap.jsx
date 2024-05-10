@@ -114,13 +114,6 @@ function KakaoMap() {
         <div css={s.layout}>
             <div css={s.layoutContainer}>
                 <div css={s.container}>
-                    {/* <Select
-                        styles={selectStyle2}
-                        options={categorys}
-                        value={selectedCategory.option}
-                        placeholder={"옵션을 선택해주세요"}
-                        onChange={selectedCategory.handleOnChange}
-                    /> */}
                     <div css={s.selectContainer}>
                         <div css={s.selectLabel}>
                             장소 범주

@@ -25,7 +25,7 @@ export const label = css`
     border: 1px solid #dbdbdb;
     font-size: 14px;
     font-weight: 600;
-    background-color: #00005cff;
+    background-color: #212121;
     color: #eee;
     cursor: default;
 

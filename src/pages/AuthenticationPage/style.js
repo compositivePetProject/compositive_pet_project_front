@@ -24,7 +24,7 @@ export const header = (authState) => css`
     
     & > div {
         width: 50%;
-        background-color: #00005cff;
+        background-color: #212121;
         text-align: center;
         line-height: 50px;
     }
@@ -35,7 +35,7 @@ export const header = (authState) => css`
         border-right: 1px solid #eeeeee;
         cursor: pointer;
         &:hover{
-            background-color: #00003cff;
+            background-color: #212121;
         }
     }
 
@@ -44,12 +44,12 @@ export const header = (authState) => css`
         border-top-right-radius: 15px;
         cursor: pointer;
         &:hover{
-            background-color: #00003cff;
+            background-color: #212121;
         }
     }
 
     & > div:nth-of-type(${authState}) {
-        background-color: #00002cff;
+        background-color: #101010;
     }
 `;
 
@@ -78,10 +78,10 @@ export const logInButton = css`
     font-size: 16px;
     font-weight: 700;
     color: #eeeeee;
-    background-color: #00005cff;
+    background-color: #212121;
 
     &:hover {
-        background-color: #00003cff;
+        background-color: #121212;
     }
 `
 
@@ -94,12 +94,12 @@ export const signUp = css`
 
     & > span {
         font-weight: 800;
-        color: #00005cff;
+        color: #212121;
         cursor: pointer;
     }
 
     & > span:hover {
-        border-bottom: 3px solid #00005cff;
+        border-bottom: 3px solid #121212;
     }
 `;
 
@@ -135,12 +135,12 @@ export const idCheckButton = css`
     height: 38px;
     border: none;
     border-radius: 5px;
-    background-color: #00005cff;
+    background-color: #212121;
     font-weight: 700;
     color: #eeeeee;
 
     &:hover {
-        background-color: #00003cff;
+        background-color: #121212;
     }
 `;
 
@@ -164,12 +164,12 @@ export const addressCheckButton = css`
     height: 38px;
     border: none;
     border-radius: 5px;
-    background-color: #00005cff;
+    background-color: #212121;
     font-weight: 700;
     color: #eeeeee;
 
     &:hover {
-        background-color: #00003cff;
+        background-color: #121212;
     }
 `;
 
@@ -187,7 +187,7 @@ export const fileButton = css`
     height: 38px;
     border-radius: 5px;
     border: none;
-    background-color: #00005cff;
+    background-color: #212121;
     font-weight: 700;
 
     & > * {
@@ -207,7 +207,7 @@ export const regiseterButton = css`
     & > button {
         padding: 20px 0px;
         width: 100%;
-        background-color: #00005cff;
+        background-color: #212121;
         font-weight: 800;
         font-size: 18px;
         color: #eeeeee;
@@ -216,6 +216,6 @@ export const regiseterButton = css`
     }
 
     & > button:hover{
-        background-color: #00003cff;
+        background-color: #121212;
     }
 `;

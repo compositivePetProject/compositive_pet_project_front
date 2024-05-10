@@ -75,7 +75,7 @@ function CommunityBoardPage() {
     return (
             <div css={s.layout}>
                     <div css={s.headerTitle}>
-                        <div>커뮤니티 갤러리 게시판</div>
+                        <div>커뮤니티 게시판</div>
                         <div css={s.searchBar}>
                             <TopSelect label={"카테고리"} name={"boardAnimalCategoryId"} options={adoptBoardAnimalCategoryOptions} setState={setSearch} />
                             <div css={s.searchLabel}>게시판 검색</div>

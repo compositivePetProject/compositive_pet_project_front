@@ -89,7 +89,7 @@ function CommunityBoardDogPage() {
     return (
         <div css={s.layout}>
                 <div css={s.headerTitle}>
-                    <div>강아지 게시판</div>
+                    <div>강아지 커뮤니티 게시판</div>
                     <div css={s.searchBar}>
                         <div css={s.searchLabel}>게시판 검색</div>
                         <input css={s.searchBarInput} type="text" 

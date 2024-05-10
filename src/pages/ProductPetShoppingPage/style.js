@@ -52,7 +52,7 @@ export const linkButtons = (isSelected) => css`
     &:active {
         transition: all 0.2s ease-in-out;
         font-weight: 700;
-        background-color: black;
+        background-color: rgba(231, 231, 231, 0.75);
     }
 `;
 
@@ -112,12 +112,12 @@ export const searchBarButton = css`
     font-weight: 600;
     cursor: pointer;
     &:hover {
-        border: 1px solid #2400c4cb;
+        border: 1px solid rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 
     &:active {
-        background-color: #00005cff;
-        color: #eeeeee;
+        background-color: #dbdbdb49;
     }
 `;
 

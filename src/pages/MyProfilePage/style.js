@@ -52,38 +52,38 @@ export const buttons = css`
 `;
 
 export const buttons2 = css`
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
     width: 160px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #00005cff;
-    font-weight: 800;
-    color: #eeeeee;
-    text-decoration: none;
+    margin-top: 10px;
+    background-color: white;
+    color: #222222;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 35px;
 
     &:hover {
-        background-color: #00003cff;
-        font-weight: 800;
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 `;
 
 export const buttons3 = css`
+    box-sizing: border-box;
+    border: 1px solid #0e004a24;
+    border-radius: 5px;
     width: 100px;
     padding: 10px 20px;
     margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #00005cff;
-    color: #eeeeee;
+    background-color: white;
+    color: #222222;
     font-weight: 600;
-    text-decoration: none;
     cursor: pointer;
-    margin-top: 30px;
 
     &:hover {
-        background: #00003cff;
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 `;
 

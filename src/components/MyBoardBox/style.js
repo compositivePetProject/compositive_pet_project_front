@@ -67,11 +67,7 @@ export const button = css`
     cursor: pointer;
 
     &:hover {
-        border: 1px solid #2400c4cb;
-    }
-
-    &:active {
-        background-color: #00005cff;
-        color: #eeeeee;
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 `;

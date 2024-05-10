@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import MyProfilePage from '../MyProfilePage/MyProfilePage';
 import MyOrderPage from '../MyOrdersPage/MyOrdersPage'
 import MyAdoptList from '../MyAdoptList/MyAdoptList';
-import { useAuthCheck } from "../../hooks/useAuthCheck";
 import MyReviewsPage from '../MyReviewsPage/MyReviewsPage';
 import MyReviewWritePage from '../MyReviewWritePage/MyReviewWritePage';
 import MyWroteReviewsPage from '../MyWroteReviewsPage/MyWroteReviewsPage';
@@ -10,7 +9,6 @@ import MyCommunityBoardsPage from '../MyCommunityBoardsPage/MyCommunityBoardsPag
 
 
 function MyPage() {
-    useAuthCheck()
     return (
         <>
             <Routes>

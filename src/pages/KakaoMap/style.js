@@ -16,7 +16,7 @@ export const container = css`
     display: flex;
     height: 40px;
     font-size: 14px;
-    margin: 10px 0px;
+    margin: 23px 0px;
 `;
 
 export const selectContainer = css`
@@ -96,7 +96,7 @@ export const button = css`
 
 export const listContainer = css`
     box-sizing: border-box;
-    margin-top: 60px;
+    margin-top: 85px;
     width: 24%;
     display: flex;
     flex-direction: column;

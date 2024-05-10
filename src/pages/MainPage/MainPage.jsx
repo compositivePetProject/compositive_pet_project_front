@@ -6,7 +6,7 @@ import { HiChevronRight, HiChevronLeft, HiOutlineChatBubbleOvalLeft } from "reac
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import FixBar from "../../components/FixBar/FixBar";
-import { getTop3AdoptBoard, postAdoptView } from "../../apis/api/Adopt";
+import { getTop3AdoptBoard } from "../../apis/api/Adopt";
 import BoardBox from "../../components/BoardBox/BoardBox";
 import { getTop3Board } from "../../apis/api/communityBoard";
 import { postCommunityBoardViewRequest } from "../../apis/api/communityBoardView";
@@ -70,7 +70,6 @@ function MainPage(props) {
           refetchOnWindowFocus: false,
           refetchInterval: false,
           onSuccess: (response) => {
-            console.log(response.data)
             setTop3BoardList(response.data);
           },
           onError: (error) => {
@@ -96,15 +95,6 @@ function MainPage(props) {
       }
     )
 
-    const postAdoptCommunityBoardView = useMutation({
-      mutationKey:"postAdoptCommunityBoardView",
-      mutationFn: postAdoptView,
-      onSuccess: (response) => {
-      },
-      onError: (error) => {
-      }
-    })
-
     const postCommunityBoardView = useMutation({
       mutationKey:"postCommunityBoardView",
       mutationFn: postCommunityBoardViewRequest,
@@ -115,10 +105,6 @@ function MainPage(props) {
     })
 
     const handleOnClick = (board) => {
-      postAdoptCommunityBoardView.mutate({
-          adoptationBoardId:board.adoptationBoardId,
-          userId:principalQueryState.data?.data.userId
-      })
       navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 

@@ -27,23 +27,7 @@ function AdoptCommunityDog() {
         boardAnimalCategoryId: 0,
     })
 
-    const postAdoptCommunityBoardView = useMutation({
-        mutationKey:"postAdoptCommunityBoardView",
-        mutationFn:postAdoptView,
-        onSuccess: (response) => {
-
-        },
-        onError: (error) => {
-            
-        }
-    })
-
-
     const handleOnClick = (board) => {
-        postAdoptCommunityBoardView.mutate({
-            adoptationBoardId:board.adoptationBoardId,
-            userId:principalQueryState.data?.data.userId
-        })
         navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 

@@ -57,11 +57,17 @@ export const buttons3 = css`
     width: 150px;
     padding: 10px 20px;
     margin-right: 5px;
-    border: none;
+    border: 1px solid #0e004a24;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    background-color: white;
+    font-weight: 600;
+    color: #222222;
     text-decoration: none;
     cursor: pointer;
+
+    &:hover {
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
+    }
 `;
 

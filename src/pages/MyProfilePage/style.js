@@ -178,16 +178,17 @@ export const nickCheckButton = css`
     height: 38px;
     margin-left: 10px;
     padding: 10px 20px;
-    border: none;
+    border: 1px solid #0e004a24;
     border-radius: 5px;
-    background-color: #00005cff;
+    background-color: white;
     font-weight: 600;
-    color: #eeeeee;
+    color: #222222;
     text-decoration: none;
     cursor: pointer;
 
-    &:hover{
-        background: #00003cff;
+    &:hover {
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
     }
 `;
 

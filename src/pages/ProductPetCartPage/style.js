@@ -115,15 +115,20 @@ export const buttons3 = css`
     width: 200px;
     padding: 10px 20px;
     margin-right: 5px;
-    border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    border: 1px solid #0e004a24;
+    background-color: white;
+    font-weight: 600;
     text-decoration: none;
     cursor: pointer;
 
-    &:hover{
-       color: #0056b8;
+    &:hover {
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
+    }
+
+    &:active {
+        background-color: #dbdbdb49;
     }
 `;
 
@@ -173,15 +178,19 @@ export const buttons4 = css`
     width: 100%;
     padding: 10px 20px;
     margin: 5px 5px 0px 0px;
-    border: none;
     border-radius: 5px;
-    background-color: #e6f2ff;
-    color: #0078ff;
+    border: 1px solid #0e004a24;
+    background-color: white;
+    font-weight: 600;
     text-decoration: none;
     cursor: pointer;
+    &:hover {
+        color: rgb(255, 64, 129);
+        background-color: #dbdbdb29;
+    }
 
-    &:hover{
-       color: #0056b8;
+    &:active {
+        background-color: #dbdbdb49;
     }
 `;
 

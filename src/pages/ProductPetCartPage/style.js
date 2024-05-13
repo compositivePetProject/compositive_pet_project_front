@@ -69,6 +69,7 @@ export const imgBox = css`
     align-items: center;
     width: 100px;
     height: 120px;
+    border-radius: 5px;
     overflow: hidden;
     cursor: pointer;
     & > img {

@@ -32,7 +32,7 @@ function AdoptCommunityBoardWritePage() {
         mutationFn : postAdoptRequest,
         onSuccess : response => {
             alert("게시글이 작성되었습니다.");
-            window.location.replace("/ex/adoptcommunity?page=1");
+            window.location.replace("/adoptcommunity?page=1");
         },
         onError : error => {
             console.log(error);

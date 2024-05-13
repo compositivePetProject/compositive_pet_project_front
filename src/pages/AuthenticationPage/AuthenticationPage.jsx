@@ -63,7 +63,7 @@ function AuthenticationPage() {
         mutationFn: authSignupRequest,
         onSuccess: response => {
             alert("가입이 완료되었습니다.")
-            navigate("/auth/sign-in");
+            navigate("/");
         },
         onError: error => {
             if(error.response.status === 400) {

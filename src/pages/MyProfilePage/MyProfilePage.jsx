@@ -67,7 +67,7 @@ function MyProfilePage() {
         onSuccess: success => {
             alert("수정 완료 되었습니다.")
             queryClient.refetchQueries("principalQuery");
-            window.location.replace("/");
+            window.location.reload();
         },
         onError: error => {
             alert(error.response.data.newNickname);
@@ -80,7 +80,7 @@ function MyProfilePage() {
         onSuccess: success => {
             alert("비밀번호 수정이 완료되었습니다.")
             localStorage.removeItem("AccessToken")
-            window.location.replace("/auth/sign-in")
+            window.location.replace("/auth/authentication")
         },
         onError: error => {
             if(error.response.status === 400) {

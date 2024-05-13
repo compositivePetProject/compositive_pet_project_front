@@ -198,7 +198,7 @@ function CommunityBoardDetailPage(props) {
       mutationFn: putCommunityBoardRequest,
       onSuccess: response => {
         alert("게시글 수정이 완료 되었습니다.")
-        window.location.replace("/community/getboards?page=1");
+        window.location.reload();
       },
       onError: error => {
         alert('오류')

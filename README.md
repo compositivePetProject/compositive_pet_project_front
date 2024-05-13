@@ -1,38 +1,37 @@
 
 # 🔖 목차
 
-> ## [✨ 프로젝트 소개](#-프로젝트-소개)
+> ## ✨[프로젝트 소개](#-프로젝트-소개)
 >
-> ## [👥 팀원 소개](#-팀원-소개)
+> ## 👥[팀원 소개](#-팀원-소개)
 >
-> ## [💼 역할 분담](#-역할-분담)
+> ## 💼[역할 분담](#-역할-분담)
 >
-> ## [🤝 협업 방식](#-협업-방식)
+> ## 🤝[협업 방식](#-협업-방식)
 >
-> ## [📚 프로젝트 진행 상황 관리](#-프로젝트-진행-상황-관리)
+> ## 📚[프로젝트 진행 상황 관리](#-프로젝트-진행-상황-관리)
 >
-> ## [🔍 브랜치 전략](#-브랜치-전략)
+> ## 🔍[브랜치 전략](#-브랜치-전략)
 >
-> ## [✔ 컨벤션](#-컨벤션)
+> ## ✔[컨벤션](#-컨벤션)
 >
-> ## [🛠 개 발 도구](#-개발-도구)
+> ## ⚙️[배포](#-배포)
 >
-> ## [📆 프로젝트 일정](#-프로젝트-일정)
+> ## 🛠[개발 도구](#-개발-도구)
 >
-> ## [📄 API 명세서&ERD 설계도](#-API-명세서&ERD-설계도)
+> ## 📆[프로젝트 일정](#-프로젝트-일정)
 >
-> ## [📋 메뉴 구조도](#-메뉴-구조도)
+> ## 📄[API 명세서&ERD 설계도](#-API-명세서&ERD-설계도)
 >
-> ## [🖥 화면 구현](#-화면-구현)
+> ## 📋[메뉴 구조도](#-메뉴-구조도)
 >
-> ## [💡 느낀점](#-느낀점)
+> ## 🖥[화면 구현](#-화면-구현)
+>
+> ## 💡[느낀점](#-느낀점)
 
-<br/>
-<br/>
 
 ## ✨ 프로젝트 소개
 - 애완동물을 키우는 사람들에게 유용한 기능을 제공하는 애완 커뮤니티 개발
-
 ### 🌟 제목
 - Pet Community(애완인 프로젝트)
 ### 🚀 목적
@@ -43,11 +42,10 @@
 - 팀원 4명
 ### 📆 제작 기간
 -   2024.04.01 ~ 2024.05.17
-
 ### 🔎 주요 기능
 
-
 ## 👥 팀원 소개
+
 
 ## 💼 역할 분담
 <h3> 🐉 팀장: 도경록 </h3>
@@ -76,20 +74,55 @@
 <h3> 팀원: 서창현 </h3>
 
 ### 🔧 Back-End
+- 회원가입/로그인
+- Oauth2 소셜 로그인/회원가입
+- 쇼핑몰 사용자 CRUD
+- 쇼핑몰 사용자 리뷰 CRUD
+- 마이페이지 회원 정보 CRUD
 
 ### 🖥 Front-End
+- 회원가입/로그인 페이지
+- 마이페이지 사용자 정보 페이지
+- Kakao Map 지도 페이지
+- Kakao Pay 결제 페이지
+- 쇼핑몰 사용자 페이지
+
+### etc.
+- 전체적인 코드 Refactoring
+- 전체적인 페이지 CSS 디자인
 
 <h3> 팀원: 권기범 </h3>
 
 ### 🔧 Back-End
+- 분양 게시판 커뮤니티 CRUD
+- 분양 게시판 좋아요
+- 분양 게시판 댓글 CRUD
 
 ### 🖥 Front-End
+- 분양 게시판 정보 페이지
+- 분양 게시판 상세 페이지
+- 분양 게시판 작성 페이지
+- 분양 게시판 댓글 페이지
+
+### etc.
+- 프로젝트 보고서 담당
 
 <h3> 팀원: 이평원 </h3>
 
 ### 🔧 Back-End
+- 게시판 커뮤니티 CRUD
+- 게시판 좋아요
+- 게시판 댓글 CRUD
 
 ### 🖥 Front-End
+- 게시판 정보 페이지
+- 게시판 상세 페이지
+- 게시판 작성 페이지
+- 게시판 댓글 페이지
+
+### etc.
+- Api 명세서, ERD 명세서 담당
+- PPT 제작
 
 <br/>
 <br/>
@@ -108,14 +141,10 @@
 *   컨펌 담당
     -   창현 : <code>경록</code>
     -   기범 : <code>경록</code>
-    -   평원 : <code>경록</code>
+    -   평원 : <code>창현</code>
 
 5. PR이 merge되어 close 되면 해당 이슈는 자동으로 Done상태로 변경됩니다.
-
-<p align="right" dir="auto">
-<a href="">TOP 🔼</a>
 </p>
-
 <br/>
 <br/>
 
@@ -127,9 +156,6 @@
 -   <a href="https://github.com/orgs/compositivePetProject/projects/8">📁 GitHub Projects(Front) & </a>
     <a href="https://github.com/orgs/compositivePetProject/projects/7">GitHub Project(back)</a>
     -   칸반 보드로 프로젝트 진행 상황을 한 눈에 확인할 수 있어 일정을 관리하기 수월했습니다.
-
-<p align="right" dir="auto">
-<a href="">TOP 🔼</a>
 </p>
     
 <br/>
@@ -144,10 +170,6 @@
 -   프로젝트 기간 동안 팀원들이 같은 시간에 작업하기 때문에 잦은 충돌이 발생할 것을 우려하여 충돌의 크기를 줄이고자 GitHub Flow 전략을 채택하여 작은 단위로 이슈를 쪼개 이슈 별로 브랜치를 분기하고 main 브랜치에 지속적으로 merge 하는 방식으로 진행했습니다.
 
 -   기본적으로 master branch에 대한 규칙만 정확하게 정립되어 있다면 나머지 가지들에 대해서는 특별한 관여를 하지 않으며 pull request기능을 사용하도록 권장하였습니다.
-
-<p align="right" dir="auto">
-<a href="">TOP 🔼</a>
-</p>
 
 <br/>
 <br/>
@@ -189,10 +211,7 @@
 ⏺️ 5. 자신의 코드가 직관적으로 바로 파악할 수 있다고 생각하지 말자
 
 👆 6. 여러가지 항목이 있다면 글머리 기호를 통해 가독성 높이기
-
-</p>
-</pre>
-</div>
+</p></pre></div>
 
 <h3>
 <a href="">📍 코드 컨벤션</a>
@@ -258,9 +277,13 @@
 </pre>
 </div>
 
-<p align="right" dir="auto">
-<a href="https://github.com/Novel-Ideas/gumeonggage-front">TOP 🔼</a>
 </p>
+
+<br/>
+<br/>
+
+## ⚙️ 배포
+### 무중단 배포
 
 <br/>
 <br/>
@@ -279,10 +302,11 @@
 ### 2. Front-End
 
 <p>
-<img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=JAVASCRIPT&logoColor=black"/>
+<img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=JAVASCRIPT&logoColor=white"/>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTMl5&logoColor=white"/>
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/>
+<img src="https://img.shields.io/badge/kakao-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"/>
 </p>
 
 ### 3. Database
@@ -295,6 +319,11 @@
 <img src="https://img.shields.io/badge/Git-181717?style=for-the-badge&logo=Git&logoColor=white"/>
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+<img src="https://img.shields.io/badge/maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white">
+<img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
+<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"/>
+<img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=SpringBoot&logoColor=white"/>
+<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white"/>
 </p>
 
 ### 5. Library
@@ -327,7 +356,7 @@
 | spring-boot-devtools                | 빠른 재시작                           |
 | mysql-connector-java                | DB인 MySQL과 연결                     |
 | jjwt-api / jjwt-impl / jjwt-jackson | JWT(JSON Web Token) 활용              |
-| spring-boot-starter-oauth2-client   | Oauth2 인증                           |
+| spring-boot-starter-oauth2-client   | Oauth2 인증(Naver, Kakao, Google)                           |
 | spring-boot-starter-aop             | spring aop 적용                       |
 | spring-boot-starter-thymeleaf       | 동적인 화면 생성의 역할               |
 
@@ -353,6 +382,8 @@
 | sweetalert2                                                                 | 알림창 구현                                |
 | uuid                                                                        | 고유 아이디 값을 생성하는 함수 제공        |
 | web-vitals                                                                  | 사용자의 웹 바이탈 항목 측정               |
+react-kakao-maps-sdk| 카카오 지도 API |
+react-modal| 모달 구현 역할 |
 
 ## 📄 API 명세서&ERD 설계도
 ### 🛰 API 명세서
@@ -363,14 +394,29 @@
 ## 🖥 화면 구현
 
 ## 💡 느낀점
-
-
 ### 도경록
 - 팀 프로젝트에서 팀장으로 참여하면서 프로젝트의 전반적인 이해도를 갖추며 팀원들의 작업 분담 및 개발 프로세스의 원할한 진행을 위한 커뮤니케이션의 중요성에 생각해 보게 되었습니다. 이러한 과정에서 발생하는 다양한 이슈들을 효과적으로 관리하고 해결하기 위해 팀원들과 지속적으로 소통하고 협력하였습니다. 이를 통해 커뮤니케이션의 중요성과 효과적인 의사소통이 팀의 성과에 큰 영향을 미치는 것을 몸소 체험하였습니다.
 - 개발 간 코드의 유지보수성과 확장성을 향상시키는 모듈화 및 클린코드에 대해 깊이 생각해보게 되는 경험이 되었고, 다음 프로젝트 때에는 더 효율적인 코드작성으로 개발자로써의 역량을 더욱 높이겠다는 다짐을 하였습니다.
+- 이번 프로젝트에서 관리자의 쇼핑몰 재고관련 기능을 담당하여 코드 로직을 구성하면서 개발 역량 이외에도 프로젝트 주제에 관련한 여러 배경지식들에 대한 공부들도 필요하다고 느꼈습니다.
 ---
 
 ### 서창현
+- 팀 프로젝트를 진행하면서 개인 프로젝트와는 많은 차이를 느꼈습니다. 저희 팀은 효율성을 중시하여 커뮤니티, 분양 커뮤니티, 쇼핑몰, 
+그리고 쇼핑몰 관리자 페이지와 DB를 기준으로 철저한 분업을 진행했습니다.
+이런 분업은 맡은 기능에 대한 전문성을 강화하고 책임감과 의욕을 불러일으키는 데 큰 장점이 있었지만, 
+팀원 간의 소통 부재는 코드 리뷰나 피드백 주고받는 과정에서 지식 공유의 시간을 줄여 협업의 가장 큰 장점인 집단지성을 활용하지 못하는 결과를 낳았습니다. 
+이를 통해 주기적인 미팅과 코드 리뷰, 그리고 다른 협업 규칙의 중요성을 깨닫게 되었습니다. 
+더불어, 비록 사소해 보이는 루틴이더라도 개개인이 이러한 체계를 지키려는 노력이 중요하다는 것을 깨달았습니다.
+
+- 이번 프로젝트에서는 이전에 배우지 않았던 라이브러리인 react-kakao-maps-sdk와 recharts를 도입했습니다. 새로운 기술을 익히고 적용하는 과정은 쉽지 않았지만, 
+이를 통해 프로젝트의 품질을 높이는 데에 성취감을 느낄 수 있었습니다. 또한, 쇼핑몰에서 사진을 확대하는 기능을 추가하는 것이 쉽지 않았습니다. 
+특히 마우스의 위치에 맞춰 확대되는 화면의 타겟 위치를 정확히 맞추는 것이 어려웠습니다.
+ 그러나 문제에 직면하여 차분히 고민하고 단계적으로 해결 방법을 정리한 뒤, 필요한 함수와 기능을 학습하고 코드로 구현하는 데에 성공했습니다. 
+이러한 경험을 통해 어떤 어려움이라도 극복할 수 있는 믿음과 자신감을 얻게 되었습니다.
+
+- 게시판에서 분양 게시판과 커뮤니티 게시판의 Top3을 조회할 때, 데이터 양이 증가함에 따라 DB 조회 성능 문제가 발생했다. 
+이는 두 가지 주요 원인으로 나타났다. 첫 번째로는 너무 많은 테이블 조인이 있었고, 두 번째로는 중복 제거를 위해 사용한 DISTINCT 문이 데이터 양이 증가함에 따라 성능을 저하시켰다. 
+이러한 문제를 해결하면서 객체지향 프로그래밍(OOP), 개발 언어 및 SQL의 기본 개념, 클린 코드 작성, 알고리즘과 자료구조에 대한 공부의 중요성을 깨달았다.
 
 ---
 
@@ -381,4 +427,10 @@
 ---
 
 ### 이평원
+- 이번 프로젝트를 하면서 제가 부족한 능력이 무엇인지 다시한번 현실적으로 깨닫고 앞으로 다른 프로젝트를 준비하면서 생각나게 될 가장 큰 동기부여가 되는 것 같았습니다 . 프로젝트를 수행하면서 커뮤니티 게시판 기능 CRUD를 개발하면서 능력이 부족한데가 진도가 굉장히 느려 기획하고자 했던 다른 기능들을 구현하지 못했습니다.  다른 프로젝트 담당 업무를 수행하는 팀원들에게 많은 미안함이 느껴졌습니다. 
+
+- 팀장님과 부팀장님께서 가이드라인을 만들어주시면서 제가 담당하는 커뮤니티 게시판의 코드 작성 절차와 코드를 개발하면서 어떤식으로 코드를 짜야하는지 유의사항을 알려주었습니다. 어떻게든 프로젝트를 마무리까지 이끌어준 팀장님과 부팀장, 그리고 팀원분께 정말 감사드립니다. 
+
+- 이번 프로젝트 과정의 경험을 통하며 취업을 위해 개인 프로젝트를 준비를 하면서 제가 부족한 능력을 다시 채우고 만약 다른 팀 프로젝트를 수행할 시 이번 프로젝트를 경험을 토대로  내가 담당받은 업무를 성실히 수행을 할 것 같습니다. 
+
 

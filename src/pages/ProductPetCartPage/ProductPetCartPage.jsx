@@ -197,11 +197,11 @@ function ProductPetCartPage(props) {
                                 checked={productCart.checked} 
                                 onChange={handleCheckOnChange}
                             />
-                            <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>
+                            <div css={s.imgBox} onClick={() => navigate(`/product/pet/detail/?productId=${productCart.productId}`)}>
                                 <img src={productCart.productImageUrl} alt="" />
                             </div>
                             <div css={s.container4}>
-                                <div onClick={() => navigate(`/product/pet/detail/${productCart.productId}/?productId=${productCart.productId}`)}>{productCart.productNameKor}</div> 
+                                <div onClick={() => navigate(`/product/pet/detail/?productId=${productCart.productId}`)}>{productCart.productNameKor}</div> 
                                 <div>{parseInt(productCart.productPrice * productCart.productCartCount)}원</div>
                                 <div css={s.productDeliveryBox}>
                                     <button onClick={() => {

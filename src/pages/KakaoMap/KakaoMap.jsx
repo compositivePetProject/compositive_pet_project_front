@@ -173,7 +173,7 @@ function KakaoMap() {
             </div>
             <div css={s.listContainer}>
                 {markers.map((marker, index) => (
-                    <div key={index} css={s.listItem} onMouseOver={() => handleMarkeronMouseOver(marker, index)} onClick={() => ref.current.click()}>
+                    <div key={index} css={s.listItem} onMouseOver={() => handleMarkeronMouseOver(marker, index)} onClick={() => handleMarkerClick(marker.place_url)}>
                         <div>{marker.content}</div>
                         <div>{marker.road_address_name}</div>
                         <div> 

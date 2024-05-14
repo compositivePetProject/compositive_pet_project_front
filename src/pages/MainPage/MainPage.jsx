@@ -153,7 +153,7 @@ function MainPage(props) {
               {/* 분양 */}
               <div css={s.communityContainer}>
                   <div>분양게시판 Top3</div>
-                  <div onClick={() => navigate("/ex/adoptcommunity?page=1")}>더보기</div>
+                  <div onClick={() => navigate("/adoptcommunity?page=1")}>더보기</div>
               </div>
               <div css={s.detailContainer}>
                 {/* 반복문 돌릴 예정 (미완)*/}

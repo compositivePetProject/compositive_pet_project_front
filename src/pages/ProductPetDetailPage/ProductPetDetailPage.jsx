@@ -220,7 +220,7 @@ function ProductPetDetailPage() {
         postProductCartAddQuery.mutate({
             userId: userId,
             productId: productId,
-            productSizeCategoryId: selectedSizeType.option?.value,
+            productSizeCategoryId: selectedSizeType.option,
             productCartCount : productOrderCount
         })
     }

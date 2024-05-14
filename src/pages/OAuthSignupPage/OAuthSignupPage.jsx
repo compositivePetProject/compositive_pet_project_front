@@ -33,7 +33,7 @@ function OAuthSignupPage() {
         mutationFn: oAuth2SignupRequest,
         onSuccess: response => {
             alert("가입이 완료되었습니다.")
-            navigate("/auth/sign-in");
+            navigate("/auth/authentication");
         },
         onError: error => {
             if(error.response.status === 400) {

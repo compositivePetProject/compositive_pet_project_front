@@ -181,6 +181,30 @@ export const productDeliveryBox = css`
     }
 `;
 
+export const selectedSizeTypeOnBox = css`
+    box-sizing: border-box;
+    display: flex;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 32px;
+        background-color: #ffffff;
+        border: 1px solid rgba(16, 16, 16, 0.3);
+    }
+    
+    & > button {
+        width: 34px;
+        height: 34px;
+        background-color: rgb(241, 242, 244);
+        border: 1px solid rgba(16, 16, 16, 0.3);
+        cursor: pointer;
+        padding: 0px 10px;
+    }
+`;
+
 
 
 

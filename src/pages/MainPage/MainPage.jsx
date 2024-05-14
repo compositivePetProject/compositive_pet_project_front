@@ -95,7 +95,7 @@ function MainPage(props) {
 
 
     const handleOnClick = (board) => {
-      navigate(`/ex/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
+      navigate(`/adoptcommunity/detail?boardid=${board.adoptationBoardId}`)
     }
 
     useEffect(() => {

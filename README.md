@@ -70,22 +70,28 @@
 - 전체적인 코드 Refactoring
 - 전체적인 페이지 CSS 디자인
 - 프로젝트 최종 발표발표
+- DB 설계
 
 <h3> 팀원: 서창현 </h3>
 
 ### 🔧 Back-End
 - 회원가입/로그인
-- Oauth2 소셜 로그인/회원가입
-- 쇼핑몰 사용자 CRUD
-- 쇼핑몰 사용자 리뷰 CRUD
+- OAuth2 소셜 로그인/회원가입
 - 마이페이지 회원 정보 CRUD
+- 쇼핑몰 사용자 주문 CRUD
+- 쇼핑몰 사용자 장바구니 CRUD
+- 쇼핑몰 사용자 리뷰 및 별점 CRUD
+- 쇼핑몰 좋아요 (오름차순, 내림차순 정렬)
 
 ### 🖥 Front-End
 - 회원가입/로그인 페이지
 - 마이페이지 사용자 정보 페이지
+- 메인페이지 자동 슬라이싱
+- 쇼핑몰 사용자 페이지
+- 쇼핑몰 장바구니 페이지
+- 쇼핑몰 상세페이지 사진 확대 기능
 - Kakao Map 지도 페이지
 - Kakao Pay 결제 페이지
-- 쇼핑몰 사용자 페이지
 
 ### etc.
 - 전체적인 코드 Refactoring
@@ -387,11 +393,125 @@ react-modal| 모달 구현 역할 |
 
 ## 📄 API 명세서&ERD 설계도
 ### 🛰 API 명세서
+### 사용자 관련 API
+![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3aee6468-6b99-447e-aca5-305c3acf567e)
+![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c0362e07-83c5-459d-999b-a3bcb9eacc65)
+![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/58d7c496-85ff-4dda-9e36-a195dc2984bb)
+![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/064a2aa4-85a6-4251-b0ee-1cf40246af93)
+### 관리자 관련 API
+![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/7720be4f-c156-4d58-99d0-a83a1b10fcca)
+
 ### 📐 ERD 설계도
+### 메인 ERD
+![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c801a0ff-7d47-47dd-9575-d18b380a7062)
+### 쇼핑몰 사용자 & 관리자 ERD
+![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/6d0b087e-9c72-464c-9f4e-000d6512dbba)
+![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/8aae4322-5ed7-4465-9026-a9313bd69d9a)
+### 분양 게시판 ERD
+![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/fc913ef8-ddc1-469a-b09e-6df0da7479e0)
+### 커뮤니티 게시판 ERD
+![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/2a082a4b-d374-42de-affc-dc0784735860)
 
 ## 📋 메뉴 구조도
 
 ## 🖥 화면 구현
+### 로그인/회원가입 페이지
+#### 일반 로그인/회원가입 페이지
+![일반 회원가입 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c3087c7a-fa9b-4739-93e8-e039ed5053d0)
+![일반 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/a0ca9483-b0f4-4ee9-a6db-06305fff9fa1)
+
+#### OAuth2 소셜 로그인/회원가입 페이지(구글)
+![구글 회원가입 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/cb8ae8e7-c641-4f50-831e-60985d8748f9)
+![구글 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/2af6215a-1605-42cb-b920-1bf2d24fc421)
+![구글 이미 회원인 사용자 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/79acd74a-92fd-4d4d-b248-fe7ac2ea8814)
+
+#### OAuth2 소셜 로그인/회원가입 페이지(카카오)
+![카카오 회원가입 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/ea9d372e-ae02-4d15-a552-810ae98becc8)
+![카카오 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/61b6bbae-533d-4356-b576-32af69b5fc50)
+![카카오 이미 회원인 사용자 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/0e2e210e-c278-4633-8fde-f05fe3d1b407)
+
+#### OAuth2 소셜 로그인/회원가입 페이지(네이버)
+![네이버 회원가입 영상](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/0102cdbf-4b4e-4db5-833c-203006beaf90)
+![네이버 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/68110d6f-eff0-4a04-a8ab-0894819f533b)
+![네이버 이미 회원인 사용자 로그인 영상](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/6e75d112-1dd6-4700-9d6b-7b5eba69c9f4)
+
+### 지도 페이지
+#### 카카오 지도 API를 이용한 주변 애완업 관련 업체 검색 페이지
+![지도 영상](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/0d82ffdc-a6ca-489b-8454-4e131e0cfda0)
+
+### 메인 페이지
+#### 여러 컨텐츠들을 간략적으로 보여주는 메인 페이지
+![메인페이지 수정본](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3be15e32-165d-44ba-aeb7-e67a2488ac7d)
+
+### 쇼핑몰 페이지
+#### 쇼핑몰 리스트 페이지
+![쇼핑몰 리스트 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3be15e32-165d-44ba-aeb7-e67a2488ac7d)
+#### 쇼핑몰 리스트 카테고리 조회 페이지
+![쇼핑몰 리스트 카테고리 조회 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/f1ad2359-1803-4e4b-a5b5-0de391d75fd5)
+#### 쇼핑몰 상품 상세 페이지
+![쇼핑몰 상품 상세 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/29bfeb28-e3f9-49d5-bc2a-cd9c95762034)
+#### 쇼핑몰 상품 결제 페이지
+![쇼핑몰 상품 결제 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/9018bf26-3a39-4a77-b9ad-f26d3acf20ef)
+#### 쇼핑몰 장바구니 추가 및 결제 페이지
+![쇼핑몰 장바구니 추가 및 결제 페이지1](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/484c6da3-7b5d-4713-9662-7e9c8dfbe8c3)
+![쇼핑몰 장바구니 추가 및 결제 페이지2](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3aada6c1-51dd-4317-bc04-24f3edbe1468)
+![쇼핑몰 장바구니 추가 및 결제 페이지3](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/317470a2-ff34-478e-9e54-75a1d994ffd0)
+![쇼핑몰 장바구니 추가 및 결제 페이지4](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/9ac04641-008e-4d67-b084-ea1da7d11a16)
+![쇼핑몰 장바구니 추가 및 결제 페이지5](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/aebec7ea-023e-4255-a03a-8944f4e7f7f3)
+#### 쇼핑몰 관리자 상품 관리 페이지
+![쇼핑몰 관리자 상품 관리 페이지1](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/8f5e3bc0-6505-4a36-9620-ff3ac98e2345)
+![쇼핑몰 관리자 상품 관리 페이지2](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3c9b67b5-758e-4c49-918e-677d89503052)
+![쇼핑몰 관리자 상품 관리 페이지3](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/d1d340a4-0324-42c2-b9f4-0f90228ed578)
+#### 쇼핑몰 관리자 재고 관리 페이지
+![쇼핑몰 관리자 재고 관리 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/29b822df-2fee-428d-9842-0db5be5f11ef)
+#### 쇼핑몰 관리자 가입고 관리 페이지
+![쇼핑몰 관리자 가입고 관리 페이지1](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/84e8510c-c7d1-41ea-830a-ad37b4480968)
+![쇼핑몰 관리자 가입고 관리 페이지2](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c358da59-d87a-49cd-aea2-20350f7e9be9)
+![쇼핑몰 관리자 가입고 관리 페이지3](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/49c50f01-c318-4570-b063-2ab935f6f441)
+![쇼핑몰 관리자 가입고 관리 페이지4](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/9903d746-458a-42ee-bba1-a590f5721b4c)
+#### 쇼핑몰 관리자 출고 관리 페이지
+![쇼핑몰 관리자 출고 관리 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/2d91bc0a-1fd6-4bf4-9277-124713920fc7)
+#### 쇼핑몰 관리자 주문 관리 페이지
+![쇼핑몰 관리자 주문 관리 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/816c1d77-6929-4876-a67d-0c4dfcccc40d)
+
+### 분양 커뮤니티 게시판 페이지
+#### 분양 커뮤니티 리스트 페이지
+![분양 커뮤니티 리스트 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/e2be0f1d-59f0-47bd-9bc1-854a9655bbea)
+#### 분양 커뮤니티 상세 페이지
+![분양 커뮤니티 상세 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/44b07403-db79-44b8-a2f4-60f2d199b51b)
+#### 분양 커뮤니티 상세 댓글 관련 페이지
+![분양 커뮤니티 상세 댓글 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/0e10e5fa-3a55-45ec-8341-64ebd9474e2f)
+#### 분양 커뮤니티 게시글 작성 페이지
+![분양 커뮤니티 게시글 작성 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/0877c97b-6ce9-4189-bb95-d137320b56b1)
+
+### 커뮤니티 게시판 페이지
+#### 커뮤니티 리스트 페이지
+![커뮤니티 리스트 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/e8baab06-2d1c-491c-a1c9-c5279c80a336)
+#### 커뮤니티 리스트 상세 페이지
+![커뮤니티 리스트 상세 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/ce80ba90-cfe7-424e-82ef-6da0d78d5d0d)
+#### 커뮤니티 리스트 상세 댓글 관련 페이지
+![커뮤니티 리스트 상세 댓글 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/32ce8e26-0c7b-4ae6-bd8a-edb3006df10c)
+#### 커뮤니티 리스트 게시글 작성 페이지
+![커뮤니티 리스트 게시글 작성 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/bd474bf5-aa94-49b5-9cc6-3590d0b014ac)
+
+### 마이페이지
+#### 사용자 정보 수정 관련 페이지
+![사용자 정보 수정 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/520ecc86-7932-447f-8843-56d3ce89d4b3)
+![사용자 정보 수정 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c51fc0c2-cdcd-45dd-b281-c5b1efb99a40)
+#### 사용자 주문 내역 및 장바구니 관련 페이지
+![사용자 주문 내역 및 장바구니 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/f4a3c45c-876a-4eac-894f-72e8fe7ba8bd)
+#### 사용자 리뷰 관리 관련 페이지
+![사용자 리뷰 관리 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/23b2aae5-342d-41da-9cbf-276ab11958b6)
+#### 사용자 커뮤니티 게시판 관련 페이지
+![사용자 커뮤니티 게시판 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/ff005e94-d1af-4879-a90f-21076d4e0937)
+#### 사용자 분양 커뮤니티 게시판 관련 페이지
+![사용자 분양 커뮤니티 게시판 관련 페이지](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/c9115efe-90d5-4c38-a9e6-5c743b826e84)
+
+### etc
+#### 퀵메뉴
+![퀵메뉴](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/50a2d6cd-a1d2-4b03-9255-e0decd69d91d)
+#### 비로그인 제어
+![비로그인 제어](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/fb8fd44c-959c-4d1f-b2aa-6fe324c3264d)
 
 ## 💡 느낀점
 ### 도경록

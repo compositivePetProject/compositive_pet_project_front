@@ -21,7 +21,7 @@
 >
 > ## 📆[프로젝트 일정](#-프로젝트-일정)
 >
-> ## 📄[API 명세서&ERD 설계도](#-API-명세서&ERD-설계도)
+> ## 📄[API 명세서&ERD 설계도](#-API-명세서-ERD-설계도)
 >
 > ## 📋[메뉴 구조도](#-메뉴-구조도)
 >
@@ -390,6 +390,7 @@
 | web-vitals                                                                  | 사용자의 웹 바이탈 항목 측정               |
 react-kakao-maps-sdk| 카카오 지도 API |
 react-modal| 모달 구현 역할 |
+react-daum-postcode | 다음 주소 API |
 
 ## 📄 API 명세서&ERD 설계도
 ### 🛰 API 명세서

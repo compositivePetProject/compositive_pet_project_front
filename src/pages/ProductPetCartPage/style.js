@@ -67,9 +67,10 @@ export const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 120px;
-    border-radius: 5px;
+    width: 90px;
+    height: 100px;
+    border-radius: 8px;
+    margin-top: 10px;
     overflow: hidden;
     cursor: pointer;
     & > img {
@@ -111,6 +112,31 @@ export const productDeliveryBox = css`
         font-size: 17px;
     }
 `;
+
+export const selectedSizeTypeOnBox = css`
+    box-sizing: border-box;
+    display: flex;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 32px;
+        background-color: #ffffff;
+        border: 1px solid rgba(16, 16, 16, 0.3);
+    }
+    
+    & > button {
+        width: 34px;
+        height: 34px;
+        background-color: rgb(241, 242, 244);
+        border: 1px solid rgba(16, 16, 16, 0.3);
+        cursor: pointer;
+        padding: 0px 10px;
+    }
+`;
+
 
 export const buttons3 = css`
     width: 200px;

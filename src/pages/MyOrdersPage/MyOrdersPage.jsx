@@ -237,7 +237,8 @@ function MyOrdersPage(props) {
                                             onChange={selectedSizeType.handleOnChange}
                                         />
                                     </div>
-                                    <div css={s.productDeliveryBox}>
+
+                                    <div css={s.selectedSizeTypeOnBox}>
                                         <button onClick={() => {
                                                         if (productOrderCount > 1) {
                                                             setProductOrderCount(productOrderCount - 1);
@@ -247,6 +248,16 @@ function MyOrdersPage(props) {
                                         <div>{productOrderCount}</div>
                                         <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
                                     </div>
+                                    {/* <div css={s.productDeliveryBox}>
+                                        <button onClick={() => {
+                                                        if (productOrderCount > 1) {
+                                                            setProductOrderCount(productOrderCount - 1);
+                                                        }
+                                                    }}><FaMinus />
+                                        </button>
+                                        <div>{productOrderCount}</div>
+                                        <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
+                                    </div> */}
                                     <AuthPageInput value={productOrderAddress} onChange={productOrderAddressOnChege} placeholder="배송지를 입력해주세요" message={productOrderAdderssMessage}/>
                                     <AuthPageInput value={productOrderDetailAddress} onChange={productOrderDetailAddressOnChege} placeholder="상세주소를 입력해주세요" message={productOrderDetailAdderssMessage}/>
                                     <div>   

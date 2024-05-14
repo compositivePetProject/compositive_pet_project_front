@@ -203,7 +203,7 @@ function ProductPetCartPage(props) {
                             <div css={s.container4}>
                                 <div onClick={() => navigate(`/product/pet/detail/?productId=${productCart.productId}`)}>{productCart.productNameKor}</div> 
                                 <div>{parseInt(productCart.productPrice * productCart.productCartCount)}원</div>
-                                <div css={s.productDeliveryBox}>
+                                <div css={s.selectedSizeTypeOnBox}>
                                     <button onClick={() => {
                                             const updatedCount = Math.max(productCart.productCartCount - 1, 1); 
                                             setProductCartList(productCartList => 
@@ -229,6 +229,17 @@ function ProductPetCartPage(props) {
                                     }}>
                                         <FaPlus />
                                     </button>
+
+                                    {/* <div css={s.selectedSizeTypeOnBox}>
+                                        <button onClick={() => {
+                                                        if (productOrderCount > 1) {
+                                                            setProductOrderCount(productOrderCount - 1);
+                                                        }
+                                                    }}><FaMinus />
+                                        </button>
+                                        <div>{productOrderCount}</div>
+                                        <button onClick={() => setProductOrderCount(productOrderCount + 1)}><FaPlus /></button>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>                       

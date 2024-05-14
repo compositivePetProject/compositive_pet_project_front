@@ -392,7 +392,7 @@ react-kakao-maps-sdk| 카카오 지도 API |
 react-modal| 모달 구현 역할 |
 react-daum-postcode | 다음 주소 API |
 
-## 📄 API 명세서&ERD 설계도
+## 📄 API 명세서 ERD 설계도
 ### 🛰 API 명세서
 ### 사용자 관련 API
 ![API 명세서](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/3aee6468-6b99-447e-aca5-305c3acf567e)

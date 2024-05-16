@@ -10,6 +10,7 @@ import { GrFormView } from "react-icons/gr";
 import BoardCommentBox from "../../../components/BoardCommentBox/BoardCommentBox";
 import { LiaCommentAltSolid } from "react-icons/lia";
 import { IoMdHeart } from "react-icons/io";
+import getServerAddress from "../../../constants/serverAddress";
 
 function AdoptCommunityBoardDetailPage() {
   const [ likedUsers, setLikedUsers] = useState([]);
@@ -195,7 +196,7 @@ function AdoptCommunityBoardDetailPage() {
           setSearchParams(params);
         } else {
           alert("로그인 후 사용이 가능한 서비스 입니다.")
-          window.location.replace("http://localhost:3000/auth/authentication");
+          window.location.replace(`http://${getServerAddress()}/auth/authentication`);
         }
       }
     } else {

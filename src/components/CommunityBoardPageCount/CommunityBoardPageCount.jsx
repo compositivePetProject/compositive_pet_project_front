@@ -2,6 +2,7 @@
 import * as s from "./style";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import getServerAddress from "../../constants/serverAddress";
 
 function CommunityBoardPageCount({boardCount, path}) {
     const [ searchParams ] = useSearchParams();
@@ -9,7 +10,7 @@ function CommunityBoardPageCount({boardCount, path}) {
     const [ numbers, setNumbers ] = useState([]);
     const maxPageNumber = boardCount?.maxPageNumber || 1;
 
-
+    
     useEffect(() => {
         const startPageNumber = page % 5 === 0 ? page - 4 : (page - (page % 5)) + 1;
         const endPageNumber = startPageNumber + 4 > maxPageNumber ? maxPageNumber : startPageNumber + 4;
@@ -29,19 +30,19 @@ function CommunityBoardPageCount({boardCount, path}) {
                     page !== 1 &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`http://localhost:3000/community${path}?page=${page - 1}`}
+                        to={`http://${getServerAddress()}/community${path}?page=${page - 1}`}
                     >&#60;</Link>
                 }
                 {
                     numbers.map(number =>
-                        <Link key={number} css={s.pageButton(number === page)} to={`http://localhost:3000/community${path}?page=${number}`}>{number}</Link>
+                        <Link key={number} css={s.pageButton(number === page)} to={`http://${getServerAddress()}/community${path}?page=${number}`}>{number}</Link>
                     )
                 }
                 {
                     page !== maxPageNumber &&
                     <Link 
                         css={s.pageButton(false)}
-                        to={`http://localhost:3000/community${path}?page=${page + 1}`}
+                        to={`http://${getServerAddress()}/community${path}?page=${page + 1}`}
                     >&#62;</Link>
                 }
             </div>

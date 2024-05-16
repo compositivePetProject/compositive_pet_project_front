@@ -10,6 +10,7 @@ import AdoptationPageNumbersUser from "../../components/AdoptationPageNumbersUse
 import MyPageSideBar from "../../components/MyPageSideBar/MyPageSideBar";
 import MyBoardBox from "../../components/MyBoardBox/MyBoardBox";
 import { TfiWrite } from "react-icons/tfi";
+import getServerAddress from "../../constants/serverAddress";
 
 
 function MyAdoptList(props) {
@@ -72,7 +73,7 @@ function MyAdoptList(props) {
         mutationFn: deleteAdoptBoardById,
         onSuccess: (response) => {
             alert("해당 게시물이 삭제되었습니다");
-            window.location.replace("http://localhost:3000/account/mypage/Adopt?page=1");
+            window.location.replace(`http://${getServerAddress()}/account/mypage/Adopt?page=1`);
         },
         onError: (error) => {
             alert("오류");

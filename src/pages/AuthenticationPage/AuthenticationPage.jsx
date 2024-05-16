@@ -13,6 +13,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import { v4 as uuid } from "uuid";
 import DaumPostcode from "react-daum-postcode";
 import ReactModal from 'react-modal';
+import getServerAddress from "../../constants/serverAddress";
 
 function AuthenticationPage() {
     const fileRef = useRef();
@@ -267,13 +268,13 @@ function AuthenticationPage() {
                                     계정이 없으신가요? <span onClick={() => setAuthState(2)}>회원가입</span>
                                 </div>
                                 <div css={s.oauth}>
-                                    <a href="http://localhost:8080/oauth2/authorization/google">
+                                    <a href={`http://${getServerAddress()}/oauth2/authorization/google`}>
                                         <img src="https://d1nuzc1w51n1es.cloudfront.net/d99d8628713bb69bd142.png" alt="google"/>
                                     </a>
-                                    <a href="http://localhost:8080/oauth2/authorization/kakao">
+                                    <a href={`http://${getServerAddress()}/oauth2/authorization/kakao`}>
                                         <img src="https://d1nuzc1w51n1es.cloudfront.net/c9b51919f15c93b05ae8.png" alt="kakao"/>
                                     </a>
-                                    <a href="http://localhost:8080/oauth2/authorization/naver">
+                                    <a href={`http://${getServerAddress()}/oauth2/authorization/naver`}>
                                         <img src="https://d1nuzc1w51n1es.cloudfront.net/6e4f331986317290b3ee.png" alt="naver"/>
                                     </a>
                                 </div>

@@ -11,6 +11,7 @@ import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 import { FaSearch } from "react-icons/fa";
 import TopSelect from "../../components/admin/TopSelect/TopSelect";
 import { adoptBoardAnimalCategoryOptions } from "../../constants/adoptBoardAnimalCategoryOptions";
+import getServerAddress from "../../constants/serverAddress";
 
 
 function ProductPetShoppingPage(props) {
@@ -104,14 +105,14 @@ function ProductPetShoppingPage(props) {
         <div css={s.layout}>
             <div css={s.categoryHeader}>
                 <div css={s.menuList}>
-                    <Link css={s.linkButtons(selectedProductType === 0)} to={"http://localhost:3000/product/pet/shopping?page=1"}
+                    <Link css={s.linkButtons(selectedProductType === 0)} to={`http://${getServerAddress()}/product/pet/shopping?page=1`}
                     onClick={() => setSelectedProductType(0)}>
                     전체
                     </Link>
                     {productTypeOptions.map(option  => 
                         <Link key={option.productType.productCategoryId} 
                                 css={s.linkButtons(selectedProductType === option.productType.productCategoryId)} 
-                                to={`http://localhost:3000/product/pet/shopping?page=1`}
+                                to={`http://${getServerAddress()}/product/pet/shopping?page=1`}
                                 onClick={() => setSelectedProductType(option.productType.productCategoryId)
                                 }
                                 >

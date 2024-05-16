@@ -11,6 +11,7 @@ import { GrFormView } from "react-icons/gr";
 import { LiaCommentAltSolid } from "react-icons/lia";
 import Quill from "../../components/Quill/Quill";
 import BoardCommentBox from "../../components/BoardCommentBox/BoardCommentBox";
+import getServerAddress from "../../constants/serverAddress";
 
 
 function CommunityBoardDetailPage(props) {
@@ -309,7 +310,7 @@ function CommunityBoardDetailPage(props) {
           setSearchParams(params);
         } else {
           alert("로그인 후 사용이 가능한 서비스 입니다.")
-          window.location.replace("http://localhost:3000/auth/authentication");
+          window.location.replace(`http://${getServerAddress()}/auth/authentication`);
         }
       }
     } else {

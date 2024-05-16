@@ -8,6 +8,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { TbLogin, TbLogout } from "react-icons/tb";
 import { adoptCommunityActiveState, communityActiveState, mapActiveState, shopActiveState } from "../../atoms/admin/isButtonSelectedState";
 import { useRecoilState } from "recoil";
+import getServerAddress from "../../constants/serverAddress";
 
 function RootHeader() {
     const [ isHovering, setIsHovering ] = useState(false);
@@ -20,7 +21,7 @@ function RootHeader() {
     const [isAdoptCommunityActive, setAdoptCommunityActive] = useRecoilState(adoptCommunityActiveState);
     const [isShopActive, setShopActive] = useRecoilState(shopActiveState);
     const [isMapActive, setMapActive] = useRecoilState(mapActiveState);
-
+    
     useEffect(() => {
         setLogin(() => principalQueryState.status === "success");
     }, [principalQueryState.status]);
@@ -51,6 +52,8 @@ function RootHeader() {
         setMapActive(false);
         navigate("/account/mypage/profile")
     }
+
+    
 
     const handleMenuClick = (menu, path) => {
         switch(menu) {
@@ -89,7 +92,7 @@ function RootHeader() {
                 <div css={s.headerOut}>
                     <div css={s.header} onMouseLeave={handleSidebarLeave}>
                     <div css={s.logoBox}>
-                        <a css={s.logoButton} href="http://localhost:3000/">
+                        <a css={s.logoButton} href={`http://${getServerAddress()}/`}>
                             <img css={s.logoimage} src="/petLogo.png" alt="" />
                         </a>
                     </div>
@@ -168,20 +171,20 @@ function RootHeader() {
                     <div css={s.loginBox}>
                         { !isLogin ?
                         <div css={s.accountItems}>
-                            <a css={s.login} href="http://localhost:3000/auth/authentication">
+                            <a css={s.login} href={`http://${getServerAddress()}/auth/authentication`}>
                                 <TbLogin />
                             </a>
-                            <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                            <a css={s.login} href={`http://${getServerAddress()}/product/pet/cart`}>
                                 <FiShoppingCart />
                             </a>
                         </div>
                         :   
                         <>
                             <div css={s.accountItems}>
-                                <a css={s.login} onClick={handleLogoutClick} href="http://localhost:3000/">
+                                <a css={s.login} onClick={handleLogoutClick} href={`http://${getServerAddress()}/`}>
                                     <TbLogout />
                                 </a>
-                                <a css={s.login} href="http://localhost:3000/product/pet/cart">
+                                <a css={s.login} href={`http://${getServerAddress()}/product/pet/cart`}>
                                     <FiShoppingCart />
                                 </a>
                             </div>                      

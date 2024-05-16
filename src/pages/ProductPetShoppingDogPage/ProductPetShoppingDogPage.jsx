@@ -9,6 +9,7 @@ import { getAllProductTypeRequest } from "../../apis/api/options";
 import { useProductOnKeyUpInput } from "../../hooks/useProductOnKeyUpInput";
 import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 import { FaSearch } from "react-icons/fa";
+import getServerAddress from "../../constants/serverAddress";
 
 function ProductPetShoppingDogPage() {
     const navigate = useNavigate();
@@ -95,14 +96,14 @@ function ProductPetShoppingDogPage() {
         <div css={s.layout}>
             <div css={s.categoryHeader}>
                 <div css={s.menuList}>
-                    <Link css={s.linkButtons(selectedProductType === 0)} to={"http://localhost:3000/product/pet/shopping/dog?page=1"}
+                    <Link css={s.linkButtons(selectedProductType === 0)} to={`http://${getServerAddress()}/product/pet/shopping/dog?page=1`}
                     onClick={() => setSelectedProductType(0)}>
                     전체
                     </Link>
                     {productTypeOptions.map(option  => 
                         <Link key={option.productType.productCategoryId} 
                                 css={s.linkButtons(selectedProductType === option.productType.productCategoryId)} 
-                                to={`http://localhost:3000/product/pet/shopping/dog?page=1`}
+                                to={`http://${getServerAddress()}/product/pet/shopping/dog?page=1`}
                                 onClick={() => setSelectedProductType(option.productType.productCategoryId)
                                 }
                                 >

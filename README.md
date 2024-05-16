@@ -3,9 +3,7 @@
 
 > ## ✨[프로젝트 소개](#-프로젝트-소개)
 >
-> ## 👥[팀원 소개](#-팀원-소개)
->
-> ## 💼[역할 분담](#-역할-분담)
+> ## 👥[팀원 소개](#-팀원-소개-및-역할-분담)
 >
 > ## 🤝[협업 방식](#-협업-방식)
 >
@@ -27,6 +25,8 @@
 >
 > ## 🖥[화면 구현](#-화면-구현)
 >
+> ## 🙋‍♂️[주요 기능 및 코드 리뷰](#-주요-기능-및-코드-리뷰)
+>
 > ## 💡[느낀점](#-느낀점)
 
 
@@ -44,10 +44,7 @@
 -   2024.04.01 ~ 2024.05.17
 ### 🔎 주요 기능
 
-## 👥 팀원 소개
-
-
-## 💼 역할 분담
+## 👥 팀원 소개 및 역할 분담
 <h3> 🐉 팀장: 도경록 </h3>
 
 ### 🔧 Back-End
@@ -414,6 +411,10 @@ react-daum-postcode | 다음 주소 API |
 ![ERD 설계도](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/2a082a4b-d374-42de-affc-dc0784735860)
 
 ## 📋 메뉴 구조도
+### 메인페이지(사용자)
+![메인페이지(사용자)](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/b3b1e2b8-4148-4d15-812c-54ada67186b4)
+### 관리자 페이지(관리자)
+![관리자 페이지(관리자)](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/1d1d8a17-c735-40ad-816b-287029f05246)
 
 ## 🖥 화면 구현
 ### 로그인/회원가입 페이지
@@ -513,6 +514,21 @@ react-daum-postcode | 다음 주소 API |
 ![퀵메뉴](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/50a2d6cd-a1d2-4b03-9255-e0decd69d91d)
 #### 비로그인 제어
 ![비로그인 제어](https://github.com/compositivePetProject/compositive_pet_project_front/assets/118997608/fb8fd44c-959c-4d1f-b2aa-6fe324c3264d)
+
+## 🙋‍♂️ 주요 기능 및 코드 리뷰
+### 게시판 TOP 3 기능
+![TOP3](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/87314dcc-8d70-4605-bf1a-db49751c8e6f)
+### 장바구니 결제
+#### 백엔드
+![장바구니결제(백엔드)](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/39bce939-6d93-404d-878b-9418f493b57e)
+#### 프론트
+![장바구니결제(프론트)](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/7b150ab7-7661-472b-bd92-17c4bc75d96d)
+### 상품 사진 확대 기능
+![상품사진확대기능](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/d3dab8a4-6fe9-4b44-a805-76d53a9e8130)
+### 관리자 매출 현황 조회
+![관리자매출현황조회](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/d9fbeffb-ac7a-478e-ab57-45d0e9234682)
+### 지도 api 기능 구현
+![지도api기능](https://github.com/compositivePetProject/compositive_pet_project_back/assets/118997608/3180d6d0-e492-4f41-ad76-2367f3420080)
 
 ## 💡 느낀점
 ### 도경록
